@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'loginstyle.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <h3>Please Input Your Login Information</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {% if error_message %}
+                        <p class="error">{{ error_message }}</p>
+                    {% endif %}
+                    <label for="username">Username:</label><br>
+                    <input type="text" class='form_control' id="username" name="username" required><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" class='form_control' id="password" name="password" required><br>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
