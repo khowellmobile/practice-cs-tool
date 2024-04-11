@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
         <link rel="stylesheet" href="{% static 'loginstyle.css' %}">
     </head>
     <body>
         <div class="container">
-            <div class="card">
+            <div class="centerCard">
                 <h3>Please Input Your Login Information</h3>
                 <form method="post">
                     {% csrf_token %}
