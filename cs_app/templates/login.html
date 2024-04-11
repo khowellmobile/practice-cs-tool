@@ -11,6 +11,9 @@
                 <h3>Please Input Your Login Information</h3>
                 <form method="post">
                     {% csrf_token %}
+                    {% if error_message %}
+                        <p class="error">{{ error_message }}</p>
+                    {% endif %}
                     <label for="username">Username:</label><br>
                     <input type="text" class='form_control' id="username" name="username" required><br>
                     <label for="password">Password:</label><br>
