@@ -1,6 +1,22 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="{% static 'mainstyle.css' %}">
+        <script>
+            function toLogin() {
+                window.location.href = '/login/';
+            }
+        </script>
+    </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <div class="card">
+                <h1>Welcome to Practice CS Custom Reporting Tool</h1>
+                <h3>Please login to continue</h3>
+                <button class="button" onclick="toLogin()">Login</button>
+            </div>
+        </div>
     </body>
 </html>
