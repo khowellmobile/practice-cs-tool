@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
@@ -9,6 +10,7 @@ def main(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 
+@login_required
 def success(request):
     template = loader.get_template('success.html')
     return HttpResponse(template.render())
