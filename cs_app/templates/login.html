@@ -4,6 +4,11 @@
     <head>
         <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
         <link rel="stylesheet" href="{% static 'loginstyle.css' %}">
+        <script>
+            function toCreateAccount() {
+                window.location.href = '/create_account/';
+            }
+        </script>
     </head>
     <body>
         <div class="container">
@@ -18,6 +23,7 @@
                     <input type="text" class='form_control' id="username" name="username" required><br>
                     <label for="password">Password:</label><br>
                     <input type="password" class='form_control' id="password" name="password" required><br>
+                    <button type="button" onclick="toCreateAccount()">Create Account</button>
                     <button type="submit">Login</button>
                 </form>
             </div>
