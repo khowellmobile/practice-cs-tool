@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
+        <link rel="stylesheet" href="{% static 'createaccountstyle.css' %}">
+        <script>
+            function toLogin() {
+                window.location.href = '/login/';
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="centerCard">
+                <h3>Please Fill Out The Information Below</h3>
+                {% if error_message %}
+                    <p class="error">{{ error_message }}</p>
+                {% endif %}
+                <form id="registrationForm" method="post">
+                    {% csrf_token %}
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required><br>
+                
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required><br>
+                
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required><br>
+                
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required><br>
+                
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                    <button type="button" onClick="toLogin()">Back to Login</button>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

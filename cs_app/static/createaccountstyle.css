@@ -23,3 +23,7 @@ form > input {
 form > button {
   margin: 10px;
 }
+
+div.centerCard {
+  height: 70%;
+}
