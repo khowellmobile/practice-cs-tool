@@ -24,9 +24,9 @@
                     <input type="text" class='form_control' id="username" name="username" required><br>
                     <label for="password">Password:</label><br>
                     <input type="password" class='form_control' id="password" name="password" required><br>
-                    <button type="button" onclick="toCreateAccount()">Create Account</button>
-                    <button type="submit">Login</button>
+                    <button type="submit" class="button-6">Login</button>
                 </form>
+                <p>Dont have an account? <a href="{% url 'create_account' %}">Create one</a></p>
             </div>
         </div>
     </body>
