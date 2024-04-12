@@ -3,7 +3,7 @@ from django.template import loader
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -63,6 +63,10 @@ def login_view(request):
         form = AuthenticationForm()
         error_message = None
     return render(request, 'login.html', {'form': form, 'error_message': error_message})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 @login_required
 def home(request):

@@ -5,11 +5,16 @@
     <head>
         <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
         <link rel="stylesheet" href="{% static 'homestyle.css' %}">
+        <script>
+            function toLogout() {
+                window.location.href = '/logout/';
+            }
+        </script>
     </head>
     <body>
         <div class="centerContainer outline">
             <div class="cardHolder outline">
-                <button class="logoutButton">Logout</button>
+                <button class="logoutButton" onclick="toLogout()">Logout</button>
                 <div class="card">
                     <h2>Generate Report</h2>
                 </div>
