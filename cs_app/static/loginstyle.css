@@ -11,6 +11,7 @@
 
 form {
   width: 50%;
+  height: 80%;
 }
 
 form > input {
@@ -21,5 +22,10 @@ form > input {
 }
 
 form > button {
-  margin: 10px;
+  margin: 50px;
+}
+
+form > button {
+  width: 200px;
+  margin: 30px;
 }

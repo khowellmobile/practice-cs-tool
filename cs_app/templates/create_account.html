@@ -5,11 +5,6 @@
     <head>
         <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
         <link rel="stylesheet" href="{% static 'createaccountstyle.css' %}">
-        <script>
-            function toLogin() {
-                window.location.href = '/login/';
-            }
-        </script>
     </head>
     <body>
         <div class="centerContainer">
@@ -34,9 +29,9 @@
                 
                     <label for="confirmPassword">Confirm Password:</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-                    <button type="button" onClick="toLogin()">Back to Login</button>
-                    <button type="submit">Submit</button>
+                    <button type="submit" class="button-6">Submit</button>
                 </form>
+                <a href="{% url 'login' %}">Back to Login</a>
             </div>
         </div>
     </body>
