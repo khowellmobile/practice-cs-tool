@@ -34,7 +34,7 @@
   outline: solid 1px blue;
 }
 
-.button-6 {
+.button-1 {
   align-items: center;
   background-color: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -56,18 +56,18 @@
   transition: all 250ms;
 }
 
-.button-6:hover,
-.button-6:focus {
+.button-1:hover,
+.button-1:focus {
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   color: rgba(0, 0, 0, 0.65);
 }
 
-.button-6:hover {
+.button-1:hover {
   transform: translateY(-1px);
 }
 
-.button-6:active {
+.button-1:active {
   background-color: #F0F0F1;
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
