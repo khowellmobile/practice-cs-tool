@@ -21,7 +21,8 @@ form > input {
 }
 
 form > button {
-  margin: 10px;
+  margin: 20px;
+  width: 200px;
 }
 
 div.centerCard {
