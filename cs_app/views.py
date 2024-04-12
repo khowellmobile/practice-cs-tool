@@ -64,6 +64,10 @@ def login_view(request):
         error_message = None
     return render(request, 'login.html', {'form': form, 'error_message': error_message})
 
+def home(request):
+    template = loader.get_template('home.html')
+    return HttpResponse(template.render())
+
 @login_required
 def success(request):
     template = loader.get_template('success.html')
