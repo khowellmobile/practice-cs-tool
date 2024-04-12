@@ -24,18 +24,24 @@
   transform: scale(1.01);
 }
 
-.cardHolder > .card:nth-child(1) {
+.cardHolder > .card:nth-child(2) {
   background-image: linear-gradient(to bottom, #375BDC, #4D70EF); 
 }
 
-.cardHolder > .card:nth-child(2) {
+.cardHolder > .card:nth-child(3) {
   background-image: linear-gradient(to bottom, #11a23a, #3fd558); 
 }
 
-.cardHolder > .card:nth-child(3) {
+.cardHolder > .card:nth-child(4) {
   background-image: linear-gradient(to bottom, #aa1a99, #f118e7); 
 }
 
-.cardHolder > .card:nth-child(4) {
+.cardHolder > .card:nth-child(5) {
   background-image: linear-gradient(to bottom, #18bdb2, #4edbe0); 
+}
+
+.logoutButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
