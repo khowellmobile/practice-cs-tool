@@ -1,4 +1,4 @@
-.cardHolder {
+.cardContainer {
   width: 65%;
   height: 65%;
   
@@ -24,19 +24,19 @@
   transform: scale(1.01);
 }
 
-.cardHolder > .card:nth-child(2) {
+.cardContainer > .card:nth-child(2) {
   background-image: linear-gradient(to bottom, #375BDC, #4D70EF); 
 }
 
-.cardHolder > .card:nth-child(3) {
+.cardContainer > .card:nth-child(3) {
   background-image: linear-gradient(to bottom, #11a23a, #3fd558); 
 }
 
-.cardHolder > .card:nth-child(4) {
+.cardContainer > .card:nth-child(4) {
   background-image: linear-gradient(to bottom, #aa1a99, #f118e7); 
 }
 
-.cardHolder > .card:nth-child(5) {
+.cardContainer > .card:nth-child(5) {
   background-image: linear-gradient(to bottom, #18bdb2, #4edbe0); 
 }
 

@@ -5,16 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from django.contrib import messages
 
-def main(request):
+def main_view(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 
-def create_account(request):
+def create_account_view(request):
     if request.method == 'POST':
+        # Get fields
         first_name = request.POST.get('firstName')
         last_name = request.POST.get('lastName')
         username = request.POST.get('username')
@@ -32,6 +31,7 @@ def create_account(request):
             return render(request, 'create_account.html', {'error_message': error_message})
 
         else:
+            # Create new user and save into database
             user = User.objects.create_user(username=username, password=password)
             user.first_name = first_name
             user.last_name = last_name
@@ -46,6 +46,7 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
+            # Get fields
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
@@ -70,6 +71,6 @@ def logout_view(request):
     return redirect('login')
 
 @login_required
-def home(request):
+def home_view(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
