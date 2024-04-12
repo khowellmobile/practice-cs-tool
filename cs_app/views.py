@@ -9,11 +9,11 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-def main(request):
+def main_view(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 
-def create_account(request):
+def create_account_view(request):
     if request.method == 'POST':
         first_name = request.POST.get('firstName')
         last_name = request.POST.get('lastName')
@@ -70,6 +70,6 @@ def logout_view(request):
     return redirect('login')
 
 @login_required
-def home(request):
+def home_view(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
