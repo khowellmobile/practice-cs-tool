@@ -52,7 +52,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 # Redirect to a success page after login
-                return redirect('/success/')
+                return redirect('/home/')
             else:
                 # Invalid login credentials
                 error_message = "Invalid username or password."
@@ -64,11 +64,7 @@ def login_view(request):
         error_message = None
     return render(request, 'login.html', {'form': form, 'error_message': error_message})
 
+@login_required
 def home(request):
     template = loader.get_template('home.html')
-    return HttpResponse(template.render())
-
-@login_required
-def success(request):
-    template = loader.get_template('success.html')
     return HttpResponse(template.render())

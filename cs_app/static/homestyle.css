@@ -24,10 +24,6 @@
   transform: scale(1.01);
 }
 
-h1 {
-  margin: 10px;
-}
-
 .cardHolder > .card:nth-child(1) {
   background-image: linear-gradient(to bottom, #375BDC, #4D70EF); 
 }
