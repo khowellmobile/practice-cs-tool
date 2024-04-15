@@ -74,3 +74,23 @@ def logout_view(request):
 def home_view(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
+
+@login_required
+def generate_report_view(request):
+    template = loader.get_template('generate_report.html')
+    return HttpResponse(template.render())
+
+@login_required
+def directions_view(request):
+    template = loader.get_template('directions.html')
+    return HttpResponse(template.render())
+
+@login_required
+def change_database_view(request):
+    template = loader.get_template('change_database.html')
+    return HttpResponse(template.render())
+
+@login_required
+def change_account_view(request):
+    template = loader.get_template('change_account.html')
+    return HttpResponse(template.render())
