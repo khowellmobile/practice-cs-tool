@@ -6,25 +6,25 @@
         <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
         <link rel="stylesheet" href="{% static 'homestyle.css' %}">
         <script>
-            function toLogout() {
-                window.location.href = '/logout/';
+            function redirectTo(url) {
+                window.location.href = url;
             }
         </script>
     </head>
     <body>
         <div class="container-1">
             <div class="cardContainer">
-                <button class="logoutButton" onclick="toLogout()">Logout</button>
-                <div class="card">
+                <button class="logoutButton" onclick="redirectTo('/logout/')">Logout</button>
+                <div class="card" onclick="redirectTo('/generate_report/')">
                     <h2>Generate Report</h2>
                 </div>
-                <div class="card">
+                <div class="card" onclick="redirectTo('/directions/')">
                     <h2>How to Use</h2>
                 </div>
-                <div class="card">
+                <div class="card" onclick="redirectTo('/change_database/')">
                     <h2>Change Database</h2>
                 </div>
-                <div class="card">
+                <div class="card" onclick="redirectTo('/change_account/')">
                     <h2>Change Account Information</h2>
                 </div>
             </div>
