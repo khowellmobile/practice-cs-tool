@@ -23,12 +23,12 @@ def create_account_view(request):
         # Check if passwords match
         if password != confirm_password:
             error_message = 'Passwords do not match'
-            return render(request, 'create_account.html', {'error_message': error_message})
+            return render(request, 'create_account.html', {'error_message': error_message, 'request': request})
 
         # Check if username already exists
         elif User.objects.filter(username=username).exists():
             error_message = 'Username already exists'
-            return render(request, 'create_account.html', {'error_message': error_message})
+            return render(request, 'create_account.html', {'error_message': error_message, 'request': request})
 
         else:
             # Create new user and save into database
@@ -38,8 +38,7 @@ def create_account_view(request):
             user.save()
             return redirect('/login/')
 
-
-    return render(request, 'create_account.html', {'error_message': None})
+    return render(request, 'create_account.html', {'error_message': None, 'request': request})
 
 
 def login_view(request):
