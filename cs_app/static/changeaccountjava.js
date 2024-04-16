@@ -27,6 +27,16 @@ function submitForm(fieldName) {
             'first_name' : $("#first_name").val(),
             'last_name' : $("#last_name").val(),
         }
+    } else if (fieldName == 'email') {
+        var url = '/change_account/update_email'
+        var formdata = {
+            'email' : $("#email").val(),
+        }
+    } else {
+        var url = 'change_account/change_password'
+        var formdata = {
+            'password' : $("#password").val(),
+        }
     }
 
     $.ajax({
