@@ -11,4 +11,5 @@ urlpatterns = [
     path('directions/', views.directions_view, name='directions'),
     path('change_database/', views.change_database_view, name='change_database'),
     path('change_account/', views.change_account_view, name='change_account'),
+    path('update_name/', views.update_name_view, name='update_name'),
 ]

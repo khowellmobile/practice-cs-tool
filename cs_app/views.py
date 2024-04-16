@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
 from django.contrib.auth.decorators import login_required
@@ -97,3 +97,24 @@ def change_account_view(request):
     }
 
     return render(request, 'change_account.html', context)
+
+@login_required
+def update_name_view(request):
+    user = request.user
+
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        user = request.user
+
+        # Process the data as needed
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        # Return a JSON response
+        return JsonResponse({'message': 'Data received successfully'})
+
+    # Return an error response if the request method is not POST
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
