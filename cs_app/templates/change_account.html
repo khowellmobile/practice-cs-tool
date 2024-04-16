@@ -18,11 +18,11 @@
                 <h3>Your Information</h3>
                 <hr>
                 <div class="row">
-                    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+                    <p id="first_name_last_name">Name: {{ user.first_name }} {{ user.last_name }}</p>
                     <form id="update_name" method="POST" style="display: none;" action="">
                         <input type="text" id="first_name" value='{{ user.first_name }}'>
                         <input type="text" id="last_name" value='{{ user.last_name }}'>
-                        <button type="button" onclick="submitForm()">Save</button>
+                        <button type="button" onclick="submitForm('name')">Save</button>
                     </form>
                     <button onclick="showForm('name')">Change</button>
                 </div>

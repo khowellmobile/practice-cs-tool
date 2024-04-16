@@ -18,9 +18,9 @@ function showForm(fieldName) {
     $("#update_" + fieldName).show();
 }
 
-function submitForm() {
+function submitForm(fieldName) {
+    $("#update_" + fieldName).hide();
     var formdata = {
-        'identifier' : $("#email").val(),
         'first_name' : $("#first_name").val(),
         'last_name' : $("#last_name").val(),
     }
@@ -32,6 +32,7 @@ function submitForm() {
         data: formdata,
         success: function(response) {
             console.log(response);
+            $('#first_name_last_name').text("Name: " + formdata['first_name'] + " " + formdata['last_name'])
         },
         error: function(xhr, errmsg, err) {
             
