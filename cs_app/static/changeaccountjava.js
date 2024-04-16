@@ -20,15 +20,19 @@ function showForm(fieldName) {
 
 function submitForm(fieldName) {
     $("#update_" + fieldName).hide();
-    var formdata = {
-        'first_name' : $("#first_name").val(),
-        'last_name' : $("#last_name").val(),
+
+    if (fieldName == 'name') {
+        var url = "/update_name/"
+        var formdata = {
+            'first_name' : $("#first_name").val(),
+            'last_name' : $("#last_name").val(),
+        }
     }
 
     $.ajax({
         type: "POST",
         headers: {'X-CSRFToken': csrf_token},
-        url: "/update_name/",
+        url: url,
         data: formdata,
         success: function(response) {
             console.log(response);
