@@ -24,7 +24,7 @@
                         <input type="text" id="last_name" value='{{ user.last_name }}'>
                         <button type="button" onclick="submitForm('name')">Save</button>
                     </form>
-                    <button onclick="showForm('name')">Change</button>
+                    <button onclick="toggleForm('name')">Change</button>
                 </div>
                 <hr>
                 <div class="row">
@@ -34,12 +34,20 @@
                 <hr>
                 <div class="row">
                     <p>Email: {{ user.email }}</p>
-                    <button>Change</button>
+                    <form id="update_email" method="POST" style="display: none;" action="">
+                        <input type="text" id="email" value='{{ user.email}}'>
+                        <button type="button" onclick="submitForm('email')">Save</button>
+                    </form>
+                    <button onclick="toggleForm('email')">Change</button>
                 </div>
                 <hr>
                 <div class="row">
                     <p>Password: The tool does not save raw text passwords. </p>
-                    <button>Change</button>
+                    <form id="update_password" method="POST" style="display: none;" action="">
+                        <input type="text" id="password">
+                        <button type="button" onclick="submitForm('password')">Save</button>
+                    </form>
+                    <button onclick="toggleForm('password')">Change</button>
                 </div>
             </div>
         </div>

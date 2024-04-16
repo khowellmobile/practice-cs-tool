@@ -14,8 +14,8 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function showForm(fieldName) {
-    $("#update_" + fieldName).show();
+function toggleForm(fieldName) {
+    $("#update_" + fieldName).toggle();
 }
 
 function submitForm(fieldName) {
