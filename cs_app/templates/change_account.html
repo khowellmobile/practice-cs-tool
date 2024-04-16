@@ -12,17 +12,17 @@
                 <h3>Your Information</h3>
                 <hr>
                 <div class="row">
-                    <p>Name: Kent Howell</p>
+                    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
                     <button>Change</button>
                 </div>
                 <hr>
                 <div class="row">
-                    <p>Username: kenthowell</p>
+                    <p>Username: {{ user.username }}</p>
                     <button>Change</button>
                 </div>
                 <hr>
                 <div class="row">
-                    <p>Email: khowellmobile@gmail.com</p>
+                    <p>Email: {{ user.email }}</p>
                     <button>Change</button>
                 </div>
                 <hr>

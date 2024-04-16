@@ -91,5 +91,9 @@ def change_database_view(request):
 
 @login_required
 def change_account_view(request):
-    template = loader.get_template('change_account.html')
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        'user': user,
+    }
+
+    return render(request, 'change_account.html', context)
