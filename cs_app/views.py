@@ -100,8 +100,6 @@ def change_account_view(request):
 
 @login_required
 def update_name_view(request):
-    user = request.user
-
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -117,4 +115,18 @@ def update_name_view(request):
         return JsonResponse({'message': 'Data received successfully'})
 
     # Return an error response if the request method is not POST
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+@login_required
+def update_email_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        user = request.user
+
+        user.email = email
+        user.save()
+
+        return JsonResponse({'message': 'Data received successfully'})
+
     return JsonResponse({'error': 'Invalid request method'}, status=400)
