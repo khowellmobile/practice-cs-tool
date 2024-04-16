@@ -22,18 +22,18 @@ function submitForm(fieldName) {
     $("#update_" + fieldName).hide();
 
     if (fieldName == 'name') {
-        var url = "/update_name/"
+        var url = "/change_account/update_name/"
         var formdata = {
             'first_name' : $("#first_name").val(),
             'last_name' : $("#last_name").val(),
         }
     } else if (fieldName == 'email') {
-        var url = '/change_account/update_email'
+        var url = '/change_account/update_email/'
         var formdata = {
             'email' : $("#email").val(),
         }
     } else {
-        var url = 'change_account/change_password'
+        var url = '/change_account/change_password/'
         var formdata = {
             'password' : $("#password").val(),
         }
