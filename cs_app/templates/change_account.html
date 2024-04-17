@@ -5,7 +5,8 @@
     <head>
         <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
         <link rel="stylesheet" href="{% static 'changeaccountstyle.css' %}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="{% static 'changeaccountjava.js' %}"></script>
         <script>
             // Easier to get csrf token from template
@@ -18,11 +19,16 @@
                 <h3>Your Information</h3>
                 <hr>
                 <div class="row">
-                    <p id="first_name_last_name">Name: {{ user.first_name }} {{ user.last_name }}</p>
-                    <form id="update_name" method="POST" style="display: none;" action="">
-                        <input type="text" id="first_name" value='{{ user.first_name }}'>
-                        <input type="text" id="last_name" value='{{ user.last_name }}'>
-                        <button type="button" onclick="submitForm('name')">Save</button>
+                    <p id="first_name_last_name">Name: {{ user.first_name }} {{
+                        user.last_name }}</p>
+                    <form id="update_name" method="POST" style="display: none;"
+                        action>
+                        <input type="text" id="first_name"
+                            value='{{ user.first_name }}'>
+                        <input type="text" id="last_name"
+                            value='{{ user.last_name }}'>
+                        <button type="button"
+                            onclick="submitForm('name')">Save</button>
                     </form>
                     <button onclick="toggleForm('name')">Change</button>
                 </div>
@@ -34,18 +40,22 @@
                 <hr>
                 <div class="row">
                     <p>Email: {{ user.email }}</p>
-                    <form id="update_email" method="POST" style="display: none;" action="">
+                    <form id="update_email" method="POST" style="display: none;"
+                        action>
                         <input type="text" id="email" value='{{ user.email}}'>
-                        <button type="button" onclick="submitForm('email')">Save</button>
+                        <button type="button"
+                            onclick="submitForm('email')">Save</button>
                     </form>
                     <button onclick="toggleForm('email')">Change</button>
                 </div>
                 <hr>
                 <div class="row">
                     <p>Password: The tool does not save raw text passwords. </p>
-                    <form id="update_password" method="POST" style="display: none;" action="">
+                    <form id="update_password" method="POST"
+                        style="display: none;" action>
                         <input type="text" id="password">
-                        <button type="button" onclick="submitForm('password')">Save</button>
+                        <button type="button"
+                            onclick="submitForm('password')">Save</button>
                     </form>
                     <button onclick="toggleForm('password')">Change</button>
                 </div>

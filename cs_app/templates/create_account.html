@@ -11,24 +11,29 @@
             <div class="card-1">
                 <h3>Please Fill Out The Information Below</h3>
                 {% if error_message %}
-                    <p class="error">{{ error_message }}</p>
+                <p class="error">{{ error_message }}</p>
                 {% endif %}
                 <form id="registrationForm" method="post">
                     {% csrf_token %}
                     <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" value="{{ request.POST.firstName }}" required><br>
-                    
+                    <input type="text" id="firstName" name="firstName"
+                        value="{{ request.POST.firstName }}" required><br>
+
                     <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" value="{{ request.POST.lastName }}" required><br>
-                    
+                    <input type="text" id="lastName" name="lastName"
+                        value="{{ request.POST.lastName }}" required><br>
+
                     <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" value="{{ request.POST.username }}" required><br>
-                    
+                    <input type="text" id="username" name="username"
+                        value="{{ request.POST.username }}" required><br>
+
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required><br>
-                    
+                    <input type="password" id="password" name="password"
+                        required><br>
+
                     <label for="confirmPassword">Confirm Password:</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                    <input type="password" id="confirmPassword"
+                        name="confirmPassword" required><br>
                     <button type="submit" class="button-1">Submit</button>
                 </form>
                 <a href="{% url 'login' %}">Back to Login</a>

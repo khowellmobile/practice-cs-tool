@@ -13,15 +13,18 @@
                 <form method="post">
                     {% csrf_token %}
                     {% if error_message %}
-                        <p class="error">{{ error_message }}</p>
+                    <p class="error">{{ error_message }}</p>
                     {% endif %}
                     <label for="username">Username:</label><br>
-                    <input type="text" class='form_control' id="username" name="username" required><br>
+                    <input type="text" class='form_control' id="username"
+                        name="username" required><br>
                     <label for="password">Password:</label><br>
-                    <input type="password" class='form_control' id="password" name="password" required><br>
+                    <input type="password" class='form_control' id="password"
+                        name="password" required><br>
                     <button type="submit" class="button-1">Login</button>
                 </form>
-                <p>Dont have an account? <a href="{% url 'create_account' %}">Create one</a></p>
+                <p>Dont have an account? <a
+                        href="{% url 'create_account' %}">Create one</a></p>
             </div>
         </div>
     </body>
