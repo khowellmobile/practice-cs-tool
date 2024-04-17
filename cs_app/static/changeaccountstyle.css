@@ -13,3 +13,10 @@
 hr {
   width: 100%;
 }
+
+#logoutButton {
+  width: 100px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}

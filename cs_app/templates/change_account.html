@@ -15,11 +15,17 @@
     </head>
     <body>
         <div class="container-1">
+            <button id='logoutButton' class="button-3"
+                onclick="redirectTo('/logout/')">Logout</button>
             <div class="card-2">
-                <h3>Your Information</h3>
+                <div class="row">
+                    <h3>Your Information</h3>
+                    <button id="homeButton" class="button-3" onclick="redirectTo('/home/')">Back to home</button>
+                </div>
                 <hr>
                 <div class="row">
-                    <p id="name_text">Name: {{ user.first_name }} {{user.last_name }}</p>
+                    <p id="name_text">Name: {{ user.first_name }}
+                        {{user.last_name }}</p>
                     <form id="update_name" method="POST" style="display: none;"
                         action>
                         <input type="text" id="first_name"
@@ -49,7 +55,8 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <p id="password_text">Password: The tool does not save raw text passwords. </p>
+                    <p id="password_text">Password: The tool does not save raw
+                        text passwords. </p>
                     <form id="update_password" method="POST"
                         style="display: none;" action>
                         <input type="text" id="password">
