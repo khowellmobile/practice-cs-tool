@@ -150,3 +150,17 @@ def update_email_view(request):
         return JsonResponse({"message": "Data received successfully"})
 
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+@login_required
+def update_password_view(request):
+    if request.method == "POST":
+        password = request.POST.get("email")
+
+        user = request.user
+
+        user.set_password(password)
+        user.save()
+
+        return JsonResponse({"message": "Data received successfully"})
+
+    return JsonResponse({"error": "Invalid request method"}, status=400)
