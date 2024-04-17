@@ -19,8 +19,7 @@
                 <h3>Your Information</h3>
                 <hr>
                 <div class="row">
-                    <p id="first_name_last_name">Name: {{ user.first_name }} {{
-                        user.last_name }}</p>
+                    <p id="name_text">Name: {{ user.first_name }} {{user.last_name }}</p>
                     <form id="update_name" method="POST" style="display: none;"
                         action>
                         <input type="text" id="first_name"
@@ -39,7 +38,7 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <p>Email: {{ user.email }}</p>
+                    <p id="email_text">Email: {{ user.email }}</p>
                     <form id="update_email" method="POST" style="display: none;"
                         action>
                         <input type="text" id="email" value='{{ user.email}}'>
@@ -50,7 +49,7 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <p>Password: The tool does not save raw text passwords. </p>
+                    <p id="password_text">Password: The tool does not save raw text passwords. </p>
                     <form id="update_password" method="POST"
                         style="display: none;" action>
                         <input type="text" id="password">

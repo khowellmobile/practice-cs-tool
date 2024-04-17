@@ -46,10 +46,20 @@ function submitForm(fieldName) {
     data: formdata,
     success: function (response) {
       console.log(response);
-      $("#first_name_last_name").text(
-        "Name: " + formdata["first_name"] + " " + formdata["last_name"]
-      );
+      ajaxResponse(fieldName, formdata);
     },
     error: function (xhr, errmsg, err) {},
   });
+}
+
+function ajaxResponse(fieldName, formdata) {
+  if (fieldName == "name") {
+    $(`#${fieldName}_text`).text(
+      "Name: " + formdata["first_name"] + " " + formdata["last_name"]
+    );
+  } else if (fieldName == "email") {
+    $(`#${fieldName}_text`).text("Email: " + formdata["email"]);
+  } else {
+    $(`#${fieldName}_text`).text("Password: " + formdata["password"]);
+  }
 }
