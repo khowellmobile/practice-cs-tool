@@ -33,7 +33,7 @@ function submitForm(fieldName) {
       email: $("#email").val(),
     };
   } else {
-    var url = "/change_account/change_password/";
+    var url = "/change_account/update_password/";
     var formdata = {
       password: $("#password").val(),
     };
@@ -60,6 +60,6 @@ function ajaxResponse(fieldName, formdata) {
   } else if (fieldName == "email") {
     $(`#${fieldName}_text`).text("Email: " + formdata["email"]);
   } else {
-    $(`#${fieldName}_text`).text("Password: " + formdata["password"]);
+    $(`#${fieldName}_text`).text("New password set.");
   }
 }
