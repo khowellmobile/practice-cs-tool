@@ -1,7 +1,7 @@
 .cardContainer {
   width: 65%;
   height: 65%;
-  
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -24,60 +24,25 @@
   transform: scale(1.01);
 }
 
+.cardContainer > .card:nth-child(1) {
+  background-image: linear-gradient(to bottom, #375bdc, #4d70ef);
+}
+
 .cardContainer > .card:nth-child(2) {
-  background-image: linear-gradient(to bottom, #375BDC, #4D70EF); 
+  background-image: linear-gradient(to bottom, #11a23a, #3fd558);
 }
 
 .cardContainer > .card:nth-child(3) {
-  background-image: linear-gradient(to bottom, #11a23a, #3fd558); 
+  background-image: linear-gradient(to bottom, #aa1a99, #f118e7);
 }
 
 .cardContainer > .card:nth-child(4) {
-  background-image: linear-gradient(to bottom, #aa1a99, #f118e7); 
+  background-image: linear-gradient(to bottom, #18bdb2, #4edbe0);
 }
 
-.cardContainer > .card:nth-child(5) {
-  background-image: linear-gradient(to bottom, #18bdb2, #4edbe0); 
-}
-
-.logoutButton {
+div > button {
   position: absolute;
   top: 20px;
   right: 20px;
   width: 100px;
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: .25rem;
-  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-  box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.85);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  justify-content: center;
-  line-height: 1.25;
-  min-height: 3rem;
-  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
-  transition: all 250ms;
-}
-
-.logoutButton:hover,
-.logoutButton:focus {
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.logoutButton:hover {
-  transform: translateY(-1px);
-}
-
-.logoutButton:active {
-  background-color: #F0F0F1;
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-  color: rgba(0, 0, 0, 0.65);
-  transform: translateY(0);
 }
