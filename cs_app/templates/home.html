@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
-        <link rel="stylesheet" href="{% static 'homestyle.css' %}">
+        <link rel="stylesheet" href="{% static 'css/common_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
         <script>
             function redirectTo(url) {
                 window.location.href = url;
@@ -13,8 +13,9 @@
     </head>
     <body>
         <div class="container-1">
+            <button class="button-3"
+                    onclick="redirectTo('/logout/')">Logout</button>
             <div class="cardContainer">
-                <button class="logoutButton" onclick="redirectTo('/logout/')">Logout</button>
                 <div class="card" onclick="redirectTo('/generate_report/')">
                     <h2>Generate Report</h2>
                 </div>

@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'commonstyles.css' %}">
-        <link rel="stylesheet" href="{% static 'mainstyle.css' %}">
+        <link rel="stylesheet" href="{% static 'css/common_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main_style.css' %}">
         <script>
             function toLogin() {
                 window.location.href = '/login/';
@@ -16,7 +16,8 @@
             <div class="card-1">
                 <h1>Welcome to Practice CS Custom Reporting Tool</h1>
                 <h3>Please login to continue</h3>
-                <button class="button-1" onclick="toLogin()" role="button">Login</button>
+                <button class="button-1" onclick="toLogin()"
+                    role="button">Login</button>
             </div>
         </div>
     </body>
