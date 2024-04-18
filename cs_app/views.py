@@ -18,7 +18,7 @@ def create_account_view(request):
         # Get fields
         first_name = request.POST.get("firstName")
         last_name = request.POST.get("lastName")
-        username = request.POST.get("username")
+        email = request.POST.get("email")
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirmPassword")
 
@@ -32,8 +32,8 @@ def create_account_view(request):
             )
 
         # Check if username already exists
-        elif User.objects.filter(username=username).exists():
-            error_message = "Username already exists"
+        elif User.objects.filter(username=email).exists():
+            error_message = "Email is already being used."
             return render(
                 request,
                 "create_account.html",
@@ -42,9 +42,10 @@ def create_account_view(request):
 
         else:
             # Create new user and save into database
-            user = User.objects.create_user(username=username, password=password)
+            user = User.objects.create_user(username=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
+            user.email = email
             user.save()
             return redirect("/login/")
 
