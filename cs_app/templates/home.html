@@ -24,15 +24,21 @@
                 </div>
                 <div class="card" onclick="redirectTo('/directions/')">
                     <h2>How to Use</h2>
-                    <img src="{% static 'images/double_question_mark.png' %}"
+                    <img src="{% static 'images/question_icon.png' %}"
+                        alt="Generate Report Image" width="150"
+                        height="150">
+                </div>
+                <div class="card" onclick="redirectTo('/change_account/')">
+                    <h2>Account Information</h2>
+                    <img src="{% static 'images/account_icon.png' %}"
                         alt="Generate Report Image" width="150"
                         height="150">
                 </div>
                 <div class="card" onclick="redirectTo('/change_database/')">
                     <h2>Change Database</h2>
-                </div>
-                <div class="card" onclick="redirectTo('/change_account/')">
-                    <h2>Change Account Information</h2>
+                    <img src="{% static 'images/database_icon.png' %}"
+                        alt="Generate Report Image" width="150"
+                        height="150">
                 </div>
             </div>
         </div>
