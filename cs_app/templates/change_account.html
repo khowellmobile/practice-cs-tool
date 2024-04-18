@@ -19,7 +19,7 @@
                 onclick="redirectTo('/logout/')">Logout</button>
             <div class="card-2">
                 <div class="row">
-                    <h3>Your Information</h3>
+                    <h2>Your Information</h2>
                     <button id="homeButton" class="button-3"
                         onclick="redirectTo('/home/')">Back to home</button>
                 </div>
@@ -37,11 +37,6 @@
                             onclick="submitForm('name')">Save</button>
                     </form>
                     <button onclick="toggleForm('name')">Change</button>
-                </div>
-                <hr>
-                <div class="row">
-                    <p>Username: {{ user.username }}</p>
-                    <button>Change</button>
                 </div>
                 <hr>
                 <div class="row">
