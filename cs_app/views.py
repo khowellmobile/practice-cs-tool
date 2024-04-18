@@ -146,6 +146,7 @@ def update_email_view(request):
         user = request.user
 
         user.email = email
+        user.username = email
         user.save()
 
         return JsonResponse({"message": "Data received successfully"})
