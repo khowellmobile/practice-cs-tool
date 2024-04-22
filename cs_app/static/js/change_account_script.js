@@ -1,7 +1,3 @@
-function redirectTo(url) {
-  window.location.href = url;
-}
-
 function toggleForm(fieldName) {
   $("#update_" + fieldName).toggle();
 }

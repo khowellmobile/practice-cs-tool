@@ -5,8 +5,11 @@
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}">
         <link rel="stylesheet" href="{% static 'css/change_account_style.css' %}">
+        
         <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/change_account_script.js' %}"></script>
         <script>
             // Easier to get csrf token from template
@@ -15,6 +18,7 @@
     </head>
     <body>
         <div class="container-1">
+            <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
             <button id='logoutButton' class="button-3"
                 onclick="redirectTo('/logout/')">Logout</button>
             <div class="card-2">
