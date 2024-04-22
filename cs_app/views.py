@@ -86,26 +86,42 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
-    template = loader.get_template("home.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "home.html", context)
 
 
 @login_required
 def generate_report_view(request):
-    template = loader.get_template("generate_report.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "generate_report.html", context)
 
 
 @login_required
 def directions_view(request):
-    template = loader.get_template("directions.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "directions.html", context)
 
 
 @login_required
 def change_database_view(request):
-    template = loader.get_template("change_database.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "change_database.html", context)
 
 
 @login_required

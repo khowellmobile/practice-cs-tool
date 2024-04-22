@@ -1,4 +1,3 @@
-
 /*
  * Common Script for Django Application
  *
@@ -6,17 +5,11 @@
  * in the Django application. It helps in maintaining consistency and reusability of code.
  *
  * List of functions:
- * - redirectTo
+ * - redirectTo(string url)
  * - [Function 2]
  * - [Function 3]
- *   ...
  */
 
 function redirectTo(url) {
     window.location.href = url;
-}
-
-
-function getCurrentUser() {
-
 }
