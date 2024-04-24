@@ -1,5 +1,5 @@
 .report-card {
-  background-color: #f1f1f1;
+  background-color: #cacaca;
   background-size: 100%;
   background-repeat: no-repeat;
   width: 70%;
@@ -12,7 +12,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+}
+
+.report-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .param-card {
@@ -44,6 +49,13 @@
     width: 100%;
     height: 100%;
     align-self: center;
+    background-color: #f1f1f1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    
 }
 
 p {
