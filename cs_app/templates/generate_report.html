@@ -3,11 +3,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'css/common_style.css' %}">
-        <link rel="stylesheet" href="{% static 'css/generate_report_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/generate_report_style.css' %}"
+        />
 
-        <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/generate_report_script.js' %}"></script>
@@ -15,47 +17,62 @@
     <body>
         <div class="container-1">
             <div class="param-card">
-                <h1>
-                    Input Report Parameters
-                </h1>
+                <h1>Input Report Parameters</h1>
                 <div class="formDiv">
                     <form method="post">
                         {% csrf_token %}
                         <div class="dateDiv">
                             <label for="start_date">Start Date:</label>
-                            <input type="date" id="start_date" name="start_date" required>
-    
+                            <input
+                                type="date"
+                                id="start_date"
+                                name="start_date"
+                                required
+                            />
+
                             <label for="end_date">End Date:</label>
-                            <input type="date" id="end_date" name="end_date" required>
-                        </div> <br><br>
-                
+                            <input
+                                type="date"
+                                id="end_date"
+                                name="end_date"
+                                required
+                            />
+                        </div>
+                        <br /><br />
+
                         <div class="div-2">
-                            <label for="client_name">Client Name: (Leave blank to select all clients)</label>
-                        <input type="text" id="client_name" name="client_name"><br>
-                
-                        <label for="sorting_option">Sorting Option:</label>
-                        <select id="sorting_option" name="sorting_option">
-                            <option value="date">Date</option>
-                            <option value="client">Client</option>
-                            <option value="amount">Amount</option>
-                        </select><br><br>
+                            <label for="client_name"
+                                >Client Name: (Leave blank to select all
+                                clients)</label
+                            >
+                            <input
+                                type="text"
+                                id="client_name"
+                                name="client_name"
+                            /><br />
+
+                            <label for="sorting_option">Sorting Option:</label>
+                            <select id="sorting_option" name="sorting_option">
+                                <option value="date">Date</option>
+                                <option value="client">Client</option>
+                                <option value="amount">Amount</option></select
+                            ><br /><br />
                         </div>
                     </form>
-                    <button class="button-3" onclick="submitParameters()">Generate Report</button>
+                    <button class="button-3" onclick="submitParameters()">
+                        Generate Report
+                    </button>
                 </div>
             </div>
             <div class="report-card">
                 <div class="report-card-header">
-                    <h1 class="">
-                        Report Goes Here
-                    </h1>
-                    <button class="button-3"
-                            onclick="redirectTo('/home/')">Back to home</button>
+                    <h1 class="">Report Goes Here</h1>
+                    <button class="button-3" onclick="redirectTo('/home/')">
+                        Back to home
+                    </button>
                 </div>
                 <div class="reportBlock">
-                    <h2>
-                        No Report Generated
-                    </h2>
+                    <h2>No Report Generated</h2>
                 </div>
                 <p id="report_params">Report Parameters: None Input</p>
             </div>
