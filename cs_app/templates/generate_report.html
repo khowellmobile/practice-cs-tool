@@ -19,7 +19,8 @@
                     Input Report Parameters
                 </h1>
                 <div class="formDiv">
-                    <form action="/generate_report/" method="post">
+                    <form method="post">
+                        {% csrf_token %}
                         <div class="dateDiv">
                             <label for="start_date">Start Date:</label>
                             <input type="date" id="start_date" name="start_date" required>
@@ -29,7 +30,7 @@
                         </div> <br><br>
                 
                         <div class="div-2">
-                            <label for="client_name">Client Name: (Leave bank to select all clients)</label>
+                            <label for="client_name">Client Name: (Leave blank to select all clients)</label>
                         <input type="text" id="client_name" name="client_name"><br>
                 
                         <label for="sorting_option">Sorting Option:</label>
@@ -38,10 +39,9 @@
                             <option value="client">Client</option>
                             <option value="amount">Amount</option>
                         </select><br><br>
-                
-                        <input class="button-1" type="submit" value="Generate Report">
                         </div>
                     </form>
+                    <button class="button-3" onclick="submitParameters()">Generate Report</button>
                 </div>
             </div>
             <div class="report-card">
@@ -57,7 +57,7 @@
                         No Report Generated
                     </h2>
                 </div>
-                <p>Report Parameters: None Input</p>
+                <p id="report_params">Report Parameters: None Input</p>
             </div>
         </div>
     </body>
