@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    let table = $("#example").DataTable({
+    })
+});
+
 function submitParameters() {
     var formdata = {
         start_date: $("#start_date").val(),
