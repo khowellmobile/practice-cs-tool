@@ -47,7 +47,15 @@
                                 id="end_date"
                                 name="end_date"
                                 required
-                            />
+                            /><br /><br />
+
+                            <label for="time_range">Time Range:</label>
+                            <select id="time_range" name="time_range">
+                                <option value="ytd">YTD</option>
+                                <option value="last_year">Last Year</option>
+                                <option value="all_time">All Time</option>
+                                <option value="custom" selected>Custom</option>
+                            </select>
                         </div>
                         <br /><br />
 
@@ -61,18 +69,8 @@
                                 id="client_name"
                                 name="client_name"
                             /><br />
-
-                            <label for="sorting_option">Sorting Option:</label>
-                            <select id="sorting_option" name="sorting_option">
-                                <option value="date">Date</option>
-                                <option value="client">Client</option>
-                                <option value="amount">Amount</option></select
-                            ><br /><br />
                         </div>
                     </form>
-                    <button class="button-3" onclick="submitParameters()">
-                        Generate Report
-                    </button>
                 </div>
             </div>
             <div class="report-card">
@@ -83,7 +81,7 @@
                     </button>
                 </div>
                 <div class="reportBlock">
-                    <table id="example" class="display">
+                    <table id="example" class="stripe display">
                         <thead>
                             <tr>
                                 <th>Name</th>

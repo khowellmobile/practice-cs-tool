@@ -5,6 +5,10 @@ $(document).ready(function () {
     });
 
     setTableSize();
+
+    $("#time_range").on("change", function () {
+        alterDates($("#time_range").val());
+    });
 });
 
 // Resize table when the window resizes
@@ -18,7 +22,6 @@ function submitParameters() {
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
         client_name: $("#client_name").val(),
-        sorting_option: $("#sorting_option").val(),
     };
 
     var res = "";
@@ -42,4 +45,40 @@ function setTableSize() {
 
     $("#example").css("height", childHeight + "px");
     $("#example").css("width", childWidth + "px");
+}
+
+function alterDates(range) {
+    var start_date, end_date;
+
+    let currentDate = new Date();
+    let day = currentDate.getDate();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+
+    day = day < 10 ? `0${day}` : day;
+    month = month < 10 ? `0${month}` : month;
+
+    switch (range) {
+        case "ytd":
+            start_date = `${year - 1}-01-01`;
+            end_date = `${year}-${month}-${day}`
+            $('#start_date').val(start_date);
+            $('#end_date').val(end_date);
+            break;
+        case "last_year":
+            start_date = `${year - 1}-01-01`;
+            end_date = `${year - 1}-12-31`;
+            $('#start_date').val(start_date);
+            $('#end_date').val(end_date);
+            break;
+        case "all_time":
+            start_date = "1000-01-01";
+            end_date = `${year}-${month}-${day}`
+            $('#start_date').val(start_date);
+            $('#end_date').val(end_date);
+            break;
+        default:
+            console.log("4");
+            break;
+    }
 }
