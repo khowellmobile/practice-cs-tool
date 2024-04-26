@@ -30,7 +30,7 @@ function submitParameters() {
 
     var res = "";
     for (var key in formdata) {
-        res += `${formdata[key]} ,`;
+        res += `${formdata[key]}, `;
     }
 
     $("#report_params").text("Report Parameters: " + res.slice(0, -2));

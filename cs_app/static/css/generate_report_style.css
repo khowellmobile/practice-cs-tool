@@ -57,6 +57,19 @@
     border-radius: 5px;
 }
 
+.historyCard {
+    width: auto;
+    height: calc(100% - 300px);
+    align-self: center;
+    background-color: #cacaca;
+    border-radius: 5px;
+    margin-top: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 p {
     margin: 0px;
 }
