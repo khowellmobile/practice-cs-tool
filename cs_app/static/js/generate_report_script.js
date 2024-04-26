@@ -9,6 +9,10 @@ $(document).ready(function () {
     $("#time_range").on("change", function () {
         alterDates($("#time_range").val());
     });
+
+    $("#start_date, #end_date").on("change", function () {
+        $("#time_range").val("custom");
+    })
 });
 
 // Resize table when the window resizes
