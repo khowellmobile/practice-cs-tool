@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     $("#start_date, #end_date").on("change", function () {
         $("#time_range").val("custom");
-    })
+    });
 });
 
 // Resize table when the window resizes
@@ -65,21 +65,21 @@ function alterDates(range) {
     switch (range) {
         case "ytd":
             start_date = `${year - 1}-01-01`;
-            end_date = `${year}-${month}-${day}`
-            $('#start_date').val(start_date);
-            $('#end_date').val(end_date);
+            end_date = `${year}-${month}-${day}`;
+            $("#start_date").val(start_date);
+            $("#end_date").val(end_date);
             break;
         case "last_year":
             start_date = `${year - 1}-01-01`;
             end_date = `${year - 1}-12-31`;
-            $('#start_date').val(start_date);
-            $('#end_date').val(end_date);
+            $("#start_date").val(start_date);
+            $("#end_date").val(end_date);
             break;
         case "all_time":
             start_date = "1000-01-01";
-            end_date = `${year}-${month}-${day}`
-            $('#start_date').val(start_date);
-            $('#end_date').val(end_date);
+            end_date = `${year}-${month}-${day}`;
+            $("#start_date").val(start_date);
+            $("#end_date").val(end_date);
             break;
         default:
             console.log("4");
