@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
+from django.db import connections
+
 
 def main_view(request):
     template = loader.get_template("index.html")
@@ -183,3 +185,22 @@ def update_password_view(request):
         return JsonResponse({"message": "Data received successfully"})
 
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+def listEmployees_view(request):
+    conn = connections["data"]
+
+    cursor = conn.cursor()
+
+    query = """SELECT Department.Name, Count(Department.Name) * 8.0 AS 'TotalHours'
+            FROM HumanResources.EmployeeDepartmentHistory
+            JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
+            JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
+            WHERE StartDate BETWEEN '2008-01-01' and '2008-12-31'
+            GROUP BY Department.Name"""
+
+    cursor.execute(query)
+
+    rows = cursor.fetchall()
+
+    return render(request, "employee_list.html", {"employees": rows})

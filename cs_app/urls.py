@@ -16,6 +16,7 @@ urlpatterns = [
 
     # Generate report and functions
     path('generate_report/', views.generate_report_view, name='generate_report'),
+    path('emp/', views.listEmployees_view, name='employee_list'),
 
     # Directions page
     path('directions/', views.directions_view, name='directions'),
