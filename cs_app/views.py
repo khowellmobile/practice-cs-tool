@@ -186,8 +186,8 @@ def update_password_view(request):
 
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
-
-def listEmployees_view(request):
+@login_required
+def load_table_view(request):
     conn = connections["data"]
 
     cursor = conn.cursor()
@@ -203,4 +203,11 @@ def listEmployees_view(request):
 
     rows = cursor.fetchall()
 
-    return render(request, "employee_list.html", {"employees": rows})
+    # Prepare data for JsonResponse
+    data = []
+    for row in rows:
+        department_name, total_hours = row
+        data.append({'department_name': department_name, 'total_hours': total_hours})
+
+    # Return JsonResponse with data
+    return JsonResponse({'data': data})
