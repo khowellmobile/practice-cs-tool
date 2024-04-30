@@ -1,7 +1,5 @@
 // Initialize table and set intial table size
 $(document).ready(function () {
-    populateTable();
-
     setTableSize();
 
     $("#time_range").on("change", function () {
@@ -18,13 +16,15 @@ $(window).resize(function () {
     setTableSize();
 });
 
-// Submits parameters to view for data query
+// Shows user what the input parameters were
 function submitParameters() {
     var formdata = {
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
         client_name: $("#client_name").val(),
     };
+
+    populateTable(formdata);
 
     var res = "";
     for (var key in formdata) {
@@ -34,7 +34,47 @@ function submitParameters() {
     $("#report_params").text("Report Parameters: " + res.slice(0, -2));
 }
 
-// Sets table size just a tad smaller than its parent
+// Populates the table through an ajax query
+function populateTable(formdata) {
+    let url = "/load_table/";
+
+    $.ajax({
+        type: "POST",
+        headers: { "X-CSRFToken": csrf_token },
+        url: url,
+        data: formdata,
+        success: function (response) {
+            createTable(formatData(response.data));
+        },
+        error: function (xhr, errmsg, err) {
+            alert("error");
+        },
+    });
+}
+
+// Formats data from json response to datatables.net format
+function formatData(data) {
+    var res = [];
+
+    data.forEach(function (item) {
+        let name = item.department_name;
+        let hours = parseFloat(item.total_hours);
+
+        res.push([name, hours]);
+    });
+
+    return res;
+}
+
+// Creates the table with input data
+function createTable(data) {
+    new DataTable("#example", {
+        columns: [{ title: "Name" }, { title: "Hours" }],
+        data: data,
+    });
+}
+
+// Sets table size just a tad smaller than its parent for responsiveness
 function setTableSize() {
     let parentWidth = $(".reportBlock").width();
     let parentHeight = $(".reportBlock").height();
@@ -49,6 +89,7 @@ function setTableSize() {
     $("#example").css("width", childWidth + "px");
 }
 
+// Sets date input fields based upon selected select option
 function alterDates(range) {
     var start_date, end_date;
 
@@ -83,40 +124,4 @@ function alterDates(range) {
             console.log("4");
             break;
     }
-}
-
-function populateTable() {
-    let url = "/load_table/";
-
-    $.ajax({
-        type: "GET",
-        url: url,
-        success: function (response) {
-            createTable(formatData(response.data));
-        },
-        error: function (xhr, errmsg, err) {
-            alert("error");
-        },
-    });
-}
-
-function formatData(data) {
-    var res = [];
-
-    data.forEach(function(item) {
-        let name = item.department_name;
-        let hours = parseFloat(item.total_hours);
-
-        res.push([name, hours]);
-    });
-
-    console.log(res);
-    return res; 
-}
-
-function createTable(data) {
-    new DataTable("#example", {
-        columns: [{ title: "Name" }, { title: "Hours" }],
-        data: data,
-    });
 }

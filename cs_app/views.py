@@ -186,28 +186,39 @@ def update_password_view(request):
 
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
+
 @login_required
 def load_table_view(request):
-    conn = connections["data"]
+    if request.method == "POST":
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
 
-    cursor = conn.cursor()
+        conn = connections["data"]
 
-    query = """SELECT Department.Name, Count(Department.Name) * 8.0 AS 'TotalHours'
-            FROM HumanResources.EmployeeDepartmentHistory
-            JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
-            JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
-            WHERE StartDate BETWEEN '2008-01-01' and '2008-12-31'
-            GROUP BY Department.Name"""
+        cursor = conn.cursor()
 
-    cursor.execute(query)
+        query = f"""SELECT Department.Name, COUNT(Department.Name) * 8.0 AS 'TotalHours'
+                   FROM HumanResources.EmployeeDepartmentHistory
+                   JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
+                   JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
+                   WHERE StartDate BETWEEN '{start_date}' AND '{end_date}'
+                   GROUP BY Department.Name;
+                   """
 
-    rows = cursor.fetchall()
+        cursor.execute(query)
 
-    # Prepare data for JsonResponse
-    data = []
-    for row in rows:
-        department_name, total_hours = row
-        data.append({'department_name': department_name, 'total_hours': total_hours})
+        rows = cursor.fetchall()
 
-    # Return JsonResponse with data
-    return JsonResponse({'data': data})
+        # Prepare data for JsonResponse
+        data = []
+        for row in rows:
+            department_name, total_hours = row
+            data.append(
+                {"department_name": department_name, "total_hours": total_hours}
+            )
+
+        # Return JsonResponse with data
+        return JsonResponse({"data": data})
+
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=400)

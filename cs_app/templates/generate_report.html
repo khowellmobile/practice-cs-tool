@@ -24,6 +24,11 @@
         />
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/generate_report_script.js' %}"></script>
+        
+        <script>
+            // Easier to get csrf token from template
+            var csrf_token = "{{ csrf_token }}";
+        </script>
     </head>
     <body>
         <div class="container-1">
