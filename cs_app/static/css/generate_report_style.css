@@ -45,7 +45,7 @@
     flex-direction: column;
 }
 
-.reportBlock {
+#reportBlock {
     width: 100%;
     height: 100%;
     align-self: center;

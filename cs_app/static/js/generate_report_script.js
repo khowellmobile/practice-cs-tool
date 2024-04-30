@@ -69,7 +69,7 @@ function createTable(data) {
         $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
         $("#example").remove(); // Remove the existing table
     }
-    $(".reportBlock").append(
+    $("#reportBlock").append(
         '<table id="example" class="stripe display"></table>'
     );
 
@@ -84,8 +84,8 @@ function createTable(data) {
 
 // Sets table size just a tad smaller than its parent for responsiveness
 function setTableSize() {
-    let parentWidth = $(".reportBlock").width();
-    let parentHeight = $(".reportBlock").height();
+    let parentWidth = $("#reportBlock").width();
+    let parentHeight = $("#reportBlock").height();
 
     let childWidth = parentWidth - parentWidth / 100;
     let childHeight = parentHeight - parentHeight / 10;
