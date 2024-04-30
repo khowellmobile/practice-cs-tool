@@ -197,11 +197,16 @@ def load_table_view(request):
 
         cursor = conn.cursor()
 
+        where_clause = ""
+
+        if start_date and end_date:
+            where_clause = f"WHERE StartDate BETWEEN '{start_date}' AND '{end_date}'"
+
         query = f"""SELECT Department.Name, COUNT(Department.Name) * 8.0 AS 'TotalHours'
                    FROM HumanResources.EmployeeDepartmentHistory
                    JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
                    JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
-                   WHERE StartDate BETWEEN '{start_date}' AND '{end_date}'
+                   {where_clause}
                    GROUP BY Department.Name;
                    """
 
