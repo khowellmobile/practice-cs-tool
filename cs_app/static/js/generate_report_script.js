@@ -19,7 +19,6 @@ function submitParameters() {
     var formdata = {
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
-        client_name: $("#client_name").val(),
     };
 
     populateTable(formdata);
