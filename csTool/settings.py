@@ -82,7 +82,7 @@ DATABASES = {
     'data': {
         'ENGINE': 'mssql',
         'NAME': 'AdventureWorks2022',
-        'HOST': 'SERVER_NAME\\SQLEXPRESS',
+        'HOST': 'HOWELL-PC8\\SQLEXPRESS',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',

@@ -1,9 +1,5 @@
 // Initialize table and set intial table size
 $(document).ready(function () {
-    populateTable();
-
-    setTableSize();
-
     $("#time_range").on("change", function () {
         alterDates($("#time_range").val());
     });
@@ -18,13 +14,14 @@ $(window).resize(function () {
     setTableSize();
 });
 
-// Submits parameters to view for data query
+// Shows user what the input parameters were
 function submitParameters() {
     var formdata = {
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
-        client_name: $("#client_name").val(),
     };
+
+    populateTable(formdata);
 
     var res = "";
     for (var key in formdata) {
@@ -34,10 +31,61 @@ function submitParameters() {
     $("#report_params").text("Report Parameters: " + res.slice(0, -2));
 }
 
-// Sets table size just a tad smaller than its parent
+// Populates the table through an ajax query
+function populateTable(formdata) {
+    let url = "/load_table/";
+
+    $.ajax({
+        type: "POST",
+        headers: { "X-CSRFToken": csrf_token },
+        url: url,
+        data: formdata,
+        success: function (response) {
+            createTable(formatData(response.data));
+        },
+        error: function (xhr, errmsg, err) {
+            alert("error");
+        },
+    });
+}
+
+// Formats data from json response to datatables.net format
+function formatData(data) {
+    var res = [];
+
+    data.forEach(function (item) {
+        let name = item.department_name;
+        let hours = parseFloat(item.total_hours);
+
+        res.push([name, hours]);
+    });
+
+    return res;
+}
+
+// Creates the table with input data
+function createTable(data) {
+    if ($.fn.DataTable.isDataTable("#example")) {
+        $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
+        $("#example").remove(); // Remove the existing table
+    }
+    $("#reportBlock").append(
+        '<table id="example" class="stripe display"></table>'
+    );
+
+    $("#example").DataTable({
+        // Initialize DataTable
+        columns: [{ title: "Name" }, { title: "Hours" }],
+        data: data,
+    });
+
+    setTableSize();
+}
+
+// Sets table size just a tad smaller than its parent for responsiveness
 function setTableSize() {
-    let parentWidth = $(".reportBlock").width();
-    let parentHeight = $(".reportBlock").height();
+    let parentWidth = $("#reportBlock").width();
+    let parentHeight = $("#reportBlock").height();
 
     let childWidth = parentWidth - parentWidth / 100;
     let childHeight = parentHeight - parentHeight / 10;
@@ -49,6 +97,7 @@ function setTableSize() {
     $("#example").css("width", childWidth + "px");
 }
 
+// Sets date input fields based upon selected select option
 function alterDates(range) {
     var start_date, end_date;
 
@@ -83,46 +132,4 @@ function alterDates(range) {
             console.log("4");
             break;
     }
-}
-
-function populateTable() {
-    const dataSet = [
-        ['Tiger Nixon', 'System Architect', 'Edinburgh', '5421', '2011/04/25', '$320,800'],
-        ['Garrett Winters', 'Accountant', 'Tokyo', '8422', '2011/07/25', '$170,750'],
-        ['Ashton Cox', 'Junior Technical Author', 'San Francisco', '1562', '2009/01/12', '$86,000'],
-        ['Cedric Kelly', 'Senior Javascript Developer', 'Edinburgh', '6224', '2012/03/29', '$433,060'],
-        ['Airi Satou', 'Accountant', 'Tokyo', '5407', '2008/11/28', '$162,700'],
-        ['Tiger Nixon', 'System Architect', 'Edinburgh', '5421', '2011/04/25', '$320,800'],
-        ['Garrett Winters', 'Accountant', 'Tokyo', '8422', '2011/07/25', '$170,750'],
-        ['Ashton Cox', 'Junior Technical Author', 'San Francisco', '1562', '2009/01/12', '$86,000'],
-        ['Cedric Kelly', 'Senior Javascript Developer', 'Edinburgh', '6224', '2012/03/29', '$433,060'],
-        ['Airi Satou', 'Accountant', 'Tokyo', '5407', '2008/11/28', '$162,700'],
-        ['Tiger Nixon', 'System Architect', 'Edinburgh', '5421', '2011/04/25', '$320,800'],
-        ['Garrett Winters', 'Accountant', 'Tokyo', '8422', '2011/07/25', '$170,750'],
-        ['Ashton Cox', 'Junior Technical Author', 'San Francisco', '1562', '2009/01/12', '$86,000'],
-        ['Cedric Kelly', 'Senior Javascript Developer', 'Edinburgh', '6224', '2012/03/29', '$433,060'],
-        ['Airi Satou', 'Accountant', 'Tokyo', '5407', '2008/11/28', '$162,700'],
-        ['Tiger Nixon', 'System Architect', 'Edinburgh', '5421', '2011/04/25', '$320,800'],
-        ['Garrett Winters', 'Accountant', 'Tokyo', '8422', '2011/07/25', '$170,750'],
-        ['Ashton Cox', 'Junior Technical Author', 'San Francisco', '1562', '2009/01/12', '$86,000'],
-        ['Cedric Kelly', 'Senior Javascript Developer', 'Edinburgh', '6224', '2012/03/29', '$433,060'],
-        ['Airi Satou', 'Accountant', 'Tokyo', '5407', '2008/11/28', '$162,700'],
-        ['Tiger Nixon', 'System Architect', 'Edinburgh', '5421', '2011/04/25', '$320,800'],
-        ['Garrett Winters', 'Accountant', 'Tokyo', '8422', '2011/07/25', '$170,750'],
-        ['Ashton Cox', 'Junior Technical Author', 'San Francisco', '1562', '2009/01/12', '$86,000'],
-        ['Cedric Kelly', 'Senior Javascript Developer', 'Edinburgh', '6224', '2012/03/29', '$433,060'],
-        ['Airi Satou', 'Accountant', 'Tokyo', '5407', '2008/11/28', '$162,700'],
-    ];
-     
-    new DataTable('#example', {
-        columns: [
-            { title: 'Name' },
-            { title: 'Position' },
-            { title: 'Office' },
-            { title: 'Extn.' },
-            { title: 'Start date' },
-            { title: 'Salary' }
-        ],
-        data: dataSet
-    });
 }

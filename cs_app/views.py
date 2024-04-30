@@ -187,20 +187,43 @@ def update_password_view(request):
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
-def listEmployees_view(request):
-    conn = connections["data"]
+@login_required
+def load_table_view(request):
+    if request.method == "POST":
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
 
-    cursor = conn.cursor()
+        conn = connections["data"]
 
-    query = """SELECT Department.Name, Count(Department.Name) * 8.0 AS 'TotalHours'
-            FROM HumanResources.EmployeeDepartmentHistory
-            JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
-            JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
-            WHERE StartDate BETWEEN '2008-01-01' and '2008-12-31'
-            GROUP BY Department.Name"""
+        cursor = conn.cursor()
 
-    cursor.execute(query)
+        where_clause = ""
 
-    rows = cursor.fetchall()
+        if start_date and end_date:
+            where_clause = f"WHERE StartDate BETWEEN '{start_date}' AND '{end_date}'"
 
-    return render(request, "employee_list.html", {"employees": rows})
+        query = f"""SELECT Department.Name, COUNT(Department.Name) * 8.0 AS 'TotalHours'
+                   FROM HumanResources.EmployeeDepartmentHistory
+                   JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
+                   JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
+                   {where_clause}
+                   GROUP BY Department.Name;
+                   """
+
+        cursor.execute(query)
+
+        rows = cursor.fetchall()
+
+        # Prepare data for JsonResponse
+        data = []
+        for row in rows:
+            department_name, total_hours = row
+            data.append(
+                {"department_name": department_name, "total_hours": total_hours}
+            )
+
+        # Return JsonResponse with data
+        return JsonResponse({"data": data})
+
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=400)
