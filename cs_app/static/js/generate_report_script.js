@@ -1,7 +1,5 @@
 // Initialize table and set intial table size
 $(document).ready(function () {
-    setTableSize();
-
     $("#time_range").on("change", function () {
         alterDates($("#time_range").val());
     });
@@ -68,10 +66,21 @@ function formatData(data) {
 
 // Creates the table with input data
 function createTable(data) {
-    new DataTable("#example", {
+    if ($.fn.DataTable.isDataTable("#example")) {
+        $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
+        $("#example").remove(); // Remove the existing table
+    }
+    $(".reportBlock").append(
+        '<table id="example" class="stripe display"></table>'
+    );
+
+    $("#example").DataTable({
+        // Initialize DataTable
         columns: [{ title: "Name" }, { title: "Hours" }],
         data: data,
     });
+
+    setTableSize();
 }
 
 // Sets table size just a tad smaller than its parent for responsiveness
