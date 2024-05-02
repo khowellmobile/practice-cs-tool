@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 
 from django.db import connections
 
+from .models import PastParameter
+
 
 def main_view(request):
     template = loader.get_template("index.html")
@@ -221,6 +223,29 @@ def load_table_view(request):
             data.append(
                 {"department_name": department_name, "total_hours": total_hours}
             )
+
+        # Return JsonResponse with data
+        return JsonResponse({"data": data})
+
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+@login_required
+def load_history_table_view(request):
+    if request.method == "POST":
+
+        pastParameters = PastParameter.objects.all()
+
+        # Prepare data for JsonResponse
+        data = []
+
+        for parameter in pastParameters:
+            data.append({
+                'text_field': parameter.text_field,
+                'date_field': parameter.date_field,
+                'paramters_json' : parameter.parameters_json
+            })
 
         # Return JsonResponse with data
         return JsonResponse({"data": data})
