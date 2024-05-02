@@ -70,7 +70,7 @@ function formatData(data) {
     return res;
 }
 
-// Creates the table with input data
+// Intializes the table with input data
 function initalizeTable(data) {
     if ($.fn.DataTable.isDataTable("#example")) {
         $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
