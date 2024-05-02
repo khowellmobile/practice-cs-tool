@@ -1,7 +1,9 @@
+// Toggles display of field change form
 function toggleForm(fieldName) {
     $("#update_" + fieldName).toggle();
 }
 
+// Detects user change and submits to view for saving
 function submitForm(fieldName) {
     $("#update_" + fieldName).hide();
 
@@ -29,13 +31,13 @@ function submitForm(fieldName) {
         url: url,
         data: formdata,
         success: function (response) {
-            console.log(response);
-            ajaxResponse(fieldName, formdata);
+            ajaxResponseSuccess(fieldName, formdata);
         },
         error: function (xhr, errmsg, err) {},
     });
 }
 
+// Shows new fieldInformation. Called on successful ajax call
 function ajaxResponse(fieldName, formdata) {
     if (fieldName == "name") {
         $(`#${fieldName}_text`).text(
