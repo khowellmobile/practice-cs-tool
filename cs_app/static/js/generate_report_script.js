@@ -16,7 +16,7 @@ function generateTable() {
         end_date: $("#end_date").val(),
     };
 
-    getData(formdata);
+    createTable(formdata);
 
     displayParameters(formdata);
 }
@@ -37,7 +37,7 @@ function displayParameters(formdata) {
 }
 
 // Populates the table through an ajax query
-function getData(formdata) {
+function createTable(formdata) {
     let url = "/load_table/";
 
     var res = "";
@@ -48,7 +48,7 @@ function getData(formdata) {
         url: url,
         data: formdata,
         success: function (response) {
-            createTable(formatData(response.data));
+            initalizeTable(formatData(response.data));
         },
         error: function (xhr, errmsg, err) {
             alert("error");
@@ -71,7 +71,7 @@ function formatData(data) {
 }
 
 // Creates the table with input data
-function createTable(data) {
+function initalizeTable(data) {
     if ($.fn.DataTable.isDataTable("#example")) {
         $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
         $("#example").remove(); // Remove the existing table
