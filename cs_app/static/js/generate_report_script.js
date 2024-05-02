@@ -9,20 +9,25 @@ $(document).ready(function () {
     });
 });
 
+// Function to organize table generation function calls
+function generateTable() {
+    var formdata = {
+        start_date: $("#start_date").val(),
+        end_date: $("#end_date").val(),
+    };
+
+    getData(formdata);
+
+    displayParameters(formdata);
+}
+
 // Resize table when the window resizes
 $(window).resize(function () {
     setTableSize();
 });
 
 // Shows user what the input parameters were
-function submitParameters() {
-    var formdata = {
-        start_date: $("#start_date").val(),
-        end_date: $("#end_date").val(),
-    };
-
-    populateTable(formdata);
-
+function displayParameters(formdata) {
     var res = "";
     for (var key in formdata) {
         res += `${formdata[key]}, `;
@@ -32,8 +37,10 @@ function submitParameters() {
 }
 
 // Populates the table through an ajax query
-function populateTable(formdata) {
+function getData(formdata) {
     let url = "/load_table/";
+
+    var res = "";
 
     $.ajax({
         type: "POST",
@@ -69,6 +76,7 @@ function createTable(data) {
         $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
         $("#example").remove(); // Remove the existing table
     }
+
     $("#reportBlock").append(
         '<table id="example" class="stripe display"></table>'
     );
