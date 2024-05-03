@@ -34,102 +34,42 @@
         <div class="container-1">
             <div class="param-card">
                 <h1>Input Report Parameters</h1>
-                <div class="formDiv">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="dateDiv">
-                            <label for="start_date">Start Date:</label>
-                            <input
-                                type="date"
-                                id="start_date"
-                                name="start_date"
-                                required
-                            />
+                <form method="post" id="formDiv">
+                    {% csrf_token %}
+                    <div id="dateDiv">
+                        <input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            required
+                        />
 
-                            <label for="end_date">End Date:</label>
-                            <input
-                                type="date"
-                                id="end_date"
-                                name="end_date"
-                                required
-                            /><br /><br />
+                        <p>to</p>
+                        <input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            required
+                        />
+                    </div>
 
-                            <label for="time_range">Time Range:</label>
-                            <select id="time_range" name="time_range">
-                                <option value="ytd">YTD</option>
-                                <option value="last_year">Last Year</option>
-                                <option value="all_time">All Time</option>
-                                <option value="custom" selected>Custom</option>
-                            </select>
-                        </div>
-                        <br /><br />
-                    </form>
+                    <div id="rangeDiv">
+                        <select id="time_range" name="time_range">
+                            <option value="ytd">YTD</option>
+                            <option value="last_year">Last Year</option>
+                            <option value="all_time">All Time</option>
+                            <option value="custom" selected>Custom</option>
+                        </select>
+                    </div>
+
                     <button class="button-3" onclick="generateTable()">
                         Generate Report
                     </button>
-                </div>
-                <div id="historyBlock">
-                    <table id="historyTable">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                            </tr>
-                            <tr>
-                                <td>Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>New York</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                            <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                            </tr>
-                            <tr>
-                                <td>Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>New York</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                </form>
+                <div id="historyBlock" class="">
+                    {% for _ in 'x'|rjust:16 %}
+                    <div class="historyCard"></div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="report-card">

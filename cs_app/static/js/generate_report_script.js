@@ -8,7 +8,6 @@ $(document).ready(function () {
         $("#time_range").val("custom");
     });
 
-    generateHistoryTable();
 });
 
 // Function to organize table generation function calls
