@@ -16,6 +16,7 @@ $(document).ready(function () {
 // Function to organize table generation function calls
 function generateTable() {
     var formdata = {
+        time_range: $("#time_range").val(),
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
     };

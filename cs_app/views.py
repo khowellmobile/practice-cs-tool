@@ -199,10 +199,10 @@ def load_table_view(request):
         start_date = request.POST.get("start_date")
         end_date = request.POST.get("end_date")
         current_date = datetime.now().date()
-        username = request.user.first_name
+        time_range = request.POST.get("time_range")
 
         PastParameter.objects.create(
-            text_field=username,
+            text_field=time_range,
             date_field=current_date,
             parameters_json={
                 "start_date": start_date,
