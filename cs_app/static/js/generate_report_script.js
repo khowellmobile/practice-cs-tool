@@ -8,6 +8,9 @@ $(document).ready(function () {
         $("#time_range").val("custom");
     });
 
+    $("#formDiv").submit(function (event) {
+        event.preventDefault();
+    });
 });
 
 // Function to organize table generation function calls
@@ -40,8 +43,6 @@ function displayParameters(formdata) {
 // Populates the table through an ajax query
 function createTable(formdata) {
     let url = "/load_table/";
-
-    var res = "";
 
     $.ajax({
         type: "POST",

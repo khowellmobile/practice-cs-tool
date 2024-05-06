@@ -34,7 +34,7 @@
         <div class="container-1">
             <div class="param-card">
                 <h1>Input Report Parameters</h1>
-                <form method="post" id="formDiv">
+                <div id="formDiv">
                     {% csrf_token %}
                     <div id="dateDiv">
                         <input
@@ -65,11 +65,14 @@
                     <button class="button-3" onclick="generateTable()">
                         Generate Report
                     </button>
-                </form>
+                </div>
                 <h1 style="margin: 0px;">History</h1>
                 <div id="historyBlock">
-                    {% for _ in 'x'|rjust:16 %}
-                    <div class="historyCard"></div>
+                    {% for param in data %}
+                    <div class="historyCard">
+                        <p>{{ param.date_field }}</p>
+                        <p>{{ param.parameters_json }}</p>
+                    </div>
                     {% endfor %}
                 </div>
             </div>

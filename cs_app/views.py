@@ -11,6 +11,8 @@ from django.db import connections
 
 from .models import PastParameter
 
+from datetime import datetime
+
 
 def main_view(request):
     template = loader.get_template("index.html")
@@ -100,7 +102,7 @@ def home_view(request):
 
 @login_required
 def generate_report_view(request):
-    data = PastParameter.objects.all()
+    data = PastParameter.objects.order_by("date_field")[:16]
     user = request.user
     context = {
         "user": user,
@@ -196,6 +198,17 @@ def load_table_view(request):
     if request.method == "POST":
         start_date = request.POST.get("start_date")
         end_date = request.POST.get("end_date")
+        current_date = datetime.now().date()
+        username = request.user.first_name
+
+        PastParameter.objects.create(
+            text_field=username,
+            date_field=current_date,
+            parameters_json={
+                "start_date": start_date,
+                "end_date": end_date,
+            },
+        )
 
         conn = connections["data"]
 
