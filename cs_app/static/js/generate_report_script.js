@@ -13,6 +13,11 @@ $(document).ready(function () {
     });
 });
 
+// Resize table when the window resizes
+$(window).resize(function () {
+    setTableSize("report");
+});
+
 // Function to organize table generation function calls
 function generateTable() {
     var formdata = {
@@ -25,11 +30,6 @@ function generateTable() {
 
     displayParameters(formdata);
 }
-
-// Resize table when the window resizes
-$(window).resize(function () {
-    setTableSize("report");
-});
 
 // Shows user what the input parameters were
 function displayParameters(formdata) {

@@ -66,12 +66,17 @@
                         Generate Report
                     </button>
                 </div>
-                <h1 style="margin: 0px;">History</h1>
+                <h1 style="margin: 0px">History</h1>
                 <div id="historyBlock">
                     {% for param in data %}
-                    <div class="historyCard">
+                    <div class="historyCard" id="hcard-{{ forloop.counter }}">
                         <p>{{ param.date_field }}</p>
                         <p>{{ param.text_field }}</p>
+                        <input
+                            type="'hidden"
+                            id="parameters"
+                            value="{{param.parameters_json}}"
+                        />
                     </div>
                     {% endfor %}
                 </div>
