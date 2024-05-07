@@ -3,10 +3,93 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'css/common_style.css' %}">
+        <!-- Imports for datatables.net -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css"
+        />
+        <script
+            type="text/javascript"
+            charset="utf8"
+            src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"
+        ></script>
+
+        <!-- Project Imports -->
+        <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/generate_report_style.css' %}"
+        />
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/generate_report_script.js' %}"></script>
+
+        <script>
+            // Easier to get csrf token from template
+            var csrf_token = "{{ csrf_token }}";
+        </script>
     </head>
     <body>
-        <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
-        <h1>Generate Report</h1>
+        <div class="container-1">
+            <div class="param-card">
+                <h1>Input Report Parameters</h1>
+                <div id="formDiv">
+                    {% csrf_token %}
+                    <div id="dateDiv">
+                        <input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            required
+                        />
+
+                        <p>to</p>
+                        <input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            required
+                        />
+                    </div>
+
+                    <div id="rangeDiv">
+                        <select id="time_range" name="time_range">
+                            <option value="ytd">YTD</option>
+                            <option value="last_year">Last Year</option>
+                            <option value="all_time">All Time</option>
+                            <option value="custom" selected>Custom</option>
+                        </select>
+                    </div>
+
+                    <button class="button-3" onclick="generateTable()">
+                        Generate Report
+                    </button>
+                </div>
+                <h1 style="margin: 0px">History</h1>
+                <div id="historyBlock">
+                    {% for param in data %}
+                    <div
+                        class="historyCard"
+                        id="hcard-{{ forloop.counter }}"
+                        onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')"
+                    >
+                        <p>{{ param.date_field }}</p>
+                        <p>{{ param.text_field }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="report-card">
+                <div class="report-card-header">
+                    <h1 class="">Report Goes Here</h1>
+                    <button class="button-3" onclick="redirectTo('/home/')">
+                        Back to home
+                    </button>
+                </div>
+                <div id="reportBlock"></div>
+                <p id="report_params">Report Parameters: None Input</p>
+            </div>
+        </div>
     </body>
 </html>
