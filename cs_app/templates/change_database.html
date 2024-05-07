@@ -4,9 +4,23 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/change_database_style.css' %}"
+        />
     </head>
     <body>
         <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
-        <h1>Change Database</h1>
+        <div class="container-1 outline">
+            <div id="contentDiv" class="card outline">
+                <div id="headerDiv">
+                    <h1>Change Database</h1>
+                </div>
+                <div id="lowerDiv">
+                    <div id="formDiv" class="outline"></div>
+                    <div id="statusDiv" class="outline"></div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

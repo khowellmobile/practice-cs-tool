@@ -1,0 +1,23 @@
+#contentDiv {
+    width: 70%;
+    height: 70%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#lowerDiv {
+    width: 100%;
+    height: 90%;
+    display: flex;
+}
+
+#formDiv {
+    width: 50%;
+    height: 100%;
+}
+
+#statusDiv {
+    width: 50%;
+    height: 100%;
+}
