@@ -3,42 +3,68 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'css/common_style.css' %}">
-        <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
-        <script>
-            function redirectTo(url) {
-                window.location.href = url;
-            }
-        </script>
+        <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/home_style.css' %}" />
+        <script src="{% static 'js/common_script.js' %}"></script>
     </head>
     <body>
         <div class="container-1">
-            <button class="button-3"
-                onclick="redirectTo('/logout/')">Logout</button>
+            <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
+            <button class="button-3" onclick="redirectTo('/logout/')">
+                Logout
+            </button>
             <div class="cardContainer">
                 <div class="card" onclick="redirectTo('/generate_report/')">
-                    <h2>Generate Report</h2>
-                    <img src="{% static 'images/report_icon.png' %}"
-                        alt="Generate Report Image" width="150"
-                        height="150">
+                    <div class="cardHeader">
+                        <h2>Generate Report</h2>
+                    </div>
+                    <div class="cardIcon">
+                        <img
+                            src="{% static 'images/report_icon.png' %}"
+                            alt="Generate Report Image"
+                            width="150"
+                            height="150"
+                        />
+                    </div>
                 </div>
                 <div class="card" onclick="redirectTo('/directions/')">
-                    <h2>How to Use</h2>
-                    <img src="{% static 'images/question_icon.png' %}"
-                        alt="Generate Report Image" width="150"
-                        height="150">
+                    <div class="cardHeader">
+                        <h2>How to Use</h2>
+                    </div>
+                    <div class="cardIcon">
+                        <img
+                            src="{% static 'images/question_icon.png' %}"
+                            alt="Generate Report Image"
+                            width="150"
+                            height="150"
+                        />
+                    </div>
                 </div>
                 <div class="card" onclick="redirectTo('/change_account/')">
-                    <h2>Account Information</h2>
-                    <img src="{% static 'images/account_icon.png' %}"
-                        alt="Generate Report Image" width="150"
-                        height="150">
+                    <div class="cardHeader">
+                        <h2>Account Information</h2>
+                    </div>
+                    <div class="cardIcon">
+                        <img
+                            src="{% static 'images/account_icon.png' %}"
+                            alt="Generate Report Image"
+                            width="150"
+                            height="150"
+                        />
+                    </div>
                 </div>
                 <div class="card" onclick="redirectTo('/change_database/')">
-                    <h2>Change Database</h2>
-                    <img src="{% static 'images/database_icon.png' %}"
-                        alt="Generate Report Image" width="150"
-                        height="150">
+                    <div class="cardHeader">
+                        <h2>Change Database</h2>
+                    </div>
+                    <div class="cardIcon">
+                        <img
+                            src="{% static 'images/database_icon.png' %}"
+                            alt="Generate Report Image"
+                            width="150"
+                            height="150"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

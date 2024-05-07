@@ -7,6 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
+from django.db import connections
+
+from .models import PastParameter
+
+from datetime import datetime
+
 
 def main_view(request):
     template = loader.get_template("index.html")
@@ -86,26 +92,44 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
-    template = loader.get_template("home.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "home.html", context)
 
 
 @login_required
 def generate_report_view(request):
-    template = loader.get_template("generate_report.html")
-    return HttpResponse(template.render())
+    data = PastParameter.objects.order_by("-date_field")[:16]
+    user = request.user
+    context = {
+        "user": user,
+        "data": data,
+    }
+
+    return render(request, "generate_report.html", context)
 
 
 @login_required
 def directions_view(request):
-    template = loader.get_template("directions.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "directions.html", context)
 
 
 @login_required
 def change_database_view(request):
-    template = loader.get_template("change_database.html")
-    return HttpResponse(template.render())
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "change_database.html", context)
 
 
 @login_required
@@ -167,3 +191,62 @@ def update_password_view(request):
         return JsonResponse({"message": "Data received successfully"})
 
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+@login_required
+def load_table_view(request):
+    if request.method == "POST":
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        current_date = datetime.now().date()
+        time_range = request.POST.get("time_range")
+
+        PastParameter.objects.create(
+            text_field=time_range,
+            date_field=current_date,
+            parameters_json={
+                "start_date": start_date,
+                "end_date": end_date,
+            },
+        )
+
+        excess_record_count = PastParameter.objects.count() - 16
+        if excess_record_count > 0:
+            excess_records = PastParameter.objects.order_by('date_field')[:excess_record_count]
+            excess_record_ids = excess_records.values_list('id', flat=True)
+            PastParameter.objects.filter(id__in=excess_record_ids).delete()
+
+        conn = connections["data"]
+
+        cursor = conn.cursor()
+
+        where_clause = ""
+
+        if start_date and end_date:
+            where_clause = f"WHERE StartDate BETWEEN '{start_date}' AND '{end_date}'"
+
+        query = f"""SELECT Department.Name, COUNT(Department.Name) * 8.0 AS 'TotalHours'
+                   FROM HumanResources.EmployeeDepartmentHistory
+                   JOIN HumanResources.Department ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
+                   JOIN HumanResources.Shift ON EmployeeDepartmentHistory.ShiftID = Shift.ShiftID
+                   {where_clause}
+                   GROUP BY Department.Name;
+                   """
+
+        cursor.execute(query)
+
+        rows = cursor.fetchall()
+
+        # Prepare data for JsonResponse
+        data = []
+        for row in rows:
+            department_name, total_hours = row
+            data.append(
+                {"department_name": department_name, "total_hours": total_hours}
+            )
+
+        # Return JsonResponse with data
+        return JsonResponse({"data": data})
+
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=400)
