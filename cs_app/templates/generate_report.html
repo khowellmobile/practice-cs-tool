@@ -34,41 +34,51 @@
         <div class="container-1">
             <div class="param-card">
                 <h1>Input Report Parameters</h1>
-                <div class="formDiv">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="dateDiv">
-                            <label for="start_date">Start Date:</label>
-                            <input
-                                type="date"
-                                id="start_date"
-                                name="start_date"
-                                required
-                            />
+                <div id="formDiv">
+                    {% csrf_token %}
+                    <div id="dateDiv">
+                        <input
+                            type="date"
+                            id="start_date"
+                            name="start_date"
+                            required
+                        />
 
-                            <label for="end_date">End Date:</label>
-                            <input
-                                type="date"
-                                id="end_date"
-                                name="end_date"
-                                required
-                            /><br /><br />
+                        <p>to</p>
+                        <input
+                            type="date"
+                            id="end_date"
+                            name="end_date"
+                            required
+                        />
+                    </div>
 
-                            <label for="time_range">Time Range:</label>
-                            <select id="time_range" name="time_range">
-                                <option value="ytd">YTD</option>
-                                <option value="last_year">Last Year</option>
-                                <option value="all_time">All Time</option>
-                                <option value="custom" selected>Custom</option>
-                            </select>
-                        </div>
-                        <br /><br />
-                    </form>
+                    <div id="rangeDiv">
+                        <select id="time_range" name="time_range">
+                            <option value="ytd">YTD</option>
+                            <option value="last_year">Last Year</option>
+                            <option value="all_time">All Time</option>
+                            <option value="custom" selected>Custom</option>
+                        </select>
+                    </div>
+
                     <button class="button-3" onclick="generateTable()">
                         Generate Report
                     </button>
                 </div>
-                <div class="historyCard"></div>
+                <h1 style="margin: 0px">History</h1>
+                <div id="historyBlock">
+                    {% for param in data %}
+                    <div
+                        class="historyCard"
+                        id="hcard-{{ forloop.counter }}"
+                        onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')"
+                    >
+                        <p>{{ param.date_field }}</p>
+                        <p>{{ param.text_field }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="report-card">
                 <div class="report-card-header">
@@ -77,7 +87,7 @@
                         Back to home
                     </button>
                 </div>
-                <div id ="reportBlock"></div>
+                <div id="reportBlock"></div>
                 <p id="report_params">Report Parameters: None Input</p>
             </div>
         </div>

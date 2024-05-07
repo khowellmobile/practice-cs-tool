@@ -7,11 +7,21 @@ $(document).ready(function () {
     $("#start_date, #end_date").on("change", function () {
         $("#time_range").val("custom");
     });
+
+    $("#formDiv").submit(function (event) {
+        event.preventDefault();
+    });
+});
+
+// Resize table when the window resizes
+$(window).resize(function () {
+    setTableSize("report");
 });
 
 // Function to organize table generation function calls
 function generateTable() {
     var formdata = {
+        time_range: $("#time_range").val(),
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
     };
@@ -20,11 +30,6 @@ function generateTable() {
 
     displayParameters(formdata);
 }
-
-// Resize table when the window resizes
-$(window).resize(function () {
-    setTableSize();
-});
 
 // Shows user what the input parameters were
 function displayParameters(formdata) {
@@ -39,8 +44,6 @@ function displayParameters(formdata) {
 // Populates the table through an ajax query
 function createTable(formdata) {
     let url = "/load_table/";
-
-    var res = "";
 
     $.ajax({
         type: "POST",
@@ -72,37 +75,34 @@ function formatData(data) {
 
 // Intializes the table with input data
 function initalizeTable(data) {
-    if ($.fn.DataTable.isDataTable("#example")) {
-        $("#example").DataTable().destroy(); // Destroy the existing DataTable instance
-        $("#example").remove(); // Remove the existing table
+    if ($.fn.DataTable.isDataTable("#reportTable")) {
+        $("#reportTable").DataTable().destroy(); // Destroy the existing DataTable instance
+        $("#reportTable").remove(); // Remove the existing table
     }
 
     $("#reportBlock").append(
-        '<table id="example" class="stripe display"></table>'
+        '<table id="reportTable" class="stripe display"></table>'
     );
 
-    $("#example").DataTable({
+    $("#reportTable").DataTable({
         // Initialize DataTable
         columns: [{ title: "Name" }, { title: "Hours" }],
         data: data,
     });
 
-    setTableSize();
+    setTableSize("report");
 }
 
 // Sets table size just a tad smaller than its parent for responsiveness
-function setTableSize() {
-    let parentWidth = $("#reportBlock").width();
-    let parentHeight = $("#reportBlock").height();
+function setTableSize(tableType) {
+    let parentWidth = $("#" + tableType + "Block").width();
+    let parentHeight = $("#" + tableType + "Block").height();
 
     let childWidth = parentWidth - parentWidth / 100;
     let childHeight = parentHeight - parentHeight / 10;
 
-    console.log(parentHeight + " " + childHeight);
-    console.log(parentWidth + " " + childWidth);
-
-    $("#example").css("height", childHeight + "px");
-    $("#example").css("width", childWidth + "px");
+    $("#" + tableType + "Table").css("height", childHeight + "px");
+    $("#" + tableType + "Table").css("width", childWidth + "px");
 }
 
 // Sets date input fields based upon selected select option
@@ -140,4 +140,19 @@ function alterDates(range) {
             console.log("4");
             break;
     }
+}
+
+// Creates a table form report history
+function createReportFromHistory(time_range, parameters_json) {
+    let paramsJson = JSON.parse(parameters_json.replace(/'/g, '"'));
+
+    formdata = {
+        time_range: time_range,
+        start_date: paramsJson.start_date,
+        end_date: paramsJson.end_date,
+    };
+
+    createTable(formdata);
+
+    displayParameters(formdata);
 }
