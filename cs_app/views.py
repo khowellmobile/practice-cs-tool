@@ -212,10 +212,9 @@ def load_table_view(request):
 
         excess_record_count = PastParameter.objects.count() - 16
         if excess_record_count > 0:
-            excess_records = PastParameter.objects.order_by("-date_field")[
-                :excess_record_count
-            ]
-            excess_records.delete()
+            excess_records = PastParameter.objects.order_by('date_field')[:excess_record_count]
+            excess_record_ids = excess_records.values_list('id', flat=True)
+            PastParameter.objects.filter(id__in=excess_record_ids).delete()
 
         conn = connections["data"]
 
