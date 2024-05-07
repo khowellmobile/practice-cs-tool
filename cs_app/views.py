@@ -102,7 +102,7 @@ def home_view(request):
 
 @login_required
 def generate_report_view(request):
-    data = PastParameter.objects.order_by("date_field")[:16]
+    data = PastParameter.objects.order_by("-date_field")[:16]
     user = request.user
     context = {
         "user": user,

@@ -69,14 +69,13 @@
                 <h1 style="margin: 0px">History</h1>
                 <div id="historyBlock">
                     {% for param in data %}
-                    <div class="historyCard" id="hcard-{{ forloop.counter }}">
+                    <div
+                        class="historyCard"
+                        id="hcard-{{ forloop.counter }}"
+                        onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')"
+                    >
                         <p>{{ param.date_field }}</p>
                         <p>{{ param.text_field }}</p>
-                        <input
-                            type="'hidden"
-                            id="parameters"
-                            value="{{param.parameters_json}}"
-                        />
                     </div>
                     {% endfor %}
                 </div>

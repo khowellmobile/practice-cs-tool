@@ -141,3 +141,18 @@ function alterDates(range) {
             break;
     }
 }
+
+// Creates a table form report history
+function createReportFromHistory(time_range, parameters_json) {
+    let paramsJson = JSON.parse(parameters_json.replace(/'/g, '"'));
+
+    formdata = {
+        time_range: time_range,
+        start_date: paramsJson.start_date,
+        end_date: paramsJson.end_date,
+    };
+
+    createTable(formdata);
+
+    displayParameters(formdata);
+}
