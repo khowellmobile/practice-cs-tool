@@ -8,6 +8,11 @@
             rel="stylesheet"
             href="{% static 'css/change_database_style.css' %}"
         />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/change_database_script.js' %}"></script>
     </head>
     <body>
         <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
@@ -18,7 +23,10 @@
                 </div>
                 <div id="lowerDiv" class="">
                     <div id="formDiv" class="card">
-                        <label for="input_engine" class="form_label">Database Engine</label>
+                        <h2 class="formHeader">Form:</h2>
+                        <label for="input_engine" class="form_label"
+                            >Database Engine</label
+                        >
                         <input
                             type="text"
                             class="form_input"
@@ -26,8 +34,10 @@
                             placeholder="Database Engine"
                             required=""
                         />
-                        <br>
-                        <label for="input_name" class="form_label">Database Name</label>
+                        <br />
+                        <label for="input_name" class="form_label"
+                            >Database Name</label
+                        >
                         <input
                             type="text"
                             class="form_input"
@@ -35,15 +45,52 @@
                             placeholder="Database Name"
                             required=""
                         />
-                        <br>
-                        <label for="input_host" class="form_label">Database Host</label>
+                        <br />
+                        <label for="input_host" class="form_label"
+                            >Database Host</label
+                        >
                         <input
                             type="text"
                             class="form_input"
                             id="input_host"
                             placeholder="Database Host"
                             required=""
-                        />                        
+                        />
+
+                        <h2 class="formHeader">Options:</h2>
+
+                        <label for="input_driver" class="form_label"
+                            >Database Driver</label
+                        >
+                        <input
+                            type="text"
+                            class="form_input"
+                            id="input_driver"
+                            placeholder="Database Driver"
+                            required=""
+                        />
+                        <br />
+                        <label for="input_user" class="form_label"
+                            >Username</label
+                        >
+                        <input
+                            type="text"
+                            class="form_input"
+                            id="input_user"
+                            placeholder="Username"
+                            required=""
+                        />
+                        <br />
+                        <label for="input_password" class="form_label"
+                            >Password</label
+                        >
+                        <input
+                            type="text"
+                            class="form_input"
+                            id="input_password"
+                            placeholder="Password"
+                            required=""
+                        />
                     </div>
                     <div id="statusDiv" class="card"></div>
                 </div>
