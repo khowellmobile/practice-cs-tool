@@ -11,14 +11,41 @@
     </head>
     <body>
         <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
-        <div class="container-1 outline">
-            <div id="contentDiv" class="card outline">
-                <div id="headerDiv">
+        <div class="container-1">
+            <div id="contentDiv" class="">
+                <div id="headerDiv" class="card">
                     <h1>Change Database</h1>
                 </div>
-                <div id="lowerDiv">
-                    <div id="formDiv" class="outline"></div>
-                    <div id="statusDiv" class="outline"></div>
+                <div id="lowerDiv" class="">
+                    <div id="formDiv" class="card">
+                        <label for="input_engine" class="form_label">Database Engine</label>
+                        <input
+                            type="text"
+                            class="form_input"
+                            id="input_engine"
+                            placeholder="Database Engine"
+                            required=""
+                        />
+                        <br>
+                        <label for="input_name" class="form_label">Database Name</label>
+                        <input
+                            type="text"
+                            class="form_input"
+                            id="input_name"
+                            placeholder="Database Name"
+                            required=""
+                        />
+                        <br>
+                        <label for="input_host" class="form_label">Database Host</label>
+                        <input
+                            type="text"
+                            class="form_input"
+                            id="input_host"
+                            placeholder="Database Host"
+                            required=""
+                        />                        
+                    </div>
+                    <div id="statusDiv" class="card"></div>
                 </div>
             </div>
         </div>
