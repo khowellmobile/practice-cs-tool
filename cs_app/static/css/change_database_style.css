@@ -77,3 +77,8 @@
     height: 95%;
     margin: 0px 10px 10px 5px;
 }
+
+p {
+    font-size: .9rem;
+    margin: 2rem 0px 0px 1.2rem;
+}
