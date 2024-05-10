@@ -17,6 +17,13 @@
     <body>
         <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
         <div class="container-1">
+            <button
+                id="logoutButton"
+                class="button-3"
+                onclick="redirectTo('/logout/')"
+            >
+                Logout
+            </button>
             <div id="contentDiv" class="">
                 <div id="headerDiv" class="card">
                     <h1>Change Database</h1>
@@ -85,7 +92,7 @@
                             >Password</label
                         >
                         <input
-                            type="text"
+                            type="password"
                             class="form_input"
                             id="input_password"
                             placeholder="Password"
@@ -94,7 +101,12 @@
                         <p>Note: Leaving the Username and Password Blank will use Windows Authentication instead</p>
                     </div>
                     <div id="statusDiv" class="card">
-                        <button class="button-3">Connect Database</button>
+                        <div id="butDiv" class="outline">
+                            <button class="button-3">Connect Database</button>
+                        </div>
+                        <div id="status" class="outline">
+                            <div class="spinner"></div>
+                        </div>
                     </div>
                 </div>
             </div>

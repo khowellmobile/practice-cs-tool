@@ -136,3 +136,10 @@ a {
     left: 20px;
     top: 5px;
 }
+
+#logoutButton {
+    width: 100px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
