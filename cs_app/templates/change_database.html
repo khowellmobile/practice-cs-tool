@@ -98,14 +98,36 @@
                             placeholder="Password"
                             required=""
                         />
-                        <p>Note: Leaving the Username and Password Blank will use Windows Authentication instead</p>
+                        <p id="note">
+                            Note: Leaving the Username and Password Blank will
+                            use Windows Authentication instead
+                        </p>
                     </div>
                     <div id="statusDiv" class="card">
-                        <div id="butDiv" class="outline">
+                        <div id="butDiv" class="">
                             <button class="button-3">Connect Database</button>
                         </div>
-                        <div id="status" class="outline">
-                            <div class="spinner"></div>
+                        <div id="status" class="">
+                            <div id="currentDBInfo" class="outline">
+                                <h2>Currently Connected To:</h2>
+                                <h3 class="">Database Engine:</h3>
+                                <p>MSSQL</p>
+                                <br>
+                                <h3 class="">Database Name:</h3>
+                                <p>AventureWorks2022</p>
+                                <br>
+                                <h3>Database Host:</h3>
+                                <p>HOWELL-PC8//SQLEXPRESS</p>
+                                <br>
+                                <h3>Database Driver:</h3>
+                                <p>
+                                    Some long driver name that is really
+                                    anoyying
+                                </p>
+                            </div>
+                            <div id="log" class="outline">
+                                <h2>Error Message:</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
