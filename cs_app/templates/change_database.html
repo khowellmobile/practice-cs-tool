@@ -24,94 +24,94 @@
             >
                 Logout
             </button>
-            <div id="contentDiv" class="">
-                <div id="headerDiv" class="card">
+            <div id="content" class="">
+                <div id="content__upper" class="card">
                     <h1>Change Database</h1>
                     <button class="button-3" onclick="redirectTo('/home/')">
                         Back to home
                     </button>
                 </div>
-                <div id="lowerDiv" class="">
-                    <div id="formDiv" class="card">
-                        <h2 class="formHeader">Form:</h2>
-                        <label for="input_engine" class="form_label"
+                <div id="content__lower" class="">
+                    <div id="form" class="card">
+                        <h2>Form:</h2>
+                        <label for="input_engine" class="form__label"
                             >Database Engine</label
                         >
                         <input
                             type="text"
-                            class="form_input"
+                            class="form__input"
                             id="input_engine"
                             placeholder="Database Engine"
                             required=""
                         />
                         <br />
-                        <label for="input_name" class="form_label"
+                        <label for="input_name" class="form__label"
                             >Database Name</label
                         >
                         <input
                             type="text"
-                            class="form_input"
+                            class="form__input"
                             id="input_name"
                             placeholder="Database Name"
                             required=""
                         />
                         <br />
-                        <label for="input_host" class="form_label"
+                        <label for="input_host" class="form__label"
                             >Database Host</label
                         >
                         <input
                             type="text"
-                            class="form_input"
+                            class="form__input"
                             id="input_host"
                             placeholder="Database Host"
                             required=""
                         />
 
-                        <h2 class="formHeader">Options:</h2>
+                        <h2>Options:</h2>
 
-                        <label for="input_driver" class="form_label"
+                        <label for="input_driver" class="form__label"
                             >Database Driver</label
                         >
                         <input
                             type="text"
-                            class="form_input"
+                            class="form__input"
                             id="input_driver"
                             placeholder="Database Driver"
                             required=""
                         />
                         <br />
-                        <label for="input_user" class="form_label"
+                        <label for="input_user" class="form__label"
                             >Username</label
                         >
                         <input
                             type="text"
-                            class="form_input"
+                            class="form__input"
                             id="input_user"
                             placeholder="Username"
                             required=""
                         />
                         <br />
-                        <label for="input_password" class="form_label"
+                        <label for="input_password" class="form__label"
                             >Password</label
                         >
                         <input
                             type="password"
-                            class="form_input"
+                            class="form__input"
                             id="input_password"
                             placeholder="Password"
                             required=""
                         />
-                        <p id="note">
+                        <p id="form__note">
                             Note: Leaving the Username and Password Blank will
                             use Windows Authentication instead
                         </p>
                     </div>
-                    <div id="statusDiv" class="card">
-                        <div id="butDiv" class="">
+                    <div id="connection-info" class="card">
+                        <div id="connection-info__button-div" class="">
                             <button class="button-3">Connect Database</button>
                         </div>
-                        <div id="status" class="">
-                            <div id="currentDBInfo" class="">
+                        <div id="connection-info__status" class="">
+                            <div id="connection-info__status__db-info" class="">
                                 <h2>Currently Connected To:</h2>
                                 <h3 class="">Database Engine:</h3>
                                 <p>MSSQL</p>
@@ -128,7 +128,7 @@
                                     anoyying
                                 </p>
                             </div>
-                            <div id="log" class="">
+                            <div id="connection-info__status__log" class="">
                                 <h2>Status / Messages:</h2>
                                 
                             </div>
