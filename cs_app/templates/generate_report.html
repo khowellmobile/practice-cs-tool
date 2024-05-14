@@ -34,9 +34,9 @@
         <div class="container-1">
             <div class="param-card">
                 <h1>Input Report Parameters</h1>
-                <div id="formDiv">
+                <div id="form">
                     {% csrf_token %}
-                    <div id="dateDiv">
+                    <div id="form__date-inputs">
                         <input
                             type="date"
                             id="start_date"
@@ -53,7 +53,7 @@
                         />
                     </div>
 
-                    <div id="rangeDiv">
+                    <div id="form__range-input">
                         <select id="time_range" name="time_range">
                             <option value="ytd">YTD</option>
                             <option value="last_year">Last Year</option>
@@ -67,10 +67,10 @@
                     </button>
                 </div>
                 <h1 style="margin: 0px">History</h1>
-                <div id="historyBlock">
+                <div id="history">
                     {% for param in data %}
                     <div
-                        class="historyCard"
+                        class="history__card"
                         id="hcard-{{ forloop.counter }}"
                         onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')"
                     >
@@ -81,14 +81,14 @@
                 </div>
             </div>
             <div class="report-card">
-                <div class="report-card-header">
+                <div class="report-card__header">
                     <h1 class="">Report Goes Here</h1>
                     <button class="button-3" onclick="redirectTo('/home/')">
                         Back to home
                     </button>
                 </div>
-                <div id="reportBlock"></div>
-                <p id="report_params">Report Parameters: None Input</p>
+                <div id="report"></div>
+                <p id="report-card__parameters">Report Parameters: None Input</p>
             </div>
         </div>
     </body>

@@ -1,37 +1,3 @@
-.report-card {
-    background-color: #cacaca;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    width: 70%;
-    margin: 15px;
-    height: 95%;
-    border-radius: 5px;
-    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
-    padding: 20px 5px 20px 5px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.report-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#reportBlock {
-    width: 100%;
-    height: 100%;
-    align-self: center;
-    background-color: #f1f1f1;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-}
-
 .param-card {
     background-color: #f1f1f1;
     background-size: 100%;
@@ -48,7 +14,7 @@
     flex-direction: column;
 }
 
-#formDiv {
+#form {
     height: 20%;
     width: 100%;
 
@@ -56,7 +22,7 @@
     flex-direction: column;
 }
 
-#dateDiv {
+#form__date-inputs {
     height: 30%;
     width: 100%;
     display: flex;
@@ -64,7 +30,7 @@
     justify-content: space-evenly;
 }
 
-#rangeDiv {
+#form__range-input {
     height: 100%;
     width: 100%;
 
@@ -92,7 +58,7 @@
     border-style:solid;
 }
 
-#historyBlock {
+#history {
     margin-top: 20px;
     height: 50%;
     width: 100%;
@@ -102,7 +68,7 @@
     gap: 10px;
 }
 
-.historyCard {
+.history__card {
     background-color: #97c0e7;
     background-size: 100%;
     border-radius: 5px;
@@ -112,13 +78,47 @@
     width: 100%;
 }
 
-.historyCard:hover,
-.historyCard:focus {
+.history__card:hover,
+.history__card:focus {
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
     color: rgb(0, 0, 0);
 }
 
-.historyCard:hover {
+.history__card:hover {
     transform: translateY(-1px);
+}
+
+.report-card {
+    background-color: #cacaca;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 70%;
+    margin: 15px;
+    height: 95%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
+    padding: 20px 5px 20px 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.report-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#report {
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    background-color: #f1f1f1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }
