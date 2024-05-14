@@ -28,15 +28,15 @@
             >
                 Logout
             </button>
-            <div class="card-2">
-                <div class="row">
+            <div class="card">
+                <div class="card__row">
                     <h2>Your Information</h2>
                     <button class="button-3" onclick="redirectTo('/home/')">
                         Back to home
                     </button>
                 </div>
                 <hr />
-                <div class="row">
+                <div class="card__row">
                     <p id="name_text">
                         Name: {{ user.first_name }} {{user.last_name }}
                     </p>
@@ -63,7 +63,7 @@
                     <button onclick="toggleForm('name')">Change</button>
                 </div>
                 <hr />
-                <div class="row">
+                <div class="card__row">
                     <p id="email_text">Email: {{ user.email }}</p>
                     <form
                         id="update_email"
@@ -79,7 +79,7 @@
                     <button onclick="toggleForm('email')">Change</button>
                 </div>
                 <hr />
-                <div class="row">
+                <div class="card__row">
                     <p id="password_text">
                         Password: The tool does not save raw text passwords.
                     </p>
