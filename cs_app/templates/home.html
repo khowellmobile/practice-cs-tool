@@ -9,16 +9,16 @@
     </head>
     <body>
         <div class="container-1">
-            <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
+            <p class="login-signifier">Welcome, {{ user.first_name }}</p>
             <button class="button-3" onclick="redirectTo('/logout/')">
                 Logout
             </button>
-            <div class="cardContainer">
-                <div class="card" onclick="redirectTo('/generate_report/')">
-                    <div class="cardHeader">
+            <div class="card-container">
+                <div class="home-card" onclick="redirectTo('/generate_report/')">
+                    <div class="home-card__header">
                         <h2>Generate Report</h2>
                     </div>
-                    <div class="cardIcon">
+                    <div class="home-card__icon">
                         <img
                             src="{% static 'images/report_icon.png' %}"
                             alt="Generate Report Image"
@@ -27,11 +27,11 @@
                         />
                     </div>
                 </div>
-                <div class="card" onclick="redirectTo('/directions/')">
-                    <div class="cardHeader">
+                <div class="home-card" onclick="redirectTo('/directions/')">
+                    <div class="home-card__header">
                         <h2>How to Use</h2>
                     </div>
-                    <div class="cardIcon">
+                    <div class="home-card__icon">
                         <img
                             src="{% static 'images/question_icon.png' %}"
                             alt="Generate Report Image"
@@ -40,11 +40,11 @@
                         />
                     </div>
                 </div>
-                <div class="card" onclick="redirectTo('/change_account/')">
-                    <div class="cardHeader">
+                <div class="home-card" onclick="redirectTo('/change_account/')">
+                    <div class="home-card__header">
                         <h2>Account Information</h2>
                     </div>
-                    <div class="cardIcon">
+                    <div class="home-card__icon">
                         <img
                             src="{% static 'images/account_icon.png' %}"
                             alt="Generate Report Image"
@@ -53,11 +53,11 @@
                         />
                     </div>
                 </div>
-                <div class="card" onclick="redirectTo('/change_database/')">
-                    <div class="cardHeader">
+                <div class="home-card" onclick="redirectTo('/change_database/')">
+                    <div class="home-card__header">
                         <h2>Change Database</h2>
                     </div>
-                    <div class="cardIcon">
+                    <div class="home-card__icon">
                         <img
                             src="{% static 'images/database_icon.png' %}"
                             alt="Generate Report Image"

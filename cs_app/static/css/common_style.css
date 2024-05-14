@@ -127,7 +127,7 @@
     transform: translateY(0);
 }
 
-.loggedInAs {
+.login-signifier {
     position: absolute;
     left: 20px;
     top: 5px;
