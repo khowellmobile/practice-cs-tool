@@ -16,7 +16,7 @@
                 {% if error_message %}
                 <p class="error">{{ error_message }}</p>
                 {% endif %}
-                <form id="registrationForm" method="post">
+                <form method="post">
                     {% csrf_token %}
                     <label for="firstName">First Name:</label>
                     <input
