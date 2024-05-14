@@ -1,13 +1,19 @@
-.card-2 {
+.card {
+    width: 70%;
+    height: 50%;
+    margin: 40px auto;
+    padding: 20px;
+
     display: flex;
     flex-direction: column;
 }
 
-.row {
+.card__row {
+    margin: 10px;
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px;
 }
 
 hr {
