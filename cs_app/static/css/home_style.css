@@ -59,11 +59,3 @@
     align-items: center;
     justify-content: center;
 }
-
-div > button {
-    width: 100px;
-    
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
