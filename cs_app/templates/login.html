@@ -9,10 +9,10 @@
     <body>
         <div class="container-1">
             <div class="card-1">
-                <div class="titleDiv">
+                <div class="title-div">
                     <h3>Please Input Your Login Information</h3>
                 </div>
-                <div class="formDiv">
+                <div class="form-div">
                     <form method="post">
                         {% csrf_token %} {% if error_message %}
                         <p class="error">{{ error_message }}</p>
@@ -36,7 +36,7 @@
                         <button type="submit" class="button-1">Login</button>
                     </form>
                 </div>
-                <div class="needAccDiv">
+                <div class="create-div">
                     <p>
                         Dont have an account?
                         <a href="{% url 'create_account' %}">Create one</a>
