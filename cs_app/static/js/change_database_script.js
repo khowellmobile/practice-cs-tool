@@ -3,6 +3,8 @@ function getNewConfig() {
     let name = $("#input_name").val().trim();
     let host = $("#input_host").val().trim();
     let driver = $("#input_driver").val().trim();
+    let user = $("#input_user").val().trim();
+    let pass = $("#input_password").val().trim();
 
     if ((engine == "") | (name == "") | (host == "") | (driver == "")) {
         alert("Please fill out engine, name, host, and driver");
@@ -12,6 +14,8 @@ function getNewConfig() {
             db_name: name,
             db_host: host,
             db_driver: driver,
+            db_user: user,
+            db_pass: pass,
         };
         submitNewConfig(db_info);
     }

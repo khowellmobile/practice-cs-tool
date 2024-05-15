@@ -70,8 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'csTool.wsgi.application'
 
-ATOMIC_REQUESTS = True
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

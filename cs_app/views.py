@@ -153,7 +153,9 @@ def switch_database_view(request):
             db_name = request.POST.get("db_name")
             db_host = request.POST.get("db_host")
             db_driver = request.POST.get("db_driver")
-
+            db_user = request.POST.get("db_user")
+            db_pass = request.POST.get("db_pass")
+            
             new_database_config = {
                 "ENGINE": db_engine,
                 "NAME": db_name,
@@ -163,28 +165,24 @@ def switch_database_view(request):
                     "trusted_connection": "yes",
                 },
                 "ATOMIC_REQUESTS": True,
-                'AUTOCOMMIT': True,
-                'CONN_MAX_AGE': 0,
-                'CONN_HEALTH_CHECKS': False,
-                'TIME_ZONE': None,
-                'USER': '',
-                'PASSWORD': '',
-                'PORT': '',
-                'TEST': {
-                    'CHARSET': None,
-                    'COLLATION': None,
-                    'MIGRATE': True,
-                    'MIRROR': None,
-                    'NAME': None
-                }
+                "AUTOCOMMIT": True,
+                "CONN_MAX_AGE": 0,
+                "CONN_HEALTH_CHECKS": False,
+                "TIME_ZONE": None,
+                "USER": db_user,
+                "PASSWORD": db_pass,
+                "PORT": "",
+                "TEST": {
+                    "CHARSET": None,
+                    "COLLATION": None,
+                    "MIGRATE": True,
+                    "MIRROR": None,
+                    "NAME": None,
+                },
             }
-
-            #for settings_dict in connections.settings.items():
-            #    print(settings_dict["ATOMIC_REQUESTS"])
 
             settings.DATABASES["data"] = new_database_config
 
-            # Close all existing database connections
             connections.close_all()
 
             return JsonResponse({"success": True})
