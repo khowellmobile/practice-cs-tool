@@ -8,7 +8,7 @@ $(document).ready(function () {
         $("#time_range").val("custom");
     });
 
-    $("#formDiv").submit(function (event) {
+    $("#form").submit(function (event) {
         event.preventDefault();
     });
 });
@@ -38,7 +38,7 @@ function displayParameters(formdata) {
         res += `${formdata[key]}, `;
     }
 
-    $("#report_params").text("Report Parameters: " + res.slice(0, -2));
+    $("#report-card__parameters").text("Report Parameters: " + res.slice(0, -2));
 }
 
 // Populates the table through an ajax query
@@ -80,7 +80,7 @@ function initalizeTable(data) {
         $("#reportTable").remove(); // Remove the existing table
     }
 
-    $("#reportBlock").append(
+    $("#report").append(
         '<table id="reportTable" class="stripe display"></table>'
     );
 
@@ -95,8 +95,8 @@ function initalizeTable(data) {
 
 // Sets table size just a tad smaller than its parent for responsiveness
 function setTableSize(tableType) {
-    let parentWidth = $("#" + tableType + "Block").width();
-    let parentHeight = $("#" + tableType + "Block").height();
+    let parentWidth = $("#" + tableType).width();
+    let parentHeight = $("#" + tableType).height();
 
     let childWidth = parentWidth - parentWidth / 100;
     let childHeight = parentHeight - parentHeight / 10;
