@@ -13,6 +13,10 @@
 
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/change_database_script.js' %}"></script>
+        <script>
+            // Easier to get csrf token from template
+            var csrf_token = "{{ csrf_token }}";
+        </script>
     </head>
     <body>
         <p class="login-signifier">Welcome, {{ user.first_name }}</p>
@@ -108,7 +112,7 @@
                     </div>
                     <div id="connection-info" class="card">
                         <div id="connection-info__button-div">
-                            <button class="button-3">Connect Database</button>
+                            <button class="button-3" onclick="getNewConfig()">Connect Database</button>
                         </div>
                         <div id="connection-info__status">
                             <div id="connection-info__status__db-info">

@@ -8,11 +8,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from django.db import connections
+from django.db import connections, transaction
 
 from .models import PastParameter
 
 from datetime import datetime
+
+import json
 
 
 def main_view(request):
@@ -126,7 +128,7 @@ def directions_view(request):
 @login_required
 def change_database_view(request):
     user = request.user
-    data_db = settings.DATABASES['data']
+    data_db = settings.DATABASES["data"]
 
     db_info = {
         "db_engine": data_db["ENGINE"],
@@ -140,6 +142,59 @@ def change_database_view(request):
     }
 
     return render(request, "change_database.html", context)
+
+
+@login_required
+def switch_database_view(request):
+    if request.method == "POST":
+
+        try:
+            db_engine = request.POST.get("db_engine")
+            db_name = request.POST.get("db_name")
+            db_host = request.POST.get("db_host")
+            db_driver = request.POST.get("db_driver")
+
+            new_database_config = {
+                "ENGINE": db_engine,
+                "NAME": db_name,
+                "HOST": db_host,
+                "OPTIONS": {
+                    "driver": db_driver,
+                    "trusted_connection": "yes",
+                },
+                "ATOMIC_REQUESTS": True,
+                'AUTOCOMMIT': True,
+                'CONN_MAX_AGE': 0,
+                'CONN_HEALTH_CHECKS': False,
+                'TIME_ZONE': None,
+                'USER': '',
+                'PASSWORD': '',
+                'PORT': '',
+                'TEST': {
+                    'CHARSET': None,
+                    'COLLATION': None,
+                    'MIGRATE': True,
+                    'MIRROR': None,
+                    'NAME': None
+                }
+            }
+
+            #for settings_dict in connections.settings.items():
+            #    print(settings_dict["ATOMIC_REQUESTS"])
+
+            settings.DATABASES["data"] = new_database_config
+
+            # Close all existing database connections
+            connections.close_all()
+
+            return JsonResponse({"success": True})
+
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+    return JsonResponse(
+        {"success": False, "error": "Invalid request method"}, status=405
+    )
 
 
 @login_required
@@ -222,8 +277,10 @@ def load_table_view(request):
 
         excess_record_count = PastParameter.objects.count() - 16
         if excess_record_count > 0:
-            excess_records = PastParameter.objects.order_by('date_field')[:excess_record_count]
-            excess_record_ids = excess_records.values_list('id', flat=True)
+            excess_records = PastParameter.objects.order_by("date_field")[
+                :excess_record_count
+            ]
+            excess_record_ids = excess_records.values_list("id", flat=True)
             PastParameter.objects.filter(id__in=excess_record_ids).delete()
 
         conn = connections["data"]
