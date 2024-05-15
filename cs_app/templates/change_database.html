@@ -114,19 +114,14 @@
                             <div id="connection-info__status__db-info">
                                 <h2>Currently Connected To:</h2>
                                 <h3>Database Engine:</h3>
-                                <p>MSSQL</p>
+                                <p>{{ db_info.db_engine }}</p>
                                 <br />
                                 <h3>Database Name:</h3>
-                                <p>AventureWorks2022</p>
+                                <p>{{ db_info.db_name }}</p>
                                 <br />
                                 <h3>Database Host:</h3>
-                                <p>HOWELL-PC8//SQLEXPRESS</p>
+                                <p>{{ db_info.db_host }}</p>
                                 <br />
-                                <h3>Database Driver:</h3>
-                                <p>
-                                    Some long driver name that is really
-                                    anoyying
-                                </p>
                             </div>
                             <div id="connection-info__status__log">
                                 <h2>Status / Messages:</h2>

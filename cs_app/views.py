@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from django.db import connections
 
@@ -125,8 +126,17 @@ def directions_view(request):
 @login_required
 def change_database_view(request):
     user = request.user
+    data_db = settings.DATABASES['data']
+
+    db_info = {
+        "db_engine": data_db["ENGINE"],
+        "db_name": data_db["NAME"],
+        "db_host": data_db["HOST"],
+    }
+
     context = {
         "user": user,
+        "db_info": db_info,
     }
 
     return render(request, "change_database.html", context)
