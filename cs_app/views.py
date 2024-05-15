@@ -8,7 +8,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from django.db import connections, transaction
+from django.db import connections
+from django.db.utils import OperationalError
 
 from .models import PastParameter
 
@@ -155,7 +156,7 @@ def switch_database_view(request):
             db_driver = request.POST.get("db_driver")
             db_user = request.POST.get("db_user")
             db_pass = request.POST.get("db_pass")
-            
+
             new_database_config = {
                 "ENGINE": db_engine,
                 "NAME": db_name,
@@ -182,10 +183,36 @@ def switch_database_view(request):
             }
 
             settings.DATABASES["data"] = new_database_config
-
+            
+            # Close all existing connections
             connections.close_all()
 
+            query = """SELECT * FROM HumanResources.EmployeeDepartmentHistory"""
+            
+            conn = connections["data"]
+
+            conn.connect()
+
+            cursor = conn.cursor()
+
+            cursor.execute(query)
+
+            rows = cursor.fetchall()
+
+            print(rows)
+
+            # Get the connection settings
+            #connection_settings = settings.DATABASES["data"]
+
+            # Print information about the connection
+            #print("New database connection settings:")
+            #for key, value in connection_settings.items():
+            #    print(f"{key}: {value}")
+
             return JsonResponse({"success": True})
+        
+        except OperationalError  as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
 
         except Exception as e:
             return JsonResponse({"success": False, "error": str(e)}, status=400)
