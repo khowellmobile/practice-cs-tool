@@ -8,14 +8,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from django.db import connections
-from django.db.utils import OperationalError
+from django.db import connections, close_old_connections
+from django.db.utils import OperationalError, DatabaseError, IntegrityError, ProgrammingError, DataError
+from django.core.exceptions import ImproperlyConfigured
 
 from .models import PastParameter
 
 from datetime import datetime
 
-import json
+import pdb
+
 
 
 def main_view(request):
@@ -182,14 +184,20 @@ def switch_database_view(request):
                 },
             }
 
-            settings.DATABASES["data"] = new_database_config
-            
-            # Close all existing connections
-            connections.close_all()
+            print(connections.all())
+
+            if db_name in settings.DATABASES:
+                alias = generate_unique_alias(db_name)
+            else:
+                alias = db_name
+
+            settings.DATABASES[alias] = new_database_config
+
+            print(connections.all())
 
             query = """SELECT * FROM HumanResources.EmployeeDepartmentHistory"""
             
-            conn = connections["data"]
+            conn = connections[alias]
 
             conn.connect()
 
@@ -199,19 +207,17 @@ def switch_database_view(request):
 
             rows = cursor.fetchall()
 
-            print(rows)
-
-            # Get the connection settings
-            #connection_settings = settings.DATABASES["data"]
-
-            # Print information about the connection
-            #print("New database connection settings:")
-            #for key, value in connection_settings.items():
-            #    print(f"{key}: {value}")
+            if rows:
+                print("TRUE")
+            else:
+                print("FALSE")
 
             return JsonResponse({"success": True})
         
-        except OperationalError  as e:
+        except (OperationalError, IntegrityError, ProgrammingError, DataError, DatabaseError) as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+        
+        except ImproperlyConfigured as e:
             return JsonResponse({"success": False, "error": str(e)}, status=400)
 
         except Exception as e:
@@ -221,6 +227,15 @@ def switch_database_view(request):
         {"success": False, "error": "Invalid request method"}, status=405
     )
 
+def generate_unique_alias(base_alias):
+    index = 1
+    unique_alias = base_alias
+
+    while unique_alias in settings.DATABASES:
+        unique_alias = f"{base_alias}_{index}"
+        index += 1
+
+    return unique_alias
 
 @login_required
 def change_account_view(request):

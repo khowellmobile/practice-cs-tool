@@ -33,7 +33,7 @@ function submitNewConfig(db_info) {
             alert(response.success);
         },
         error: function (xhr, errmsg, err) {
-            alert("error");
+            alert("xhr: " + xhr + " errmsg: " + errmsg + " err: " + err);
         },
     });
 }
