@@ -8,16 +8,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from django.db import connections, close_old_connections
-from django.db.utils import OperationalError, DatabaseError, IntegrityError, ProgrammingError, DataError
+from django.db import connections
+from django.db.utils import (
+    OperationalError,
+    DatabaseError,
+    IntegrityError,
+    ProgrammingError,
+    DataError,
+)
 from django.core.exceptions import ImproperlyConfigured
 
 from .models import PastParameter
 
 from datetime import datetime
-
-import pdb
-
 
 
 def main_view(request):
@@ -150,53 +153,49 @@ def change_database_view(request):
 @login_required
 def switch_database_view(request):
     if request.method == "POST":
+        db_engine = request.POST.get("db_engine")
+        db_name = request.POST.get("db_name")
+        db_host = request.POST.get("db_host")
+        db_driver = request.POST.get("db_driver")
+        db_user = request.POST.get("db_user")
+        db_pass = request.POST.get("db_pass")
+
+        new_database_config = {
+            "ENGINE": db_engine,
+            "NAME": db_name,
+            "HOST": db_host,
+            "OPTIONS": {
+                "driver": db_driver,
+                "trusted_connection": "yes",
+            },
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+            "USER": db_user,
+            "PASSWORD": db_pass,
+            "PORT": "",
+            "TEST": {
+                "CHARSET": None,
+                "COLLATION": None,
+                "MIGRATE": True,
+                "MIRROR": None,
+                "NAME": None,
+            },
+        }
+
+        if db_name in settings.DATABASES:
+            alias = generate_unique_alias(db_name)
+        else:
+            alias = db_name
 
         try:
-            db_engine = request.POST.get("db_engine")
-            db_name = request.POST.get("db_name")
-            db_host = request.POST.get("db_host")
-            db_driver = request.POST.get("db_driver")
-            db_user = request.POST.get("db_user")
-            db_pass = request.POST.get("db_pass")
-
-            new_database_config = {
-                "ENGINE": db_engine,
-                "NAME": db_name,
-                "HOST": db_host,
-                "OPTIONS": {
-                    "driver": db_driver,
-                    "trusted_connection": "yes",
-                },
-                "ATOMIC_REQUESTS": True,
-                "AUTOCOMMIT": True,
-                "CONN_MAX_AGE": 0,
-                "CONN_HEALTH_CHECKS": False,
-                "TIME_ZONE": None,
-                "USER": db_user,
-                "PASSWORD": db_pass,
-                "PORT": "",
-                "TEST": {
-                    "CHARSET": None,
-                    "COLLATION": None,
-                    "MIGRATE": True,
-                    "MIRROR": None,
-                    "NAME": None,
-                },
-            }
-
-            print(connections.all())
-
-            if db_name in settings.DATABASES:
-                alias = generate_unique_alias(db_name)
-            else:
-                alias = db_name
 
             settings.DATABASES[alias] = new_database_config
 
-            print(connections.all())
-
             query = """SELECT * FROM HumanResources.EmployeeDepartmentHistory"""
-            
+
             conn = connections[alias]
 
             conn.connect()
@@ -213,19 +212,34 @@ def switch_database_view(request):
                 print("FALSE")
 
             return JsonResponse({"success": True})
-        
-        except (OperationalError, IntegrityError, ProgrammingError, DataError, DatabaseError) as e:
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
-        
-        except ImproperlyConfigured as e:
+
+        except (
+            OperationalError,
+            IntegrityError,
+            ProgrammingError,
+            DataError,
+            DatabaseError,
+        ) as e:
+            remove_database_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
 
+        except ImproperlyConfigured as e:
+            remove_database_config(alias)
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+
         except Exception as e:
+            remove_database_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
 
     return JsonResponse(
         {"success": False, "error": "Invalid request method"}, status=405
     )
+
+
+def remove_database_config(alias):
+    if alias in settings.DATABASES:
+        del settings.DATABASES[alias]
+
 
 def generate_unique_alias(base_alias):
     index = 1
@@ -236,6 +250,7 @@ def generate_unique_alias(base_alias):
         index += 1
 
     return unique_alias
+
 
 @login_required
 def change_account_view(request):
