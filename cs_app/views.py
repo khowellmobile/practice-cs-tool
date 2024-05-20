@@ -193,9 +193,6 @@ def switch_database_view(request):
 
         try:
 
-            if db_user == "0":
-                result = 1 / 0
-
             settings.DATABASES[alias] = new_database_config
 
             query = """SELECT * FROM HumanResources.EmployeeDepartmentHistory"""
@@ -224,18 +221,17 @@ def switch_database_view(request):
             DataError,
             DatabaseError,
         ) as e:
-            remove_connection(alias)
-            remove_database_config(alias)
+            remove_conn_and_config(alias)
             return JsonResponse({"success": False, "error1": str(e)}, status=400)
 
+        # Wrong engine error
         except ImproperlyConfigured as e:
-            remove_connection(alias)
-            remove_database_config(alias)
+            remove_conn_and_config(alias)
             return JsonResponse({"success": False, "error2": str(e)}, status=400)
 
+        # No Matching DB Name, DB Host
         except Exception as e:
-            remove_connection(alias)
-            remove_database_config(alias)
+            remove_conn_and_config(alias)
             return JsonResponse({"success": False, "error3": str(e)}, status=400)
 
     return JsonResponse(
@@ -243,15 +239,13 @@ def switch_database_view(request):
     )
 
 
-def remove_database_config(alias):
+def remove_conn_and_config(alias):
     if alias in settings.DATABASES:
         del settings.DATABASES[alias]
 
-def remove_connection(alias):
     for conn in connections.all():
         if conn.alias == alias:
             connections.__delitem__(alias)
-            
 
 
 def generate_unique_alias(base_alias):
