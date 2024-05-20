@@ -15,6 +15,7 @@ from django.db.utils import (
     IntegrityError,
     ProgrammingError,
     DataError,
+    InterfaceError,
 )
 from django.core.exceptions import ImproperlyConfigured
 
@@ -192,6 +193,9 @@ def switch_database_view(request):
 
         try:
 
+            if db_user == "0":
+                result = 1 / 0
+
             settings.DATABASES[alias] = new_database_config
 
             query = """SELECT * FROM HumanResources.EmployeeDepartmentHistory"""
@@ -220,25 +224,34 @@ def switch_database_view(request):
             DataError,
             DatabaseError,
         ) as e:
+            remove_connection(alias)
             remove_database_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
+            return JsonResponse({"success": False, "error1": str(e)}, status=400)
 
         except ImproperlyConfigured as e:
+            remove_connection(alias)
             remove_database_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=500)
+            return JsonResponse({"success": False, "error2": str(e)}, status=400)
 
         except Exception as e:
+            remove_connection(alias)
             remove_database_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
+            return JsonResponse({"success": False, "error3": str(e)}, status=400)
 
     return JsonResponse(
-        {"success": False, "error": "Invalid request method"}, status=405
+        {"success": False, "error4": "Invalid request method"}, status=405
     )
 
 
 def remove_database_config(alias):
     if alias in settings.DATABASES:
         del settings.DATABASES[alias]
+
+def remove_connection(alias):
+    for conn in connections.all():
+        if conn.alias == alias:
+            connections.__delitem__(alias)
+            
 
 
 def generate_unique_alias(base_alias):
