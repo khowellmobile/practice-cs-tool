@@ -15,8 +15,10 @@ from django.db.utils import (
     IntegrityError,
     ProgrammingError,
     DataError,
-    InterfaceError,
 )
+
+import pyodbc
+
 from django.core.exceptions import ImproperlyConfigured
 
 from .models import PastParameter
@@ -214,32 +216,27 @@ def switch_database_view(request):
 
             return JsonResponse({"success": True})
 
-        except (
-            OperationalError,
-            IntegrityError,
-            ProgrammingError,
-            DataError,
-            DatabaseError,
-        ) as e:
-            remove_conn(alias)
-            remove_config(alias)
-            return JsonResponse({"success": False, "error1": str(e)}, status=400)
-
         # Wrong engine error
         # Only remove config required
         except ImproperlyConfigured as e:
             remove_config(alias)
-            return JsonResponse({"success": False, "error2": str(e)}, status=400)
-
-        # No Matching DB Name, DB Host, DB Driver
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+        
+        # Wrong driver error
         # DB Driver error requires that both the conn and config be removed in this order!
+        except (pyodbc.InterfaceError) as e :
+            remove_conn(alias)
+            remove_config(alias)
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+        # No Matching DB Name, DB Host
         except Exception as e:
             remove_conn(alias)
             remove_config(alias)
-            return JsonResponse({"success": False, "error3": str(e)}, status=400)
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
 
     return JsonResponse(
-        {"success": False, "error4": "Invalid request method"}, status=405
+        {"success": False, "error": "Invalid request method"}, status=405
     )
 
 def remove_config(alias):
