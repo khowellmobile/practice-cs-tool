@@ -30,10 +30,24 @@ function submitNewConfig(db_info) {
         url: url,
         data: db_info,
         success: function (response) {
-            alert(response.success);
+            dbChangeHandler(true, response);
         },
-        error: function (xhr, errmsg, err) {
-            alert("xhr: " + xhr + " errmsg: " + errmsg + " err: " + err);
+        error: function (xhr) {
+            dbChangeHandler(false, xhr);
         },
     });
+}
+
+function dbChangeHandler(success, message) {
+    if (success) {
+        alert("success")
+    } else {
+        alert("error")
+        if (message.responseJSON) {
+            alert("Server error: " + message.responseJSON.error);
+            alert("Server: " + message.responseJSON.success);
+        } else {
+            alert("An error occurred while processing your request.");
+        }
+    }
 }
