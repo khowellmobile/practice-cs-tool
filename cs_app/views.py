@@ -240,12 +240,14 @@ def switch_database_view(request):
 
 
 def remove_conn_and_config(alias):
-    if alias in settings.DATABASES:
-        del settings.DATABASES[alias]
+    connections.close_all()
 
     for conn in connections.all():
         if conn.alias == alias:
             connections.__delitem__(alias)
+
+    if alias in settings.DATABASES:
+        del settings.DATABASES[alias]
 
 
 def generate_unique_alias(base_alias):
