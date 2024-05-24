@@ -40,14 +40,16 @@ function submitNewConfig(db_info) {
 
 function dbChangeHandler(success, message) {
     if (success) {
-        alert("success")
+        $("#connection-info__status__log").append(
+            "<p class='stat__message'>Success</p>"
+        );
     } else {
-        alert("error")
         if (message.responseJSON) {
-            alert("Server error: " + message.responseJSON.error);
-            alert("Server: " + message.responseJSON.success);
+            $("#connection-info__status__log").append(
+                `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
+            );
         } else {
-            alert("An error occurred while processing your request.");
+            alert("An error occurred while processing your request. Please try again.");
         }
     }
 }
