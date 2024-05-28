@@ -41,7 +41,7 @@ function submitNewConfig(db_info) {
 function dbChangeHandler(success, message) {
     if (success) {
         $("#connection-info__status__log").append(
-            "<p class='stat__message'>Success</p>"
+            "<p class='stat__message'>Successful Connection</p>"
         );
     } else {
         if (message.responseJSON) {
