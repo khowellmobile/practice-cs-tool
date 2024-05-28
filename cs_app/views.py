@@ -160,12 +160,13 @@ def get_db_info_view(request):
     if db_alias:
         data_db = settings.DATABASES.get(db_alias)
         if data_db:
-            db_info = {
-                "db_engine": data_db.get("ENGINE"),
-                "db_name": data_db.get("NAME"),
-                "db_host": data_db.get("HOST"),
-            }
-            return JsonResponse({"db_info": db_info})
+            return JsonResponse(
+                {
+                    "db_engine": data_db.get("ENGINE"),
+                    "db_name": data_db.get("NAME"),
+                    "db_host": data_db.get("HOST"),
+                }
+            )
         else:
             return JsonResponse({"Error": "Invalid database alias"}, status=400)
     else:

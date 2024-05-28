@@ -57,7 +57,7 @@ function dbChangeHandler(success, message) {
     }
 }
 
-function getDBInfoFromAlias(alias) {
+function getDisplayDBInfo(alias) {
     let url = "/get_db_info/";
 
     $.ajax({
@@ -66,7 +66,9 @@ function getDBInfoFromAlias(alias) {
         url: url,
         data: { db_alias: alias },
         success: function (response) {
-            console.log(response);
+            $("#curr_engine").text(response["db_engine"])
+            $("#curr_name").text(response["db_name"])
+            $("#curr_host").text(response["db_host"])
         },
         error: function (xhr) {
             alert("Error");
