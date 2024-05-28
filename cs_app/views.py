@@ -154,6 +154,25 @@ def change_database_view(request):
 
 
 @login_required
+def get_db_info_view(request):
+    db_alias = request.GET.get("db_alias")
+
+    if db_alias:
+        data_db = settings.DATABASES.get(db_alias)
+        if data_db:
+            db_info = {
+                "db_engine": data_db.get("ENGINE"),
+                "db_name": data_db.get("NAME"),
+                "db_host": data_db.get("HOST"),
+            }
+            return JsonResponse({"db_info": db_info})
+        else:
+            return JsonResponse({"Error": "Invalid database alias"}, status=400)
+    else:
+        return JsonResponse({"Error": "Missing database alias"}, status=400)
+
+
+@login_required
 def switch_database_view(request):
     if request.method == "POST":
         db_engine = request.POST.get("db_engine")
@@ -214,17 +233,17 @@ def switch_database_view(request):
             else:
                 print("FALSE")
 
-            return JsonResponse({"success": True})
+            return JsonResponse({"success": True, "db_alias": alias})
 
         # Wrong engine error
         # Only remove config required
         except ImproperlyConfigured as e:
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
-        
+
         # Wrong driver error
         # DB Driver error requires that both the conn and config be removed in this order!
-        except (pyodbc.InterfaceError) as e :
+        except pyodbc.InterfaceError as e:
             remove_conn(alias)
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
@@ -239,6 +258,7 @@ def switch_database_view(request):
         {"success": False, "error": "Invalid request method"}, status=405
     )
 
+
 def remove_config(alias):
     if alias in settings.DATABASES:
         del settings.DATABASES[alias]
@@ -251,6 +271,7 @@ def remove_conn(alias):
     for conn in connections.all():
         if conn.alias == alias:
             connections.__delitem__(alias)
+
 
 def generate_unique_alias(base_alias):
     index = 1

@@ -43,13 +43,33 @@ function dbChangeHandler(success, message) {
         $("#connection-info__status__log").append(
             "<p class='stat__message'>Successful Connection</p>"
         );
+        getDBInfoFromAlias(message.db_alias);
     } else {
         if (message.responseJSON) {
             $("#connection-info__status__log").append(
                 `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
             );
         } else {
-            alert("An error occurred while processing your request. Please try again.");
+            alert(
+                "An error occurred while processing your request. Please try again."
+            );
         }
     }
+}
+
+function getDBInfoFromAlias(alias) {
+    let url = "/get_db_info/";
+
+    $.ajax({
+        type: "GET",
+        headers: { "X-CSRFToken": csrf_token },
+        url: url,
+        data: { db_alias: alias },
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (xhr) {
+            alert("Error");
+        },
+    });
 }
