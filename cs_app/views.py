@@ -182,6 +182,7 @@ def switch_database_view(request):
         db_driver = request.POST.get("db_driver")
         db_user = request.POST.get("db_user")
         db_pass = request.POST.get("db_pass")
+        trust_conn = "no" if db_user and db_pass else "yes"
 
         new_database_config = {
             "ENGINE": db_engine,
@@ -189,15 +190,15 @@ def switch_database_view(request):
             "HOST": db_host,
             "OPTIONS": {
                 "driver": db_driver,
-                "trusted_connection": "yes",
+                "trusted_connection": trust_conn,
             },
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
             "CONN_MAX_AGE": 0,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
-            "USER": db_user,
-            "PASSWORD": db_pass,
+            "USER": (db_user if db_user else None),
+            "PASSWORD": db_pass if db_pass else None,
             "PORT": "",
             "TEST": {
                 "CHARSET": None,
