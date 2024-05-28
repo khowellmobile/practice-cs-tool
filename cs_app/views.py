@@ -154,6 +154,26 @@ def change_database_view(request):
 
 
 @login_required
+def get_db_info_view(request):
+    db_alias = request.GET.get("db_alias")
+
+    if db_alias:
+        data_db = settings.DATABASES.get(db_alias)
+        if data_db:
+            return JsonResponse(
+                {
+                    "db_engine": data_db.get("ENGINE"),
+                    "db_name": data_db.get("NAME"),
+                    "db_host": data_db.get("HOST"),
+                }
+            )
+        else:
+            return JsonResponse({"Error": "Invalid database alias"}, status=400)
+    else:
+        return JsonResponse({"Error": "Missing database alias"}, status=400)
+
+
+@login_required
 def switch_database_view(request):
     if request.method == "POST":
         db_engine = request.POST.get("db_engine")
@@ -162,6 +182,7 @@ def switch_database_view(request):
         db_driver = request.POST.get("db_driver")
         db_user = request.POST.get("db_user")
         db_pass = request.POST.get("db_pass")
+        trust_conn = "no" if db_user and db_pass else "yes"
 
         new_database_config = {
             "ENGINE": db_engine,
@@ -169,15 +190,15 @@ def switch_database_view(request):
             "HOST": db_host,
             "OPTIONS": {
                 "driver": db_driver,
-                "trusted_connection": "yes",
+                "trusted_connection": trust_conn,
             },
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
             "CONN_MAX_AGE": 0,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
-            "USER": db_user,
-            "PASSWORD": db_pass,
+            "USER": (db_user if db_user else None),
+            "PASSWORD": db_pass if db_pass else None,
             "PORT": "",
             "TEST": {
                 "CHARSET": None,
@@ -214,17 +235,17 @@ def switch_database_view(request):
             else:
                 print("FALSE")
 
-            return JsonResponse({"success": True})
+            return JsonResponse({"success": True, "db_alias": alias})
 
         # Wrong engine error
         # Only remove config required
         except ImproperlyConfigured as e:
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
-        
+
         # Wrong driver error
         # DB Driver error requires that both the conn and config be removed in this order!
-        except (pyodbc.InterfaceError) as e :
+        except pyodbc.InterfaceError as e:
             remove_conn(alias)
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
@@ -239,6 +260,7 @@ def switch_database_view(request):
         {"success": False, "error": "Invalid request method"}, status=405
     )
 
+
 def remove_config(alias):
     if alias in settings.DATABASES:
         del settings.DATABASES[alias]
@@ -251,6 +273,7 @@ def remove_conn(alias):
     for conn in connections.all():
         if conn.alias == alias:
             connections.__delitem__(alias)
+
 
 def generate_unique_alias(base_alias):
     index = 1

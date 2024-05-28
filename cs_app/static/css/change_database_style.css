@@ -101,9 +101,8 @@
 
 #connection-info__status {
     height: 90%;
-    margin: 0px;
-
     max-height: 32rem;
+    margin: 0px;
 
     display: flex;
     flex-direction: column;
