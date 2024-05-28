@@ -120,4 +120,12 @@ a {
     outline: solid 1px blue;
 }
 
+.outlineR {
+    outline: solid 1px red;
+}
+
+.outlineG {
+    outline: solid 1px green;
+}
+
 

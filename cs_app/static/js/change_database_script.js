@@ -30,10 +30,26 @@ function submitNewConfig(db_info) {
         url: url,
         data: db_info,
         success: function (response) {
-            alert(response.success);
+            dbChangeHandler(true, response);
         },
-        error: function (xhr, errmsg, err) {
-            alert("xhr: " + xhr + " errmsg: " + errmsg + " err: " + err);
+        error: function (xhr) {
+            dbChangeHandler(false, xhr);
         },
     });
+}
+
+function dbChangeHandler(success, message) {
+    if (success) {
+        $("#connection-info__status__log").append(
+            "<p class='stat__message'>Successful Connection</p>"
+        );
+    } else {
+        if (message.responseJSON) {
+            $("#connection-info__status__log").append(
+                `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
+            );
+        } else {
+            alert("An error occurred while processing your request. Please try again.");
+        }
+    }
 }
