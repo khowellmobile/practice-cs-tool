@@ -38,7 +38,7 @@ function submitForm(fieldName) {
 }
 
 // Shows new fieldInformation. Called on successful ajax call
-function ajaxResponse(fieldName, formdata) {
+function ajaxResponseSuccess(fieldName, formdata) {
     if (fieldName == "name") {
         $(`#${fieldName}_text`).text(
             "Name: " + formdata["first_name"] + " " + formdata["last_name"]
