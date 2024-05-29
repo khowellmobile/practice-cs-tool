@@ -17,6 +17,14 @@ function getNewConfig() {
             db_user: user,
             db_pass: pass,
         };
+
+        // Will stop users from spamming conncections while connection is loading
+        if ($(".spinner").css("visibility") == "visible") {
+            return;
+        }
+
+        setSpinnerVisiblity(true);
+
         submitNewConfig(db_info);
     }
 }
@@ -39,6 +47,8 @@ function submitNewConfig(db_info) {
 }
 
 function dbChangeHandler(success, message) {
+    setSpinnerVisiblity(false);
+
     if (success) {
         $("#connection-info__status__log").append(
             "<p class='stat__message'>Successful Connection</p>"
@@ -66,12 +76,20 @@ function getDisplayDBInfo(alias) {
         url: url,
         data: { db_alias: alias },
         success: function (response) {
-            $("#curr_engine").text(response["db_engine"])
-            $("#curr_name").text(response["db_name"])
-            $("#curr_host").text(response["db_host"])
+            $("#curr_engine").text(response["db_engine"]);
+            $("#curr_name").text(response["db_name"]);
+            $("#curr_host").text(response["db_host"]);
         },
         error: function (xhr) {
             alert("Error");
         },
     });
+}
+
+function setSpinnerVisiblity(spinnerVisible) {
+    if (spinnerVisible) {
+        $(".spinner").css("visibility", "visible");
+    } else {
+        $(".spinner").css("visibility", "hidden");
+    }
 }
