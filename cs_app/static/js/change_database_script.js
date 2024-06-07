@@ -93,3 +93,5 @@ function setSpinnerVisiblity(spinnerVisible) {
         $(".spinner").css("visibility", "hidden");
     }
 }
+
+module.exports = {setSpinnerVisiblity}
