@@ -11,9 +11,9 @@ describe("setSpinnerVisiblity function", () => {
         );
         global.document = dom.window.document;
         global.window = dom.window;
-    
-        var jsdom = require("jsdom");
-        $ = require("jquery")(new jsdom.JSDOM().window);
+
+        // Initialize jQuery within the test environment
+        $ = require("jquery")(dom.window);
     });
 
     afterEach(() => {
@@ -26,12 +26,14 @@ describe("setSpinnerVisiblity function", () => {
         const spinner = document.querySelector(".spinner");
         // Access computed style using getComputedStyle
         const computedStyle = dom.window.getComputedStyle(spinner);
+
         expect(computedStyle.visibility).toBe("visible");
     });
 
     test("should hide spinner when spinnerVisible is false", () => {
         // Modify the inline style to set spinner visible
         document.querySelector(".spinner").style.visibility = "visible";
+
         setSpinnerVisiblity(false);
         const spinner = document.querySelector(".spinner");
         // Access computed style using getComputedStyle
