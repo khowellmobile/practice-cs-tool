@@ -94,4 +94,4 @@ function setSpinnerVisiblity(spinnerVisible) {
     }
 }
 
-module.exports = {setSpinnerVisiblity}
+module.exports = { setSpinnerVisiblity };

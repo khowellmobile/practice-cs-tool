@@ -1,18 +1,19 @@
 const { setSpinnerVisiblity } = require("../static/js/change_database_script");
 const { JSDOM } = require("jsdom");
 
-const $ = require("jquery");
-
 describe("setSpinnerVisiblity function", () => {
     let dom;
 
     beforeEach(() => {
         // Set up a DOM environment using jsdom
         dom = new JSDOM(
-            '<!DOCTYPE html><div><div class="spinner"></div></div>'
+            '<!DOCTYPE html><div><div class="spinner" style="visibility: hidden;"></div></div>'
         );
         global.document = dom.window.document;
         global.window = dom.window;
+    
+        var jsdom = require("jsdom");
+        $ = require("jquery")(new jsdom.JSDOM().window);
     });
 
     afterEach(() => {
@@ -23,12 +24,18 @@ describe("setSpinnerVisiblity function", () => {
     test("should make spinner visible when spinnerVisible is true", () => {
         setSpinnerVisiblity(true);
         const spinner = document.querySelector(".spinner");
-        expect(getComputedStyle(spinner).visibility).toBe("visible");
+        // Access computed style using getComputedStyle
+        const computedStyle = dom.window.getComputedStyle(spinner);
+        expect(computedStyle.visibility).toBe("visible");
     });
 
     test("should hide spinner when spinnerVisible is false", () => {
+        // Modify the inline style to set spinner visible
+        document.querySelector(".spinner").style.visibility = "visible";
         setSpinnerVisiblity(false);
         const spinner = document.querySelector(".spinner");
-        expect(getComputedStyle(spinner).visibility).toBe("hidden");
+        // Access computed style using getComputedStyle
+        const computedStyle = dom.window.getComputedStyle(spinner);
+        expect(computedStyle.visibility).toBe("hidden");
     });
 });
