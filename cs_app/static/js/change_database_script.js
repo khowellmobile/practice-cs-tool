@@ -86,7 +86,7 @@ function getDisplayDBInfo(alias) {
     });
 }
 
-function setSpinnerVisiblity(spinnerVisible) {
+function setSpinnerVisibility(spinnerVisible) {
     if (spinnerVisible) {
         $(".spinner").css("visibility", "visible");
     } else {
@@ -94,4 +94,4 @@ function setSpinnerVisiblity(spinnerVisible) {
     }
 }
 
-module.exports = { setSpinnerVisiblity };
+module.exports = { setSpinnerVisibility };
