@@ -10,13 +10,6 @@
         />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-        <script src="{% static 'js/common_script.js' %}"></script>
-        <script src="{% static 'js/change_account_script.js' %}"></script>
-        <script>
-            // Easier to get csrf token from template
-            var csrf_token = "{{ csrf_token }}";
-        </script>
     </head>
     <body>
         <div class="container-1">
@@ -98,5 +91,12 @@
                 </div>
             </div>
         </div>
+        <!-- Links to .js files and getting csrf_token -->
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/change_account_script.js' %}"></script>
+        <script>
+            // Easier to get csrf token from template
+            var csrf_token = "{{ csrf_token }}";
+        </script>
     </body>
 </html>
