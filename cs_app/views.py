@@ -133,6 +133,14 @@ def directions_view(request):
 
     return render(request, "directions.html", context)
 
+def tinker_view(request):
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "tinker.html", context)
+
 
 @login_required
 def change_database_view(request):

@@ -23,7 +23,7 @@ function getNewConfig() {
             return;
         }
 
-        setSpinnerVisiblity(true);
+        setSpinnerVisibility(true);
 
         submitNewConfig(db_info);
     }
@@ -47,7 +47,7 @@ function submitNewConfig(db_info) {
 }
 
 function dbChangeHandler(success, message) {
-    setSpinnerVisiblity(false);
+    setSpinnerVisibility(false);
 
     if (success) {
         $("#connection-info__status__log").append(
