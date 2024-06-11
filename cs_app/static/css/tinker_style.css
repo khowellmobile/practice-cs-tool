@@ -2,52 +2,97 @@ html {
   font-size: 16px;
   margin: 0px;
   padding: 0px;
+  font-family: "Roboto", sans-serif;
 }
 
 #content {
-    width: 80%;
-    height: 70%;
+  width: 80%;
+  height: 70%;
 
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #c1 {
-    width: 100%;
-    height: calc(15%);
-    margin: 0.5rem 0.5rem 0rem 0.5rem;
+  width: 100%;
+  height: calc(15% - 0.5rem);
+  margin: 0.5rem 0.5rem 0rem 0.5rem;
 }
 
 #c2 {
     width: calc(50% - 0.75rem);
     height: calc(85% - 1rem);
     margin: 0.5rem 0.25rem 0.5rem 0.5rem;
+
+    display: inline-block;
+}
+
+.form__label {
+  width: 10rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+
+  font-size: 1rem;
+  transition: all 0.5s;
+
+  display: inline-block;
+}
+
+.form__input {
+  width: 40%;
+  margin: 0.5rem 0rem 0rem 0.5rem;
+  padding: 0.5rem 1rem;
+
+  font-size: 1rem;
+  color: #333;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.2rem;
+  border: none;
+  border-bottom: 0.3rem solid transparent;
+  transition: all 0.5s;
+
+  display: inline-block;
+}
+
+.form__label + .form__input:placeholder-shown {
+  -webkit-transform: translateX(-11rem);
+  transform: translateX(-11rem);
+}
+
+#c2 > h3 {
+  margin: 0.5rem 0rem 0.5rem 0.5rem;
+}
+
+#form__note {
+    margin: 4rem 0rem 0.5rem 0.5rem;
+
+    font-size: 0.8rem;
 }
 
 #c3 {
-    width: calc(50% - 0.75rem);
-    height: calc(85% - 1rem);
-    margin: 0.5rem 0.5rem 0.5rem 0.25rem;
+  width: calc(50% - 0.75rem);
+  height: calc(85% - 1rem);
+  margin: 0.5rem 0.5rem 0.5rem 0.25rem;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 #c3-1 {
-    width: 100%;
-    height: 15%;
+  width: 100%;
+  height: 15%;
 }
 
 #c3-2 {
-    width: 100%;
-    height: 30%;
+  width: 100%;
+  height: 30%;
 }
 
 #c3-3 {
-    width: 100%;
-    height: 55%;
+  width: 100%;
+  height: 55%;
 }
 
 .scroller {
-    overflow-y: auto;
+  overflow-y: auto;
 }
