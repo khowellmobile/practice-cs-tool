@@ -14,15 +14,21 @@ html {
 
 #c1 {
     width: 100%;
-    height: 20%;
+    height: calc(15%);
+    margin: 0.5rem 0.5rem 0rem 0.5rem;
 }
 
-#c2, #c3 {
-    width: 50%;
-    height: 80%;
+#c2 {
+    width: calc(50% - 0.75rem);
+    height: calc(85% - 1rem);
+    margin: 0.5rem 0.25rem 0.5rem 0.5rem;
 }
 
 #c3 {
+    width: calc(50% - 0.75rem);
+    height: calc(85% - 1rem);
+    margin: 0.5rem 0.5rem 0.5rem 0.25rem;
+
     display: flex;
     flex-direction: column;
 }
