@@ -59,7 +59,8 @@ html {
   transform: translateX(-11rem);
 }
 
-#c2 > h3, #c3-2 > h3 {
+#c2 > h3,
+#c3-2 > h3 {
   margin: 0.5rem 0rem 0.5rem 0.5rem;
 }
 
@@ -89,8 +90,18 @@ html {
 
   background-color: rgb(167, 191, 255);
   border-radius: 5px 5px 0px 0px;
+}
 
+#c3-2 > h4 {
+  margin-left: 1.5rem;
+  margin-right: 0.25rem;
   display: inline;
+}
+
+#c3-2 > p {
+  display: inline;
+
+  font-size: 0.8rem;
 }
 
 #c3-3 {
