@@ -1,3 +1,3 @@
 function foo(id) {
-    $("#" + id).append("<h1>New Heading</h1>");
+    $("#" + id).append("<p class='stat__message'>Successful Connection</p>");
 }

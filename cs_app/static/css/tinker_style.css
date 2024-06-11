@@ -17,6 +17,18 @@ html {
   width: 100%;
   height: calc(15% - 0.5rem);
   margin: 0.5rem 0.5rem 0rem 0.5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#c1 > h1 {
+  margin-left: 1rem;
+}
+
+#c1 > button {
+  margin-right: 1rem;
 }
 
 #c2 {
@@ -60,7 +72,8 @@ html {
 }
 
 #c2 > h3,
-#c3-2 > h3 {
+#c3-2 > h3,
+#c3-3 > h3 {
   margin: 0.5rem 0rem 0.5rem 0.5rem;
 }
 
@@ -110,6 +123,10 @@ html {
 
   background-color: rgb(255, 255, 255);
   border-radius: 0px 0px 5px 5px;
+}
+
+.stat__message {
+  margin: 1rem 0rem 0rem 2rem;
 }
 
 .scroller {
