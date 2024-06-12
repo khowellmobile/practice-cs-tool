@@ -15,8 +15,8 @@ html {
 
 #c1 {
   width: 100%;
-  height: calc(15% - 0.5rem);
-  margin: 0.5rem 0.5rem 0rem 0.5rem;
+  height: calc(15%);
+  margin: 0rem 0rem 0rem 0rem;
 
   display: flex;
   justify-content: space-between;
@@ -32,9 +32,9 @@ html {
 }
 
 #c2 {
-  width: calc(50% - 0.75rem);
-  height: calc(85% - 1rem);
-  margin: 0.5rem 0.25rem 0.5rem 0.5rem;
+  width: calc(50% - 0.25rem);
+  height: calc(85% - 0.5rem);
+  margin: 0.5rem 0.25rem 0rem 0rem;
 
   display: inline-block;
 }
@@ -84,22 +84,28 @@ html {
 }
 
 #c3 {
-  width: calc(50% - 0.75rem);
-  height: calc(85% - 1rem);
-  margin: 0.5rem 0.5rem 0.5rem 0.25rem;
+  width: calc(50% - 0.25rem);
+  height: calc(85% - 0.5rem);
+  margin: 0.5rem 0rem 0rem 0.25rem;
 
   display: flex;
   flex-direction: column;
 }
 
 #c3-1 {
-  width: 100%;
-  height: 10%;
+  width: calc(100%);
+  height: calc(12%);
+
+  background-color: white;
+}
+
+#but{
+  margin-bottom: 0.25rem;
 }
 
 #c3-2 {
   width: 100%;
-  height: 30%;
+  height: 28%;
 
   background-color: rgb(167, 191, 255);
   border-radius: 5px 5px 0px 0px;
@@ -119,7 +125,7 @@ html {
 
 #c3-3 {
   width: 100%;
-  height: 65%;
+  height: 60%;
 
   background-color: rgb(255, 255, 255);
   border-radius: 0px 0px 5px 5px;
@@ -130,5 +136,5 @@ html {
 }
 
 .scroller {
-  overflow-y: auto;
+  overflow-y:auto;
 }

@@ -4,17 +4,21 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link
-            rel="stylesheet"
-            href="{% static 'css/tinker_style.css' %}"
-        />
+        <link rel="stylesheet" href="{% static 'css/tinker_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
-    <body>
-        
 
+    <body>
+        <p class="login-signifier">Welcome, {{ user.first_name }}</p>
         <div class="container-1">
+            <button
+                id="logout-button"
+                class="button-3"
+                onclick="redirectTo('/logout/')"
+            >
+                Logout
+            </button>
             <div id="content">
                 <div id="c1" class="card">
                     <h1>Change Database</h1>
@@ -68,9 +72,7 @@
                         required=""
                     />
                     <br />
-                    <label for="input_user" class="form__label"
-                        >Username</label
-                    >
+                    <label for="input_user" class="form__label">Username</label>
                     <input
                         type="text"
                         class="form__input"
@@ -90,31 +92,37 @@
                         required=""
                     />
                     <p id="form__note">
-                        Note: Leaving the Username and Password Blank will
-                        use Windows Authentication instead
+                        Note: Leaving the Username and Password Blank will use
+                        Windows Authentication instead
                     </p>
                 </div>
-                <br>
+                <br />
                 <div id="c3" class="card">
-                    <div id="c3-1"></div>
-                    <div id="c3-2">
-                        <h3> Currently Connected To:</h3>
+                    <div id="c3-1">
+                        <button
+                            id="but"
+                            class="button-3"
+                            onclick="getNewConfig()"
+                        >
+                            Connect Database
+                        </button>
+                    </div>
+                    <div id="c3-2" class="">
+                        <h3>Currently Connected To:</h3>
                         <h4>Database Engine:</h4>
                         <p>Hello</p>
-                        <br>
+                        <br />
                         <h4>Database Name:</h4>
                         <p>Hello</p>
-                        <br>
+                        <br />
                         <h4>Database Host:</h4>
                         <p>Hello</p>
                     </div>
-                    <div id="c3-3" class="scroller"  onclick="foo('c3-3')">
+                    <div id="c3-3" class="scroller" onclick="foo('c3-3')">
                         <h3>Status / Messages:</h3>
                     </div>
                 </div>
             </div>
-        </div>
-
         </div>
         <!-- Links to .js files and getting csrf_token -->
         <script src="{% static 'js/common_script.js' %}"></script>
