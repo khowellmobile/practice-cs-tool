@@ -1,1 +1,29 @@
+html {
+  margin: 0px;
+  padding: 0px;
+
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+#content {
+  width: 80%;
+  height: 80%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#content > div {
+  width: 100%;
+  height: calc(100% / 4);
+
+  margin: 0.25em 0rem 0.25 0rem;
+
+  outline: solid purple 1px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
