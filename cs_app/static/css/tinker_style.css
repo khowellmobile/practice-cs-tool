@@ -1,11 +1,16 @@
 html {
-  font-size: 16px;
   margin: 0px;
   padding: 0px;
+
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
 }
 
-#content {
+h3 {
+  margin: 0.5rem 0rem 0.5rem 0.5rem;
+}
+
+#database-change {
   width: 80%;
   height: 70%;
 
@@ -13,7 +18,7 @@ html {
   flex-wrap: wrap;
 }
 
-#c1 {
+#database-change__header {
   width: 100%;
   height: calc(15%);
   margin: 0rem 0rem 0rem 0rem;
@@ -23,15 +28,15 @@ html {
   align-items: center;
 }
 
-#c1 > h1 {
+#database-change__header > h1 {
   margin-left: 1rem;
 }
 
-#c1 > button {
+#database-change__header > button {
   margin-right: 1rem;
 }
 
-#c2 {
+#database-change__form  {
   width: calc(50% - 0.25rem);
   height: calc(85% - 0.5rem);
   margin: 0.5rem 0.25rem 0rem 0rem;
@@ -71,19 +76,13 @@ html {
   transform: translateX(-11rem);
 }
 
-#c2 > h3,
-#c3-2 > h3,
-#c3-3 > h3 {
-  margin: 0.5rem 0rem 0.5rem 0.5rem;
-}
-
 #form__note {
   margin: 4rem 0rem 0.5rem 0.5rem;
 
   font-size: 0.8rem;
 }
 
-#c3 {
+#database-change__info {
   width: calc(50% - 0.25rem);
   height: calc(85% - 0.5rem);
   margin: 0.5rem 0rem 0rem 0.25rem;
@@ -92,38 +91,55 @@ html {
   flex-direction: column;
 }
 
-#c3-1 {
+#database-change__info-button {
   width: calc(100%);
   height: calc(12%);
 
   background-color: white;
 }
 
-#but{
+#database-change__info-button > button {
   margin-bottom: 0.25rem;
 }
 
-#c3-2 {
+#database-change__current-connection {
   width: 100%;
   height: 28%;
 
   background-color: rgb(167, 191, 255);
   border-radius: 5px 5px 0px 0px;
+
+  display: flex;
 }
 
-#c3-2 > h4 {
+#database-change__current-connection__info {
+  width: 70%;
+  height: 100%;
+}
+
+#database-change__current-connection__info > h4 {
   margin-left: 1.5rem;
   margin-right: 0.25rem;
+
   display: inline;
 }
 
-#c3-2 > p {
-  display: inline;
-
+#database-change__current-connection__info > p {
   font-size: 0.8rem;
+
+  display: inline;
 }
 
-#c3-3 {
+#database-change__current-connection__spinner {
+  width: 30%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#database-change__status {
   width: 100%;
   height: 60%;
 
@@ -136,5 +152,23 @@ html {
 }
 
 .scroller {
-  overflow-y:auto;
+  overflow-y: auto;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3d76f1;
+  animation: spin 1.5s linear infinite;
+
+  visibility: hidden;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

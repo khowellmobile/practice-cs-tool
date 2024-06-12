@@ -19,14 +19,14 @@
             >
                 Logout
             </button>
-            <div id="content">
-                <div id="c1" class="card">
+            <div id="database-change">
+                <div id="database-change__header" class="card">
                     <h1>Change Database</h1>
                     <button class="button-3" onclick="redirectTo('/home/')">
                         Back to home
                     </button>
                 </div>
-                <div id="c2" class="card">
+                <div id="database-change__form" class="card">
                     <h3>Form:</h3>
                     <label for="input_engine" class="form__label"
                         >Database Engine</label
@@ -97,8 +97,8 @@
                     </p>
                 </div>
                 <br />
-                <div id="c3" class="card">
-                    <div id="c3-1">
+                <div id="database-change__info" class="card">
+                    <div id="database-change__info-button">
                         <button
                             id="but"
                             class="button-3"
@@ -107,18 +107,27 @@
                             Connect Database
                         </button>
                     </div>
-                    <div id="c3-2" class="">
-                        <h3>Currently Connected To:</h3>
-                        <h4>Database Engine:</h4>
-                        <p>Hello</p>
-                        <br />
-                        <h4>Database Name:</h4>
-                        <p>Hello</p>
-                        <br />
-                        <h4>Database Host:</h4>
-                        <p>Hello</p>
+                    <div id="database-change__current-connection">
+                        <div id="database-change__current-connection__info">
+                            <h3>Currently Connected To:</h3>
+                            <h4>Database Engine:</h4>
+                            <p>Hello</p>
+                            <br />
+                            <h4>Database Name:</h4>
+                            <p>Hello</p>
+                            <br />
+                            <h4>Database Host:</h4>
+                            <p>Hello</p>
+                        </div>
+                        <div id="database-change__current-connection__spinner">
+                            <div class="spinner"></div>
+                        </div>
                     </div>
-                    <div id="c3-3" class="scroller" onclick="foo('c3-3')">
+                    <div
+                        id="database-change__status"
+                        class="scroller"
+                        onclick="foo('database-change__status')"
+                    >
                         <h3>Status / Messages:</h3>
                     </div>
                 </div>
