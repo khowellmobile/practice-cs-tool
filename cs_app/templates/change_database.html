@@ -4,13 +4,11 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link
-            rel="stylesheet"
-            href="{% static 'css/change_database_style.css' %}"
-        />
+        <link rel="stylesheet" href="{% static 'css/change_database_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
+
     <body>
         <p class="login-signifier">Welcome, {{ user.first_name }}</p>
         <div class="container-1">
@@ -21,121 +19,118 @@
             >
                 Logout
             </button>
-            <div id="content" class="outline">
-                <div id="content__upper" class="card">
+            <div id="database-change">
+                <div id="database-change__header" class="card">
                     <h1>Change Database</h1>
                     <button class="button-3" onclick="redirectTo('/home/')">
                         Back to home
                     </button>
                 </div>
-                <div id="content__lower" class="outlineG">
-                    <div id="form" class="card">
-                        <h2>Form:</h2>
-                        <label for="input_engine" class="form__label"
-                            >Database Engine</label
+                <div id="database-change__form" class="card">
+                    <h3>Form:</h3>
+                    <label for="input_engine" class="form__label"
+                        >Database Engine</label
+                    >
+                    <input
+                        type="text"
+                        class="form__input"
+                        id="input_engine"
+                        placeholder="Database Engine"
+                        required=""
+                    />
+                    <br />
+                    <label for="input_name" class="form__label"
+                        >Database Name</label
+                    >
+                    <input
+                        type="text"
+                        class="form__input"
+                        id="input_name"
+                        placeholder="Database Name"
+                        required=""
+                    />
+                    <br />
+                    <label for="input_host" class="form__label"
+                        >Database Host</label
+                    >
+                    <input
+                        type="text"
+                        class="form__input"
+                        id="input_host"
+                        placeholder="Database Host"
+                        required=""
+                    />
+                    <h3>Options:</h3>
+                    <label for="input_driver" class="form__label"
+                        >Database Driver</label
+                    >
+                    <input
+                        type="text"
+                        class="form__input"
+                        id="input_driver"
+                        placeholder="Database Driver"
+                        required=""
+                    />
+                    <br />
+                    <label for="input_user" class="form__label">Username</label>
+                    <input
+                        type="text"
+                        class="form__input"
+                        id="input_user"
+                        placeholder="Username"
+                        required=""
+                    />
+                    <br />
+                    <label for="input_password" class="form__label"
+                        >Password</label
+                    >
+                    <input
+                        type="password"
+                        class="form__input"
+                        id="input_password"
+                        placeholder="Password"
+                        required=""
+                    />
+                    <p id="form__note">
+                        Note: Leaving the Username and Password Blank will use
+                        Windows Authentication instead
+                    </p>
+                </div>
+                <br />
+                <div id="database-change__info" class="card">
+                    <div id="database-change__info-button">
+                        <button
+                            id="but"
+                            class="button-3"
+                            onclick="getNewConfig()"
                         >
-                        <input
-                            type="text"
-                            class="form__input"
-                            id="input_engine"
-                            placeholder="Database Engine"
-                            required=""
-                        />
-                        <br />
-                        <label for="input_name" class="form__label"
-                            >Database Name</label
-                        >
-                        <input
-                            type="text"
-                            class="form__input"
-                            id="input_name"
-                            placeholder="Database Name"
-                            required=""
-                        />
-                        <br />
-                        <label for="input_host" class="form__label"
-                            >Database Host</label
-                        >
-                        <input
-                            type="text"
-                            class="form__input"
-                            id="input_host"
-                            placeholder="Database Host"
-                            required=""
-                        />
-
-                        <h2>Options:</h2>
-
-                        <label for="input_driver" class="form__label"
-                            >Database Driver</label
-                        >
-                        <input
-                            type="text"
-                            class="form__input"
-                            id="input_driver"
-                            placeholder="Database Driver"
-                            required=""
-                        />
-                        <br />
-                        <label for="input_user" class="form__label"
-                            >Username</label
-                        >
-                        <input
-                            type="text"
-                            class="form__input"
-                            id="input_user"
-                            placeholder="Username"
-                            required=""
-                        />
-                        <br />
-                        <label for="input_password" class="form__label"
-                            >Password</label
-                        >
-                        <input
-                            type="password"
-                            class="form__input"
-                            id="input_password"
-                            placeholder="Password"
-                            required=""
-                        />
-                        <p id="form__note">
-                            Note: Leaving the Username and Password Blank will
-                            use Windows Authentication instead
-                        </p>
+                            Connect Database
+                        </button>
                     </div>
-                    <div id="connection-info" class="card">
-                        <div id="connection-info__button-div">
-                            <button class="button-3" onclick="getNewConfig()">
-                                Connect Database
-                            </button>
+                    <div id="database-change__current-connection">
+                        <div id="database-change__current-connection__info">
+                            <h3>Currently Connected To:</h3>
+                            <h4>Database Engine:</h4>
+                            <p id="curr_engine">
+                                {{ db_info.db_engine }}
+                            </p>
+                            <br />
+                            <h4>Database Name:</h4>
+                            <p id="curr_name">{{ db_info.db_name }}</p>
+                            <br />
+                            <h4>Database Host:</h4>
+                            <p id="curr_host">{{ db_info.db_host }}</p>
                         </div>
-                        <div id="connection-info__status" class="outlineR">
-                            <div>
-                                <div id="connection-info__status__db-info">
-                                    <h2>Currently Connected To:</h2>
-                                    <h3>Database Engine:</h3>
-                                    <p id="curr_engine">
-                                        {{ db_info.db_engine }}
-                                    </p>
-                                    <br />
-                                    <h3>Database Name:</h3>
-                                    <p id="curr_name">{{ db_info.db_name }}</p>
-                                    <br />
-                                    <h3>Database Host:</h3>
-                                    <p id="curr_host">{{ db_info.db_host }}</p>
-                                    <br />
-                                </div>
-                                <div>
-                                    <div class="spinner"></div>
-                                </div>
-                            </div>
-                            <div
-                                class="scroller outline"
-                                id="connection-info__status__log"
-                            >
-                                <h2>Status / Messages:</h2>
-                            </div>
+                        <div id="database-change__current-connection__spinner">
+                            <div class="spinner"></div>
                         </div>
+                    </div>
+                    <div
+                        id="database-change__status"
+                        class="scroller"
+                        onclick="foo('database-change__status')"
+                    >
+                        <h3>Status / Messages:</h3>
                     </div>
                 </div>
             </div>
@@ -149,3 +144,4 @@
         </script>
     </body>
 </html>
+

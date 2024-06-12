@@ -1,71 +1,54 @@
 html {
-  font-size: 20px;
-}
+  margin: 0px;
+  padding: 0px;
 
-@media (max-width: 1634px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 1635px) {
-  html {
-    font-size: 20px;
-  }
-}
-
-* {
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
 }
 
-#content {
+h3 {
+  margin: 0.5rem 0rem 0.5rem 0.5rem;
+}
+
+#database-change {
   width: 80%;
   height: 70%;
 
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
-#content__upper {
-  margin-bottom: 5px;
+#database-change__header {
+  width: 100%;
+  height: 15%;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#content__upper > button {
-  height: 50%;
-  margin-right: 1rem;
-}
-
-#content__upper > h1 {
+#database-change__header > h1 {
   margin-left: 1rem;
 }
 
-#content__lower {
-  width: 100%;
-  height: 100%;
-  margin-top: 5px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#database-change__header > button {
+  margin-right: 1rem;
 }
 
-#form {
-  width: 50%;
-  height: 100%;
-  margin-right: 5px;
+#database-change__form  {
+  width: calc(50% - 0.25rem);
+  height: calc(85% - 0.5rem);
+  margin: 0.5rem 0.25rem 0rem 0rem;
+
+  display: inline-block;
 }
 
 .form__label {
   width: 10rem;
-  margin-left: 1.2rem;
-  margin-top: 0.7rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
 
-  font-family: "Roboto", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: all 0.5s;
 
   display: inline-block;
@@ -73,11 +56,10 @@ html {
 
 .form__input {
   width: 40%;
-  margin-top: 15px;
-  padding: 0.7rem 1.2rem;
+  margin: 0.5rem 0rem 0rem 0.5rem;
+  padding: 0.5rem 1rem;
 
-  font-family: "Roboto", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #333;
   background-color: rgb(255, 255, 255);
   border-radius: 0.2rem;
@@ -93,43 +75,35 @@ html {
   transform: translateX(-11rem);
 }
 
-#form > h2 {
-  width: 50%;
-  margin: 1.2rem 0px 0px 1.2rem;
-}
-
 #form__note {
-  margin: 2rem 0px 0px 1.2rem;
+  margin: 4rem 0rem 0.5rem 0.5rem;
 
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
-#connection-info {
-  width: 50%;
-  height: 100%;
-  margin-left: 5px;
-}
-
-#connection-info__button-div {
-  height: 10%;
-  margin: 0px;
-}
-
-#connection-info__status {
-  height: 100%;
-  max-height: 100%;
-  margin: 0px;
-
+#database-change__info {
+  width: calc(50% - 0.25rem);
+  height: calc(85% - 0.5rem);
+  margin: 0.5rem 0rem 0rem 0.25rem;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-#connection-info__status > div:nth-child(1) {
+#database-change__info-button {
   width: 100%;
-  height: 27%;
+  height: 12%;
+
+  background-color: white;
+}
+
+#database-change__info-button > button {
+  margin-bottom: 0.25rem;
+}
+
+#database-change__current-connection {
+  width: 100%;
+  height: 28%;
 
   background-color: rgb(167, 191, 255);
   border-radius: 5px 5px 0px 0px;
@@ -137,53 +111,47 @@ html {
   display: flex;
 }
 
-#connection-info__status__db-info {
-  width: 60%;
+#database-change__current-connection__info {
+  width: 70%;
   height: 100%;
+}
+
+#database-change__current-connection__info > h4 {
+  margin-left: 1.5rem;
+  margin-right: 0.25rem;
 
   display: inline;
 }
 
-#connection-info__status__db-info + div {
-  width: 40%;
+#database-change__current-connection__info > p {
+  font-size: 0.8rem;
+
+  display: inline;
+}
+
+#database-change__current-connection__spinner {
+  width: 30%;
   height: 100%;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
-#connection-info__status__db-info > h2,
-#connection-info__status__log > h2 {
-  margin: 1rem 0px 0.5rem 1rem;
-}
-
-#connection-info__status__db-info > p {
-  font-size: 0.9rem;
-
-  display: inline;
-}
-
-#connection-info__status__db-info > h3 {
-  margin: 0rem 0rem 0rem 2rem;
-
-  display: inline;
-}
-
-#connection-info__status__log {
+#database-change__status {
   width: 100%;
-  height: 73%;
+  height: 60%;
 
   background-color: rgb(255, 255, 255);
   border-radius: 0px 0px 5px 5px;
 }
 
-.scroller {
-  overflow-y: auto;
-}
-
 .stat__message {
   margin: 1rem 0rem 0rem 2rem;
+}
+
+.scroller {
+  overflow-y: auto;
 }
 
 .spinner {
