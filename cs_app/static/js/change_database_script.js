@@ -50,13 +50,13 @@ function dbChangeHandler(success, message) {
     setSpinnerVisibility(false);
 
     if (success) {
-        $("#connection-info__status__log").append(
+        $("#database-change__status").append(
             "<p class='stat__message'>Successful Connection</p>"
         );
         getDBInfoFromAlias(message.db_alias);
     } else {
         if (message.responseJSON) {
-            $("#connection-info__status__log").append(
+            $("#database-change__status").append(
                 `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
             );
         } else {

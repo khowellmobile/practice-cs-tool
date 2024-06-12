@@ -111,13 +111,15 @@
                         <div id="database-change__current-connection__info">
                             <h3>Currently Connected To:</h3>
                             <h4>Database Engine:</h4>
-                            <p>Hello</p>
+                            <p id="curr_engine">
+                                {{ db_info.db_engine }}
+                            </p>
                             <br />
                             <h4>Database Name:</h4>
-                            <p>Hello</p>
+                            <p id="curr_name">{{ db_info.db_name }}</p>
                             <br />
                             <h4>Database Host:</h4>
-                            <p>Hello</p>
+                            <p id="curr_host">{{ db_info.db_host }}</p>
                         </div>
                         <div id="database-change__current-connection__spinner">
                             <div class="spinner"></div>
