@@ -9,19 +9,41 @@ html {
 #content {
     width: 90%;
     height: 90%;
+
+    display: flex;
 }
 
 #c1 {
-    width: 10%;
+    width: 5%;
     height: 100%;
+
+    transition: all 0.5s;
 }
 
 #c2 {
-    width: 90%;
-    height: 10%;
+    width: 95%;
+    height: 100%;
+    transition: all 0.5s;
 }
 
-#c3 {
-    width: 90%;
-    height: 90%;
+#c2-1 {
+    width: 100%;
+    height: 20%;
+}
+
+#c2-2 {
+    width: 100%;
+    height: 80%;
+
+    box-sizing: border-box;
+    border: 5px solid black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#c2-2-1 {
+    width: 80%;
+    height: 80%;
 }
