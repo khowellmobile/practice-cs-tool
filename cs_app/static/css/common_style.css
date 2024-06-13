@@ -127,3 +127,11 @@ a {
 .outlineG {
     outline: solid 1px green;
 }
+
+.outlineP {
+    outline: solid 1px purple;
+}
+
+.outlineO {
+    outline: solid 1px orange;
+}
