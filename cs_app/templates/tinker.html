@@ -10,30 +10,131 @@
     </head>
 
     <body>
-        
         <div class="container-1">
-            <div id="content" class="outline">
-                <div id="c1">
+            <p class="login-signifier">Welcome, {{ user.first_name }}</p>
+            <button
+                id="logout-button"
+                class="button-3"
+                onclick="redirectTo('/logout/')"
+            >
+                Logout
+            </button>
+            <div id="content" class="card">
+                <div>
                     <h1>Your Information</h1>
-                    <h1>Button</h1>
+                    <button
+                        class="button-3 content__button"
+                        onclick="redirectTo('/home/')"
+                    >
+                        Back to home
+                    </button>
                 </div>
-                <div id="c2">
-                    <h3>Your Name</h3>
-                    <h3>Button</h3>
+                <hr />
+                <div>
+                    <p id="name_text">
+                        Name: {{ user.first_name }} {{user.last_name }}
+                    </p>
+                    <form
+                        id="update_name"
+                        method="POST"
+                        style="display: none"
+                        action
+                    >
+                        <input
+                            type="text"
+                            id="first_name"
+                            class="form__input narrow__input"
+                            value="{{ user.first_name }}"
+                        />
+                        <input
+                            type="text"
+                            id="last_name"
+                            class="form__input narrow__input"
+                            value="{{ user.last_name }}"
+                        />
+                        <button
+                            id="but"
+                            type="button"
+                            class="button-3"
+                            onclick="submitForm('name')"
+                        >
+                            Save
+                        </button>
+                    </form>
+                    <button
+                        class="button-3 content__button"
+                        onclick="toggleForm('name')"
+                    >
+                        Change
+                    </button>
                 </div>
-                <div id="c3">
-                    <h3>Email</h3>
-                    <h3>Button</h3>
+                <hr />
+                <div>
+                    <p id="email_text">Email: {{ user.email }}</p>
+                    <form
+                        id="update_email"
+                        method="POST"
+                        style="display: none"
+                        action
+                    >
+                        <input
+                            type="text"
+                            id="email"
+                            class="form__input wide__input"
+                            value="{{ user.email}}"
+                        />
+                        <button
+                            type="button"
+                            class="button-3"
+                            onclick="submitForm('email')"
+                        >
+                            Save
+                        </button>
+                    </form>
+                    <button
+                        class="button-3 content__button"
+                        onclick="toggleForm('email')"
+                    >
+                        Change
+                    </button>
                 </div>
-                <div id="c4">
-                    <h3>Password</h3>
-                    <h3>Button</h3>
+                <hr />
+                <div>
+                    <p id="password_text">
+                        Password: The tool does not save raw text passwords.
+                    </p>
+                    <form
+                        id="update_password"
+                        method="POST"
+                        style="display: none"
+                        action
+                    >
+                        <input
+                            type="text"
+                            class="form__input wide__input"
+                            id="password"
+                        />
+                        <button
+                            type="button"
+                            class="button-3"
+                            onclick="submitForm('password')"
+                        >
+                            Save
+                        </button>
+                    </form>
+                    <button
+                        class="button-3 content__button"
+                        onclick="toggleForm('password')"
+                    >
+                        Change
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- Links to .js files and getting csrf_token -->
         <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/change_account_script.js' %}"></script>
         <script src="{% static 'js/tinker_script.js' %}"></script>
         <script>
             // Easier to get csrf token from template
