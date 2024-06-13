@@ -8,17 +8,18 @@ html {
 
 p {
     width: 40%;
-    margin-left: 1rem;
+    margin-left: 2rem;
 
     font-size: 1.1rem;
 }
 
 h1 {
-    margin-left: 1rem;
+    margin-left: 2rem;
 }
 
 hr {
-    width: 100%;
+    width: 95%;
+    align-self: center;
 }
 
 #content {
@@ -41,7 +42,7 @@ hr {
 }
 
 .content__button {
-    margin-right: 1rem;
+    margin-right: 2rem;
 }
 
 form {
