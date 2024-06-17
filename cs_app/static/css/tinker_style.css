@@ -82,7 +82,7 @@ html {
 
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-evenly;
 }
 
 #c2-2 {
@@ -142,8 +142,6 @@ html {
     transform: translateY(0);
 }
 
-#b1 {
-    width: 5rem;
-    height: 2.5rem;
+#c2-1-2 > button {
     margin-left: 1rem;
 }
