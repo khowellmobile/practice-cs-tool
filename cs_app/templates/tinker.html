@@ -12,14 +12,54 @@
     <body>
         <div class="container-1 outline">
             <div id="content" class="outlineG">
-                <div id="c1" class="card outlineP" onclick="toggleSize('c1', '5', '20')"></div>
+                <div
+                    id="c1"
+                    class="card outlineP"
+                    onclick="toggleSize('c1', '3', '20')"
+                ></div>
                 <div id="c2">
                     <div id="c2-1" class="card outlineP">
+                        <div id="c2-1-1" class="outlineR">
+                            <input
+                                type="date"
+                                id="start_date"
+                                class="form__input"
+                                name="start_date"
+                                required
+                            />
+
+                            <p>to</p>
+                            <input
+                                type="date"
+                                id="end_date"
+                                class="form__input"
+                                name="end_date"
+                                required
+                            />
+
+                            <select
+                                id="time_range"
+                                class="form__input"
+                                name="time_range"
+                            >
+                                <option value="ytd">YTD</option>
+                                <option value="last_year">Last Year</option>
+                                <option value="all_time">All Time</option>
+                                <option value="custom" selected>Custom</option>
+                            </select>
+
+                            <button id="b1" class="but" onclick="generateTable()">
+                                Create
+                            </button>
+                        </div>
+                        <div id="c2-1-2" class="outlineR">
+                            <button class="button-3" onclick="redirectTo('/home/')">
+                                Back to home
+                            </button>
+                        </div>
                     </div>
                     <div id="c2-2" class="card outlineP">
-                        <div id="c2-2-1" class="outlineG">
-                            
-                        </div>
+                        <div id="c2-2-1" class="outlineG"></div>
                     </div>
                 </div>
             </div>

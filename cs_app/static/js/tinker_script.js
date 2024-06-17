@@ -40,6 +40,6 @@ function toggleSize(eId, smallPercent, largePercent) {
         e2.css("width", "80%");
     } else {
         e.css("width", smallPercent + "%");
-        e2.css("width", "95%");
+        e2.css("width", "97%");
     }
 }

@@ -14,29 +14,84 @@ html {
 }
 
 #c1 {
-    width: 5%;
+    width: 3%;
     height: 100%;
 
     transition: all 0.5s;
 }
 
 #c2 {
-    width: 95%;
+    width: 97%;
     height: 100%;
     transition: all 0.5s;
 }
 
 #c2-1 {
     width: 100%;
-    height: 20%;
+    height: 10%;
+
+    display: flex;
+}
+
+#c2-1-1 {
+    width: 50%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+}
+
+.form__input {
+    font-size: 1rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    border: none;
+    border-bottom: 0.3rem solid transparent;
+}
+
+#start_date,
+#end_date {
+    width: 9rem;
+    height: 2.5rem;
+    margin: 0rem 1rem;
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#time_range {
+    width: 9rem;
+    height: 2.5rem;
+
+    box-sizing: border-box;
+}
+
+#c2-1-2 {
+    width: 50%;
+    height: 100%;
+    padding: 1rem;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: end;
 }
 
 #c2-2 {
     width: 100%;
-    height: 80%;
+    height: 90%;
+
+    padding: 2rem 0.25rem 0.25rem 0.25rem;
 
     box-sizing: border-box;
-    border: 5px solid black;
 
     display: flex;
     justify-content: center;
@@ -44,6 +99,51 @@ html {
 }
 
 #c2-2-1 {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
+}
+
+.but {
+    color: rgba(0, 0, 0, 0.85);
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
+        Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    transition: all 250ms;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.but:hover,
+.but:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.but:hover {
+    transform: translateY(-1px);
+}
+
+.but:active {
+    color: rgba(0, 0, 0, 0.65);
+    background-color: #f0f0f1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    transform: translateY(0);
+}
+
+#b1 {
+    width: 5rem;
+    height: 2.5rem;
+    margin-left: 1rem;
 }
