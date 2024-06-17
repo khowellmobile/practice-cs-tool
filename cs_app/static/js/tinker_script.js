@@ -1,30 +1,6 @@
-function foo(id, size) {
-    $("#" + id).css("width", size);
-}
+const throttledToggleSize = throttle(toggleSize, 500);
 
-/** 
-function toggleSize(elementId, size1, size2) {
-    let delta = 0.01;
-    let parentWidth = $("#content").width();
-    let childWidth = $("#" + elementId).width();
-
-    let width = (childWidth / parentWidth) * 100;
-
-    var sideBar = $("#" + elementId);
-    var c2 = $("#c2");
-
-    if (width <= size1 + delta && width >= size1 - delta) {
-        sideBar.css("width", size2 + "%");
-        c2.css("width", "95%");
-    } else {
-        sideBar.css("width", size1 + "%");
-        c2.css("width", "80%");
-    }
-}
-
-*/
-
-// toggleSize(id, 5, 20);
+// Changes the size of #c1 and #c2 to allow of an expanding history div
 function toggleSize(eId, smallPercent, largePercent) {
     let delta = 0.1;
     let e = $("#" + eId);
@@ -38,8 +14,36 @@ function toggleSize(eId, smallPercent, largePercent) {
     if (cWidth <= lSize - delta) {
         e.css("width", largePercent + "%");
         e2.css("width", "80%");
+        toggleVisible("c1-1");
     } else {
         e.css("width", smallPercent + "%");
         e2.css("width", "97%");
+        toggleVisible("c1-1");
+    }
+}
+
+// Toggles the visibility of an element
+function toggleVisible(id) {
+    let e = $("#" + id);
+
+    if (e.css("visibility") === "visible") {
+        e.css("visibility", "hidden");
+    } else {
+        e.css("visibility", "visible");
+    }
+}
+
+// Throttle function to avoid user spamming calls
+function throttle(func, delay) {
+    let throttled = false;
+
+    return function() {
+        if (!throttled) {
+            throttled = true;
+            func.apply(this, arguments);
+            setTimeout(() => {
+                throttled=false;
+            }, delay);
+        }
     }
 }
