@@ -6,6 +6,7 @@ html {
 * {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
 #content {
@@ -19,10 +20,8 @@ html {
     width: 3%;
     height: 100%;
 
-    box-sizing: border-box;
-
+    background-color: rgb(167, 191, 255);
     transition: all 0.5s;
-    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
@@ -39,18 +38,25 @@ html {
 }
 
 #c1-2-1 {
-    height: 5%;
     width: 100%;
+    height: 5%;
 }
 
 #c1-2 {
     width: 90%;
     height: calc(90% - 2rem);
+    margin: 1rem 0rem;
+
+    background-color: white;
+    border-radius: .2rem;
 
     visibility: hidden;
-
-    margin: 1rem 0rem;
     overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#c1-2::-webkit-scrollbar:horizontal {
+    display: none;
 }
 
 #expandBut {
@@ -62,6 +68,7 @@ html {
     width: 97%;
     height: 100%;
     margin-left: 1rem;
+
     transition: all 0.5s;
 }
 
@@ -69,14 +76,14 @@ html {
     width: 100%;
     height: 10%;
 
+    background-color: rgb(167, 191, 255);
+
     display: flex;
 }
 
 #c2-1-1 {
     width: 50%;
     height: 100%;
-
-    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -97,8 +104,6 @@ html {
     margin: 0rem 1rem;
     padding: 0.5rem 2rem 0.5rem 0.5rem;
 
-    box-sizing: border-box;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,16 +113,12 @@ html {
     width: 9rem;
     height: 2.5rem;
     padding: 0.5rem 2rem 0.5rem 0.5rem;
-
-    box-sizing: border-box;
 }
 
 #c2-1-2 {
     width: 50%;
     height: 100%;
     padding: 1rem;
-
-    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -126,11 +127,11 @@ html {
 
 #c2-2 {
     width: 100%;
-    height: 90%;
+    height: calc(90% - 1rem);
+    margin-top: 1rem;
+    padding: 2rem 1rem 1rem 1rem;
 
-    padding: 2rem 0.25rem 0.25rem 0.25rem;
-
-    box-sizing: border-box;
+    background-color: rgb(127, 128, 131);
 
     display: flex;
     justify-content: center;
@@ -140,6 +141,9 @@ html {
 #c2-2-1 {
     width: 100%;
     height: 100%;
+
+    background-color: white;
+    border-radius: 0.2rem;
 }
 
 .but {
@@ -148,7 +152,7 @@ html {
     border: none;
     border-radius: 0.25rem;
     box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-    box-sizing: border-box;
+
     cursor: pointer;
     font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
         Helvetica, Arial, sans-serif;
