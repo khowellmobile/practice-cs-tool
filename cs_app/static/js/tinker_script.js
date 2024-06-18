@@ -33,14 +33,10 @@ function toggleSizeButton(goingBig) {
     let c2 = $(".symbol");
 
     if (goingBig) {
-        c1.css("opacity", "1");
         c1.css("display", "flex");
-        c2.css("opacity", "0");
         c2.css("display", "none");
     } else {
-        c1.css("opacity", "0");
         c1.css("display", "none");
-        c2.css("opacity", "1");
         c2.css("display", "flex");
     }
 }
