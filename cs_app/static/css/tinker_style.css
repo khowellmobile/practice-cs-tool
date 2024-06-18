@@ -4,7 +4,7 @@ html {
 }
 
 * {
-    
+    margin: 0px;
     padding: 0px;
 }
 
@@ -45,9 +45,9 @@ html {
 
 #c1-2 {
     width: 90%;
-    height: 90%;
+    height: calc(90% - 2rem);
 
-    box-sizing: border-box;
+    margin: 1rem 0rem;
 }
 
 #expandBut {
@@ -55,7 +55,7 @@ html {
     height: 2.5rem;
 
     position: relative;
-    left: 2rem;
+    left: 2.5rem;
 }
 
 #c2 {
