@@ -47,15 +47,15 @@ html {
     width: 90%;
     height: calc(90% - 2rem);
 
+    visibility: hidden;
+
     margin: 1rem 0rem;
+    overflow-y: auto;
 }
 
 #expandBut {
     width: 90%;
     height: 2.5rem;
-
-    position: relative;
-    left: 2.5rem;
 }
 
 #c2 {

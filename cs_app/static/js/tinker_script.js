@@ -27,7 +27,7 @@ function toggleVisible(id) {
     let e = $("#" + id);
 
     if (e.css("visibility") === "visible") {
-        e.css("visibility", "visible");
+        e.css("visibility", "hidden");
     } else {
         e.css("visibility", "visible");
     }
@@ -37,13 +37,13 @@ function toggleVisible(id) {
 function throttle(func, delay) {
     let throttled = false;
 
-    return function() {
+    return function () {
         if (!throttled) {
             throttled = true;
             func.apply(this, arguments);
             setTimeout(() => {
-                throttled=false;
+                throttled = false;
             }, delay);
         }
-    }
+    };
 }
