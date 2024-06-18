@@ -22,12 +22,18 @@ function toggleSize(eId, smallPercent, largePercent) {
     }
 }
 
+function foo() {
+    for (let i = 0; i < 10; i++) {
+        $("#c1-2").append("<button class='but historyButton'>LY</button>")
+    }
+}
+
 // Toggles the visibility of an element
 function toggleVisible(id) {
     let e = $("#" + id);
 
     if (e.css("visibility") === "visible") {
-        e.css("visibility", "hidden");
+        e.css("visibility", "visible");
     } else {
         e.css("visibility", "visible");
     }
