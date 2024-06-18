@@ -14,11 +14,11 @@ function toggleSize(eId, smallPercent, largePercent) {
     if (cWidth <= lSize - delta) {
         e.css("width", largePercent + "%");
         e2.css("width", "80%");
-        toggleVisible("c1-1");
+        toggleVisible("c1-2");
     } else {
         e.css("width", smallPercent + "%");
         e2.css("width", "97%");
-        toggleVisible("c1-1");
+        toggleVisible("c1-2");
     }
 }
 
@@ -27,7 +27,7 @@ function toggleVisible(id) {
     let e = $("#" + id);
 
     if (e.css("visibility") === "visible") {
-        e.css("visibility", "hidden");
+        e.css("visibility", "visible");
     } else {
         e.css("visibility", "visible");
     }
