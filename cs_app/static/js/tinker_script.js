@@ -14,28 +14,34 @@ function toggleSize(eId, smallPercent, largePercent) {
     if (cWidth <= lSize - delta) {
         e.css("width", largePercent + "%");
         e2.css("width", "80%");
-        toggleVisible("c1-2");
+        toggleSizeButton(true);
     } else {
         e.css("width", smallPercent + "%");
         e2.css("width", "97%");
-        toggleVisible("c1-2");
+        toggleSizeButton(false);
     }
 }
 
 function foo() {
     for (let i = 0; i < 10; i++) {
-        $("#c1-2").append("<button class='but historyButton'>LY</button>")
+        $("#c1-2").append("<button class='but historyButton'>LY</button>");
     }
 }
 
-// Toggles the visibility of an element
-function toggleVisible(id) {
-    let e = $("#" + id);
+function toggleSizeButton(goingBig) {
+    let c1 = $(".expandedInfo");
+    let c2 = $(".symbol");
 
-    if (e.css("visibility") === "visible") {
-        e.css("visibility", "visible");
+    if (goingBig) {
+        c1.css("opacity", "1");
+        c1.css("display", "flex");
+        c2.css("opacity", "0");
+        c2.css("display", "none");
     } else {
-        e.css("visibility", "visible");
+        c1.css("opacity", "0");
+        c1.css("display", "none");
+        c2.css("opacity", "1");
+        c2.css("display", "flex");
     }
 }
 

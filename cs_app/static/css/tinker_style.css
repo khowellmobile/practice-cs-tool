@@ -70,6 +70,39 @@ html {
     margin-bottom: 0.5rem;
 }
 
+.expandedInfo {
+    display: none;
+}
+
+.symbol {
+    display: flex;
+}
+
+.repKind {
+    width: 20%;
+    min-width: 4rem;
+    height: 100%;
+}
+
+.repDate {
+    width: 25%;
+    min-width: 4rem;
+    height: 100%;
+    
+}
+
+.repRange {
+    width: 55%;
+    min-width: 9rem;
+    height: 100%;
+}
+
+.repKind, .repDate, .repRange {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #c2 {
     width: 97%;
     height: 100%;
