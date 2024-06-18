@@ -2,7 +2,7 @@ const throttledToggleSize = throttle(toggleSize, 500);
 
 // Changes the size of #c1 and #c2 to allow of an expanding history div
 function toggleSize(eId, smallPercent, largePercent) {
-    let delta = 0.1;
+    let delta = 10;
     let e = $("#" + eId);
     let e2 = $("#c2");
 

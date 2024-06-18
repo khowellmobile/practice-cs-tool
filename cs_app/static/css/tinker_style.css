@@ -1,9 +1,11 @@
 html {
-    margin: 0px;
-    padding: 0px;
-
     font-size: 16px;
     font-family: "Roboto", sans-serif;
+}
+
+* {
+    
+    padding: 0px;
 }
 
 #content {
@@ -17,11 +19,17 @@ html {
     width: 3%;
     height: 100%;
 
+    box-sizing: border-box;
+
     transition: all 0.5s;
     box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#c1-2 {
+#c1-1 {
     width: 100%;
     height: 10%;
 
@@ -30,14 +38,30 @@ html {
     justify-content: center;
 }
 
+#c1-2-1 {
+    height: 5%;
+    width: 100%;
+}
+
+#c1-2 {
+    width: 90%;
+    height: 90%;
+
+    box-sizing: border-box;
+}
+
 #expandBut {
     width: 90%;
     height: 2.5rem;
+
+    position: relative;
+    left: 2rem;
 }
 
 #c2 {
     width: 97%;
     height: 100%;
+    margin-left: 1rem;
     transition: all 0.5s;
 }
 
@@ -86,7 +110,6 @@ html {
     padding: 0.5rem 2rem 0.5rem 0.5rem;
 
     box-sizing: border-box;
-
 }
 
 #c2-1-2 {
