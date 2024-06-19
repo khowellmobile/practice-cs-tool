@@ -3,6 +3,12 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+@media (max-width: 1440px) {
+    html {
+        font-size: 12px; /* Set font size to 12px for smaller screens */
+    }
+}
+
 * {
     margin: 0px;
     padding: 0px;
@@ -67,11 +73,11 @@ html {
     width: 100%;
     height: 2.5rem;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .expandedInfo > div > p {
-    font-size: .85rem;
+    font-size: 0.85rem;
 }
 
 .expandedInfo {
@@ -100,7 +106,9 @@ html {
     height: 2.5rem;
 }
 
-.repKind, .repDate, .repRange {
+.repKind,
+.repDate,
+.repRange {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,7 +132,7 @@ html {
 }
 
 #c2-1-1 {
-    width: 50%;
+    width: 40%;
     height: 100%;
 
     display: flex;
@@ -158,13 +166,13 @@ html {
 }
 
 #c2-1-2 {
-    width: 50%;
+    width: 60%;
     height: 100%;
     padding: 1rem;
 
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-end;
 }
 
 #c2-2 {
