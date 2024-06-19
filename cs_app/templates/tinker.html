@@ -27,8 +27,8 @@
                     <div id="history-menu__expand-button">
                         <button
                             id="expand-button"
-                            class="but"
-                            onclick="throttledToggleSize('history-menu', 'c2', '3', '20')"
+                            class="history-button-style"
+                            onclick="throttledToggleSize('history-menu', 'report-block', '3', '20')"
                         >
                             E
                         </button>
@@ -37,7 +37,7 @@
                         {% for param in data reversed %}
                         <button
                             id="hcard-{{ forloop.counter }}"
-                            class="but history-button"
+                            class="history-button-style history-button"
                             onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')">
                             <p class="symbol">
                                 {% if param.text_field == 'YTD' %} 
@@ -72,9 +72,9 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div id="c2">
-                    <div id="c2-1" class="card">
-                        <div id="c2-1-1">
+                <div id="report-block">
+                    <div id="report-block__menu" class="card">
+                        <div id="report-block__menu__inputs">
                             <input
                                 type="date"
                                 id="start_date"
@@ -103,7 +103,7 @@
                                 <option value="Custom" selected>Custom</option>
                             </select>
                         </div>
-                        <div id="c2-1-2">
+                        <div id="report-block__menu__buttons">
                             <button class="button-3" onclick="generateTable()">
                                 Create Report
                             </button>
@@ -118,7 +118,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="c2-2" class="card">
+                    <div id="report-block__content" class="card">
                         <div id="report"></div>
                     </div>
                 </div>
