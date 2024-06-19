@@ -28,7 +28,7 @@
                         <button
                             id="expandBut"
                             class="but"
-                            onclick="throttledToggleSize('c1', '3', '20')"
+                            onclick="throttledToggleSize('c1', 'c2', '3', '20')"
                         >
                             E
                         </button>
@@ -53,13 +53,13 @@
                                 {% endif %}
                             </p>
                             <div class="expandedInfo">
-                                <div class="repKind">
+                                <div class="repKind outlineR">
                                     <p>{{ param.text_field }}</p>
                                 </div>
-                                <div class="repDate">
+                                <div class="repDate outlineG">
                                     <p>{{ param.date_field }}</p>
                                 </div>
-                                <div class="repRange">
+                                <div class="repRange outlineP">
                                     <p>
                                         Start Date {{ param.parameters_json.start_date }}
                                     </p>
