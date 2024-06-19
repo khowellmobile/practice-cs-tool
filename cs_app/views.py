@@ -135,9 +135,11 @@ def directions_view(request):
 
 @login_required
 def tinker_view(request):
+    data = PastParameter.objects.order_by("-date_field")[:16]
     user = request.user
     context = {
         "user": user,
+        "data": data,
     }
 
     return render(request, "tinker.html", context)

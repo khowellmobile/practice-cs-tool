@@ -23,14 +23,18 @@
                         </button>
                     </div>
                     <div id="c1-2">
-                        <button class="but historyButton">
+                        {% for param in data %}
+                        <button
+                            id="hcard-{{ forloop.counter }} "
+                            class="but historyButton"
+                        >
                             <p class="symbol">C</p>
                             <div class="expandedInfo">
                                 <div class="repKind">
                                     <p>Kind Custom</p>
                                 </div>
                                 <div class="repDate">
-                                    <p>Ran on 10/11/00</p>
+                                    <p>{{ param.date_field }}</p>
                                 </div>
                                 <div class="repRange">
                                     <p>Start Date 10/11/00</p>
@@ -38,36 +42,7 @@
                                 </div>
                             </div>
                         </button>
-                        <button class="but historyButton">
-                            <p class="symbol">C</p>
-                            <div class="expandedInfo">
-                                <div class="repKind">
-                                    <p>Kind Custom</p>
-                                </div>
-                                <div class="repDate">
-                                    <p>Ran on 10/11/00</p>
-                                </div>
-                                <div class="repRange">
-                                    <p>Start Date 10/11/00</p>
-                                    <p>End Date 10/11/00</p>
-                                </div>
-                            </div>
-                        </button>
-                        <button class="but historyButton">
-                            <p class="symbol">C</p>
-                            <div class="expandedInfo">
-                                <div class="repKind">
-                                    <p>Kind Custom</p>
-                                </div>
-                                <div class="repDate">
-                                    <p>Ran on 10/11/00</p>
-                                </div>
-                                <div class="repRange">
-                                    <p>Start Date 10/11/00</p>
-                                    <p>End Date 10/11/00</p>
-                                </div>
-                            </div>
-                        </button>
+                        {% endfor %}
                     </div>
                 </div>
                 <div id="c2">
@@ -134,7 +109,7 @@
 </html>
 
 {% for param in data %}
-<button id="hcard-{{ forloop.counter }} "class="but historyButton">
+<button id="hcard-{{ forloop.counter }} " class="but historyButton">
     <p class="symbol">C</p>
     <div class="expandedInfo">
         <div class="repKind">
