@@ -76,6 +76,45 @@ html {
     margin-bottom: 0.75rem;
 }
 
+.history-button-style {
+    color: rgba(0, 0, 0, 0.85);
+    background-color: #ffffff;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+
+    cursor: pointer;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
+        Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    transition: all 250ms;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.history-button-style:hover,
+.history-button-style:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.history-button-style:hover {
+    transform: translateY(-1px);
+}
+
+.history-button-style:active {
+    color: rgba(0, 0, 0, 0.65);
+    background-color: #f0f0f1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    transform: translateY(0);
+}
+
 .expanded-info > div > p {
     font-size: 0.85rem;
 }
@@ -200,43 +239,4 @@ html {
 
     background-color: white;
     border-radius: 0.2rem;
-}
-
-.history-button-style {
-    color: rgba(0, 0, 0, 0.85);
-    background-color: #ffffff;
-    border: none;
-    border-radius: 0.25rem;
-    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-
-    cursor: pointer;
-    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
-        Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.25;
-    transition: all 250ms;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.but:hover,
-.but:focus {
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-    color: rgba(0, 0, 0, 0.65);
-}
-
-.but:hover {
-    transform: translateY(-1px);
-}
-
-.but:active {
-    color: rgba(0, 0, 0, 0.65);
-    background-color: #f0f0f1;
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-    transform: translateY(0);
 }
