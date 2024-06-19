@@ -22,7 +22,7 @@ html {
     display: flex;
 }
 
-#c1 {
+#history-menu {
     width: 3%;
     height: 100%;
 
@@ -34,7 +34,7 @@ html {
     align-items: center;
 }
 
-#c1-1 {
+#history-expand-button {
     width: 100%;
     height: 10%;
 
