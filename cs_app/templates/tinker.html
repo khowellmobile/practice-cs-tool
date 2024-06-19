@@ -7,6 +7,15 @@
         <link rel="stylesheet" href="{% static 'css/tinker_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <link
+        rel="stylesheet"
+        type="text/css"
+        href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css" />
+    <script
+        type="text/javascript"
+        charset="utf8"
+        src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
     </head>
 
     <body>
@@ -92,7 +101,7 @@
                         </div>
                     </div>
                     <div id="c2-2" class="card">
-                        <div id="c2-2-1"></div>
+                        <div id="report"></div>
                     </div>
                 </div>
             </div>
@@ -107,21 +116,3 @@
         </script>
     </body>
 </html>
-
-{% for param in data %}
-<button id="hcard-{{ forloop.counter }} " class="but historyButton">
-    <p class="symbol">C</p>
-    <div class="expandedInfo">
-        <div class="repKind">
-            <p>Kind Custom</p>
-        </div>
-        <div class="repDate">
-            <p>Ran on {{ param.date_field }}</p>
-        </div>
-        <div class="repRange">
-            <p>Start Date 10/11/00</p>
-            <p>End Date 10/11/00</p>
-        </div>
-    </div>
-</button>
-{% endfor %}

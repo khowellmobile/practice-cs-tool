@@ -22,12 +22,6 @@ function toggleSize(eId, smallPercent, largePercent) {
     }
 }
 
-function foo() {
-    for (let i = 0; i < 10; i++) {
-        $("#c1-2").append("<button class='but historyButton'>LY</button>");
-    }
-}
-
 function toggleSizeButton(goingBig) {
     let c1 = $(".expandedInfo");
     let c2 = $(".symbol");
@@ -55,3 +49,64 @@ function throttle(func, delay) {
         }
     };
 }
+
+// Function to organize table generation function calls
+function generateTable() {
+    var formdata = {
+        time_range: $("#time_range").val(),
+        start_date: $("#start_date").val(),
+        end_date: $("#end_date").val(),
+    };
+
+    createTable(formdata);
+}
+
+function createTable(formdata) {
+    let url = "/load_table/";
+
+    $.ajax({
+        type: "POST",
+        headers: { "X-CSRFToken": csrf_token },
+        url: url,
+        data: formdata,
+        success: function (response) {
+            initalizeTable(formatData(response.data));
+        },
+        error: function (xhr, errmsg, err) {
+            alert("error");
+        },
+    });
+}
+
+// Formats data from json response to datatables.net format
+function formatData(data) {
+    var res = [];
+
+    data.forEach(function (item) {
+        let name = item.department_name;
+        let hours = parseFloat(item.total_hours);
+
+        res.push([name, hours]);
+    });
+
+    return res;
+}
+
+// Intializes the table with input data
+function initalizeTable(data) {
+    if ($.fn.DataTable.isDataTable("#reportTable")) {
+        $("#reportTable").DataTable().destroy(); // Destroy the existing DataTable instance
+        $("#reportTable").remove(); // Remove the existing table
+    }
+
+    $("#report").append(
+        '<table id="reportTable" class="stripe display"></table>'
+    );
+
+    $("#reportTable").DataTable({
+        // Initialize DataTable
+        columns: [{ title: "Name" }, { title: "Hours" }],
+        data: data,
+    });
+}
+
