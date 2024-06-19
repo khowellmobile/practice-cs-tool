@@ -241,7 +241,7 @@ function toggleSize(e1Id, e2Id, smallPercent, largePercent) {
  * @param {boolean} hideSymbols - flag to indicate if symbols should be hidden
  */
 function toggleClassDisplay(hideSymbols) {
-    let c1 = $(".expandedInfo");
+    let c1 = $(".expanded-info");
     let c2 = $(".symbol");
 
     if (hideSymbols) {

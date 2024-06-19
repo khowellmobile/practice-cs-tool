@@ -24,20 +24,20 @@
         <div class="container-1">
             <div id="content">
                 <div id="history-menu" class="card">
-                    <div id="history-expand-button">
+                    <div id="history-menu__expand-button">
                         <button
-                            id="expandBut"
+                            id="expand-button"
                             class="but"
                             onclick="throttledToggleSize('history-menu', 'c2', '3', '20')"
                         >
                             E
                         </button>
                     </div>
-                    <div id="c1-2">
+                    <div id="history-menu__history-scroll">
                         {% for param in data reversed %}
                         <button
-                            id="hcard-{{ forloop.counter }} "
-                            class="but historyButton"
+                            id="hcard-{{ forloop.counter }}"
+                            class="but history-button"
                             onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')">
                             <p class="symbol">
                                 {% if param.text_field == 'YTD' %} 
@@ -52,14 +52,14 @@
                                     ?
                                 {% endif %}
                             </p>
-                            <div class="expandedInfo">
-                                <div class="repKind">
+                            <div class="expanded-info">
+                                <div class="report-kind">
                                     <p>{{ param.text_field }}</p>
                                 </div>
-                                <div class="repDate">
+                                <div class="report-date">
                                     <p>{{ param.date_field }}</p>
                                 </div>
-                                <div class="repRange">
+                                <div class="report-range">
                                     <p>
                                         Start Date {{ param.parameters_json.start_date }}
                                     </p>
