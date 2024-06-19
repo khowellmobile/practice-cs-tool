@@ -34,11 +34,11 @@
                         </button>
                     </div>
                     <div id="c1-2">
-                        {% for param in data %}
+                        {% for param in data reversed %}
                         <button
                             id="hcard-{{ forloop.counter }} "
                             class="but historyButton"
-                        >
+                            onClick="createReportFromHistory('{{ param.text_field|escapejs }}', '{{ param.parameters_json|escapejs }}')">
                             <p class="symbol">
                                 {% if param.text_field == 'YTD' %} 
                                     YTD 
@@ -53,7 +53,7 @@
                                 {% endif %}
                             </p>
                             <div class="expandedInfo">
-                                <div class="repKind outlineG">
+                                <div class="repKind">
                                     <p>{{ param.text_field }}</p>
                                 </div>
                                 <div class="repDate">
