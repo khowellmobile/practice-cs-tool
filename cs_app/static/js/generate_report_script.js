@@ -5,7 +5,7 @@ $(document).ready(function () {
     });
 
     $("#start_date, #end_date").on("change", function () {
-        $("#time_range").val("custom");
+        $("#time_range").val("Custom");
     });
 
     $("#form").submit(function (event) {
@@ -118,26 +118,26 @@ function alterDates(range) {
     month = month < 10 ? `0${month}` : month;
 
     switch (range) {
-        case "ytd":
+        case "YTD":
             start_date = `${year - 1}-01-01`;
             end_date = `${year}-${month}-${day}`;
             $("#start_date").val(start_date);
             $("#end_date").val(end_date);
             break;
-        case "last_year":
+        case "Last Year":
             start_date = `${year - 1}-01-01`;
             end_date = `${year - 1}-12-31`;
             $("#start_date").val(start_date);
             $("#end_date").val(end_date);
             break;
-        case "all_time":
+        case "All Time":
             start_date = "1000-01-01";
             end_date = `${year}-${month}-${day}`;
             $("#start_date").val(start_date);
             $("#end_date").val(end_date);
             break;
         default:
-            console.log("4");
+            console.log("error");
             break;
     }
 }

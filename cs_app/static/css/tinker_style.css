@@ -70,6 +70,10 @@ html {
     margin-bottom: 0.5rem;
 }
 
+.expandedInfo > div > p {
+    font-size: .85rem;
+}
+
 .expandedInfo {
     display: none;
 }
@@ -81,20 +85,19 @@ html {
 .repKind {
     width: 20%;
     min-width: 4rem;
-    height: 100%;
+    height: 2.5rem;
 }
 
 .repDate {
     width: 25%;
     min-width: 4rem;
-    height: 100%;
-    
+    height: 2.5rem;
 }
 
 .repRange {
     width: 55%;
     min-width: 9rem;
-    height: 100%;
+    height: 2.5rem;
 }
 
 .repKind, .repDate, .repRange {
@@ -180,6 +183,8 @@ html {
 #report {
     width: 100%;
     height: 100%;
+
+    padding: 5rem;
 
     background-color: white;
     border-radius: 0.2rem;

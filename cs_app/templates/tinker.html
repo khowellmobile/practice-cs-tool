@@ -9,13 +9,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <link
-        rel="stylesheet"
-        type="text/css"
-        href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css" />
-    <script
-        type="text/javascript"
-        charset="utf8"
-        src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+            rel="stylesheet"
+            type="text/css"
+            href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css"
+        />
+        <script
+            type="text/javascript"
+            charset="utf8"
+            src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"
+        ></script>
     </head>
 
     <body>
@@ -37,17 +39,33 @@
                             id="hcard-{{ forloop.counter }} "
                             class="but historyButton"
                         >
-                            <p class="symbol">C</p>
+                            <p class="symbol">
+                                {% if param.text_field == 'YTD' %} 
+                                    YTD 
+                                {% elif param.text_field == 'Last Year' %} 
+                                    LY
+                                {% elif param.text_field == 'Custom' %} 
+                                    C
+                                {% elif param.text_field == 'All Time' %} 
+                                    AT
+                                {% else %} 
+                                    ?
+                                {% endif %}
+                            </p>
                             <div class="expandedInfo">
-                                <div class="repKind">
-                                    <p>Kind Custom</p>
+                                <div class="repKind outlineG">
+                                    <p>{{ param.text_field }}</p>
                                 </div>
                                 <div class="repDate">
                                     <p>{{ param.date_field }}</p>
                                 </div>
                                 <div class="repRange">
-                                    <p>Start Date 10/11/00</p>
-                                    <p>End Date 10/11/00</p>
+                                    <p>
+                                        Start Date {{ param.parameters_json.start_date }}
+                                    </p>
+                                    <p>
+                                        End Date {{ param.parameters_json.end_date }}
+                                    </p>
                                 </div>
                             </div>
                         </button>
@@ -79,10 +97,10 @@
                                 class="form__input"
                                 name="time_range"
                             >
-                                <option value="ytd">YTD</option>
-                                <option value="last_year">Last Year</option>
-                                <option value="all_time">All Time</option>
-                                <option value="custom" selected>Custom</option>
+                                <option value="YTD">YTD</option>
+                                <option value="Last Year">Last Year</option>
+                                <option value="All Time">All Time</option>
+                                <option value="Custom" selected>Custom</option>
                             </select>
                         </div>
                         <div id="c2-1-2">

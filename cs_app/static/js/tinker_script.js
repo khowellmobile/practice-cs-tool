@@ -35,6 +35,20 @@ function toggleSizeButton(goingBig) {
     }
 }
 
+// Resize table when the window resizes
+$(window).on("resize", function () {
+    setTableHeight();
+});
+
+function setTableHeight() {
+    let table = $("#reportTable");
+    let parentHeight = $("#report").height();
+
+    let childHeight = parentHeight - parentHeight / 7;
+
+    table.css("height", childHeight + "px");
+}
+
 // Throttle function to avoid user spamming calls
 function throttle(func, delay) {
     let throttled = false;
@@ -100,7 +114,7 @@ function initalizeTable(data) {
     }
 
     $("#report").append(
-        '<table id="reportTable" class="stripe display"></table>'
+        '<table id="reportTable" class="display" style="width:100%;"></table>'
     );
 
     $("#reportTable").DataTable({
@@ -108,5 +122,6 @@ function initalizeTable(data) {
         columns: [{ title: "Name" }, { title: "Hours" }],
         data: data,
     });
-}
 
+    setTableHeight();
+}
