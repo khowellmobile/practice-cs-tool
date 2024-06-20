@@ -2,8 +2,14 @@ html {
     margin: 0px;
     padding: 0px;
 
-    font-size: 16px;
+    font-size: 18px;
     font-family: "Roboto", sans-serif;
+}
+
+@media (min-width: 1441px) {
+    html {
+        font-size: 22px;
+    }
 }
 
 h3 {
