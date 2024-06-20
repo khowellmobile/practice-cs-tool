@@ -23,7 +23,7 @@ function getNewConfig() {
             return;
         }
 
-        setSpinnerVisiblity(true);
+        setSpinnerVisibility(true);
 
         submitNewConfig(db_info);
     }
@@ -47,16 +47,16 @@ function submitNewConfig(db_info) {
 }
 
 function dbChangeHandler(success, message) {
-    setSpinnerVisiblity(false);
+    setSpinnerVisibility(false);
 
     if (success) {
-        $("#connection-info__status__log").append(
+        $("#database-change__status").append(
             "<p class='stat__message'>Successful Connection</p>"
         );
         getDBInfoFromAlias(message.db_alias);
     } else {
         if (message.responseJSON) {
-            $("#connection-info__status__log").append(
+            $("#database-change__status").append(
                 `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
             );
         } else {
