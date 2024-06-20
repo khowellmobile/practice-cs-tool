@@ -1,0 +1,72 @@
+html {
+    margin: 0px;
+    padding: 0px;
+
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+
+    background-color: lightblue;
+}
+
+#d1 {
+    width: 80%;
+    height: 80%;
+}
+
+#d1-1 {
+    width: 100%;
+    height: 3rem;
+
+    display: flex;
+}
+
+.tab {
+    width: 25%;
+    height: 100%;
+
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab:nth-child(2) {
+    margin-left: 0.25rem;
+    margin-right: 0.125rem;
+}
+
+.tab:nth-child(3) {
+    margin-left: 0.125rem;
+    margin-right: 0.25rem;
+}
+
+.active {
+    background-color: white;
+    height: calc(3rem + 1px);
+
+    border-radius: 0.3rem 0.3rem 0rem 0rem;
+}
+
+.inactive {
+    background-color: rgb(167, 191, 255);
+    height: 2.5rem;
+
+    border-radius: 0.3rem;
+
+    margin-bottom: 1rem;
+}
+
+#d1-2 {
+    width: 100%;
+    height: calc(100% - 3rem);
+
+    background-color: white;
+
+    border: none;
+    border-radius: 0rem 0rem 0.3rem 0.3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

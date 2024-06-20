@@ -4,9 +4,34 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/directions_style.css' %}" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
-        <p class="loggedInAs">Welcome, {{ user.first_name }}</p>
-        <h1>How to</h1>
+        <div class="container-1">
+            <div id="d1" class="">
+                <div id="d1-1" class="">
+                    <div id="t1" class="tab active">
+                        <h3>Tab 1</h3>
+                    </div>
+                    <div id="t2" class="tab inactive">
+                        <h3>Tab 2</h3>
+                    </div>
+                    <div id="t3" class="tab inactive">
+                        <h3>Tab 3</h3>
+                    </div>
+                    <div id="t4" class="tab inactive">
+                        <h3>Tab 4</h3>
+                    </div>
+                </div>
+                <div id="d1-2" class="">
+                </div>
+            </div>
+        </div>
+
+        <!-- Links to .js files -->
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/directions_script.js' %}"></script>
     </body>
 </html>
