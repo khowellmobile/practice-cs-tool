@@ -1,21 +1,79 @@
-.card {
-    width: 70%;
-    height: 50%;
-    margin: 40px auto;
-    padding: 20px;
+html {
+    margin: 0px;
+    padding: 0px;
+
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+}
+
+p {
+    width: 40%;
+    margin-left: 2rem;
+
+    font-size: 1.1rem;
+}
+
+h1 {
+    margin-left: 2rem;
+}
+
+hr {
+    width: 95%;
+    align-self: center;
+}
+
+#content {
+    width: 80%;
+    height: 60%;
 
     display: flex;
     flex-direction: column;
 }
 
-.card__row {
-    margin: 10px;
-    
+#content > div {
+    width: 100%;
+    height: calc(100% / 4);
+
+    margin: 0.25em 0rem 0.25 0rem;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-hr {
-    width: 100%;
+.content__button {
+    margin-right: 2rem;
 }
+
+form {
+    width: 40%;
+    height: 4rem;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form__input {
+    font-size: 1rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    border: none;
+    border-bottom: 0.3rem solid transparent;
+}
+
+.narrow__input {
+    width: 7rem;
+    height: 1.5rem;
+    margin: 0rem 1rem 0rem 0rem;
+    padding: 0.5rem 1rem;
+}
+
+.wide__input {
+    width: 17rem;
+    height: 1.5rem;
+    margin: 0rem 1rem 0rem 1rem;
+    padding: 0.5rem 1rem;
+}
+

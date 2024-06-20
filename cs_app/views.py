@@ -114,7 +114,7 @@ def home_view(request):
 
 @login_required
 def generate_report_view(request):
-    data = PastParameter.objects.order_by("-date_field")[:16]
+    data = PastParameter.objects.order_by("-date_field")[:25]
     user = request.user
     context = {
         "user": user,
@@ -132,6 +132,15 @@ def directions_view(request):
     }
 
     return render(request, "directions.html", context)
+
+@login_required
+def tinker_view(request):
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "tinker.html", context)
 
 
 @login_required
@@ -364,7 +373,7 @@ def load_table_view(request):
             },
         )
 
-        excess_record_count = PastParameter.objects.count() - 16
+        excess_record_count = PastParameter.objects.count() - 25
         if excess_record_count > 0:
             excess_records = PastParameter.objects.order_by("date_field")[
                 :excess_record_count
