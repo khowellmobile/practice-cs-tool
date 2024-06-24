@@ -1,0 +1,54 @@
+html {
+    margin: 0px;
+    padding: 0px;
+
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+
+    background-color: lightblue;
+
+
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+#d1 {
+    width: 80%;
+    height: 80%;
+}
+
+
+#d1-2 {
+    width: 100%;
+    height: calc(100% - 3rem);
+
+    background-color: white;
+
+    border: none;
+    border-radius: 0rem 0rem 0.3rem 0.3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+#d1-2-1,
+#d1-2-2,
+#d1-2-3 {
+    width: 30%;
+    height: 90%;
+
+    transition: all ease-in-out 0.75s;
+}
+
+.up {
+    transform: translateY(-42rem);
+}
+
+.down {
+    transform: translateY(42rem);
+}
