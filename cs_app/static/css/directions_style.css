@@ -70,24 +70,37 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    overflow: hidden;
 }
 
-#d1-2-1,
-#d1-2-2,
-#d1-2-3 {
+.tripleSlide {
     width: 33.33%;
     height: 100%;
 
     transition: transform ease-in-out 0.75s;
-
-    background-color: red;
 }
 
+#d1-2-4,
+#d1-2-5 {
+    width: 50%;
+    height: 100%;
+
+    transition: transform ease-in-out 0.75s;
+
+    display: none;
+}
+
+#d1-2-6,
+#d1-2-7,
+#d1-2-8 {
+    display: none;
+} 
+
 .up {
-    transform: translateY(-42rem);
+    transform: translateY(calc(-100% - 4rem));
 }
 
 .down {
-    transform: translateY(42rem);
+    transform: translateY(calc(100% + 4rem));
 }
-
