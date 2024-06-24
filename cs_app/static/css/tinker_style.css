@@ -6,12 +6,6 @@ html {
     font-family: "Roboto", sans-serif;
 
     background-color: lightblue;
-
-
-}
-
-html::-webkit-scrollbar {
-    display: none;
 }
 
 #d1 {
@@ -19,14 +13,58 @@ html::-webkit-scrollbar {
     height: 80%;
 }
 
+#d1-1 {
+    width: 100%;
+    height: 3rem;
+
+    display: flex;
+}
+
+.tab {
+    width: 25%;
+    height: 100%;
+
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: height 0.3s;
+}
+
+.tab:nth-child(2) {
+    margin-left: 0.25rem;
+    margin-right: 0.125rem;
+}
+
+.tab:nth-child(3) {
+    margin-left: 0.125rem;
+    margin-right: 0.25rem;
+}
+
+.active {
+    background-color: white;
+    height: calc(3rem + 1px);
+
+    border-radius: 0.3rem 0.3rem 0rem 0rem;
+}
+
+.inactive {
+    background-color: rgb(167, 191, 255);
+    height: 2.5rem;
+
+    border-radius: 0.3rem;
+}
 
 #d1-2 {
     width: 100%;
     height: calc(100% - 3rem);
+    padding: 3rem;
 
     background-color: white;
 
-    border: none;
+    box-sizing: border-box;
     border-radius: 0rem 0rem 0.3rem 0.3rem;
 
     display: flex;
@@ -39,16 +77,29 @@ html::-webkit-scrollbar {
 #d1-2-1,
 #d1-2-2,
 #d1-2-3 {
-    width: 30%;
-    height: 90%;
+    width: 33.33%;
+    height: 100%;
 
-    transition: all ease-in-out 0.75s;
+    transition: transform ease-in-out 0.75s;
 }
 
+#d1-2-4,
+#d1-2-5 {
+    width: 50%;
+    height: 100%;
+
+    transition: transform ease-in-out 0.75s;
+
+    display: none;
+}
+
+
+
 .up {
-    transform: translateY(-42rem);
+    transform: translateY(calc(-100% - 4rem));
 }
 
 .down {
-    transform: translateY(42rem);
+    transform: translateY(calc(100% + 4rem));
 }
+
