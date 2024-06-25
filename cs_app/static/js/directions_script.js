@@ -32,16 +32,16 @@ $(".tab").on("click", function () {
 function hideActive() {
     switch (currentActiveId) {
         case "t1":
-            hideOverviewSlides();
+            hideTripleSlides("t1");
             break;
         case "t2":
-            hideGenRepSlides();
+            hideDoubleSlides("t2");
             break;
         case "t3":
-            hideChangeDBSlides();
+            hideTripleSlides("t3");
             break;
         case "t4":
-            hideAccountInfoSlides();
+            hideDoubleSlides("t4");
             break;
         default:
             console.log("unknown tab");
@@ -52,32 +52,40 @@ function showNewActive() {
     switch (currentActiveId) {
         case "t1":
             setTimeout(() => {
-                showOverviewSlides();
+                showTripleSlides("t1");
             }, 1200);
             break;
         case "t2":
             setTimeout(() => {
-                showGenRepSlides();
+                showDoubleSlides("t2");
             }, 1200);
             break;
         case "t3":
             setTimeout(() => {
-                showChangeDBSlides();
+                showTripleSlides("t3");
             }, 1200);
             break;
         case "t4":
             setTimeout(() => {
-                showAccountInfoSlides();
-            }, 1200)
+                showDoubleSlides("t4");
+            }, 1200);
         default:
             console.log("unknown tab");
     }
 }
 
-function hideOverviewSlides() {
-    let e1 = $("#d1-2-1");
-    let e2 = $("#d1-2-2");
-    let e3 = $("#d1-2-3");
+function hideTripleSlides(tabId) {
+    let e1, e2, e3;
+    if (tabId === "t1") {
+        e1 = $("#d1-2-1");
+        e2 = $("#d1-2-2");
+        e3 = $("#d1-2-3");
+    } else {
+        e1 = $("#d1-2-6");
+        e2 = $("#d1-2-7");
+        e3 = $("#d1-2-8");
+    }
+
     setTimeout(() => {
         e1.addClass("up");
     }, 150);
@@ -94,10 +102,18 @@ function hideOverviewSlides() {
     }, 1200);
 }
 
-function showOverviewSlides() {
-    let e1 = $("#d1-2-1");
-    let e2 = $("#d1-2-2");
-    let e3 = $("#d1-2-3");
+function showTripleSlides(tabId) {
+    let e1, e2, e3;
+    if (tabId === "t1") {
+        e1 = $("#d1-2-1");
+        e2 = $("#d1-2-2");
+        e3 = $("#d1-2-3");
+    } else {
+        e1 = $("#d1-2-6");
+        e2 = $("#d1-2-7");
+        e3 = $("#d1-2-8");
+    }
+
     e1.css("display", "flex");
     e2.css("display", "flex");
     e3.css("display", "flex");
@@ -113,9 +129,16 @@ function showOverviewSlides() {
     }, 450);
 }
 
-function hideGenRepSlides() {
-    let e1 = $("#d1-2-4");
-    let e2 = $("#d1-2-5");
+function hideDoubleSlides(tabId) {
+    let e1, e2;
+    if (tabId === "t1") {
+        e1 = $("#d1-2-4");
+        e2 = $("#d1-2-5");
+    } else {
+        e1 = $("#d1-2-9");
+        e2 = $("#d1-2-10");
+    }
+
     setTimeout(() => {
         e1.addClass("up");
     }, 150);
@@ -128,9 +151,16 @@ function hideGenRepSlides() {
     }, 1200);
 }
 
-function showGenRepSlides() {
-    let e1 = $("#d1-2-4");
-    let e2 = $("#d1-2-5");
+function showDoubleSlides(tabId) {
+    let e1, e2;
+    if (tabId === "t1") {
+        e1 = $("#d1-2-4");
+        e2 = $("#d1-2-5");
+    } else {
+        e1 = $("#d1-2-9");
+        e2 = $("#d1-2-10");
+    }
+
     e1.css("display", "flex");
     e2.css("display", "flex");
     setTimeout(() => {
@@ -138,72 +168,5 @@ function showGenRepSlides() {
     }, 150);
     setTimeout(() => {
         e2.removeClass("down");
-    }, 300);
-}
-
-function hideChangeDBSlides() {
-    let e1 = $("#d1-2-6");
-    let e2 = $("#d1-2-7");
-    let e3 = $("#d1-2-8");
-    setTimeout(() => {
-        e1.addClass("down");
-    }, 150);
-    setTimeout(() => {
-        e2.addClass("up");
-    }, 300);
-    setTimeout(() => {
-        e3.addClass("down");
-    }, 450);
-    setTimeout(() => {
-        e1.css("display", "none");
-        e2.css("display", "none");
-        e3.css("display", "none");
-    }, 1200);
-}
-
-function showChangeDBSlides() {
-    let e1 = $("#d1-2-6");
-    let e2 = $("#d1-2-7");
-    let e3 = $("#d1-2-8");
-    e1.css("display", "flex");
-    e2.css("display", "flex");
-    e3.css("display", "flex");
-
-    setTimeout(() => {
-        e1.removeClass("down");
-    }, 150);
-    setTimeout(() => {
-        e2.removeClass("up");
-    }, 300);
-    setTimeout(() => {
-        e3.removeClass("down");
-    }, 450);
-}
-
-function hideAccountInfoSlides() {
-    let e1 = $("#d1-2-9");
-    let e2 = $("#d1-2-10");
-    setTimeout(() => {
-        e1.addClass("down");
-    }, 150);
-    setTimeout(() => {
-        e2.addClass("up");
-    }, 300);
-    setTimeout(() => {
-        e1.css("display", "none");
-        e2.css("display", "none");
-    }, 1200);
-}
-
-function showAccountInfoSlides() {
-    let e1 = $("#d1-2-9");
-    let e2 = $("#d1-2-10");
-    e1.css("display", "flex");
-    e2.css("display", "flex");
-    setTimeout(() => {
-        e1.removeClass("down");
-    }, 150);
-    setTimeout(() => {
-        e2.removeClass("up");
     }, 300);
 }

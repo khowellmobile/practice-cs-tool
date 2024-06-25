@@ -77,8 +77,18 @@ html {
 .tripleSlide {
     width: 33.33%;
     height: 100%;
+    padding: 1rem;
+    margin: 0rem 0.25rem 0rem 0.25rem;
 
+    box-sizing: border-box;
+    background-color: #f7f7f7; /* Light gray background */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     transition: transform ease-in-out 0.75s;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .doubleSlide {
@@ -94,7 +104,53 @@ html {
 #d1-2-7,
 #d1-2-8 {
     display: none;
-} 
+}
+
+.tripleSlide h2 {
+    margin-bottom: 1rem;
+
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.tripleSlide p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666;
+}
+
+.explanation {
+    height: 10rem;
+}
+
+.list {
+    margin-top: 1.5rem;
+}
+
+.list h4 {
+    margin-bottom: 0rem;
+
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.list ul {
+    padding-left: 0;
+
+    list-style-type: none;
+}
+
+.list li {
+    margin-bottom: 0.25rem;
+
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666;
+}
+
+.list li strong {
+    color: #333;
+}
 
 .up {
     transform: translateY(calc(-100% - 4rem));
