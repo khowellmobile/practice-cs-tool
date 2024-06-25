@@ -81,8 +81,7 @@ html {
     transition: transform ease-in-out 0.75s;
 }
 
-#d1-2-4,
-#d1-2-5 {
+.doubleSlide {
     width: 50%;
     height: 100%;
 

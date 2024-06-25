@@ -41,7 +41,7 @@ function hideActive() {
             hideChangeDBSlides();
             break;
         case "t4":
-            toggleOverviewSlides();
+            hideAccountInfoSlides();
             break;
         default:
             console.log("unknown tab");
@@ -65,6 +65,10 @@ function showNewActive() {
                 showChangeDBSlides();
             }, 1200);
             break;
+        case "t4":
+            setTimeout(() => {
+                showAccountInfoSlides();
+            }, 1200)
         default:
             console.log("unknown tab");
     }
@@ -174,4 +178,32 @@ function showChangeDBSlides() {
     setTimeout(() => {
         e3.removeClass("down");
     }, 450);
+}
+
+function hideAccountInfoSlides() {
+    let e1 = $("#d1-2-9");
+    let e2 = $("#d1-2-10");
+    setTimeout(() => {
+        e1.addClass("down");
+    }, 150);
+    setTimeout(() => {
+        e2.addClass("up");
+    }, 300);
+    setTimeout(() => {
+        e1.css("display", "none");
+        e2.css("display", "none");
+    }, 1200);
+}
+
+function showAccountInfoSlides() {
+    let e1 = $("#d1-2-9");
+    let e2 = $("#d1-2-10");
+    e1.css("display", "flex");
+    e2.css("display", "flex");
+    setTimeout(() => {
+        e1.removeClass("down");
+    }, 150);
+    setTimeout(() => {
+        e2.removeClass("up");
+    }, 300);
 }
