@@ -94,10 +94,18 @@ html {
 .doubleSlide {
     width: 50%;
     height: 100%;
+    padding: 1rem;
+    margin: 0rem 0.25rem 0rem 0.25rem;
 
+    box-sizing: border-box;
+    background-color: #f7f7f7; /* Light gray background */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     transition: transform ease-in-out 0.75s;
 
     display: none;
+    flex-direction: column;
 }
 
 #d1-2-6,
@@ -106,14 +114,14 @@ html {
     display: none;
 }
 
-.tripleSlide h2 {
+.tripleSlide h2, .doubleSlide h2 {
     margin-bottom: 1rem;
 
     font-size: 1.5rem;
     color: #333;
 }
 
-.tripleSlide p {
+.tripleSlide p, .doubleSlide p {
     font-size: 1rem;
     line-height: 1.5;
     color: #666;

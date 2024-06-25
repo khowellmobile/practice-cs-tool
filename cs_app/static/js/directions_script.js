@@ -131,7 +131,7 @@ function showTripleSlides(tabId) {
 
 function hideDoubleSlides(tabId) {
     let e1, e2;
-    if (tabId === "t1") {
+    if (tabId === "t2") {
         e1 = $("#d1-2-4");
         e2 = $("#d1-2-5");
     } else {
@@ -153,7 +153,7 @@ function hideDoubleSlides(tabId) {
 
 function showDoubleSlides(tabId) {
     let e1, e2;
-    if (tabId === "t1") {
+    if (tabId === "t2") {
         e1 = $("#d1-2-4");
         e2 = $("#d1-2-5");
     } else {
