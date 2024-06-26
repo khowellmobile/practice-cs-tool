@@ -43,14 +43,14 @@ html {
     margin-right: 0.25rem;
 }
 
-.active {
+.tab.active {
     background-color: white;
     height: calc(3rem + 1px);
 
     border-radius: 0.3rem 0.3rem 0rem 0rem;
 }
 
-.inactive {
+.tab.inactive {
     background-color: rgb(167, 191, 255);
     height: 2.5rem;
 
@@ -74,8 +74,7 @@ html {
     overflow: hidden;
 }
 
-.tripleSlide {
-    width: 33.33%;
+.slide {
     height: 100%;
     padding: 1rem;
     margin: 0rem 0.25rem 0rem 0.25rem;
@@ -86,23 +85,17 @@ html {
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     transition: transform ease-in-out 0.75s;
+}
+
+.slide.tripleSlide {
+    width: 33.33%;
 
     display: flex;
     flex-direction: column;
 }
 
-.doubleSlide {
+.slide.doubleSlide {
     width: 50%;
-    height: 100%;
-    padding: 1rem;
-    margin: 0rem 0.25rem 0rem 0.25rem;
-
-    box-sizing: border-box;
-    background-color: #f7f7f7; /* Light gray background */
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: transform ease-in-out 0.75s;
 
     display: none;
     flex-direction: column;
@@ -114,16 +107,14 @@ html {
     display: none;
 }
 
-.tripleSlide h2,
-.doubleSlide h2 {
+.slide h2 {
     margin-bottom: 1rem;
 
     font-size: 1.5rem;
     color: #333;
 }
 
-.tripleSlide p,
-.doubleSlide p {
+.slide p {
     font-size: 1rem;
     line-height: 1.5;
     color: #666;
@@ -227,7 +218,7 @@ html {
 #c2-1:hover,
 #c2-2:hover {
     background-color: rgb(167, 191, 255, 1);
-    transform: translateY(2px);
+    transform: translateY(-2px);
 
     transition: all 0.4s;
 }
@@ -239,5 +230,24 @@ html {
     background-color: #f0f0f1;
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-    transform: translateY(0);
+    transform: translateY(1px);
+}
+
+#d1-2-5-1,
+#d1-2-5-2,
+#d1-2-5-3 {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+#d1-2-5-1 {
+    padding: 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#d1-2-5-1 h4 {
+    margin-top: 0rem;
 }
