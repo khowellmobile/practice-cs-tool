@@ -170,3 +170,14 @@ function showDoubleSlides(tabId) {
         e2.removeClass("down");
     }, 300);
 }
+
+function toggleScale() {
+    console.log("running");
+    if ($("#d1-2-5-3").hasClass("scaleDown")) {
+        $("#d1-2-5-3").removeClass("scaleDown");
+        $("#d1-2-5-3").addClass("scaleUp");
+    } else {
+        $("#d1-2-5-3").addClass("scaleDown");
+        $("#d1-2-5-3").removeClass("scaleUp");
+    }
+}
