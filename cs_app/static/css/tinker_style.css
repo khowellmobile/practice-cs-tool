@@ -250,25 +250,27 @@ a:hover {
 #d1-2-5-3 {
     width: 100%;
     height: 100%;
-    display: none;
-}
-
-#d1-2-5-3 {
     padding: 0rem;
 
     transition: all 0.5s;
 
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
 }
 
+#d1-2-5-1 {
+    display: flex;
+}
+
 .scaleDown {
     transform: scale(0);
+    transition: all 0.5s;
 }
 
 .scaleUp {
     transform: scale(1);
+    transition: all 0.5s;
 }
 
 #d1-2-5-3 h4 {

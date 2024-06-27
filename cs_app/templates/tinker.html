@@ -156,21 +156,21 @@
                         </p>
                         <h4>Click a section below to learn more!</h4>
                         <div id="c" class="">
-                            <div id="c1" class="card">
+                            <div id="c1" class="card" onclick="switchSubSlide('d1-2-5-1')">
                                 <h4>Report History</h4>
                             </div>
                             <div id="c2" class="">
-                                <div id="c2-1" class="card">
+                                <div id="c2-1" class="card" onclick="switchSubSlide('d1-2-5-2')">
                                     <h4>Parameter/Buttons</h4>
                                 </div>
-                                <div id="c2-2" class="card" onclick="toggleScale()">
+                                <div id="c2-2" class="card" onclick="switchSubSlide('d1-2-5-3')">
                                     <h4>Report Table</h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="d1-2-5" class="slide doubleSlide down">
-                        <div id="d1-2-5-1">
+                        <div id="d1-2-5-1" class="scaleUp">
                             <h2>Report History</h2>
                             <p>
                                 Report history is an expanding side menu with a
@@ -231,7 +231,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div id="d1-2-5-2" class="outlineP">
+                        <div id="d1-2-5-2" class="scaleDown">
                             <h2>Parameters/Buttons</h2>
                             <p>
                                 The section at the top is used to hold parameter
@@ -283,7 +283,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div id="d1-2-5-3" class="outlineP">
+                        <div id="d1-2-5-3" class="scaleDown">
                             <h2>Data Table</h2>
                             <p>
                                 The data table is generated using the
