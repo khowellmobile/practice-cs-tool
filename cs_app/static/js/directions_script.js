@@ -38,7 +38,7 @@ function hideActive() {
             hideDoubleSlides("t2");
             break;
         case "t3":
-            hideTripleSlides("t3");
+            hideDoubleSlides("t3");
             break;
         case "t4":
             hideDoubleSlides("t4");
@@ -62,7 +62,7 @@ function showNewActive() {
             break;
         case "t3":
             setTimeout(() => {
-                showTripleSlides("t3");
+                showDoubleSlides("t3");
             }, 1200);
             break;
         case "t4":
@@ -134,9 +134,12 @@ function hideDoubleSlides(tabId) {
     if (tabId === "t2") {
         e1 = $("#d1-2-4");
         e2 = $("#d1-2-5");
+    } else if (tabId === "t3") {
+        e1 = $("#d1-2-6");
+        e2 = $("#d1-2-7");
     } else {
-        e1 = $("#d1-2-9");
-        e2 = $("#d1-2-10");
+        e1 = $("#d1-2-8");
+        e2 = $("#d1-2-9");
     }
 
     setTimeout(() => {
@@ -156,9 +159,12 @@ function showDoubleSlides(tabId) {
     if (tabId === "t2") {
         e1 = $("#d1-2-4");
         e2 = $("#d1-2-5");
+    } else if (tabId === "t3") {
+        e1 = $("#d1-2-6");
+        e2 = $("#d1-2-7");
     } else {
-        e1 = $("#d1-2-9");
-        e2 = $("#d1-2-10");
+        e1 = $("#d1-2-8");
+        e2 = $("#d1-2-9");
     }
 
     e1.css("display", "flex");
