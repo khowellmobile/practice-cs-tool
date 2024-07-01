@@ -155,14 +155,26 @@
                         </p>
                         <h4>Click a section below to learn more!</h4>
                         <div id="c" class="">
-                            <div id="c1" class="card" onclick="switchSubSlide('d1-2-5-1')">
+                            <div
+                                id="c1"
+                                class="card"
+                                onclick="switchSubSlide('d1-2-5-1')"
+                            >
                                 <h4>Report History</h4>
                             </div>
                             <div id="c2" class="">
-                                <div id="c2-1" class="card" onclick="switchSubSlide('d1-2-5-2')">
+                                <div
+                                    id="c2-1"
+                                    class="card"
+                                    onclick="switchSubSlide('d1-2-5-2')"
+                                >
                                     <h4>Parameter/Buttons</h4>
                                 </div>
-                                <div id="c2-2" class="card" onclick="switchSubSlide('d1-2-5-3')">
+                                <div
+                                    id="c2-2"
+                                    class="card"
+                                    onclick="switchSubSlide('d1-2-5-3')"
+                                >
                                     <h4>Report Table</h4>
                                 </div>
                             </div>
@@ -332,14 +344,98 @@
                             </p>
                         </div>
                     </div>
-                    <div
-                        id="d1-2-6"
-                        class="outlineR slide tripleSlide up"
-                    ></div>
-                    <div
-                        id="d1-2-7"
-                        class="outlineP slide tripleSlide down"
-                    ></div>
+                    <div id="d1-2-6" class="outlineR slide tripleSlide up">
+                        <h2>Form</h2>
+                        <div class="explanation">
+                            <p>
+                                The Form is where you will input the database
+                                information you wish to connect to. Keep in mind
+                                leaving the username and password blank will
+                                result in the tool using windows authentication
+                                for login.
+                            </p>
+                        </div>
+                        <div class="list">
+                            <h4>Database Form Fields</h4>
+                            <ul>
+                                <li>
+                                    <strong>Database Engine</strong> - Manages
+                                    data storage and retrieval in a DBMS like
+                                    MySQL or PostgreSQL.
+                                </li>
+                                <li>
+                                    <strong>Database Name</strong> - Identifier
+                                    for a specific database instance within the
+                                    DBMS.
+                                </li>
+                                <li>
+                                    <strong>Database Host</strong> - Server or
+                                    network location where the database engine
+                                    and its data are stored.
+                                </li>
+                                <li>
+                                    <strong>Database Driver</strong> - Enables
+                                    applications to communicate with specific
+                                    types of databases.
+                                </li>
+                                <li>
+                                    <strong>Database Username</strong> -
+                                    Credential used to authenticate access to a
+                                    database.
+                                </li>
+                                <li>
+                                    <strong>Database Password</strong> -
+                                    Security key required for secure access to a
+                                    database instance.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="d1-2-7" class="outlineP slide tripleSlide down">
+                        <h2>Current Connection and Status</h2>
+                        <div class="explanation">
+                            <p>
+                                In the right pane is the database you are
+                                currently connection to.
+                                Beneath that is your status/messages box. This
+                                is where any status messages will appear to let
+                                you know about any errors.
+                            </p>
+                        </div>
+                        <div class="list">
+                            <h4>Common Messages</h4>
+                            <ul>
+                                <li>
+                                    <strong>Successful Connection</strong> -
+                                    This messages appears when a successful
+                                    connection is made.
+                                </li>
+                                <li>
+                                    <strong
+                                        >Error: 'EngineName' isn't an available
+                                        database backend</strong
+                                    >
+                                    - This will appear when an invalid engine
+                                    is entered
+                                </li>
+                                <li>
+                                    <strong>Error: '28000',... </strong> - This
+                                    will appear when a database name could not
+                                    be found
+                                </li>
+                                <li>
+                                    <strong>Error: '08001',... </strong> - This
+                                    will appear when the database host could not
+                                    be found
+                                </li>
+                                <li>
+                                    <strong>Error: 'IM002',... </strong> - This
+                                    will appear when the database driver could
+                                    not be found
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <div
                         id="d1-2-8"
                         class="outlineB slide tripleSlide up"
