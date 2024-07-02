@@ -296,13 +296,13 @@ def generate_unique_alias(base_alias):
 
 
 @login_required
-def change_account_view(request):
+def account_information_view(request):
     user = request.user
     context = {
         "user": user,
     }
 
-    return render(request, "change_account.html", context)
+    return render(request, "account_information.html", context)
 
 
 @login_required
