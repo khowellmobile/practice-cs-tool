@@ -53,7 +53,7 @@ function dbChangeHandler(success, message) {
         $("#database-change__status").append(
             "<p class='stat__message'>Successful Connection</p>"
         );
-        getDBInfoFromAlias(message.db_alias);
+        getDisplayDBInfo(message.db_alias);
     } else {
         if (message.responseJSON) {
             $("#database-change__status").append(
