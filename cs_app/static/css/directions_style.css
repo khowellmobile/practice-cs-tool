@@ -26,18 +26,6 @@ a:hover {
     right: 8.25rem;
 }
 
-#d1 {
-    width: 80%;
-    height: 80%;
-}
-
-#d1-1 {
-    width: 100%;
-    height: 3rem;
-
-    display: flex;
-}
-
 .tab {
     width: 25%;
     height: 100%;
@@ -75,23 +63,6 @@ a:hover {
     border-radius: 0.3rem;
 }
 
-#d1-2 {
-    width: 100%;
-    height: calc(100% - 3rem);
-    padding: 3rem;
-
-    background-color: white;
-
-    box-sizing: border-box;
-    border-radius: 0rem 0rem 0.3rem 0.3rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    overflow: hidden;
-}
-
 .slide {
     height: 100%;
     padding: 1rem;
@@ -119,12 +90,6 @@ a:hover {
     flex-direction: column;
 }
 
-#d1-2-6,
-#d1-2-7,
-#d1-2-8 {
-    display: none;
-}
-
 .slide h2 {
     margin-bottom: 1rem;
 
@@ -136,6 +101,14 @@ a:hover {
     font-size: 1rem;
     line-height: 1.5;
     color: #666;
+}
+
+.up {
+    transform: translateY(calc(-100% - 4rem));
+}
+
+.down {
+    transform: translateY(calc(100% + 4rem));
 }
 
 .explanation {
@@ -171,19 +144,77 @@ a:hover {
     color: #333;
 }
 
-.up {
-    transform: translateY(calc(-100% - 4rem));
+.scaleDown {
+    transform: scale(0);
+    transition: all 0.5s;
 }
 
-.down {
-    transform: translateY(calc(100% + 4rem));
+.scaleUp {
+    transform: scale(1);
+    transition: all 0.5s;
 }
 
-#d1-2-4 > h4 {
+.mini-genRep__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mini-genRep__button:hover {
+    background-color: rgb(167, 191, 255, 1);
+    transform: translateY(-2px);
+
+    transition: all 0.4s;
+}
+
+.mini-genRep__button:active {
+    color: rgba(0, 0, 0, 0.65);
+    background-color: #f0f0f1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    transform: translateY(1px);
+}
+
+#d1 {
+    width: 80%;
+    height: 80%;
+}
+
+#tabs {
+    width: 100%;
+    height: 3rem;
+
+    display: flex;
+}
+
+#slides {
+    width: 100%;
+    height: calc(100% - 3rem);
+    padding: 3rem;
+
+    background-color: white;
+
+    box-sizing: border-box;
+    border-radius: 0rem 0rem 0.3rem 0.3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+#slides__changeDB__1,
+#slides__changeDB__2,
+#slides__acctInfo__1 {
+    display: none;
+}
+
+#slides__genRep__1 > h4 {
     align-self: center;
 }
 
-#c {
+#mini-genRep {
     width: 80%;
     height: 50%;
     padding: 1rem;
@@ -195,17 +226,17 @@ a:hover {
     align-self: center;
 }
 
-#c1 {
+#mini-genRep h4 {
+    text-align: center;
+}
+
+#mini-genRep__repHist {
     width: 20%;
     height: 100%;
     margin-right: 0.25rem;
 }
 
-#c h4 {
-    text-align: center;
-}
-
-#c2 {
+#mini-genRep__rightHalf {
     width: 80%;
     height: 100%;
 
@@ -213,47 +244,20 @@ a:hover {
     flex-direction: column;
 }
 
-#c2-1 {
+#mini-genRep__rightHalf__top {
     width: 100%;
     height: 15%;
 }
 
-#c2-2 {
+#mini-genRep__rightHalf__bottom {
     width: 100%;
     height: 85%;
     margin-top: 0.25rem;
 }
 
-#c1,
-#c2-1,
-#c2-2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#c1:hover,
-#c2-1:hover,
-#c2-2:hover {
-    background-color: rgb(167, 191, 255, 1);
-    transform: translateY(-2px);
-
-    transition: all 0.4s;
-}
-
-#c1:active,
-#c2-1:active,
-#c2-2:active {
-    color: rgba(0, 0, 0, 0.65);
-    background-color: #f0f0f1;
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-    transform: translateY(1px);
-}
-
-#d1-2-5-1,
-#d1-2-5-2,
-#d1-2-5-3 {
+#slides__genRep__2__repHist,
+#slides__genRep__2__params,
+#slides__genRep__2__repTab {
     width: 100%;
     height: 100%;
     padding: 0rem;
@@ -265,29 +269,19 @@ a:hover {
     align-items: center;
 }
 
-#d1-2-5-1 {
+#slides__genRep__2__repHist {
     display: flex;
 }
 
-.scaleDown {
-    transform: scale(0);
-    transition: all 0.5s;
-}
-
-.scaleUp {
-    transform: scale(1);
-    transition: all 0.5s;
-}
-
-#d1-2-5-3 h4 {
+#slides__genRep__2__repTab h4 {
     margin-bottom: 0rem;
 
     font-size: 1.2rem;
     color: #333;
 
     align-self: flex-start;
-} 
+}
 
-#d1-2-5-1 h4, #d1-2-3-2 h4{
+#slides__genRep__2__repHist h4{
     margin-top: 0rem;
 }

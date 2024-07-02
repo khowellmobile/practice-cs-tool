@@ -1,5 +1,5 @@
 var currentActiveId = "t1";
-var currentActiveSubSlide = "d1-2-5-1";
+var currentActiveSubSlide = "slides__genRep__2__repHist";
 var lockTabs = false;
 var lockSubSlides = false;
 
@@ -76,15 +76,10 @@ function showNewActive() {
 
 function hideTripleSlides(tabId) {
     let e1, e2, e3;
-    if (tabId === "t1") {
-        e1 = $("#d1-2-1");
-        e2 = $("#d1-2-2");
-        e3 = $("#d1-2-3");
-    } else {
-        e1 = $("#d1-2-6");
-        e2 = $("#d1-2-7");
-        e3 = $("#d1-2-8");
-    }
+
+    e1 = $("#slides__overview__1");
+    e2 = $("#slides__overview__2");
+    e3 = $("#slides__overview__3");
 
     setTimeout(() => {
         e1.addClass("up");
@@ -104,15 +99,9 @@ function hideTripleSlides(tabId) {
 
 function showTripleSlides(tabId) {
     let e1, e2, e3;
-    if (tabId === "t1") {
-        e1 = $("#d1-2-1");
-        e2 = $("#d1-2-2");
-        e3 = $("#d1-2-3");
-    } else {
-        e1 = $("#d1-2-6");
-        e2 = $("#d1-2-7");
-        e3 = $("#d1-2-8");
-    }
+    e1 = $("#slides__overview__1");
+    e2 = $("#slides__overview__2");
+    e3 = $("#slides__overview__3");
 
     e1.css("display", "flex");
     e2.css("display", "flex");
@@ -132,14 +121,14 @@ function showTripleSlides(tabId) {
 function hideDoubleSlides(tabId) {
     let e1, e2;
     if (tabId === "t2") {
-        e1 = $("#d1-2-4");
-        e2 = $("#d1-2-5");
+        e1 = $("#slides__genRep__1");
+        e2 = $("#slides__genRep__2");
     } else if (tabId === "t3") {
-        e1 = $("#d1-2-6");
-        e2 = $("#d1-2-7");
+        e1 = $("#slides__changeDB__1");
+        e2 = $("#slides__changeDB__2");
     } else {
-        e1 = $("#d1-2-8");
-        e2 = $("#d1-2-9");
+        e1 = $("#slides__acctInfo__1");
+        e2 = $("#slides__acctInfo__2");
     }
 
     setTimeout(() => {
@@ -157,14 +146,14 @@ function hideDoubleSlides(tabId) {
 function showDoubleSlides(tabId) {
     let e1, e2;
     if (tabId === "t2") {
-        e1 = $("#d1-2-4");
-        e2 = $("#d1-2-5");
+        e1 = $("#slides__genRep__1");
+        e2 = $("#slides__genRep__2");
     } else if (tabId === "t3") {
-        e1 = $("#d1-2-6");
-        e2 = $("#d1-2-7");
+        e1 = $("#slides__changeDB__1");
+        e2 = $("#slides__changeDB__2");
     } else {
-        e1 = $("#d1-2-8");
-        e2 = $("#d1-2-9");
+        e1 = $("#slides__acctInfo__1");
+        e2 = $("#slides__acctInfo__2");
     }
 
     e1.css("display", "flex");
