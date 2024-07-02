@@ -20,6 +20,12 @@ a:hover {
     color: rgb(167, 191, 255);
 }
 
+.home-button {
+    position: absolute;
+    top: 20px;
+    right: 8.25rem;
+}
+
 #d1 {
     width: 80%;
     height: 80%;

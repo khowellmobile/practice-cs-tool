@@ -10,6 +10,20 @@
     </head>
     <body>
         <div class="container-1">
+            <p class="login-signifier">Welcome, {{ user.first_name }}</p>
+            <button
+                        class="button-3 home-button"
+                        onclick="redirectTo('/home/')"
+                    >
+                        Back to home
+                    </button>
+            <button
+                id="logout-button"
+                class="button-3"
+                onclick="redirectTo('/logout/')"
+            >
+                Logout
+            </button>
             <div id="d1" class="">
                 <div id="d1-1" class="">
                     <div id="t1" class="tab active">
