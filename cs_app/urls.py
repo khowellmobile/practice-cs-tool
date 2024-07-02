@@ -27,10 +27,10 @@ urlpatterns = [
     path('get_db_info/', views.get_db_info_view, name='get_db_info'),
 
     # Change account page and functions
-    path('change_account/', views.change_account_view, name='change_account'),
-    path('change_account/update_name/', views.update_name_view, name='update_name'),
-    path('change_account/update_email/', views.update_email_view, name='update_name'),
-    path('change_account/update_password/', views.update_password_view, name='update_name'),
+    path('account_information/', views.account_information_view, name='change_account'),
+    path('account_information/update_name/', views.update_name_view, name='update_name'),
+    path('account_information/update_email/', views.update_email_view, name='update_name'),
+    path('account_information/update_password/', views.update_password_view, name='update_name'),
 
     #tinker
     path('tinker/', views.tinker_view, name='tinker'),
