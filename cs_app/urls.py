@@ -3,16 +3,14 @@ from .views import *
 
 urlpatterns = [
 
-    # Initial landing page
+    # Initial and home screen
     path('', admin_views.main_view, name='main'),
+    path('home/', admin_views.home_view, name='home'),
 
     # Authorization
-    path('login/', admin_views.login_view, name='login'),
-    path('logout/', admin_views.logout_view, name='logout'),
-    path('create_account/', admin_views.create_account_view, name='create_account'),
-
-    # Home screen
-    path('home/', admin_views.home_view, name='home'),
+    path('login/', authorization_views.login_view, name='login'),
+    path('logout/', authorization_views.logout_view, name='logout'),
+    path('create_account/', authorization_views.create_account_view, name='create_account'),
 
     # Generate report and functions
     path('generate_report/', admin_views.generate_report_view, name='generate_report'),
