@@ -4,7 +4,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/change_database_style.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/change_database_style.css' %}"
+        />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
@@ -111,9 +114,7 @@
                         <div id="database-change__current-connection__info">
                             <h3>Currently Connected To:</h3>
                             <h4>Database Engine:</h4>
-                            <p id="curr_engine">
-                                {{ db_info.db_engine }}
-                            </p>
+                            <p id="curr_engine">{{ db_info.db_engine }}</p>
                             <br />
                             <h4>Database Name:</h4>
                             <p id="curr_name">{{ db_info.db_name }}</p>
@@ -125,11 +126,7 @@
                             <div class="spinner"></div>
                         </div>
                     </div>
-                    <div
-                        id="database-change__status"
-                        class="scroller"
-                        onclick="foo('database-change__status')"
-                    >
+                    <div id="database-change__status" class="scroller">
                         <h3>Status / Messages:</h3>
                     </div>
                 </div>
@@ -144,4 +141,3 @@
         </script>
     </body>
 </html>
-
