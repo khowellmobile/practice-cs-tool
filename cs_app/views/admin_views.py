@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.template import loader
 
 from django.contrib.auth.decorators import login_required
@@ -18,6 +18,7 @@ def home_view(request):
     }
 
     return render(request, "home.html", context)
+
 
 @login_required
 def tinker_view(request):
