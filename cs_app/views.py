@@ -9,13 +9,6 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from django.db import connections
-from django.db.utils import (
-    OperationalError,
-    DatabaseError,
-    IntegrityError,
-    ProgrammingError,
-    DataError,
-)
 
 import pyodbc
 
@@ -296,13 +289,13 @@ def generate_unique_alias(base_alias):
 
 
 @login_required
-def change_account_view(request):
+def account_information_view(request):
     user = request.user
     context = {
         "user": user,
     }
 
-    return render(request, "change_account.html", context)
+    return render(request, "account_information.html", context)
 
 
 @login_required
