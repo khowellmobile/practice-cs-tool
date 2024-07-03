@@ -7,6 +7,7 @@ from datetime import datetime
 
 from ..models import PastParameter
 
+
 @login_required
 def generate_report_view(request):
     data = PastParameter.objects.order_by("-date_field")[:25]
@@ -17,6 +18,7 @@ def generate_report_view(request):
     }
 
     return render(request, "generate_report.html", context)
+
 
 @login_required
 def load_table_view(request):
