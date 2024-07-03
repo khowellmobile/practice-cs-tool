@@ -13,8 +13,8 @@ urlpatterns = [
     path('create_account/', authorization_views.create_account_view, name='create_account'),
 
     # Generate report and functions
-    path('generate_report/', admin_views.generate_report_view, name='generate_report'),
-    path('load_table/', admin_views.load_table_view, name='load_table'),
+    path('generate_report/', generate_report_views.generate_report_view, name='generate_report'),
+    path('load_table/', generate_report_views.load_table_view, name='load_table'),
 
     # Directions page
     path('directions/', admin_views.directions_view, name='directions'),
