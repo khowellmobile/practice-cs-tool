@@ -74,22 +74,26 @@ a {
     flex-basis: 100;
 }
 
-.outlineB {
-    outline: solid 1px blue;
-}
-
 .outlineR {
     outline: solid 1px red;
+}
+
+.outlineO {
+    outline: solid 1px orange;
+}
+
+.outlineY {
+    outline: solid 1px yellow;
 }
 
 .outlineG {
     outline: solid 1px green;
 }
 
-.outlineP {
-    outline: solid 1px purple;
+.outlineB {
+    outline: solid 1px blue;
 }
 
-.outlineO {
-    outline: solid 1px orange;
+.outlineP {
+    outline: solid 1px purple;
 }
