@@ -1,3 +1,24 @@
+/**
+ * JavaScript file for handling dynamic UI interactions and AJAX requests for the generate_report.html page.
+ *
+ * This file includes functions to manage UI behavior such as toggling div sizes, altering date inputs based on
+ * preset selections, generating and displaying tables from server data, and throttling function calls to optimize
+ * performance. It utilizes jQuery for DOM manipulation and AJAX operations.
+ *
+ * Functions:
+ * - toggleSize(e1Id, e2Id, smallPercent, largePercent): Toggles the size of two div elements based on percentage values.
+ * - alterDates(range): Adjusts date inputs according to a predefined time range selection.
+ * - generateTable(): Initiates the process of generating a table based on user input.
+ * - createTable(formdata): Sends AJAX request to load table data based on provided form data.
+ * - initializeTable(data): Renders a DataTable with formatted data and manages table height.
+ * - createReportFromHistory(time_range, parameters_json): Generates a report using history buttons on page and updates UI elements.
+ * - setTableHeight(): Sets the height of the report table dynamically based on its container.
+ * - formatData(data): Formats raw data from the server into a format suitable for DataTables.
+ * - throttle(func, delay): Creates a throttled version of a function to limit its invocation rate.
+ *
+ * Dependencies: Requires jQuery for DOM manipulation and AJAX operations.
+ */
+
 const throttledToggleSize = throttle(toggleSize, 500);
 
 /**

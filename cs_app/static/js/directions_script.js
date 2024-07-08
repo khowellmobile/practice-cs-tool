@@ -31,8 +31,6 @@ var lockSubSlides = false;
  *
  * This function handles clicking on a tab then locking further tab changes (2400ms).
  * The tab clicked on will become active and the rest of teh tabs are set to inactive.
- *
- * @listens click
  */
 $(".tab").on("click", function () {
     if (!lockTabs) {
