@@ -230,10 +230,10 @@ function showDoubleSlides(tabId) {
 }
 
 /**
- * Handles switching the displayed sub-slide and locking any futher changes while 
+ * Handles switching the displayed sub-slide and locking any futher changes while
  * animations are active.
  *
- * When a subslide is switched there is a 550ms animation for hiding 
+ * When a subslide is switched there is a 550ms animation for hiding
  * then showing the old and new slide.
  *
  * @param {string} newSlideId - The ID of the new sub-slide to switch to.

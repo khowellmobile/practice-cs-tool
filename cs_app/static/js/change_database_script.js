@@ -18,7 +18,6 @@
  * Dependencies: Requires jQuery for DOM manipulation and AJAX operations.
  */
 
-
 /**
  * Gathers input values for database configuration fields, validates them,
  * and initiates the process to submit the new configuration.
