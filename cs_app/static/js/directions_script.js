@@ -1,3 +1,26 @@
+/**
+ * This file contains functions to manage tab clicks, show/hide slides based on tab selection,
+ * and switch between sub-slides with animation effects within the directions.html template page.
+ *
+ * Global Variables:
+ * - currentActiveId: Tracks the ID of the currently active tab.
+ * - currentActiveSubSlide: Tracks the ID of the currently active sub-slide.
+ * - lockTabs: Prevents tab switch spamming to avoid unintended behavior.
+ * - lockSubSlides: Prevents sub-slide switch spamming to ensure smooth animations.
+ *
+ * Functions:
+ * - $(".tab").on("click", function () { ... }): Event listener for tab clicks with locking mechanism.
+ * - hideActive(): Hides the currently active set of slides based on `currentActiveId`.
+ * - showNewActive(): Shows the slides corresponding to the newly activated tab after a delay.
+ * - hideTripleSlides(tabId): Hides triple slides based on the provided `tabId`.
+ * - showTripleSlides(tabId): Shows triple slides based on the provided `tabId` after a delay.
+ * - hideDoubleSlides(tabId): Hides double slides based on the provided `tabId`.
+ * - showDoubleSlides(tabId): Shows double slides based on the provided `tabId` after a delay.
+ * - switchSubSlide(newSlideId): Switches the active sub-slide with animation based on `lockSubSlides`.
+ *
+ * Dependencies: Requires jQuery for DOM manipulation.
+ */
+
 var currentActiveId = "t1";
 var currentActiveSubSlide = "slides__genRep__2__repHist";
 var lockTabs = false;
