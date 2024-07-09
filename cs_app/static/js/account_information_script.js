@@ -16,13 +16,24 @@
  */
 
 /**
- * Toggles the visibility of the form used to update the specified field.
- *
- * @param {string} fieldName - The name of the field for which the form should be toggled.
+ * Event listener attached to all toggle buttons
+ * 
+ * Toggles the visibility of the form used to update the specified field gotten from the parent.
  */
-function toggleForm(fieldName) {
+$(".toggleButton").on("click", function () {
+    fieldName = $(this).parent().attr("id");
     $("#update_" + fieldName).toggle();
-}
+});
+
+/**
+ * Event listener attached to all submit buttons
+ * 
+ * Submits the form used to update the specified field gotten from the grandparent.
+ */
+$(".submitButton").on("click", function () {
+    fieldName = $(this).parent().parent().attr("id");
+    submitForm(fieldName);
+});
 
 /**
  * Submits form data for updating user information via AJAX based on the field name (name, email, password).
@@ -34,30 +45,34 @@ function toggleForm(fieldName) {
 function submitForm(fieldName) {
     $("#update_" + fieldName).hide();
 
-    var url, formdata;
+    var formdata;
 
-    if (fieldName == "name") {
-        url = "/account_information/update_name/";
-        formdata = {
-            first_name: $("#first_name").val(),
-            last_name: $("#last_name").val(),
-        };
-    } else if (fieldName == "email") {
-        url = "/account_information/update_email/";
-        formdata = {
-            email: $("#email").val(),
-        };
-    } else {
-        url = "/account_information/update_password/";
-        formdata = {
-            password: $("#password").val(),
-        };
+    switch (fieldName) {
+        case "name":
+            formdata = {
+                first_name: $("#first_name").val(),
+                last_name: $("#last_name").val(),
+            };
+            break;
+        case "email":
+            formdata = {
+                email: $("#email").val(),
+            };
+            break;
+        case "password":
+            formdata = {
+                password: $("#password").val(),
+            };
+            break;
+        default:
+            console.log("Field name not recognized");
+            break;
     }
 
     $.ajax({
         type: "POST",
         headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
-        url: url,
+        url: `/account_information/update_${fieldName}/`,
         data: formdata,
         success: function (response) {
             ajaxResponseSuccess(fieldName, formdata);
@@ -77,13 +92,20 @@ function submitForm(fieldName) {
 function ajaxResponseSuccess(fieldName, formdata) {
     var displayText;
 
-    if (fieldName == "name") {
-        displayText =
-            "Name: " + formdata["first_name"] + " " + formdata["last_name"];
-    } else if (fieldName == "email") {
-        displayText = "Email: " + formdata["email"];
-    } else {
-        displayText = "New password set.";
+    switch (fieldName) {
+        case "name":
+            displayText =
+                "Name: " + formdata["first_name"] + " " + formdata["last_name"];
+            break;
+        case "email":
+            displayText = "Email: " + formdata["email"];
+            break;
+        case "password":
+            displayText = "New password set.";
+            break;
+        default:
+            console.log("Field name not recognized");
+            break;
     }
 
     $(`#${fieldName}_text`).text(displayText);
