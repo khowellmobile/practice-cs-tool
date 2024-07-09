@@ -42,7 +42,7 @@ function getNewConfig() {
             db_pass: pass,
         };
 
-        // Will stop users from spamming conncections while connection is loading
+        // Will stop users from spamming connections while connection is loading
         if ($(".spinner").css("visibility") == "visible") {
             return;
         }
@@ -63,7 +63,7 @@ function submitNewConfig(db_info) {
 
     $.ajax({
         type: "POST",
-        headers: { "X-CSRFToken": csrf_token },
+        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
         url: url,
         data: db_info,
         success: function (response) {
@@ -113,7 +113,7 @@ function getDisplayDBInfo(alias) {
 
     $.ajax({
         type: "GET",
-        headers: { "X-CSRFToken": csrf_token },
+        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
         url: url,
         data: { db_alias: alias },
         success: function (response) {

@@ -74,7 +74,7 @@ function createTable(formdata) {
 
     $.ajax({
         type: "POST",
-        headers: { "X-CSRFToken": csrf_token },
+        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
         url: url,
         data: formdata,
         success: function (response) {
