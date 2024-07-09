@@ -16,13 +16,24 @@
  */
 
 /**
- * Toggles the visibility of the form used to update the specified field.
- *
- * @param {string} fieldName - The name of the field for which the form should be toggled.
+ * Event listener attached to all toggle buttons
+ * 
+ * Toggles the visibility of the form used to update the specified field gotten from the parent.
  */
-function toggleForm(fieldName) {
+$(".toggleButton").on("click", function () {
+    fieldName = $(this).parent().attr("id");
     $("#update_" + fieldName).toggle();
-}
+});
+
+/**
+ * Event listener attached to all submit buttons
+ * 
+ * Submits the form used to update the specified field gotten from the grandparent.
+ */
+$(".submitButton").on("click", function () {
+    fieldName = $(this).parent().parent().attr("id");
+    submitForm(fieldName);
+});
 
 /**
  * Submits form data for updating user information via AJAX based on the field name (name, email, password).

@@ -4,7 +4,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/account_information_style.css' %}" />
+        <link
+            rel="stylesheet"
+            href="{% static 'css/account_information_style.css' %}"
+        />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
@@ -30,7 +33,7 @@
                     </button>
                 </div>
                 <hr />
-                <div>
+                <div id="name">
                     <p id="name_text">
                         Name: {{ user.first_name }} {{user.last_name }}
                     </p>
@@ -55,21 +58,17 @@
                         <button
                             id="but"
                             type="button"
-                            class="button-1"
-                            onclick="submitForm('name')"
+                            class="button-1 submitButton"
                         >
                             Save
                         </button>
                     </form>
-                    <button
-                        class="button-1 content__button"
-                        onclick="toggleForm('name')"
-                    >
+                    <button class="button-1 content__button toggleButton">
                         Change
                     </button>
                 </div>
                 <hr />
-                <div>
+                <div id="email">
                     <p id="email_text">Email: {{ user.email }}</p>
                     <form
                         id="update_email"
@@ -83,23 +82,16 @@
                             class="form__input wide__input"
                             value="{{ user.email}}"
                         />
-                        <button
-                            type="button"
-                            class="button-1"
-                            onclick="submitForm('email')"
-                        >
+                        <button type="button" class="button-1 submitButton">
                             Save
                         </button>
                     </form>
-                    <button
-                        class="button-1 content__button"
-                        onclick="toggleForm('email')"
-                    >
+                    <button class="button-1 content__button toggleButton">
                         Change
                     </button>
                 </div>
                 <hr />
-                <div>
+                <div id="password">
                     <p id="password_text">
                         Password: The tool does not save raw text passwords.
                     </p>
@@ -114,18 +106,11 @@
                             class="form__input wide__input"
                             id="password"
                         />
-                        <button
-                            type="button"
-                            class="button-1"
-                            onclick="submitForm('password')"
-                        >
+                        <button type="button" class="button-1 submitButton">
                             Save
                         </button>
                     </form>
-                    <button
-                        class="button-1 content__button"
-                        onclick="toggleForm('password')"
-                    >
+                    <button class="button-1 content__button toggleButton">
                         Change
                     </button>
                 </div>
