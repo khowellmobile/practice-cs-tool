@@ -34,20 +34,22 @@ function toggleForm(fieldName) {
 function submitForm(fieldName) {
     $("#update_" + fieldName).hide();
 
+    var url, formdata;
+
     if (fieldName == "name") {
-        var url = "/account_information/update_name/";
-        var formdata = {
+        url = "/account_information/update_name/";
+        formdata = {
             first_name: $("#first_name").val(),
             last_name: $("#last_name").val(),
         };
     } else if (fieldName == "email") {
-        var url = "/account_information/update_email/";
-        var formdata = {
+        url = "/account_information/update_email/";
+        formdata = {
             email: $("#email").val(),
         };
     } else {
-        var url = "/account_information/update_password/";
-        var formdata = {
+        url = "/account_information/update_password/";
+        formdata = {
             password: $("#password").val(),
         };
     }
@@ -60,7 +62,9 @@ function submitForm(fieldName) {
         success: function (response) {
             ajaxResponseSuccess(fieldName, formdata);
         },
-        error: function (xhr, errmsg, err) {},
+        error: function (xhr, errmsg, err) {
+            // Handle errors as needed
+        },
     });
 }
 
@@ -71,13 +75,16 @@ function submitForm(fieldName) {
  * @param {Object} formdata - The data object containing updated field information.
  */
 function ajaxResponseSuccess(fieldName, formdata) {
+    var displayText;
+
     if (fieldName == "name") {
-        $(`#${fieldName}_text`).text(
-            "Name: " + formdata["first_name"] + " " + formdata["last_name"]
-        );
+        displayText =
+            "Name: " + formdata["first_name"] + " " + formdata["last_name"];
     } else if (fieldName == "email") {
-        $(`#${fieldName}_text`).text("Email: " + formdata["email"]);
+        displayText = "Email: " + formdata["email"];
     } else {
-        $(`#${fieldName}_text`).text("New password set.");
+        displayText = "New password set.";
     }
+
+    $(`#${fieldName}_text`).text(displayText);
 }
