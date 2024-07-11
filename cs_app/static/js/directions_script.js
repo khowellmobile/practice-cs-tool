@@ -21,7 +21,7 @@
  * Dependencies: Requires jQuery for DOM manipulation.
  */
 
-var currentActiveId = "t1";
+var currentActiveId = "overview";
 var currentActiveSubSlide = "slides__genRep__2__repHist";
 var lockTabs = false;
 var lockSubSlides = false;
@@ -65,17 +65,17 @@ $(".tab").on("click", function () {
  */
 function hideActive() {
     switch (currentActiveId) {
-        case "t1":
-            hideTripleSlides("t1");
+        case "overview":
+            hideTripleSlides("overview");
             break;
-        case "t2":
-            hideDoubleSlides("t2");
+        case "genRep":
+            hideDoubleSlides("genRep");
             break;
-        case "t3":
-            hideDoubleSlides("t3");
+        case "changeDB":
+            hideDoubleSlides("changeDB");
             break;
-        case "t4":
-            hideDoubleSlides("t4");
+        case "acctInfo":
+            hideDoubleSlides("acctInfo");
             break;
         default:
             console.log("unknown tab");
@@ -91,24 +91,24 @@ function hideActive() {
  */
 function showNewActive() {
     switch (currentActiveId) {
-        case "t1":
+        case "overview":
             setTimeout(() => {
-                showTripleSlides("t1");
+                showTripleSlides("overview");
             }, 1200);
             break;
-        case "t2":
+        case "genRep":
             setTimeout(() => {
-                showDoubleSlides("t2");
+                showDoubleSlides("genRep");
             }, 1200);
             break;
-        case "t3":
+        case "changeDB":
             setTimeout(() => {
-                showDoubleSlides("t3");
+                showDoubleSlides("changeDB");
             }, 1200);
             break;
-        case "t4":
+        case "acctInfo":
             setTimeout(() => {
-                showDoubleSlides("t4");
+                showDoubleSlides("acctInfo");
             }, 1200);
         default:
             console.log("unknown tab");
@@ -164,17 +164,8 @@ function showTripleSlides(tabId) {
  * @param {string} tabId - The ID of the tab determining which slides to hide.
  */
 function hideDoubleSlides(tabId) {
-    let e1, e2;
-    if (tabId === "t2") {
-        e1 = $("#slides__genRep__1");
-        e2 = $("#slides__genRep__2");
-    } else if (tabId === "t3") {
-        e1 = $("#slides__changeDB__1");
-        e2 = $("#slides__changeDB__2");
-    } else {
-        e1 = $("#slides__acctInfo__1");
-        e2 = $("#slides__acctInfo__2");
-    }
+    let e1 = $(`#slides__${tabId}__1`);
+    let e2 = $(`#slides__${tabId}__2`);
 
     classToggleTimeout(e1, true, "up", 150);
     classToggleTimeout(e2, true, "down", 300);
@@ -191,17 +182,8 @@ function hideDoubleSlides(tabId) {
  * @param {string} tabId - The ID of the tab determining which slides to show.
  */
 function showDoubleSlides(tabId) {
-    let e1, e2;
-    if (tabId === "t2") {
-        e1 = $("#slides__genRep__1");
-        e2 = $("#slides__genRep__2");
-    } else if (tabId === "t3") {
-        e1 = $("#slides__changeDB__1");
-        e2 = $("#slides__changeDB__2");
-    } else {
-        e1 = $("#slides__acctInfo__1");
-        e2 = $("#slides__acctInfo__2");
-    }
+    let e1 = $(`#slides__${tabId}__1`);
+    let e2 = $(`#slides__${tabId}__2`);
 
     e1.css("display", "flex");
     e2.css("display", "flex");
@@ -241,21 +223,19 @@ function switchSubSlide(newSlideId) {
 
         classToggleTimeout(e2, false, "scaleDown", 550);
         classToggleTimeout(e2, true, "scaleUp", 550);
-        
 
         currentActiveSubSlide = newSlideId;
     }
 }
 
 function classToggleTimeout(element, addingClass, cssClass, timeout) {
-
     if (addingClass) {
         setTimeout(() => {
             element.addClass(cssClass);
-        }, timeout)
+        }, timeout);
     } else {
         setTimeout(() => {
             element.removeClass(cssClass);
-        }, timeout)
+        }, timeout);
     }
 }
