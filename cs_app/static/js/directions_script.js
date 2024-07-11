@@ -127,15 +127,10 @@ function hideTripleSlides(tabId) {
     e2 = $("#slides__overview__2");
     e3 = $("#slides__overview__3");
 
-    setTimeout(() => {
-        e1.addClass("up");
-    }, 150);
-    setTimeout(() => {
-        e2.addClass("down");
-    }, 300);
-    setTimeout(() => {
-        e3.addClass("up");
-    }, 450);
+    classToggleTimeout(e1, true, "up", 150);
+    classToggleTimeout(e2, true, "down", 300);
+    classToggleTimeout(e3, true, "up", 450);
+
     setTimeout(() => {
         e1.css("display", "none");
         e2.css("display", "none");
@@ -158,15 +153,9 @@ function showTripleSlides(tabId) {
     e2.css("display", "flex");
     e3.css("display", "flex");
 
-    setTimeout(() => {
-        e1.removeClass("up");
-    }, 150);
-    setTimeout(() => {
-        e2.removeClass("down");
-    }, 300);
-    setTimeout(() => {
-        e3.removeClass("up");
-    }, 450);
+    classToggleTimeout(e1, false, "up", 150);
+    classToggleTimeout(e2, false, "down", 300);
+    classToggleTimeout(e3, false, "up", 450);
 }
 
 /**
@@ -187,12 +176,9 @@ function hideDoubleSlides(tabId) {
         e2 = $("#slides__acctInfo__2");
     }
 
-    setTimeout(() => {
-        e1.addClass("up");
-    }, 150);
-    setTimeout(() => {
-        e2.addClass("down");
-    }, 300);
+    classToggleTimeout(e1, true, "up", 150);
+    classToggleTimeout(e2, true, "down", 300);
+
     setTimeout(() => {
         e1.css("display", "none");
         e2.css("display", "none");
@@ -219,12 +205,9 @@ function showDoubleSlides(tabId) {
 
     e1.css("display", "flex");
     e2.css("display", "flex");
-    setTimeout(() => {
-        e1.removeClass("up");
-    }, 150);
-    setTimeout(() => {
-        e2.removeClass("down");
-    }, 300);
+
+    classToggleTimeout(e1, false, "up", 150);
+    classToggleTimeout(e2, false, "down", 300);
 }
 
 /**
@@ -256,11 +239,23 @@ function switchSubSlide(newSlideId) {
             e2.css("display", "flex");
         }, 525);
 
-        setTimeout(() => {
-            e2.removeClass("scaleDown");
-            e2.addClass("scaleUp");
-        }, 550);
+        classToggleTimeout(e2, false, "scaleDown", 550);
+        classToggleTimeout(e2, true, "scaleUp", 550);
+        
 
         currentActiveSubSlide = newSlideId;
+    }
+}
+
+function classToggleTimeout(element, addingClass, cssClass, timeout) {
+
+    if (addingClass) {
+        setTimeout(() => {
+            element.addClass(cssClass);
+        }, timeout)
+    } else {
+        setTimeout(() => {
+            element.removeClass(cssClass);
+        }, timeout)
     }
 }
