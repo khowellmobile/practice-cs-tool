@@ -23,7 +23,6 @@ html {
 }
 
 #history-menu {
-    width: 3%;
     height: 100%;
 
     background-color: rgb(167, 191, 255);
@@ -32,6 +31,14 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.historySmall {
+    width: 3%;
+}
+
+.historyLarge {
+    width: 20%;
 }
 
 #history-menu__expand-button {
@@ -154,11 +161,18 @@ html {
 }
 
 #report-block {
-    width: 97%;
     height: 100%;
     margin-left: 1rem;
 
     transition: all 0.5s;
+}
+
+.reportSmall {
+    width: 80%;
+}
+
+.reportLarge {
+    width: 97%;
 }
 
 #report-block__menu {

@@ -219,7 +219,7 @@ function formatData(data) {
 }
 
 $("#expand-button").on("click", function () {
-    throttledToggleSize("history-menu", "report-block", "3", "20");
+    throttledToggleSize("history-menu", "report-block");
 });
 
 /**
@@ -233,27 +233,19 @@ $("#expand-button").on("click", function () {
  * @param {string} smallPercent - The number in percent for the small size
  * @param {string} largePercent - The number in percent for the large size
  */
-function toggleSize(e1Id, e2Id, smallPercent, largePercent) {
-    let delta = 10;
+function toggleSize(e1Id, e2Id) {
     let e1 = $("#" + e1Id);
     let e2 = $("#" + e2Id);
 
-    let pWidth = $("#content").width();
-    let cWidth = e1.width();
+    e1.toggleClass("historySmall historyLarge");
 
-    let lSize = (largePercent / 100) * pWidth;
+    e2.toggleClass("reportLarge reportSmall");
 
-    if (cWidth <= lSize - delta) {
-        e1.css("width", largePercent + "%");
-        e2.css("width", "80%");
-        toggleClassDisplay(true);
-    } else {
-        e1.css("width", smallPercent + "%");
-        e2.css("width", "97%");
-        toggleClassDisplay(false);
-    }
+    let e1Large = e1.hasClass("historyLarge");
+    let e2Small = e2.hasClass("reportSmall");
+
+    toggleClassDisplay(e1Large && e2Small);
 }
-
 /**
  * Toggles the display of .expandedInfo elements and .symbol elements
  *
