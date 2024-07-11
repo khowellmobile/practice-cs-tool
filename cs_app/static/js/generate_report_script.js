@@ -6,7 +6,7 @@
  * performance. It utilizes jQuery for DOM manipulation and AJAX operations.
  *
  * Functions:
- * - toggleSize(e1Id, e2Id, smallPercent, largePercent): Toggles the size of two div elements based on percentage values.
+ * - toggleSize(e1Id, e2Id): Toggles the size of two div elements based on size classes.
  * - alterDates(range): Adjusts date inputs according to a predefined time range selection.
  * - generateTable(): Initiates the process of generating a table based on user input.
  * - createTable(formdata): Sends AJAX request to load table data based on provided form data.
@@ -42,6 +42,14 @@ $("#start_date, #end_date").on("change", function () {
  */
 $(window).on("resize", function () {
     setTableHeight();
+});
+
+/**
+ * Calls throttledToggleSize() for history-menu and report-block on click
+ * of expand-button
+ */
+$("#expand-button").on("click", function () {
+    throttledToggleSize("history-menu", "report-block");
 });
 
 /**
@@ -163,25 +171,22 @@ function alterDates(range) {
         case "YTD":
             start_date = `${year - 1}-01-01`;
             end_date = `${year}-${month}-${day}`;
-            $("#start_date").val(start_date);
-            $("#end_date").val(end_date);
             break;
         case "Last Year":
             start_date = `${year - 1}-01-01`;
             end_date = `${year - 1}-12-31`;
-            $("#start_date").val(start_date);
-            $("#end_date").val(end_date);
             break;
         case "All Time":
             start_date = "1000-01-01";
             end_date = `${year}-${month}-${day}`;
-            $("#start_date").val(start_date);
-            $("#end_date").val(end_date);
             break;
         default:
-            console.log("error");
+            console.log("Unknown time range");
             break;
     }
+
+    $("#start_date").val(start_date);
+    $("#end_date").val(end_date);
 }
 
 /**
@@ -222,35 +227,27 @@ function formatData(data) {
 }
 
 /**
- * Toggles the size of 2 divs
+ * Toggles the size classes of two specified divs.
  *
- * Handles the resizing of 2 divs. e1 being toggled between small and large
- * percent values and e2 being sized between 80% and 97%;
+ * This function manages the size toggling of two div elements identified
+ * by their respective IDs, adjusting them between small and large sizes
+ * based on their current state of classes.
  *
- * @param {string} e1Id - id of the first div to be sized
- * @param {string} e2Id - id of the second div to be sized
- * @param {string} smallPercent - The number in percent for the small size
- * @param {string} largePercent - The number in percent for the large size
+ * @param {string} e1Id - The ID of the first div element.
+ * @param {string} e2Id - The ID of the second div element.
  */
-function toggleSize(e1Id, e2Id, smallPercent, largePercent) {
-    let delta = 10;
+function toggleSize(e1Id, e2Id) {
     let e1 = $("#" + e1Id);
     let e2 = $("#" + e2Id);
 
-    let pWidth = $("#content").width();
-    let cWidth = e1.width();
+    e1.toggleClass("historySmall historyLarge");
 
-    let lSize = (largePercent / 100) * pWidth;
+    e2.toggleClass("reportLarge reportSmall");
 
-    if (cWidth <= lSize - delta) {
-        e1.css("width", largePercent + "%");
-        e2.css("width", "80%");
-        toggleClassDisplay(true);
-    } else {
-        e1.css("width", smallPercent + "%");
-        e2.css("width", "97%");
-        toggleClassDisplay(false);
-    }
+    let e1Large = e1.hasClass("historyLarge");
+    let e2Small = e2.hasClass("reportSmall");
+
+    toggleClassDisplay(e1Large && e2Small);
 }
 
 /**
