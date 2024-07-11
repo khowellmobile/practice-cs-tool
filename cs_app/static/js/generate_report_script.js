@@ -6,7 +6,7 @@
  * performance. It utilizes jQuery for DOM manipulation and AJAX operations.
  *
  * Functions:
- * - toggleSize(e1Id, e2Id, smallPercent, largePercent): Toggles the size of two div elements based on percentage values.
+ * - toggleSize(e1Id, e2Id): Toggles the size of two div elements based on size classes.
  * - alterDates(range): Adjusts date inputs according to a predefined time range selection.
  * - generateTable(): Initiates the process of generating a table based on user input.
  * - createTable(formdata): Sends AJAX request to load table data based on provided form data.
@@ -42,6 +42,14 @@ $("#start_date, #end_date").on("change", function () {
  */
 $(window).on("resize", function () {
     setTableHeight();
+});
+
+/**
+ * Calls throttledToggleSize() for history-menu and report-block on click
+ * of expand-button
+ */
+$("#expand-button").on("click", function () {
+    throttledToggleSize("history-menu", "report-block");
 });
 
 /**
@@ -218,20 +226,15 @@ function formatData(data) {
     return res;
 }
 
-$("#expand-button").on("click", function () {
-    throttledToggleSize("history-menu", "report-block");
-});
-
 /**
- * Toggles the size of 2 divs
+ * Toggles the size classes of two specified divs.
  *
- * Handles the resizing of 2 divs. e1 being toggled between small and large
- * percent values and e2 being sized between 80% and 97%;
+ * This function manages the size toggling of two div elements identified
+ * by their respective IDs, adjusting them between small and large sizes
+ * based on their current state of classes.
  *
- * @param {string} e1Id - id of the first div to be sized
- * @param {string} e2Id - id of the second div to be sized
- * @param {string} smallPercent - The number in percent for the small size
- * @param {string} largePercent - The number in percent for the large size
+ * @param {string} e1Id - The ID of the first div element.
+ * @param {string} e2Id - The ID of the second div element.
  */
 function toggleSize(e1Id, e2Id) {
     let e1 = $("#" + e1Id);
@@ -246,6 +249,7 @@ function toggleSize(e1Id, e2Id) {
 
     toggleClassDisplay(e1Large && e2Small);
 }
+
 /**
  * Toggles the display of .expandedInfo elements and .symbol elements
  *
