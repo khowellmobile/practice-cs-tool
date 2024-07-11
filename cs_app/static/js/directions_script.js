@@ -17,6 +17,7 @@
  * - hideDoubleSlides(tabId): Hides double slides based on the provided `tabId`.
  * - showDoubleSlides(tabId): Shows double slides based on the provided `tabId` after a delay.
  * - switchSubSlide(newSlideId): Switches the active sub-slide with animation based on `lockSubSlides`.
+ * - classToggleTimeout(element, addingClass, cssClass, timeout): Toggles a specified class for an element after a delay
  *
  * Dependencies: Requires jQuery for DOM manipulation.
  */
@@ -228,6 +229,14 @@ function switchSubSlide(newSlideId) {
     }
 }
 
+/**
+ * Sets a timeout to toggle a CSS class on an element after a delay.
+ *
+ * @param {jQuery} element - The jQuery element to toggle the class on.
+ * @param {boolean} addingClass - Whether to add or remove the class.
+ * @param {string} cssClass - The CSS class to toggle.
+ * @param {number} timeout - The delay in milliseconds before toggling the class.
+ */
 function classToggleTimeout(element, addingClass, cssClass, timeout) {
     if (addingClass) {
         setTimeout(() => {
