@@ -163,25 +163,22 @@ function alterDates(range) {
         case "YTD":
             start_date = `${year - 1}-01-01`;
             end_date = `${year}-${month}-${day}`;
-            $("#start_date").val(start_date);
-            $("#end_date").val(end_date);
             break;
         case "Last Year":
             start_date = `${year - 1}-01-01`;
             end_date = `${year - 1}-12-31`;
-            $("#start_date").val(start_date);
-            $("#end_date").val(end_date);
             break;
         case "All Time":
             start_date = "1000-01-01";
             end_date = `${year}-${month}-${day}`;
-            $("#start_date").val(start_date);
-            $("#end_date").val(end_date);
             break;
         default:
-            console.log("error");
+            console.log("Unknown time range");
             break;
     }
+
+    $("#start_date").val(start_date);
+    $("#end_date").val(end_date);
 }
 
 /**
@@ -220,6 +217,10 @@ function formatData(data) {
 
     return res;
 }
+
+$("#expand-button").on("click", function () {
+    throttledToggleSize("history-menu", "report-block", "3", "20");
+});
 
 /**
  * Toggles the size of 2 divs
