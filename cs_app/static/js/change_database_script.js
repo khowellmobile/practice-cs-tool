@@ -23,34 +23,26 @@
  * and initiates the process to submit the new configuration.
  */
 function getNewConfig() {
-    let engine = $("#input_engine").val().trim();
-    let name = $("#input_name").val().trim();
-    let host = $("#input_host").val().trim();
-    let driver = $("#input_driver").val().trim();
-    let user = $("#input_user").val().trim();
-    let pass = $("#input_password").val().trim();
-
-    if ((engine == "") | (name == "") | (host == "") | (driver == "")) {
-        alert("Please fill out engine, name, host, and driver");
-    } else {
-        let db_info = {
-            db_engine: engine,
-            db_name: name,
-            db_host: host,
-            db_driver: driver,
-            db_user: user,
-            db_pass: pass,
-        };
-
-        // Will stop users from spamming connections while connection is loading
-        if ($(".spinner").css("visibility") == "visible") {
-            return;
-        }
-
-        setSpinnerVisibility(true);
-
-        submitNewConfig(db_info);
+    // Will stop users from spamming connections while connection is loading
+    if ($(".spinner").css("visibility") == "visible") {
+        return;
     }
+
+    db_info = getInputValues();
+
+    if (
+        (db_info["db_engine"] == "") |
+        (db_info["db_name"] == "") |
+        (db_info["db_host"] == "") |
+        (db_info["db_driver"] == "")
+    ) {
+        alert("Please fill out engine, name, host, and driver");
+        return;
+    }
+
+    setSpinnerVisibility(true);
+
+    submitNewConfig(db_info);
 }
 
 /**
@@ -90,16 +82,16 @@ function dbChangeHandler(success, message) {
             "<p class='stat__message'>Successful Connection</p>"
         );
         getDisplayDBInfo(message.db_alias);
+    } else if (message.responseJSON) {
+        // captures a failure but one that includes a json response
+        $("#database-change__status").append(
+            `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
+        );
     } else {
-        if (message.responseJSON) {
-            $("#database-change__status").append(
-                `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
-            );
-        } else {
-            alert(
-                "An error occurred while processing your request. Please try again."
-            );
-        }
+        // captures a failure due to non-view related circumstances
+        alert(
+            "An error occurred while processing your request. Please try again."
+        );
     }
 }
 
@@ -138,6 +130,24 @@ function setSpinnerVisibility(spinnerVisible) {
     } else {
         $(".spinner").css("visibility", "hidden");
     }
+}
+
+/**
+ * Gathers input values of all inputs in the form on the change database page.
+ * Formats these into an object used in creating the new databse configuration.
+ *
+ * @return {Object} - Object that contains the information from the form inputs
+ */
+function getInputValues() {
+    var db_info = {};
+    $("#database-change__form")
+        .find("input")
+        .each(function () {
+            id = $(this).attr("id").slice(6);
+            db_info[`db_${id}`] = $(this).val().trim();
+        });
+
+    return db_info;
 }
 
 // Export for testing using jest and jsdom
