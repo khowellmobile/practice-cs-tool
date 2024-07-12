@@ -1,5 +1,5 @@
 """
-Django views for directions page related functionalities.
+Django views for directions page and related functionalities.
 
 This module contains Django view functions specifically for displaying directions
 related to user navigation or guidance. The views ensure that only authenticated
