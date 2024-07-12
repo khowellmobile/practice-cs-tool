@@ -1,3 +1,30 @@
+"""
+Views for generate report page.
+
+This module contains Django view functions related to rendering the generate report page
+and loading data into tables. These views require users to be logged in, enforced by the 
+@login_required decorator. The functions handle HTTP requests to render HTML templates 
+and respond with JSON data for AJAX requests.
+
+Functions:
+- generate_report_view(request): Renders the 'generate_report.html' template with the
+  latest 25 entries from PastParameter and the current user's information.
+  
+- load_table_view(request): Processes AJAX POST requests containing start_date, end_date,
+  and time_range parameters. Logs parameters in PastParameter, executes a SQL query to
+  calculate department-wise total hours, and returns JSON response with the data.
+
+Dependencies:
+- Django modules: render, JsonResponse, connections
+- Python modules: datetime
+- Model: PastParameter from the application's models
+
+Usage:
+These views are intended to be used in a Django application where users can generate
+reports based on historical parameters and load databse information into tables.
+
+"""
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -10,6 +37,21 @@ from ..models import PastParameter
 
 @login_required
 def generate_report_view(request):
+    """
+    View function to generate the generate report page
+
+    Requires the user to be logged in to access the view.
+
+    Retrieves the latest 25 entries from PastParameter ordered by date_field,
+    prepares the data along with the current user's information, and renders
+    the 'generate_report.html' template with the context.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered template with user and data context.
+    """
     data = PastParameter.objects.order_by("-date_field")[:25]
     user = request.user
     context = {
@@ -22,6 +64,22 @@ def generate_report_view(request):
 
 @login_required
 def load_table_view(request):
+    """
+    View function to handle AJAX POST requests for loading data into a table.
+
+    Requires the user to be logged in to access the view.
+
+    Processes POST requests containing parameters like start_date, end_date, and time_range.
+    Stores relevant parameters in the PastParameter model for logging purposes.
+    Executes a SQL query to retrieve department-wise total hours based on given date filters.
+    Returns JSON response with department names and corresponding total hours.
+
+    Args:
+        request (HttpRequest): The HTTP request object containing POST data.
+
+    Returns:
+        JsonResponse: JSON response with data if successful, or error message if request method is not POST.
+    """
     if request.method == "POST":
         start_date = request.POST.get("start_date")
         end_date = request.POST.get("end_date")
