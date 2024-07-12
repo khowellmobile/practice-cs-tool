@@ -1,5 +1,5 @@
 """
-Views for generate report page.
+Django views for generate report page and related functionalities.
 
 This module contains Django view functions related to rendering the generate report page
 and loading data into tables. These views require users to be logged in, enforced by the 
@@ -18,10 +18,6 @@ Dependencies:
 - Django modules: render, JsonResponse, connections
 - Python modules: datetime
 - Model: PastParameter from the application's models
-
-Usage:
-These views are intended to be used in a Django application where users can generate
-reports based on historical parameters and load databse information into tables.
 
 """
 
