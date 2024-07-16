@@ -17,7 +17,7 @@
 
 /**
  * Event listener attached to all toggle buttons
- * 
+ *
  * Toggles the visibility of the form used to update the specified field gotten from the parent.
  */
 $(".toggleButton").on("click", function () {
@@ -27,7 +27,7 @@ $(".toggleButton").on("click", function () {
 
 /**
  * Event listener attached to all submit buttons
- * 
+ *
  * Submits the form used to update the specified field gotten from the grandparent.
  */
 $(".submitButton").on("click", function () {
@@ -77,8 +77,8 @@ function submitForm(fieldName) {
         success: function (response) {
             ajaxResponseSuccess(fieldName, formdata);
         },
-        error: function (xhr, errmsg, err) {
-            // Handle errors as needed
+        error: function (xhr) {
+            ajaxResponseError(fieldName, xhr.responseJSON);
         },
     });
 }
@@ -109,4 +109,38 @@ function ajaxResponseSuccess(fieldName, formdata) {
     }
 
     $(`#${fieldName}_text`).text(displayText);
+}
+
+/**
+ * Alerts the user about specific errors encountered after an AJAX call.
+ *
+ * @param {string} fieldName - The name of the field that was being updated (name, email, password).
+ * @param {Object} message - The error message object returned from the server.
+ *                          It should contain an "error" key indicating the type of error.
+ */
+function ajaxResponseError(fieldName, message) {
+    if (message["error"] == "Invalid format") {
+        switch (fieldName) {
+            case "name":
+                alert(
+                    "Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes."
+                );
+                break;
+            case "email":
+                alert(
+                    "Email format is invalid. Please follow standard email format: example@domain.com"
+                );
+                break;
+            case "password":
+                alert(
+                    "Password format is invalid. Passwords must be at least 8 characters long."
+                );
+                break;
+            default:
+                console.log("Field name not recognized");
+                break;
+        }
+    } else {
+        alert("An unknown error occurred. Please try again.");
+    }
 }

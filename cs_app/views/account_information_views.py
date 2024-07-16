@@ -19,12 +19,15 @@ Dependencies:
 - Django modules: JsonResponse
 - Django authentication: login_required
 - Django shortcuts: render
+- Utils: common_functions
 
 """
 
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
+import cs_app.utils.common_functions as cf
 
 
 @login_required
@@ -68,6 +71,10 @@ def update_name_view(request):
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
 
+        # Validation for name formats
+        if not cf.validate_name(first_name) or not cf.validate_name(last_name):
+            return JsonResponse({"error": "Invalid format"}, status=400)
+
         user = request.user
 
         # Process the data as needed
@@ -79,7 +86,7 @@ def update_name_view(request):
         return JsonResponse({"message": "Data received successfully"})
 
     # Return an error response if the request method is not POST
-    return JsonResponse({"error": "Invalid request method"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 @login_required
@@ -101,6 +108,10 @@ def update_email_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
 
+        # Validation for email format
+        if not cf.validate_name(email):
+            return JsonResponse({"error": "Invalid format"}, status=400)
+
         user = request.user
 
         user.email = email
@@ -109,7 +120,7 @@ def update_email_view(request):
 
         return JsonResponse({"message": "Data received successfully"})
 
-    return JsonResponse({"error": "Invalid request method"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 @login_required
@@ -131,6 +142,10 @@ def update_password_view(request):
     if request.method == "POST":
         password = request.POST.get("password")
 
+        # Validation for password format
+        if not cf.validate_name(password):
+            return JsonResponse({"error": "Invalid format"}, status=400)
+
         user = request.user
 
         user.set_password(password)
@@ -138,4 +153,4 @@ def update_password_view(request):
 
         return JsonResponse({"message": "Data received successfully"})
 
-    return JsonResponse({"error": "Invalid request method"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
