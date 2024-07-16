@@ -111,27 +111,35 @@ function ajaxResponseSuccess(fieldName, formdata) {
     $(`#${fieldName}_text`).text(displayText);
 }
 
+/**
+ * Alerts user of any potential errors after the ajax call
+ *
+ * @param {string} fieldName - The name of the field that was trying to be updated (name, email, password).
+ * @param {Object} message - Error message
+ */
 function ajaxResponseError(fieldName, message) {
-    console.log(message["error"]);
-
-    switch (fieldName) {
-        case "name":
-            alert(
-                "Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes."
-            );
-            break;
-        case "email":
-            alert(
-                "Email format is invalid. Please follow standard email format: example@domain.com"
-            );
-            break;
-        case "password":
-            alert(
-                "Password format is invalid. Passwords must be 8 characters long and include at least one special character and one number"
-            );
-            break;
-        default:
-            console.log("Field name not recognized");
-            break;
+    if (message["error"] == "Invalid format") {
+        switch (fieldName) {
+            case "name":
+                alert(
+                    "Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes."
+                );
+                break;
+            case "email":
+                alert(
+                    "Email format is invalid. Please follow standard email format: example@domain.com"
+                );
+                break;
+            case "password":
+                alert(
+                    "Password format is invalid. Passwords must be 8 characters long and include at least one special character and one number"
+                );
+                break;
+            default:
+                console.log("Field name not recognized");
+                break;
+        }
+    } else {
+        alert("unknown error please try again");
     }
 }
