@@ -16,6 +16,7 @@ Dependencies:
 - Django modules: render, redirect
 - Django authentication: User, AuthenticationForm, authenticate, login, logout
 - Decorators: login_required
+- Utils: common_functions
 """
 
 from django.shortcuts import render, redirect
@@ -23,6 +24,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+
+import cs_app.utils.common_functions as cf
 
 
 def create_account_view(request):
