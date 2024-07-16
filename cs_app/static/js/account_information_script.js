@@ -17,7 +17,7 @@
 
 /**
  * Event listener attached to all toggle buttons
- * 
+ *
  * Toggles the visibility of the form used to update the specified field gotten from the parent.
  */
 $(".toggleButton").on("click", function () {
@@ -27,7 +27,7 @@ $(".toggleButton").on("click", function () {
 
 /**
  * Event listener attached to all submit buttons
- * 
+ *
  * Submits the form used to update the specified field gotten from the grandparent.
  */
 $(".submitButton").on("click", function () {
@@ -77,8 +77,8 @@ function submitForm(fieldName) {
         success: function (response) {
             ajaxResponseSuccess(fieldName, formdata);
         },
-        error: function (xhr, errmsg, err) {
-            // Handle errors as needed
+        error: function (xhr) {
+            ajaxResponseError(fieldName, xhr.responseJSON);
         },
     });
 }
@@ -109,4 +109,29 @@ function ajaxResponseSuccess(fieldName, formdata) {
     }
 
     $(`#${fieldName}_text`).text(displayText);
+}
+
+function ajaxResponseError(fieldName, message) {
+    console.log(message["error"]);
+
+    switch (fieldName) {
+        case "name":
+            alert(
+                "Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes."
+            );
+            break;
+        case "email":
+            alert(
+                "Email format is invalid. Please follow standard email format: example@domain.com"
+            );
+            break;
+        case "password":
+            alert(
+                "Password format is invalid. Passwords must be 8 characters long and include at least one special character and one number"
+            );
+            break;
+        default:
+            console.log("Field name not recognized");
+            break;
+    }
 }

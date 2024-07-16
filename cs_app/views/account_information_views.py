@@ -73,7 +73,7 @@ def update_name_view(request):
 
         # Validation for name formats
         if not cf.validate_name(first_name) or not cf.validate_name(last_name):
-            return JsonResponse({"error": "Invalid format"})
+            return JsonResponse({"error": "Invalid format"}, status=400)
 
         user = request.user
 
@@ -86,7 +86,7 @@ def update_name_view(request):
         return JsonResponse({"message": "Data received successfully"})
 
     # Return an error response if the request method is not POST
-    return JsonResponse({"error": "Invalid request method"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 @login_required
@@ -110,7 +110,7 @@ def update_email_view(request):
 
         # Validation for email format
         if not cf.validate_name(email):
-            return JsonResponse({"error": "Invalid format"})
+            return JsonResponse({"error": "Invalid format"}, status=400)
 
         user = request.user
 
@@ -120,7 +120,7 @@ def update_email_view(request):
 
         return JsonResponse({"message": "Data received successfully"})
 
-    return JsonResponse({"error": "Invalid request method"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 @login_required
@@ -144,7 +144,7 @@ def update_password_view(request):
 
         # Validation for password format
         if not cf.validate_name(password):
-            return JsonResponse({"error": "Invalid format"})
+            return JsonResponse({"error": "Invalid format"}, status=400)
 
         user = request.user
 
@@ -153,4 +153,4 @@ def update_password_view(request):
 
         return JsonResponse({"message": "Data received successfully"})
 
-    return JsonResponse({"error": "Invalid request method"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
