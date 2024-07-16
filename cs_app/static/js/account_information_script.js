@@ -112,10 +112,11 @@ function ajaxResponseSuccess(fieldName, formdata) {
 }
 
 /**
- * Alerts user of any potential errors after the ajax call
+ * Alerts the user about specific errors encountered after an AJAX call.
  *
- * @param {string} fieldName - The name of the field that was trying to be updated (name, email, password).
- * @param {Object} message - Error message
+ * @param {string} fieldName - The name of the field that was being updated (name, email, password).
+ * @param {Object} message - The error message object returned from the server.
+ *                          It should contain an "error" key indicating the type of error.
  */
 function ajaxResponseError(fieldName, message) {
     if (message["error"] == "Invalid format") {
@@ -132,7 +133,7 @@ function ajaxResponseError(fieldName, message) {
                 break;
             case "password":
                 alert(
-                    "Password format is invalid. Passwords must be 8 characters long and include at least one special character and one number"
+                    "Password format is invalid. Passwords must be at least 8 characters long."
                 );
                 break;
             default:
@@ -140,6 +141,6 @@ function ajaxResponseError(fieldName, message) {
                 break;
         }
     } else {
-        alert("unknown error please try again");
+        alert("An unknown error occurred. Please try again.");
     }
 }
