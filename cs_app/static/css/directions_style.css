@@ -4,8 +4,17 @@ html {
 
     font-size: 16px;
     font-family: "Roboto", sans-serif;
+}
 
-    background-color: lightblue;
+:root {
+    --primary-color: rgb(255, 255, 255, 0.5);
+}
+
+body {
+	background: linear-gradient(-45deg, #4b8aff, #b25aec, #5784ff, #64eeb5);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
 }
 
 a {
@@ -31,7 +40,6 @@ a:hover {
     height: 100%;
 
     border: none;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,17 +58,21 @@ a:hover {
 }
 
 .tab.active {
-    background-color: white;
-    height: calc(3rem + 1px);
+    background-color: var(--primary-color);
+    height: calc(3rem);
 
     border-radius: 0.3rem 0.3rem 0rem 0rem;
 }
 
 .tab.inactive {
-    background-color: rgb(167, 191, 255);
+    background-color: var(--primary-color);
     height: 2.5rem;
 
     border-radius: 0.3rem;
+}
+
+#slides {
+    background-color: var(--primary-color);
 }
 
 .slide {
@@ -69,10 +81,9 @@ a:hover {
     margin: 0rem 0.25rem 0rem 0.25rem;
 
     box-sizing: border-box;
-    background-color: #f7f7f7; /* Light gray background */
-    border: 1px solid #ccc; /* Gray border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: white;
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
     transition: transform ease-in-out 0.75s;
 }
 
@@ -192,7 +203,7 @@ a:hover {
     height: calc(100% - 3rem);
     padding: 3rem;
 
-    background-color: white;
+    background-color: var(--primary-color);
 
     box-sizing: border-box;
     border-radius: 0rem 0rem 0.3rem 0.3rem;
