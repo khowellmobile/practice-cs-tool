@@ -294,3 +294,48 @@ function throttle(func, delay) {
         }
     };
 }
+
+$("#history-menu__history-scroll button").each(function () {
+    var symbol = $(this).find(".symbol");
+    let symbolText = symbol.text().trim();
+
+    switch (symbolText) {
+        case "YTD":
+            symbol.css("background-color", "#00BACB");
+            break;
+        case "LY":
+            symbol.css("background-color", "#21D19F");
+            break;
+        case "C":
+            symbol.css("background-color", "#FFE156");
+            break;
+        case "AT":
+            symbol.css("background-color", "#FE4E00");
+            break;
+        default:
+            console.log("unknown symbol text");
+    }
+});
+
+$(".report-kind").each(function () {
+    var text = $(this).find("p").text();
+
+    console.log(text)
+
+    switch (text) {
+        case "YTD":
+            $(this).css("background-color", "#00BACB");
+            break;
+        case "Last Year":
+            $(this).css("background-color", "#21D19F");
+            break;
+        case "Custom":
+            $(this).css("background-color", "#FFE156");
+            break;
+        case "All Time":
+            $(this).css("background-color", "#FE4E00");
+            break;
+        default:
+            console.log("unknown symbol text");
+    }
+});
