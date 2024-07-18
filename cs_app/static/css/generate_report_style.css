@@ -178,7 +178,8 @@ body {
 
 .report-date {
     width: 25%;
-    min-width: 3.5rem;
+    min-width: 2.8rem;
+    max-width: 4.5rem;
     height: 2.5rem;
 }
 
