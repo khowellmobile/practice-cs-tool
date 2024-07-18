@@ -6,6 +6,17 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+:root {
+    --primary-color: rgb(255, 255, 255, 0.5);
+}
+
+body {
+	background: linear-gradient(-45deg, #4b8aff, #b25aec, #5784ff, #64eeb5);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
 p {
     width: 40%;
     margin-left: 2rem;
@@ -25,6 +36,8 @@ hr {
 #content {
     width: 80%;
     height: 60%;
+
+    background-color: var(--primary-color);
 
     display: flex;
     flex-direction: column;
