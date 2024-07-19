@@ -301,16 +301,16 @@ $("#history-menu__history-scroll button").each(function () {
 
     switch (symbolText) {
         case "YTD":
-            symbol.css("background-color", "#00BACB");
+            symbol.css("background-color", "#783de4");
             break;
         case "LY":
-            symbol.css("background-color", "#21D19F");
+            symbol.css("background-color", "#b25aec");
             break;
         case "C":
-            symbol.css("background-color", "#FFE156");
+            symbol.css("background-color", "#5784ff");
             break;
         case "AT":
-            symbol.css("background-color", "#FE4E00");
+            symbol.css("background-color", "#62d9e9");
             break;
         default:
             console.log("unknown symbol text");
@@ -324,16 +324,16 @@ $(".report-kind").each(function () {
 
     switch (text) {
         case "YTD":
-            $(this).css("background-color", "#00BACB");
+            $(this).css("background-color", "#783de4");
             break;
         case "Last Year":
-            $(this).css("background-color", "#21D19F");
+            $(this).css("background-color", "#b25aec");
             break;
         case "Custom":
-            $(this).css("background-color", "#FFE156");
+            $(this).css("background-color", "#5784ff");
             break;
         case "All Time":
-            $(this).css("background-color", "#FE4E00");
+            $(this).css("background-color", "#62d9e9");
             break;
         default:
             console.log("unknown symbol text");

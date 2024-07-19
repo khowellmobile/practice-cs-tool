@@ -10,13 +10,6 @@ html {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
 
-body {
-	background: linear-gradient(-45deg, #4b8aff, #b25aec, #5784ff, #64eeb5);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	height: 100vh;
-}
-
 a {
     text-decoration: none;
     color: #333;
