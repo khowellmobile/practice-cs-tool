@@ -18,28 +18,36 @@
                 {% endif %}
                 <form method="post">
                     {% csrf_token %}
-                    <label for="firstName">First Name:</label>
-                    <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        value="{{ request.POST.firstName }}"
-                        required
-                    /><br />
-
-                    <label for="lastName">Last Name:</label>
-                    <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        value="{{ request.POST.lastName }}"
-                        required
-                    /><br />
+                    <div id="d1">
+                        <div id="d1-1">
+                            <label for="firstName">First Name:</label
+                            ><input
+                                type="text"
+                                id="firstName"
+                                class="input"
+                                name="firstName"
+                                value="{{ request.POST.firstName }}"
+                                required
+                            />
+                        </div>
+                        <div id="d1-2">
+                            <label for="lastName">Last Name:</label
+                            ><input
+                                type="text"
+                                id="lastName"
+                                class="input"
+                                name="lastName"
+                                value="{{ request.POST.lastName }}"
+                                required
+                            />
+                        </div>
+                    </div>
 
                     <label for="email">Email Address:</label>
                     <input
                         type="email"
                         id="email"
+                        class="input"
                         name="email"
                         value="{{ request.POST.email }}"
                         required
@@ -49,6 +57,7 @@
                     <input
                         type="password"
                         id="password"
+                        class="input"
                         name="password"
                         required
                     /><br />
@@ -57,6 +66,7 @@
                     <input
                         type="password"
                         id="confirmPassword"
+                        class="input"
                         name="confirmPassword"
                         required
                     /><br />

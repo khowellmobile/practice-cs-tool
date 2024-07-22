@@ -22,7 +22,29 @@ form > label {
     align-self: flex-start;
 }
 
-form > input {
+#d1 {
+    width: 100%;
+    margin-bottom: 1rem;
+    
+    display: flex;
+}
+
+#d1-1, #d1-2 {
+    width: calc(100% - 0.5rem);
+
+    display: flex;
+    flex-direction: column;
+}
+
+#d1-1 {
+    margin-right: 0.25rem
+}
+
+#d1-2 {
+    margin-left: 0.25rem
+}
+
+.input {
     margin-top: 0.5rem;
     margin-bottom: 0.2rem;
     width: 100%;
