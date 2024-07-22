@@ -6,6 +6,10 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+:root {
+    --primary-color: rgb(255, 255, 255, 0.5);
+}
+
 @media (min-width: 1441px) {
     html {
         font-size: 22px;
@@ -28,6 +32,8 @@ h3 {
     width: 100%;
     height: 15%;
 
+    background-color: var(--primary-color);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,6 +51,8 @@ h3 {
     width: calc(50% - 0.25rem);
     height: calc(85% - 0.5rem);
     margin: 0.5rem 0.25rem 0rem 0rem;
+
+    background-color: var(--primary-color);
 
     display: inline-block;
 }
@@ -92,27 +100,42 @@ h3 {
     height: calc(85% - 0.5rem);
     margin: 0.5rem 0rem 0rem 0.25rem;
 
+    background-color: transparent;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#d {
+    width: 100%;
+    height: 40%;
+    margin-bottom: 0.5rem;
+    
+    background-color: transparent;
+    
     display: flex;
     flex-direction: column;
 }
 
 #database-change__info-button {
     width: 100%;
-    height: 12%;
+    height: calc(30% + 0.5rem);
 
-    background-color: white;
+    background-color: rgb(255, 255, 255, 0);
 }
 
 #database-change__info-button > button {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
 #database-change__current-connection {
     width: 100%;
-    height: 28%;
-
-    background-color: rgb(167, 191, 255);
-    border-radius: 5px 5px 0px 0px;
+    height: 70%;
+    padding-bottom: 0.5rem;
+    
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255, 0.5);
+    border-radius: 0.5rem;
 
     display: flex;
 }
@@ -146,10 +169,10 @@ h3 {
 
 #database-change__status {
     width: 100%;
-    height: 60%;
+    height: 100%;
 
-    background-color: rgb(255, 255, 255);
-    border-radius: 0px 0px 5px 5px;
+    background-color: rgb(255, 255, 255,1);
+    border-radius: 0.5rem;
 }
 
 .stat__message {
