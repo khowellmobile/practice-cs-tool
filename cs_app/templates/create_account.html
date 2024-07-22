@@ -18,8 +18,8 @@
                 {% endif %}
                 <form method="post">
                     {% csrf_token %}
-                    <div id="d1">
-                        <div id="d1-1">
+                    <div id="form-names">
+                        <div id="form-names__first-name">
                             <label for="firstName">First Name:</label
                             ><input
                                 type="text"
@@ -30,7 +30,7 @@
                                 required
                             />
                         </div>
-                        <div id="d1-2">
+                        <div id="form-names__last-name">
                             <label for="lastName">Last Name:</label
                             ><input
                                 type="text"

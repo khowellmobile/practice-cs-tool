@@ -22,25 +22,25 @@ form > label {
     align-self: flex-start;
 }
 
-#d1 {
+#form-names {
     width: 100%;
     margin-bottom: 1rem;
     
     display: flex;
 }
 
-#d1-1, #d1-2 {
+#form-names__first-name, #form-names__last-name {
     width: calc(100% - 0.5rem);
 
     display: flex;
     flex-direction: column;
 }
 
-#d1-1 {
+#form-names__first-name {
     margin-right: 0.25rem
 }
 
-#d1-2 {
+#form-names__last-name {
     margin-left: 0.25rem
 }
 
