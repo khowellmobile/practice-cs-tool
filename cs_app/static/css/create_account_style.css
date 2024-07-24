@@ -18,7 +18,18 @@ form {
     align-items: center;
 }
 
-form > label {
+form label {
+    font-size: 1.2rem;
+
+    align-self: flex-start;
+}
+
+form > p {
+    margin: 0 0 0 0.5rem;
+
+    font-size: 0.8rem;
+    color: rgb(223, 0, 0);
+
     align-self: flex-start;
 }
 

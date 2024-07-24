@@ -8,6 +8,8 @@
             rel="stylesheet"
             href="{% static 'css/create_account_style.css' %}"
         />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container-1">
@@ -16,7 +18,7 @@
                 {% if error_message %}
                 <p class="error">{{ error_message }}</p>
                 {% endif %}
-                <form method="post">
+                <form method="post" id="create-account-form" onsubmit="return validateForm()">
                     {% csrf_token %}
                     <div id="form-names">
                         <div id="form-names__first-name">
@@ -54,6 +56,9 @@
                     /><br />
 
                     <label for="password">Password:</label>
+                    <p id="passChars">8 Characters</p>
+                    <p id="passNums">1 or more Number</p>
+                    <p id="passSymbols">1 or more Special Character (!@#$%^&*()_+={}[]:;<>,.?) </p>
                     <input
                         type="password"
                         id="password"
@@ -75,5 +80,9 @@
                 <a href="{% url 'login' %}">Back to Login</a>
             </div>
         </div>
+
+        <!-- Links to .js files -->
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/create_account_script.js' %}"></script>
     </body>
 </html>
