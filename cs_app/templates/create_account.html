@@ -8,6 +8,8 @@
             rel="stylesheet"
             href="{% static 'css/create_account_style.css' %}"
         />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container-1">
@@ -16,39 +18,51 @@
                 {% if error_message %}
                 <p class="error">{{ error_message }}</p>
                 {% endif %}
-                <form method="post">
+                <form method="post" id="create-account-form" onsubmit="return validateForm()">
                     {% csrf_token %}
-                    <label for="firstName">First Name:</label>
-                    <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        value="{{ request.POST.firstName }}"
-                        required
-                    /><br />
-
-                    <label for="lastName">Last Name:</label>
-                    <input
-                        type="text"
-                        id="lastName"
-                        name="lastName"
-                        value="{{ request.POST.lastName }}"
-                        required
-                    /><br />
+                    <div id="form-names">
+                        <div id="form-names__first-name">
+                            <label for="firstName">First Name:</label
+                            ><input
+                                type="text"
+                                id="firstName"
+                                class="input"
+                                name="firstName"
+                                value="{{ request.POST.firstName }}"
+                                required
+                            />
+                        </div>
+                        <div id="form-names__last-name">
+                            <label for="lastName">Last Name:</label
+                            ><input
+                                type="text"
+                                id="lastName"
+                                class="input"
+                                name="lastName"
+                                value="{{ request.POST.lastName }}"
+                                required
+                            />
+                        </div>
+                    </div>
 
                     <label for="email">Email Address:</label>
                     <input
                         type="email"
                         id="email"
+                        class="input"
                         name="email"
                         value="{{ request.POST.email }}"
                         required
                     /><br />
 
                     <label for="password">Password:</label>
+                    <p id="passChars">8 Characters</p>
+                    <p id="passNums">1 or more Number</p>
+                    <p id="passSymbols">1 or more Special Character (!@#$%^&*()_+={}[]:;<>,.?) </p>
                     <input
                         type="password"
                         id="password"
+                        class="input"
                         name="password"
                         required
                     /><br />
@@ -57,6 +71,7 @@
                     <input
                         type="password"
                         id="confirmPassword"
+                        class="input"
                         name="confirmPassword"
                         required
                     /><br />
@@ -65,5 +80,9 @@
                 <a href="{% url 'login' %}">Back to Login</a>
             </div>
         </div>
+
+        <!-- Links to .js files -->
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/create_account_script.js' %}"></script>
     </body>
 </html>
