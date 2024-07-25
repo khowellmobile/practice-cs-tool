@@ -23,7 +23,7 @@ function validateForm() {
         );
         return false;
     } else if (!passwordChecker(password)) {
-        ("Password format is invalid. Passwords must be at least 8 characters long, include a number, and include a special character.");
+        alert("Password format is invalid. Passwords must be at least 8 characters long, include a number, and include a special character.");
         return false;
     }
 
