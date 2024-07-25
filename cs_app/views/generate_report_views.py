@@ -48,7 +48,7 @@ def generate_report_view(request):
     Returns:
         HttpResponse: Rendered template with user and data context.
     """
-    data = PastParameter.objects.order_by("-date_field")[:25]
+    data = list(PastParameter.objects.order_by("-date_field")[:25])[::-1]
     user = request.user
     context = {
         "user": user,
