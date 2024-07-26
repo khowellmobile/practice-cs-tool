@@ -15,6 +15,8 @@ html {
     height: 10%;
 
     box-sizing: border-box;
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
 
     display: inline;
 }
@@ -24,12 +26,12 @@ html {
     height: 1.2rem;
     margin: 0rem 0rem 0.6rem 0rem;
 
+    box-sizing: border-box;
     text-align: center;
-
-    outline: #333 solid 1px;
+    font-size: 0.8rem;
 }
 
-#s1 {
+.input-container {
     width: 90%;
     height: 1.2rem;
     margin: 0rem 5% 0rem 5%;
@@ -38,12 +40,12 @@ html {
     justify-content: space-between;
 }
 
-#s1  > input[type="range"] {
+.input-container  > input[type="range"] {
     width: 85%;
     height: 1rem;
 }
 
-#s1 > input[type="text"] {
+.input-container > input[type="text"] {
     width: 10%;
     height: 100%;
 
@@ -77,21 +79,34 @@ html {
 #d1-1 {
     width: 15%;
     height: 100%;
+    padding: 0rem 0.5rem 0rem 0.5rem;
 
-    background-color: var(--primary-color);
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 #d1-2 {
-    width: 70%;
+    width: calc(70% - 1rem);
     height: 100%;
+    margin: 0rem 0.5rem 0rem 0.5rem;
+
+    box-sizing: border-box;
+    border: 0.5rem solid var(--primary-color);
 }
 
 #d1-3 {
     width: 15%;
     height: 100%;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #d2 {
