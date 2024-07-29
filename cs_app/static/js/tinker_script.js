@@ -1,5 +1,17 @@
+var buttonAssignments = {
+    "b-1": `foo('hello')`,
+    "b-2": `iterateChildren('#d1-2', 0)`,
+    "b-3": `outline('#b-3')`,
+    "b-4": null,
+    "b-5": null,
+    "b-6": null,
+    "b-7": null,
+    "b-8": null,
+    "b-9": null,
+    "b-10": null,
+};
+
 $(document).ready(function () {
-    
     populateSliders();
     populateButtons();
 
@@ -46,7 +58,7 @@ function populateSliders() {
                         max="5.00"
                         step="0.01"
                         value="1.00"
-                        class="sliderRange "
+                        class="sliderRange"
                     />
                     <input type="text" value="1.0" class="sliderInput"/>
                 </div>
@@ -60,10 +72,55 @@ function populateSliders() {
 function populateButtons() {
     // Loop to create and append the buttons
     for (var i = 1; i <= 10; i++) {
+        let id = "b-" + i;
         var buttonHtml = `
-            <button id="b-${i}" class="button-1">Place Holder</button>
+            <button 
+                id="${id}" 
+                class="button-1" 
+                onclick="${buttonAssignments[id]}"
+            >${id}</button>
         `;
 
         $("#d2-1").append(buttonHtml);
     }
+}
+
+function foo(str) {
+    var leaf = `
+        <div id='${eId}-l' class='leaf' onclick='outline(${eId})'>
+            ${eId}
+        </div>
+    `;
+}
+
+function iterateChildren(identifier, count) {
+    var indent = "";
+
+    for (let i = 0; i < count; i++) {
+        indent = indent + "---";
+    }
+    $element = $(identifier);
+    eId = $element.attr("id");
+
+    var leaf = `
+        <div id='${eId}-l' class='leaf' onclick='outline("#${eId}")'>
+            <p>${indent}${eId}</p>
+        </div>
+    `;
+
+    // Process the current element (for example, log its tag name)
+    $("#tree-container").append(leaf);
+
+    count++;
+
+    // Iterate through each child element
+    $element.children().each(function () {
+        // Recursively call the function for each child
+        iterateChildren($(this), count);
+    });
+}
+
+function outline(id) {
+    console.log(id);
+    $(`${id}`).toggleClass("outlineO");
 }

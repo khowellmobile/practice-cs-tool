@@ -60,6 +60,23 @@ html {
     transition: all 0.5s;
 }
 
+.leaf {
+    width: 100%;
+    margin: 0px;
+
+    outline: 1px solid orange;
+
+    transition: all 0.3s linear;
+}
+
+.leaf:hover {
+    background-color: var(--primary-color);
+}
+
+.leaf p {
+    margin: 0.1rem;
+}
+
 #main {
     width: 100%;
     height: 100%;
@@ -95,6 +112,19 @@ html {
 
     box-sizing: border-box;
     border: 0.5rem solid var(--primary-color);
+
+    background-image: linear-gradient(
+            to right,
+            rgb(207, 207, 207) 1px,
+            transparent 1px
+        ),
+        linear-gradient(to bottom, rgb(207, 207, 207) 1px, transparent 1px);
+    background-size: 1rem 1rem;
+    background-color: white; /* Background color of the grid cells */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #d1-3 {
@@ -103,10 +133,32 @@ html {
     padding: 0rem 0.5rem 0rem 0.5rem;
 
     box-sizing: border-box;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+#tree-info {
+    width: 100%;
+    height: 20%;
+    padding: 0.5rem;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    box-sizing: border-box;
+}
+
+#tree-container {
+    width: 100%;
+    height: calc(80% - 1rem);
+    margin-top: 1rem;
+    padding: 0.5rem;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    box-sizing: border-box;
 }
 
 #d2 {
