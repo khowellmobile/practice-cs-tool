@@ -6,7 +6,7 @@ html {
     margin: 0px;
     padding: 0px;
 
-    font-size: 18px;
+    font-size: 16px;
     font-family: "Roboto", sans-serif;
 }
 
@@ -40,7 +40,7 @@ html {
     justify-content: space-between;
 }
 
-.input-container  > input[type="range"] {
+.input-container > input[type="range"] {
     width: 83%;
     height: 1rem;
 }
@@ -112,4 +112,29 @@ html {
 #d2 {
     width: 100%;
     height: 20%;
+
+    display: flex;
+}
+
+#d2-1 {
+    width: 50%;
+    height: 100%;
+    padding: 0.5rem;
+
+    box-sizing: border-box;
+
+    display: grid;
+    align-items: center;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+button {
+    height: 4.5rem;
+}
+
+#d2-2 {
+    width: 50%;
+    height: 100%;
 }
