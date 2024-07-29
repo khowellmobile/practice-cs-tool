@@ -41,18 +41,18 @@ html {
 }
 
 .input-container  > input[type="range"] {
-    width: 85%;
+    width: 83%;
     height: 1rem;
 }
 
 .input-container > input[type="text"] {
-    width: 10%;
+    width: 12%;
     height: 100%;
 
     line-height: 100%;
     text-align: center;
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 0.7rem;
     color: #333;
     background-color: rgb(255, 255, 255);
     border-radius: 0.2rem;
