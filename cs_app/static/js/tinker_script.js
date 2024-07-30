@@ -26,31 +26,34 @@ $(document).ready(function () {
         e.val($(this).val());
     });
 
-    iterateChildren("#dev-container", "", "k");
+    iterateChildren("#dev-container", "", "k", "1");
 
     $(".leaf").on("mouseenter", function () {
-        let id = "#" + $(this).attr("id").slice(0, 2);
+        let leafId = $(this).attr("leaf-id").slice(0, -2);
 
-        $(id).addClass("hovered");
+        $(`[leaf-id='${leafId}']`).addClass("hovered");
 
         if (!$(this).hasClass("clicked")) {
-            addOutline(id);
+            addOutline(leafId);
         }
     });
 
     $(".leaf").on("click", function () {
-        let id = "#" + $(this).attr("id").slice(0, 2);
         $(this).toggleClass("clicked");
     });
 
     $(".leaf").on("mouseleave", function () {
-        let id = "#" + $(this).attr("id").slice(0, 2);
+        let leafId = $(this).attr("leaf-id").slice(0, -2);
 
-        $(id).removeClass("hovered");
+        $(`[leaf-id='${leafId}']`).removeClass("hovered");
 
         if (!$(this).hasClass("clicked")) {
-            removeOutline(id);
+            removeOutline(leafId);
         }
+    });
+
+    $("#outline-all").on("change", function () {
+        console.log($(this).is(":checked"));
     });
 });
 
@@ -114,55 +117,41 @@ function populateButtons() {
 
 function foo(str) {}
 
-function iterateChildren(identifier, indent, k) {
-
+function iterateChildren(identifier, indent, k, i) {
     $element = $(identifier);
     eId = $element.attr("id");
     eTag = $element.prop("tagName");
 
-    var leaf = getLeaf(eId, eTag, indent);
+    $element.attr("leaf-id", k);
+
+    var leaf = getLeaf(eId, eTag, indent, k);
 
     $("#tree-container").append(leaf);
 
     $element.children().each(function () {
         // Recursively call the function for each child
-        iterateChildren($(this), indent + "---", k);
+        iterateChildren($(this), indent + "---", k + "-" + i++, 1);
     });
 }
 
-function createCustomIds(identifier, k, i) {
-    var $element = $(identifier);
-    let oldId = $element.attr("id");
+function getLeaf(eId, eTag, indent, k) {
+    if (eId == undefined) {
+        eId = "";
+    }
 
-    $element.attr("id", oldId + "_" + k);
-
-    var leaf = getLeaf(eId, eTag, indent);
-
-    // Iterate through each child element
-    $element.children().each(function () {
-        // Recursively call the function for each child
-        createCustomIds($(this), k + "-" + i++, 1);
-    });
-}
-
-function getLeaf(eId, eTag, indent) {
     var leaf = `
-        <div id='${eId}-l' class='leaf'>
-            <p>${indent}${eTag}</p>
+        <div class='leaf' leaf-id='${k}-l'>
+            <p>${indent}${eTag} ${eId}</p>
         </div>
     `;
 
     return leaf;
 }
 
-function toggleOutline(id, colorChar) {
-    $(`${id}`).toggleClass("outline" + colorChar);
+function addOutline(leafId) {
+    $(`[leaf-id='${leafId}']`).addClass("outlineO");
 }
 
-function addOutline(id) {
-    $(`${id}`).addClass("outlineO");
-}
-
-function removeOutline(id) {
-    $(`${id}`).removeClass("outlineO");
+function removeOutline(leafId) {
+    $(`[leaf-id='${leafId}']`).removeClass("outlineO");
 }
