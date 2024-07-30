@@ -30,7 +30,7 @@ $(document).ready(function () {
 
     $(".leaf").on("mouseenter", function () {
         let id = "#" + $(this).attr("id").slice(0, 2);
-        
+
         $(id).addClass("hovered");
 
         if (!$(this).hasClass("clicked")) {
@@ -120,12 +120,16 @@ function iterateChildren(identifier, count) {
     for (let i = 0; i < count; i++) {
         indent = indent + "---";
     }
+
     $element = $(identifier);
     eId = $element.attr("id");
+    eTag = $element.prop("tagName");
+
+    console.log(identifier)
 
     var leaf = `
         <div id='${eId}-l' class='leaf'>
-            <p>${indent}${eId}</p>
+            <p>${indent}${eTag} ${eId}</p>
         </div>
     `;
 
