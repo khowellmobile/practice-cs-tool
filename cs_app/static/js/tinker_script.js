@@ -51,10 +51,6 @@ $(document).ready(function () {
             removeOutline(leafId);
         }
     });
-
-    $("#outline-all").on("change", function () {
-        console.log($(this).is(":checked"));
-    });
 });
 
 function sliderInputRange(num, id) {
