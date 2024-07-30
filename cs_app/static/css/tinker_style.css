@@ -209,9 +209,22 @@ html {
 #element-info {
     width: 25%;
     height: 100%;
+    padding: 0.5rem;
+
+    box-sizing: border-box;
 
     background-color: var(--primary-color);
     border-radius: 0.5rem;
+
+    display: inline;
+}
+
+#element-info p {
+    margin: 0px;
+}
+
+#element-info ul {
+    margin: 0px;
 }
 
 #element-options {
