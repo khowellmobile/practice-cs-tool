@@ -2,7 +2,7 @@ var buttonAssignments = {
     "b-1": `foo('hello')`,
     "b-2": `iterateChildren('#d1-2', 0)`,
     "b-3": `toggleOutline('#b-3')`,
-    "b-4": null,
+    "b-4": `createCustomIds('#dev-container', 'k', 1)`,
     "b-5": null,
     "b-6": null,
     "b-7": null,
@@ -26,7 +26,7 @@ $(document).ready(function () {
         e.val($(this).val());
     });
 
-    iterateChildren("#d1-2", 0);
+    iterateChildren("#dev-container", "", "k");
 
     $(".leaf").on("mouseenter", function () {
         let id = "#" + $(this).attr("id").slice(0, 2);
@@ -114,35 +114,45 @@ function populateButtons() {
 
 function foo(str) {}
 
-function iterateChildren(identifier, count) {
-    var indent = "";
-
-    for (let i = 0; i < count; i++) {
-        indent = indent + "---";
-    }
+function iterateChildren(identifier, indent, k) {
 
     $element = $(identifier);
     eId = $element.attr("id");
     eTag = $element.prop("tagName");
 
-    console.log(identifier)
+    var leaf = getLeaf(eId, eTag, indent);
 
-    var leaf = `
-        <div id='${eId}-l' class='leaf'>
-            <p>${indent}${eTag} ${eId}</p>
-        </div>
-    `;
-
-    // Process the current element (for example, log its tag name)
     $("#tree-container").append(leaf);
 
-    count++;
+    $element.children().each(function () {
+        // Recursively call the function for each child
+        iterateChildren($(this), indent + "---", k);
+    });
+}
+
+function createCustomIds(identifier, k, i) {
+    var $element = $(identifier);
+    let oldId = $element.attr("id");
+
+    $element.attr("id", oldId + "_" + k);
+
+    var leaf = getLeaf(eId, eTag, indent);
 
     // Iterate through each child element
     $element.children().each(function () {
         // Recursively call the function for each child
-        iterateChildren($(this), count);
+        createCustomIds($(this), k + "-" + i++, 1);
     });
+}
+
+function getLeaf(eId, eTag, indent) {
+    var leaf = `
+        <div id='${eId}-l' class='leaf'>
+            <p>${indent}${eTag}</p>
+        </div>
+    `;
+
+    return leaf;
 }
 
 function toggleOutline(id, colorChar) {
