@@ -77,6 +77,23 @@ html {
     margin: 0.1rem;
 }
 
+.hovered {
+    outline: 2px dashed #5784ff; /* Define border style and color */
+    animation: hovered 1s infinite; /* Apply animation */
+}
+
+@keyframes hovered {
+    0% {
+        outline-color: #5784ff; /* Initial border color */
+    }
+    50% {
+        outline-color: transparent; /* Border disappears */
+    }
+    100% {
+        outline-color: #5784ff; /* Border color back to initial */
+    }
+}
+
 #main {
     width: 100%;
     height: 100%;

@@ -1,7 +1,7 @@
 var buttonAssignments = {
     "b-1": `foo('hello')`,
     "b-2": `iterateChildren('#d1-2', 0)`,
-    "b-3": `outline('#b-3')`,
+    "b-3": `toggleOutline('#b-3')`,
     "b-4": null,
     "b-5": null,
     "b-6": null,
@@ -24,6 +24,33 @@ $(document).ready(function () {
         let parentId = $(this).parent().attr("id");
         e = $("#" + parentId + " > input[type=text]");
         e.val($(this).val());
+    });
+
+    iterateChildren("#d1-2", 0);
+
+    $(".leaf").on("mouseenter", function () {
+        let id = "#" + $(this).attr("id").slice(0, 2);
+        
+        $(id).addClass("hovered");
+
+        if (!$(this).hasClass("clicked")) {
+            addOutline(id);
+        }
+    });
+
+    $(".leaf").on("click", function () {
+        let id = "#" + $(this).attr("id").slice(0, 2);
+        $(this).toggleClass("clicked");
+    });
+
+    $(".leaf").on("mouseleave", function () {
+        let id = "#" + $(this).attr("id").slice(0, 2);
+
+        $(id).removeClass("hovered");
+
+        if (!$(this).hasClass("clicked")) {
+            removeOutline(id);
+        }
     });
 });
 
@@ -85,13 +112,7 @@ function populateButtons() {
     }
 }
 
-function foo(str) {
-    var leaf = `
-        <div id='${eId}-l' class='leaf' onclick='outline(${eId})'>
-            ${eId}
-        </div>
-    `;
-}
+function foo(str) {}
 
 function iterateChildren(identifier, count) {
     var indent = "";
@@ -103,7 +124,7 @@ function iterateChildren(identifier, count) {
     eId = $element.attr("id");
 
     var leaf = `
-        <div id='${eId}-l' class='leaf' onclick='outline("#${eId}")'>
+        <div id='${eId}-l' class='leaf'>
             <p>${indent}${eId}</p>
         </div>
     `;
@@ -120,7 +141,14 @@ function iterateChildren(identifier, count) {
     });
 }
 
-function outline(id) {
-    console.log(id);
-    $(`${id}`).toggleClass("outlineO");
+function toggleOutline(id, colorChar) {
+    $(`${id}`).toggleClass("outline" + colorChar);
+}
+
+function addOutline(id) {
+    $(`${id}`).addClass("outlineO");
+}
+
+function removeOutline(id) {
+    $(`${id}`).removeClass("outlineO");
 }
