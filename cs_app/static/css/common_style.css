@@ -5,6 +5,14 @@ body {
 	height: 98vh;
 }
 
+html {
+    margin: 0px;
+    padding: 0px;
+
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+}
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -44,7 +52,7 @@ body {
     cursor: pointer;
     font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
         Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     line-height: 1.25;
     text-decoration: none;
