@@ -39,7 +39,22 @@ $(document).ready(function () {
     });
 
     $(".leaf").on("click", function () {
-        $(this).toggleClass("clicked");
+        let leafId = $(this).attr("leaf-id").slice(0, -2);
+
+
+        let element = $(`[leaf-id='${leafId}']`);
+        
+        console.log(element)
+
+        let tagName = element.prop("tagName");
+        let id = element.attr("id") || "No ID";
+        let classList = element.attr("class") || "No Classes";
+
+        console.log(tagName);
+        console.log(id);
+        console.log(classList);
+        $("#e-tag").html(`<b>Tag Name: </b>${tagName}`)
+        $("#e-id").html(`<b>Id: </b>${id}`)
     });
 
     $(".leaf").on("mouseleave", function () {
