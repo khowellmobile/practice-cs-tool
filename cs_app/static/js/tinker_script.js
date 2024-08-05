@@ -11,6 +11,8 @@ var buttonAssignments = {
     "b-10": null,
 };
 
+var activeElement = "";
+
 $(document).ready(function () {
     populateSliders();
     populateButtons();
@@ -33,29 +35,28 @@ $(document).ready(function () {
         let leafId = $(this).attr("leaf-id").slice(0, -2);
 
         $(`[leaf-id='${leafId}']`).addClass("hovered");
-
-        if (!$(this).hasClass("clicked")) {
-            addOutline(leafId);
-        }
     });
 
     $(".leaf").on("click", function () {
+        // Getting variables
         let leafId = $(this).attr("leaf-id").slice(0, -2);
 
-        $(this).toggleClass("clicked");
-
         let element = $(`[leaf-id='${leafId}']`);
+        activeElement = element;
 
         let tagName = element.prop("tagName");
         let id = element.attr("id") || "No ID";
         let classList = element.attr("class").split(" ") || "No Classes";
 
-        $("#e-classes").html("");
+        $(this).toggleClass("clicked");
 
+        $("#outline-check").prop("checked", element.hasClass("outlineP"));
+
+        // Displaying needed information
+        $("#e-classes").html("");
         for (e in classList) {
             $("#e-classes").append(`<li>${classList[e]}</li>`);
         }
-
         $("#e-tag").html(`<b>Tag Name: </b>${tagName}`);
         $("#e-id").html(`<b>Id: </b>${id}`);
     });
@@ -64,10 +65,10 @@ $(document).ready(function () {
         let leafId = $(this).attr("leaf-id").slice(0, -2);
 
         $(`[leaf-id='${leafId}']`).removeClass("hovered");
+    });
 
-        if (!$(this).hasClass("clicked")) {
-            removeOutline(leafId);
-        }
+    $("#outline-check").on("change", function () {
+        toggleOutline($(this).is(":checked"))
     });
 });
 
@@ -114,7 +115,7 @@ function populateSliders() {
 }
 
 function populateSliderAssigns() {
-    let e = $("#element-options__slider-assigns")
+    let e = $("#element-options__slider-assigns");
     for (let i = 1; i < 10; i++) {
         e.append(
             `
@@ -130,7 +131,7 @@ function populateSliderAssigns() {
                 <input type="text" id="sa-${i}" placeholder="" />
             </div>
             `
-        )
+        );
     }
 }
 
@@ -183,11 +184,10 @@ function getLeaf(eId, eTag, indent, k) {
     return leaf;
 }
 
-function addOutline(leafId) {
-    $(`[leaf-id='${leafId}']`).addClass("outlineP");
+function toggleOutline(outlineOn) {
+    if (outlineOn) {
+        activeElement.addClass("outlineP");
+    } else {
+        activeElement.removeClass("outlineP");
+    }
 }
-
-function removeOutline(leafId) {
-    $(`[leaf-id='${leafId}']`).removeClass("outlineP");
-}
-
