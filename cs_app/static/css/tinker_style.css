@@ -99,7 +99,7 @@ html {
     background-color: var(--primary-color);
 }
 
-.mini-card > select {
+.mini-card > select, .mini-card > input {
     text-align: center;
     box-sizing: border-box;
     font-size: 1rem;
@@ -108,6 +108,19 @@ html {
     border-radius: 0.5rem;
     border: none;
     transition: all 0.5s;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid-item > input {
+    width: 30%;
+}
+
+.grid-item > select {
+    width: 50%;
 }
 
 #main {
@@ -281,28 +294,6 @@ html {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 0.7rem;
-}
-
-.grid-item {
-    display: flex;
-    justify-content: space-between;
-}
-
-.grid-item > input {
-    width: 30%;
-
-    text-align: center;
-    box-sizing: border-box;
-    font-size: 1rem;
-    color: #333;
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.5rem;
-    border: none;
-    transition: all 0.5s;
-}
-
-.grid-item > select {
-    width: 50%;
 }
 
 button {
