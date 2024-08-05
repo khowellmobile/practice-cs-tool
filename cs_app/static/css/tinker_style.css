@@ -92,6 +92,24 @@ html {
     }
 }
 
+.mini-card {
+    padding: 0.2rem;
+
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+}
+
+.mini-card > select {
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    border: none;
+    transition: all 0.5s;
+}
+
 #main {
     width: 100%;
     height: 100%;
@@ -128,11 +146,7 @@ html {
     box-sizing: border-box;
     border: 0.5rem solid var(--primary-color);
 
-    background-image: linear-gradient(
-            to right,
-            rgb(207, 207, 207) 1px,
-            transparent 1px
-        ),
+    background-image: linear-gradient(to right, rgb(207, 207, 207) 1px, transparent 1px),
         linear-gradient(to bottom, rgb(207, 207, 207) 1px, transparent 1px);
     background-size: 1rem 1rem;
     background-color: white; /* Background color of the grid cells */
@@ -230,9 +244,65 @@ html {
 #element-options {
     width: calc(75% - 1rem);
     height: 100%;
+    padding: 0.5rem;
 
+    box-sizing: border-box;
     background-color: var(--primary-color);
     border-radius: 0.5rem;
+
+    display: inline;
+}
+
+#element-options > input {
+    margin: 0px;
+    width: 1rem;
+    height: 1rem;
+
+    line-height: 1rem;
+    vertical-align: middle;
+}
+
+#element-options > span {
+    vertical-align: middle;
+
+    font-size: 1rem;
+}
+
+#element-options > h3 {
+    margin: 0.5rem 0rem;
+}
+
+#element-options__slider-assigns {
+    width: 100%;
+    height: auto;
+
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.7rem;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid-item > input {
+    width: 30%;
+
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    border: none;
+    transition: all 0.5s;
+}
+
+.grid-item > select {
+    width: 50%;
 }
 
 button {

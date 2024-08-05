@@ -14,6 +14,7 @@ var buttonAssignments = {
 $(document).ready(function () {
     populateSliders();
     populateButtons();
+    populateSliderAssigns();
 
     $(".sliderInput").on("change", function () {
         let parentId = $(this).parent().attr("id");
@@ -41,15 +42,22 @@ $(document).ready(function () {
     $(".leaf").on("click", function () {
         let leafId = $(this).attr("leaf-id").slice(0, -2);
 
+        $(this).toggleClass("clicked");
 
         let element = $(`[leaf-id='${leafId}']`);
 
         let tagName = element.prop("tagName");
         let id = element.attr("id") || "No ID";
-        let classList = element.attr("class") || "No Classes";
+        let classList = element.attr("class").split(" ") || "No Classes";
 
-        $("#e-tag").html(`<b>Tag Name: </b>${tagName}`)
-        $("#e-id").html(`<b>Id: </b>${id}`)
+        $("#e-classes").html("");
+
+        for (e in classList) {
+            $("#e-classes").append(`<li>${classList[e]}</li>`);
+        }
+
+        $("#e-tag").html(`<b>Tag Name: </b>${tagName}`);
+        $("#e-id").html(`<b>Id: </b>${id}`);
     });
 
     $(".leaf").on("mouseleave", function () {
@@ -86,8 +94,8 @@ function populateSliders() {
     for (var i = 1; i <= numberOfSliders; i++) {
         var sliderHtml = `
             <div class="slider-container">
-                <p>s${i}</p>
-                <div id="s${i}" class="input-container">
+                <p>s-${i}</p>
+                <div id="s-${i}" class="input-container">
                     <input
                         type="range"
                         min="0.00"
@@ -105,9 +113,30 @@ function populateSliders() {
     }
 }
 
+function populateSliderAssigns() {
+    let e = $("#element-options__slider-assigns")
+    for (let i = 1; i < 10; i++) {
+        e.append(
+            `
+            <div class="grid-item mini-card">
+                <span>s-${i}</span>
+                <select id="dropdown" name="options">
+                    <option value="" disabled selected></option>
+                    <option value="height">Height</option>
+                    <option value="width">Width</option>
+                    <option value="margin">Margin</option>
+                    <option value="padding">Padding</option>
+                </select>
+                <input type="text" id="sa-${i}" placeholder="" />
+            </div>
+            `
+        )
+    }
+}
+
 function populateButtons() {
     // Loop to create and append the buttons
-    for (var i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 10; i++) {
         let id = "b-" + i;
         var buttonHtml = `
             <button 
@@ -155,9 +184,9 @@ function getLeaf(eId, eTag, indent, k) {
 }
 
 function addOutline(leafId) {
-    $(`[leaf-id='${leafId}']`).addClass("outlineO");
+    $(`[leaf-id='${leafId}']`).addClass("outlineP");
 }
 
 function removeOutline(leafId) {
-    $(`[leaf-id='${leafId}']`).removeClass("outlineO");
+    $(`[leaf-id='${leafId}']`).removeClass("outlineP");
 }
