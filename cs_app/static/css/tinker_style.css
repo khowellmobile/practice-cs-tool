@@ -13,35 +13,53 @@ html {
 .slider-container {
     width: 100%;
     height: 10%;
+    padding: 0.5rem;
 
     box-sizing: border-box;
     background-color: var(--primary-color);
     border-radius: 0.5rem;
 
-    display: inline;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.slider-container > p {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin: 0rem 0rem 0.6rem 0rem;
+.slider-container > span {
+    margin: 0px;
+    align-self: flex-start;
+}
 
-    box-sizing: border-box;
+.slider-container > input[type="text"] {
+    width: 12%;
+    height: 1rem;
+    margin: 0px;
+
+    line-height: 100%;
     text-align: center;
-    font-size: 0.8rem;
+    box-sizing: border-box;
+    font-size: 0.7rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    border: none;
+    transition: all 0.5s;
+
+    align-self: center;
 }
 
 .input-container {
     width: 90%;
     height: 1.2rem;
-    margin: 0rem 5% 0rem 5%;
+    margin: 0px;
+
 
     display: flex;
     justify-content: space-between;
+    align-self: center;
 }
 
 .input-container > input[type="range"] {
-    width: 83%;
+    width: 76%;
     height: 1rem;
 }
 
@@ -99,7 +117,8 @@ html {
     background-color: var(--primary-color);
 }
 
-.mini-card > select, .mini-card > input {
+.mini-card > select,
+.mini-card > input {
     text-align: center;
     box-sizing: border-box;
     font-size: 1rem;

@@ -11,10 +11,22 @@ var buttonAssignments = {
     "b-10": null,
 };
 
+var sliderStates = {
+    "s-1": null,
+    "s-2": null,
+    "s-3": null,
+    "s-4": null,
+    "s-5": null,
+    "s-6": null,
+    "s-7": null,
+    "s-8": null,
+    "s-9": null,
+};
+
 var activeElement = "";
 
 $(document).ready(function () {
-    populateSliders();
+    //populateSliders();
     populateButtons();
     populateSliderAssigns();
 
@@ -38,22 +50,22 @@ $(document).ready(function () {
     });
 
     $(".leaf").on("click", function () {
-        // Getting variables
-        let leafId = $(this).attr("leaf-id").slice(0, -2);
+        // Getting/setting variables
+        const leafId = $(this).attr("leaf-id").slice(0, -2);
+        const element = $(`[leaf-id='${leafId}']`);
+        const tagName = element.prop("tagName");
+        const id = element.attr("id") || "No ID";
+        const classList = element.attr("class").split(/\s+/) || "No Classes";
 
-        let element = $(`[leaf-id='${leafId}']`);
         activeElement = element;
-
-        let tagName = element.prop("tagName");
-        let id = element.attr("id") || "No ID";
-        let classList = element.attr("class").split(" ") || "No Classes";
 
         $(this).toggleClass("clicked");
 
         $("#outline-check").prop("checked", element.hasClass("outlineP"));
 
         // Displaying needed information
-        $("#e-classes").html("");
+        $("#e-classes").empty();
+
         for (e in classList) {
             $("#e-classes").append(`<li>${classList[e]}</li>`);
         }
@@ -68,7 +80,7 @@ $(document).ready(function () {
     });
 
     $("#outline-check").on("change", function () {
-        toggleOutline($(this).is(":checked"))
+        toggleOutline($(this).is(":checked"));
     });
 });
 
@@ -191,3 +203,5 @@ function toggleOutline(outlineOn) {
         activeElement.removeClass("outlineP");
     }
 }
+
+function sliderAssignHandler(element) {}
