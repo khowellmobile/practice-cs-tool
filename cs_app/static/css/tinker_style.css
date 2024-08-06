@@ -30,7 +30,7 @@ html {
 }
 
 .slider-container > input[type="text"] {
-    width: 12%;
+    width: 15%;
     height: 1rem;
     margin: 0px;
 
@@ -51,7 +51,6 @@ html {
     width: 90%;
     height: 1.2rem;
     margin: 0px;
-
 
     display: flex;
     justify-content: space-between;
@@ -80,9 +79,13 @@ html {
 
 .leaf {
     width: 100%;
-    margin: 0px;
+    margin-bottom: 0.2rem;
 
     transition: all 0.3s linear;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .leaf:hover {
@@ -90,7 +93,42 @@ html {
 }
 
 .leaf p {
-    margin: 0.1rem;
+    margin: 0rem;
+
+    display: inline;
+}
+
+.blue-box {
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px dashed blue;
+    box-sizing: border-box;
+}
+
+.dot {
+    width: 0.8rem; 
+    height: 0.8rem;
+
+    border-radius: 50%;
+    cursor: pointer;
+
+    display: inline-block; 
+
+    transition: all 0.2s linear;
+}
+
+.blue-dot-hallow {
+    border: 2px solid #5784ff; /* Blue border creating the outline */
+    background-color: transparent; /* No fill inside the dot */
+    box-sizing: border-box;
+}
+
+.blue-dot-solid {
+    width: 0.8rem; 
+    height: 0.8rem;
+    background-color: #995aec;
+    border-radius: 50%; 
+    display: inline-block; 
 }
 
 .hovered {
@@ -121,7 +159,7 @@ html {
 .mini-card > input {
     text-align: center;
     box-sizing: border-box;
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #333;
     background-color: rgb(255, 255, 255);
     border-radius: 0.5rem;
@@ -131,15 +169,20 @@ html {
 
 .grid-item {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 .grid-item > input {
-    width: 30%;
+    width: 50%;
 }
 
 .grid-item > select {
-    width: 50%;
+    width: 25%;
+}
+
+.grid-item > span {
+    font-size: 0.8rem;
 }
 
 #main {

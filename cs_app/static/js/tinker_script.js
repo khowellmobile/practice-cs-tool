@@ -1,5 +1,5 @@
 var buttonAssignments = {
-    "b-1": `foo('hello')`,
+    "b-1": `foo()`,
     "b-2": `iterateChildren('#d1-2', 0)`,
     "b-3": `toggleOutline('#b-3')`,
     "b-4": `createCustomIds('#dev-container', 'k', 1)`,
@@ -12,27 +12,159 @@ var buttonAssignments = {
 };
 
 var sliderStates = {
-    "s-1": null,
-    "s-2": null,
-    "s-3": null,
-    "s-4": null,
-    "s-5": null,
-    "s-6": null,
-    "s-7": null,
-    "s-8": null,
-    "s-9": null,
+    "s-1": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-2": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-3": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-4": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-5": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-6": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-7": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-8": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
+    "s-9": {
+        "leaf-id": null,
+        units: null,
+        property: null,
+    },
 };
 
 var activeElement = "";
 
 $(document).ready(function () {
+    // Populating page with needed elements
     populateSliders();
     populateButtons();
     populateSliderAssigns();
+    populateLeafs("#dev-container", "", "k", "1");
 
+    // Attaching listeners to sliders
+    attachSliderActionHandlers();
+
+    // Attaching listenders to leafs
+    attachLeafActionHandlers();
+
+    $("#outline-check").on("change", function () {
+        toggleOutline($(this).is(":checked"));
+    });
+
+    $(".grid-item .dot").on("click", function () {
+        toggleDot($(this));
+    })
+});
+
+function foo() {
+    console.log(sliderStates);
+}
+
+function populateSliders() {
+    // Number of sliders to add
+    var numberOfSliders = 9;
+
+    // Loop to create and append the sliders
+    for (var i = 1; i <= numberOfSliders; i++) {
+        var sliderHtml = `
+            <div class="slider-container">
+                <span>s-${i}</span>
+                <input type="text" value="1.0" class="sliderInput"/>
+                <div id="s-${i}" class="input-container">
+                    <input type="text" value="0.0" class="slider-start"/>
+                    <input
+                        type="range"
+                        min="0.00"
+                        max="10.0"
+                        step="0.01"
+                        value="1.00"
+                        class="sliderRange"
+                    />
+                    <input type="text" value="10.0" class="slider-end"/>
+                </div>
+            </div>
+        `;
+
+        $("#d1-1").append(sliderHtml);
+    }
+}
+
+function populateSliderAssigns() {
+    let e = $("#element-options__slider-assigns");
+    for (let i = 1; i <= 9; i++) {
+        e.append(
+            `
+            <div id="s-${i}-a" class="grid-item mini-card">
+                <div class='dot blue-dot-hallow'></div>
+                <span>s-${i}</span>
+                <input type="text" placeholder="" class="slider-prop"/>
+                <select id="unit-select" class="slider-units">
+                    <option value="" disabled selected></option>
+                    <option value="px">px</option>
+                    <option value="em">em</option>
+                    <option value="rem">rem</option>
+                    <option value="%">%</option>
+                </select>
+            </div>
+            `
+        );
+    }
+}
+
+function populateButtons() {
+    // Loop to create and append the buttons
+    for (let i = 1; i <= 10; i++) {
+        let id = "b-" + i;
+        var buttonHtml = `
+            <button 
+                id="${id}" 
+                class="button-1" 
+                onclick="${buttonAssignments[id]}"
+            >${id}</button>
+        `;
+
+        $("#d2-1").append(buttonHtml);
+    }
+}
+
+function attachSliderActionHandlers() {
     $(".sliderRange").on("input", function () {
         let parentId = $(this).parent().attr("id");
         e = $("#" + parentId).prev("input");
+        e.val($(this).val());
+    });
+
+    $(".sliderInput").on("change", function () {
+        let parent = $(this).next("div");
+        e = parent.children().eq(1);
+
         e.val($(this).val());
     });
 
@@ -46,8 +178,22 @@ $(document).ready(function () {
         e.attr("max", $(this).val());
     });
 
-    iterateChildren("#dev-container", "", "k", "1");
+    $(".slider-prop").on("change", function () {
+        parentId = $(this).parent().attr("id").slice(0, -2);
 
+        sliderStates[parentId]["property"] = $(this).val();
+        sliderStates[parentId]["leaf-id"] = activeElement.attr("leaf-id");
+    });
+
+    $(".slider-units").on("change", function () {
+        parentId = $(this).parent().attr("id").slice(0, -2);
+
+        sliderStates[parentId]["units"] = $(this).val();
+        sliderStates[parentId]["leaf-id"] = activeElement.attr("leaf-id");
+    });
+}
+
+function attachLeafActionHandlers() {
     $(".leaf").on("mouseenter", function () {
         let leafId = $(this).attr("leaf-id").slice(0, -2);
 
@@ -83,81 +229,9 @@ $(document).ready(function () {
 
         $(`[leaf-id='${leafId}']`).removeClass("hovered");
     });
-
-    $("#outline-check").on("change", function () {
-        toggleOutline($(this).is(":checked"));
-    });
-});
-
-function populateSliders() {
-    // Number of sliders to add
-    var numberOfSliders = 9;
-
-    // Loop to create and append the sliders
-    for (var i = 1; i <= numberOfSliders; i++) {
-        var sliderHtml = `
-            <div class="slider-container">
-                <span>s-${i}</span>
-                <input type="text" value="1.0" class="sliderInput"/>
-                <div id="s-${i}" class="input-container">
-                    <input type="text" value="0.0" class="slider-start"/>
-                    <input
-                        type="range"
-                        min="0.00"
-                        max="10.0"
-                        step="0.01"
-                        value="1.00"
-                        class="sliderRange"
-                    />
-                    <input type="text" value="10.0" class="slider-end"/>
-                </div>
-            </div>
-        `;
-
-        $("#d1-1").append(sliderHtml);
-    }
 }
 
-function populateSliderAssigns() {
-    let e = $("#element-options__slider-assigns");
-    for (let i = 1; i < 10; i++) {
-        e.append(
-            `
-            <div class="grid-item mini-card">
-                <span>s-${i}</span>
-                <select id="dropdown" name="options">
-                    <option value="" disabled selected></option>
-                    <option value="height">Height</option>
-                    <option value="width">Width</option>
-                    <option value="margin">Margin</option>
-                    <option value="padding">Padding</option>
-                </select>
-                <input type="text" id="sa-${i}" placeholder="" />
-            </div>
-            `
-        );
-    }
-}
-
-function populateButtons() {
-    // Loop to create and append the buttons
-    for (let i = 1; i <= 10; i++) {
-        let id = "b-" + i;
-        var buttonHtml = `
-            <button 
-                id="${id}" 
-                class="button-1" 
-                onclick="${buttonAssignments[id]}"
-            >${id}</button>
-        `;
-
-        $("#d2-1").append(buttonHtml);
-    }
-}
-
-function foo(str) {}
-
-function iterateChildren(identifier, indent, k, i) {
+function populateLeafs(identifier, indent, k, i) {
     $element = $(identifier);
     eId = $element.attr("id");
     eTag = $element.prop("tagName");
@@ -170,7 +244,7 @@ function iterateChildren(identifier, indent, k, i) {
 
     $element.children().each(function () {
         // Recursively call the function for each child
-        iterateChildren($(this), indent + "---", k + "-" + i++, 1);
+        populateLeafs($(this), indent + "---", k + "-" + i++, 1);
     });
 }
 
@@ -181,7 +255,7 @@ function getLeaf(eId, eTag, indent, k) {
 
     var leaf = `
         <div class='leaf' leaf-id='${k}-l'>
-            <p>${indent}${eTag} ${eId}</p>
+            <div>${indent}<p>${eTag} ${eId}</p></div><div class='indicators-div'></div>
         </div>
     `;
 
@@ -189,11 +263,17 @@ function getLeaf(eId, eTag, indent, k) {
 }
 
 function toggleOutline(outlineOn) {
+    leafId = activeElement.attr("leaf-id") + "-l";
+
     if (outlineOn) {
         activeElement.addClass("outlineP");
+        $(`[leaf-id='${leafId}'] > .indicators-div`).append("<div class='blue-box'></div>");
     } else {
         activeElement.removeClass("outlineP");
+        $(`[leaf-id='${leafId}'] > .indicators-div .blue-box`).remove();
     }
 }
 
-function sliderAssignHandler(element) {}
+function toggleDot(element) {
+    element.toggleClass("blue-dot-hallow blue-dot-solid");
+}
