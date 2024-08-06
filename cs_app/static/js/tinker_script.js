@@ -77,10 +77,6 @@ $(document).ready(function () {
     $("#outline-check").on("change", function () {
         toggleOutline($(this).is(":checked"));
     });
-
-    $(".grid-item .dot").on("click", function () {
-        toggleDot($(this));
-    })
 });
 
 function foo() {
@@ -179,17 +175,24 @@ function attachSliderActionHandlers() {
     });
 
     $(".slider-prop").on("change", function () {
-        parentId = $(this).parent().attr("id").slice(0, -2);
+        sliderId = $(this).parent().attr("id").slice(0, -2);
 
-        sliderStates[parentId]["property"] = $(this).val();
-        sliderStates[parentId]["leaf-id"] = activeElement.attr("leaf-id");
+        sliderStates[sliderId]["property"] = $(this).val();
     });
 
     $(".slider-units").on("change", function () {
-        parentId = $(this).parent().attr("id").slice(0, -2);
+        sliderId = $(this).parent().attr("id").slice(0, -2);
 
-        sliderStates[parentId]["units"] = $(this).val();
-        sliderStates[parentId]["leaf-id"] = activeElement.attr("leaf-id");
+        sliderStates[sliderId]["units"] = $(this).val();
+    });
+
+    $(".grid-item .dot").on("click", function () {
+        $(this).toggleClass("blue-dot-hallow blue-dot-solid");
+
+        sliderId = $(this).parent().attr("id").slice(0, -2);
+        sliderStates[sliderId]["leaf-id"] = activeElement.attr("leaf-id");
+
+        activateSlider();
     });
 }
 
@@ -274,6 +277,9 @@ function toggleOutline(outlineOn) {
     }
 }
 
-function toggleDot(element) {
-    element.toggleClass("blue-dot-hallow blue-dot-solid");
+function activateSlider() {
+    leafId = activeElement.attr("leaf-id") + "-l";
+
+    console.log(leafId)
+    $(`[leaf-id='${leafId}'] > .indicators-div`).append("<div class='dot blue-dot-solid'><b>1</b></div>");
 }

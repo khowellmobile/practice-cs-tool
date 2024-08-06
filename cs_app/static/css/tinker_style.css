@@ -111,8 +111,12 @@ html {
 
     border-radius: 50%;
     cursor: pointer;
+    font-size: 0.8rem;
 
-    display: inline-block; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
     transition: all 0.2s linear;
 }
@@ -124,8 +128,6 @@ html {
 }
 
 .blue-dot-solid {
-    width: 0.8rem; 
-    height: 0.8rem;
     background-color: #995aec;
     border-radius: 50%; 
     display: inline-block; 
