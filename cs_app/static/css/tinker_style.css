@@ -10,6 +10,13 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+p,
+h3,
+li,
+span {
+    cursor: default;
+}
+
 .slider-container {
     width: 100%;
     height: 10%;
@@ -60,6 +67,8 @@ html {
 .input-container > input[type="range"] {
     width: 76%;
     height: 1rem;
+
+    cursor: pointer;
 }
 
 .input-container > input[type="text"] {
@@ -82,6 +91,7 @@ html {
     margin-bottom: 0.2rem;
 
     transition: all 0.3s linear;
+    cursor: default;
 
     display: flex;
     justify-content: space-between;
@@ -99,21 +109,24 @@ html {
 }
 
 .blue-box {
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.8rem;
+    height: 0.8rem;
+
     border: 1px dashed blue;
     box-sizing: border-box;
+
+    display: inline-block;
 }
 
 .dot {
-    width: 0.8rem; 
+    width: 0.8rem;
     height: 0.8rem;
 
     border-radius: 50%;
     cursor: pointer;
     font-size: 0.8rem;
 
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -129,24 +142,24 @@ html {
 
 .blue-dot-solid {
     background-color: #995aec;
-    border-radius: 50%; 
-    display: inline-block; 
+    border-radius: 50%;
+    display: inline-block;
 }
 
 .hovered {
     outline: 2px dashed #5784ff; /* Define border style and color */
-    animation: hovered 1s infinite; /* Apply animation */
+    animation: hovered 1.5s infinite; /* Apply animation */
 }
 
 @keyframes hovered {
     0% {
-        outline-color: #5784ff; /* Initial border color */
-    }
-    50% {
         outline-color: transparent; /* Border disappears */
     }
-    100% {
+    50% {
         outline-color: #5784ff; /* Border color back to initial */
+    }
+    100% {
+        outline-color: transparent; /* Border disappears */
     }
 }
 
