@@ -11,51 +11,76 @@ var buttonAssignments = {
     "b-10": null,
 };
 
+var leafStates = {
+    "k-l": {
+        "k-value": null,
+        "slider-id": null,
+    },
+};
+
 var sliderStates = {
     "s-1": {
-        "leaf-id": null,
+        "slider-assign-id": "s-1-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-2": {
-        "leaf-id": null,
+        "slider-assign-id": "s-2-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-3": {
-        "leaf-id": null,
+        "slider-assign-id": "s-3-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-4": {
-        "leaf-id": null,
+        "slider-assign-id": "s-4-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-5": {
-        "leaf-id": null,
+        "slider-assign-id": "s-5-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-6": {
-        "leaf-id": null,
+        "slider-assign-id": "s-6-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-7": {
-        "leaf-id": null,
+        "slider-assign-id": "s-7-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-8": {
-        "leaf-id": null,
+        "slider-assign-id": "s-8-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
     "s-9": {
-        "leaf-id": null,
+        "slider-assign-id": "s-9-a",
+        "k-l": null,
         units: null,
         property: null,
+        assigned: false,
     },
 };
 
@@ -77,10 +102,14 @@ $(document).ready(function () {
     $("#outline-check").on("change", function () {
         toggleOutline($(this).is(":checked"));
     });
+
+    $("#outline-check-all").on("change", function () {
+        toggleOutlineAll("#dev-container");
+    });
 });
 
 function foo() {
-    console.log(sliderStates);
+    console.log(leafStates);
 }
 
 function populateSliders() {
@@ -155,13 +184,18 @@ function attachSliderActionHandlers() {
         let parentId = $(this).parent().attr("id");
         e = $("#" + parentId).prev("input");
         e.val($(this).val());
+
+        changeCss(parentId, $(this).val());
     });
 
     $(".sliderInput").on("change", function () {
         let parent = $(this).next("div");
         e = parent.children().eq(1);
-
         e.val($(this).val());
+
+        let parentId = parent.attr("id");
+
+        changeCss(parentId, $(this).val());
     });
 
     $(".slider-start").on("change", function () {
@@ -186,27 +220,32 @@ function attachSliderActionHandlers() {
         sliderStates[sliderId]["units"] = $(this).val();
     });
 
+    // TODO -----------------------------------//
     $(".grid-item .dot").on("click", function () {
-        $(this).toggleClass("blue-dot-hallow blue-dot-solid");
-
         sliderId = $(this).parent().attr("id").slice(0, -2);
-        sliderStates[sliderId]["leaf-id"] = activeElement.attr("leaf-id");
+        sliderStates[sliderId]["k-l"] = activeElement.attr("k-l");
 
-        activateSlider();
+        if ($(this).hasClass("blue-dot-hallow")) {
+            activateSlider(sliderId);
+        } else {
+            deactivateSlider(sliderId);
+        }
+
+        $(this).toggleClass("blue-dot-hallow blue-dot-solid");
     });
 }
 
 function attachLeafActionHandlers() {
     $(".leaf").on("mouseenter", function () {
-        let leafId = $(this).attr("leaf-id").slice(0, -2);
+        let k = $(this).attr("k-value").slice(0, -2);
 
-        $(`[leaf-id='${leafId}']`).addClass("hovered");
+        $(`[k-value='${k}']`).addClass("hovered");
     });
 
     $(".leaf").on("click", function () {
         // Getting/setting variables
-        const leafId = $(this).attr("leaf-id").slice(0, -2);
-        const element = $(`[leaf-id='${leafId}']`);
+        const k = $(this).attr("k-value").slice(0, -2);
+        const element = $(`[k-value='${k}']`);
         const tagName = element.prop("tagName");
         const id = element.attr("id") || "No ID";
         const classList = element.attr("class").split(/\s+/) || "No Classes";
@@ -228,9 +267,9 @@ function attachLeafActionHandlers() {
     });
 
     $(".leaf").on("mouseleave", function () {
-        let leafId = $(this).attr("leaf-id").slice(0, -2);
+        let k = $(this).attr("k-value").slice(0, -2);
 
-        $(`[leaf-id='${leafId}']`).removeClass("hovered");
+        $(`[k-value='${k}']`).removeClass("hovered");
     });
 }
 
@@ -239,9 +278,14 @@ function populateLeafs(identifier, indent, k, i) {
     eId = $element.attr("id");
     eTag = $element.prop("tagName");
 
-    $element.attr("leaf-id", k);
+    $element.attr("k-value", k);
 
     var leaf = getLeaf(eId, eTag, indent, k);
+
+    leafStates[k + "-l"] = {
+        "k-value": k,
+        "slider-id": null,
+    };
 
     $("#tree-container").append(leaf);
 
@@ -256,8 +300,7 @@ function getLeaf(eId, eTag, indent, k) {
         eId = "";
     }
 
-    var leaf = `
-        <div class='leaf' leaf-id='${k}-l'>
+    var leaf = `<div class="leaf" k-value='${k}-l'>
             <div>${indent}<p>${eTag} ${eId}</p></div><div class='indicators-div'></div>
         </div>
     `;
@@ -266,20 +309,58 @@ function getLeaf(eId, eTag, indent, k) {
 }
 
 function toggleOutline(outlineOn) {
-    leafId = activeElement.attr("leaf-id") + "-l";
+    kL = activeElement.attr("k-value") + "-l";
 
     if (outlineOn) {
         activeElement.addClass("outlineP");
-        $(`[leaf-id='${leafId}'] > .indicators-div`).append("<div class='blue-box'></div>");
+        $(`[k-value='${kL}'] > .indicators-div`).append("<div class='blue-box'></div>");
     } else {
         activeElement.removeClass("outlineP");
-        $(`[leaf-id='${leafId}'] > .indicators-div .blue-box`).remove();
+        $(`[k-value='${kL}'] > .indicators-div .blue-box`).remove();
     }
 }
 
-function activateSlider() {
-    leafId = activeElement.attr("leaf-id") + "-l";
+function toggleOutlineAll(identifier) {
+    $element = $(identifier);
 
-    console.log(leafId)
-    $(`[leaf-id='${leafId}'] > .indicators-div`).append("<div class='dot blue-dot-solid'><b>1</b></div>");
+    $element.toggleClass("outlineR");
+
+    $element.children().each(function () {
+        toggleOutlineAll($(this));
+    });
+}
+
+function activateSlider(sliderId) {
+    kL = activeElement.attr("k-value") + "-l";
+    sliderNum = sliderId[sliderId.length - 1];
+
+    leafStates[kL]["slider-id"] = sliderId;
+    sliderStates[sliderId]["k-l"] = kL;
+    sliderStates[sliderId]["assigned"] = true;
+
+    $(`[k-value='${kL}'] > .indicators-div`).append(
+        `<div id='dot-${sliderNum}'class='dot blue-dot-solid'><b>${sliderNum}</b></div>`
+    );
+}
+
+function deactivateSlider(sliderId) {
+    kL = activeElement.attr("k-value") + "-l";
+    sliderNum = sliderId[sliderId.length - 1];
+
+    leafStates[kL]["slider-id"] = "";
+    sliderStates[sliderId]["k-l"] = "";
+    sliderStates[sliderId]["assigned"] = false;
+
+    $(`#dot-${sliderNum}`).remove();
+}
+
+function changeCss(parentId, val) {
+    let units = sliderStates[parentId]["units"];
+    let property = sliderStates[parentId]["property"];
+    let kL = sliderStates[parentId]["k-l"];
+    let kval = leafStates[kL]["k-value"];
+
+    element = $(`[k-value='${kval}']`);
+
+    element.css(property, val + units);
 }
