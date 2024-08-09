@@ -33,6 +33,7 @@ span {
 
 .slider-container > span {
     margin: 0px;
+
     align-self: flex-start;
 }
 
@@ -108,6 +109,11 @@ span {
     display: inline;
 }
 
+.leaf .dot-solid,
+.leaf .blue-box {
+    margin-left: 0.2rem;
+}
+
 .blue-box {
     width: 0.8rem;
     height: 0.8rem;
@@ -134,15 +140,16 @@ span {
     transition: all 0.2s linear;
 }
 
-.blue-dot-hallow {
+.dot-hallow {
     border: 2px solid #5784ff; /* Blue border creating the outline */
     background-color: transparent; /* No fill inside the dot */
     box-sizing: border-box;
 }
 
-.blue-dot-solid {
+.dot-solid {
     background-color: #995aec;
     border-radius: 50%;
+    
     display: inline-block;
 }
 

@@ -147,7 +147,7 @@ function populateSliderAssigns() {
         e.append(
             `
             <div id="s-${i}-a" class="grid-item mini-card">
-                <div class='dot blue-dot-hallow'></div>
+                <div class='dot dot-hallow'></div>
                 <span>s-${i}</span>
                 <input type="text" placeholder="" class="slider-prop"/>
                 <select id="unit-select" class="slider-units">
@@ -225,13 +225,13 @@ function attachSliderActionHandlers() {
         sliderId = $(this).parent().attr("id").slice(0, -2);
         sliderStates[sliderId]["k-l"] = activeElement.attr("k-l");
 
-        if ($(this).hasClass("blue-dot-hallow")) {
+        if ($(this).hasClass("dot-hallow")) {
             activateSlider(sliderId);
         } else {
             deactivateSlider(sliderId);
         }
 
-        $(this).toggleClass("blue-dot-hallow blue-dot-solid");
+        $(this).toggleClass("dot-hallow dot-solid");
     });
 }
 
@@ -339,7 +339,7 @@ function activateSlider(sliderId) {
     sliderStates[sliderId]["assigned"] = true;
 
     $(`[k-value='${kL}'] > .indicators-div`).append(
-        `<div id='dot-${sliderNum}'class='dot blue-dot-solid'><b>${sliderNum}</b></div>`
+        `<div id='dot-${sliderNum}'class='dot dot-solid'><b>${sliderNum}</b></div>`
     );
 }
 
