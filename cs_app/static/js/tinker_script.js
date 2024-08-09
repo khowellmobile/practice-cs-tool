@@ -1,8 +1,34 @@
+/**
+ * This file contains functions to handle various UI interactions including button actions, slider operations,
+ * and element manipulation within the dev-container and slider interfaces.
+ *
+ * Global Variables:
+ * - buttonAssignments: Maps button IDs to corresponding functions to execute on click.
+ * - leafStates: Tracks the state of leaf elements in the tree structure.
+ * - sliderStates: Keeps track of the state of sliders and their configurations.
+ * - activeElement: The currently active element in the UI.
+ *
+ * Functions:
+ * - $(document).ready(function () { ... }): Initializes the page by populating elements, attaching event handlers.
+ * - populateLeafs(identifier, indent, k, i): Recursively populates tree structure with leaf elements.
+ * - getLeaf(eId, eTag, indent, k): Creates HTML for a leaf element based on its attributes.
+ * - populateSliders(): Creates and appends slider elements to the page.
+ * - populateSliderAssigns(): Creates and appends slider assignment elements to the page.
+ * - populateButtons(): Creates and appends buttons with assigned actions to the page.
+ * - attachLeafActionHandlers(): Attaches event handlers to leaf elements for interaction.
+ * - attachSliderActionHandlers(): Attaches event handlers to sliders for user interactions.
+ * - activateSlider(sliderId): Activates a slider and updates its state and visual indicators.
+ * - deactivateSlider(sliderId): Deactivates a slider and updates its state and visual indicators.
+ * - toggleOutline(outlineOn): Toggles the outline appearance of the active element.
+ * - toggleOutlineAll(identifier): Toggles the outline appearance for all elements within a given container.
+ * - changeCss(parentId, val): Updates the CSS property of an element based on slider input.
+ */
+
 var buttonAssignments = {
     "b-1": `foo()`,
-    "b-2": `iterateChildren('#d1-2', 0)`,
-    "b-3": `toggleOutline('#b-3')`,
-    "b-4": `createCustomIds('#dev-container', 'k', 1)`,
+    "b-2": null,
+    "b-3": null,
+    "b-4": null,
     "b-5": null,
     "b-6": null,
     "b-7": null,
@@ -11,7 +37,7 @@ var buttonAssignments = {
     "b-10": null,
 };
 
-// Generic object added for clarity. 
+// Generic object added for clarity.
 // Other objects added in populateLeafs().
 var leafStates = {
     "k-?-l": {
@@ -20,7 +46,7 @@ var leafStates = {
     },
 };
 
-// Generic object added for clarity. 
+// Generic object added for clarity.
 // Other objects added in populateSliders().
 var sliderStates = {
     "s-?": {
@@ -29,13 +55,19 @@ var sliderStates = {
         units: null,
         property: null,
         assigned: false,
-    }
+    },
 };
 
 var activeElement = "";
 
+/**
+ * Initializes the page by populating elements, attaching event handlers, and setting up listeners.
+ *
+ * This function is called when the document is ready. It populates leaf elements, sliders, slider assignments,
+ * and attaches event handlers to sliders and leaf elements. It also sets up change listeners for outline checkboxes.
+ */
 $(document).ready(function () {
-    // Populating page with needed elements
+    // Populating page elements
     populateLeafs("#dev-container", "", "k", "1");
     populateSliders();
     populateSliderAssigns();
@@ -44,7 +76,7 @@ $(document).ready(function () {
     // Attaching listeners to sliders
     attachSliderActionHandlers();
 
-    // Attaching listenders to leafs
+    // Attaching listeners to leafs
     attachLeafActionHandlers();
 
     $("#outline-check").on("change", function () {
@@ -56,10 +88,21 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Logs the current slider states to the console.
+ */
 function foo() {
     console.log(sliderStates);
 }
 
+/**
+ * Recursively populates tree structure with leaf elements.
+ *
+ * @param {string} identifier - The jQuery selector to identify the parent element.
+ * @param {string} indent - The current indentation level for visual representation.
+ * @param {string} k - The key value used to track the leaf element.
+ * @param {string} i - The index used for numbering child elements.
+ */
 function populateLeafs(identifier, indent, k, i) {
     $element = $(identifier);
     eId = $element.attr("id");
@@ -77,11 +120,20 @@ function populateLeafs(identifier, indent, k, i) {
     $("#tree-container").append(leaf);
 
     $element.children().each(function () {
-        // Recursively call the function for each child
+        // Recursive call
         populateLeafs($(this), indent + "---", k + "-" + i++, 1);
     });
 }
 
+/**
+ * Creates HTML for a leaf element based on its attributes.
+ *
+ * @param {string} eId - The ID of the element.
+ * @param {string} eTag - The tag name of the element.
+ * @param {string} indent - The current indentation level for visual representation.
+ * @param {string} k - The key value used to track the leaf element.
+ * @returns {string} - The HTML string for the leaf element.
+ */
 function getLeaf(eId, eTag, indent, k) {
     if (eId == undefined) {
         eId = "";
@@ -95,11 +147,16 @@ function getLeaf(eId, eTag, indent, k) {
     return leaf;
 }
 
+/**
+ * Creates and appends slider elements to the page.
+ *
+ * This function generates slider HTML for a predefined number of sliders and appends them to the container.
+ * It also initializes the sliderStates object with relevant slider information.
+ */
 function populateSliders() {
     // Number of sliders to add
     var numberOfSliders = 9;
 
-    // Loop to create and append the sliders
     for (var i = 1; i <= numberOfSliders; i++) {
         var sliderHtml = `
             <div class="slider-container">
@@ -132,6 +189,11 @@ function populateSliders() {
     }
 }
 
+/**
+ * Creates and appends slider assignment elements to the page.
+ *
+ * This function generates HTML for slider assignment options and appends them to the element options container.
+ */
 function populateSliderAssigns() {
     let e = $("#element-options__slider-assigns");
     for (let i = 1; i <= 9; i++) {
@@ -154,6 +216,33 @@ function populateSliderAssigns() {
     }
 }
 
+/**
+ * Creates and appends buttons with assigned actions to the page.
+ *
+ * This function generates HTML for buttons based on the buttonAssignments object and appends them to the container.
+ */
+function populateButtons() {
+    // Loop to create and append the buttons
+    for (let i = 1; i <= 10; i++) {
+        let id = "b-" + i;
+        var buttonHtml = `
+            <button 
+                id="${id}" 
+                class="button-1" 
+                onclick="${buttonAssignments[id]}"
+            >${id}</button>
+        `;
+
+        $("#d2-1").append(buttonHtml);
+    }
+}
+
+/**
+ * Attaches event handlers to leaf elements for interaction.
+ *
+ * This function sets up mouse enter, click, and mouse leave event handlers to manage leaf element behavior
+ * and update the active element's information.
+ */
 function attachLeafActionHandlers() {
     $(".leaf").on("mouseenter", function () {
         let k = $(this).attr("k-value").slice(0, -2);
@@ -175,7 +264,6 @@ function attachLeafActionHandlers() {
 
         $("#outline-check").prop("checked", element.hasClass("outlineP"));
 
-        // Displaying needed information
         $("#e-classes").empty();
 
         for (e in classList) {
@@ -192,22 +280,11 @@ function attachLeafActionHandlers() {
     });
 }
 
-function populateButtons() {
-    // Loop to create and append the buttons
-    for (let i = 1; i <= 10; i++) {
-        let id = "b-" + i;
-        var buttonHtml = `
-            <button 
-                id="${id}" 
-                class="button-1" 
-                onclick="${buttonAssignments[id]}"
-            >${id}</button>
-        `;
-
-        $("#d2-1").append(buttonHtml);
-    }
-}
-
+/**
+ * Attaches event handlers to sliders for user interactions.
+ *
+ * This function sets up input change and range input event handlers to update slider values and CSS properties.
+ */
 function attachSliderActionHandlers() {
     $(".sliderRange").on("input", function () {
         let parentId = $(this).parent().attr("id");
@@ -263,6 +340,11 @@ function attachSliderActionHandlers() {
     });
 }
 
+/**
+ * Activates a slider and updates its state and visual indicators.
+ *
+ * @param {string} sliderId - The ID of the slider to be activated.
+ */
 function activateSlider(sliderId) {
     kL = activeElement.attr("k-value") + "-l";
     sliderNum = sliderId[sliderId.length - 1];
@@ -276,6 +358,11 @@ function activateSlider(sliderId) {
     );
 }
 
+/**
+ * Deactivates a slider and updates its state and visual indicators.
+ *
+ * @param {string} sliderId - The ID of the slider to be deactivated.
+ */
 function deactivateSlider(sliderId) {
     kL = activeElement.attr("k-value") + "-l";
     sliderNum = sliderId[sliderId.length - 1];
@@ -287,6 +374,11 @@ function deactivateSlider(sliderId) {
     $(`#dot-${sliderNum}`).remove();
 }
 
+/**
+ * Toggles the outline appearance of the active element.
+ *
+ * @param {boolean} outlineOn - Whether to turn the outline on or off.
+ */
 function toggleOutline(outlineOn) {
     kL = activeElement.attr("k-value") + "-l";
 
@@ -299,6 +391,11 @@ function toggleOutline(outlineOn) {
     }
 }
 
+/**
+ * Toggles the outline appearance for all elements within a given container.
+ *
+ * @param {string} identifier - The jQuery selector to identify the container element.
+ */
 function toggleOutlineAll(identifier) {
     $element = $(identifier);
 
@@ -309,6 +406,12 @@ function toggleOutlineAll(identifier) {
     });
 }
 
+/**
+ * Updates the CSS property of an element based on slider input.
+ *
+ * @param {string} parentId - The ID of the slider container element.
+ * @param {string} val - The value from the slider input to set.
+ */
 function changeCss(parentId, val) {
     let units = sliderStates[parentId]["units"];
     let property = sliderStates[parentId]["property"];
