@@ -1,6 +1,7 @@
 /**
  * This file contains functions to handle various UI interactions including button actions, slider operations,
- * and element manipulation within the dev-container and slider interfaces.
+ * and element manipulation within the dev-container and slider interfaces. Write all components in #dev-container.
+ * Css For #dev-container may need small adjustments.
  *
  * Global Variables:
  * - buttonAssignments: Maps button IDs to corresponding functions to execute on click.
@@ -36,6 +37,32 @@ var buttonAssignments = {
     "b-9": null,
     "b-10": null,
 };
+
+/*----------------------------------- Dev Functions Go Here -----------------------------------*/
+
+function foo() {
+    console.log("hello!");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+
+
+/**
+ * Functions written below are used to run the ui and functionality of the page.
+ */
 
 // Generic object added for clarity.
 // Other objects added in populateLeafs().
@@ -87,13 +114,6 @@ $(document).ready(function () {
         toggleOutlineAll("#dev-container");
     });
 });
-
-/**
- * Logs the current slider states to the console.
- */
-function foo() {
-    console.log(sliderStates);
-}
 
 /**
  * Recursively populates tree structure with leaf elements.
