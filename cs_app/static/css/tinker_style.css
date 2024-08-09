@@ -1,3 +1,8 @@
+/* Write all dev css below here */
+
+/* Write all dev css above here */
+
+/* all css written below here is for the ui and functionality of the page */
 :root {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
@@ -10,39 +15,66 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+p,
+h3,
+li,
+span {
+    cursor: default;
+}
+
 .slider-container {
     width: 100%;
     height: 10%;
+    padding: 0.5rem;
 
     box-sizing: border-box;
     background-color: var(--primary-color);
     border-radius: 0.5rem;
 
-    display: inline;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.slider-container > p {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin: 0rem 0rem 0.6rem 0rem;
+.slider-container > span {
+    margin: 0px;
 
-    box-sizing: border-box;
+    align-self: flex-start;
+}
+
+.slider-container > input[type="text"] {
+    width: 15%;
+    height: 1rem;
+    margin: 0px;
+
+    line-height: 100%;
     text-align: center;
-    font-size: 0.8rem;
+    box-sizing: border-box;
+    font-size: 0.7rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    border: none;
+    transition: all 0.5s;
+
+    align-self: center;
 }
 
 .input-container {
     width: 90%;
     height: 1.2rem;
-    margin: 0rem 5% 0rem 5%;
+    margin: 0px;
 
     display: flex;
     justify-content: space-between;
+    align-self: center;
 }
 
 .input-container > input[type="range"] {
-    width: 83%;
+    width: 76%;
     height: 1rem;
+
+    cursor: pointer;
 }
 
 .input-container > input[type="text"] {
@@ -62,9 +94,14 @@ html {
 
 .leaf {
     width: 100%;
-    margin: 0px;
+    margin-bottom: 0.2rem;
 
     transition: all 0.3s linear;
+    cursor: default;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .leaf:hover {
@@ -72,24 +109,107 @@ html {
 }
 
 .leaf p {
-    margin: 0.1rem;
+    margin: 0rem;
+
+    display: inline;
+}
+
+.leaf .dot-solid,
+.leaf .blue-box {
+    margin-left: 0.2rem;
+}
+
+.blue-box {
+    width: 0.8rem;
+    height: 0.8rem;
+
+    border: 1px dashed blue;
+    box-sizing: border-box;
+
+    display: inline-block;
+}
+
+.dot {
+    width: 0.8rem;
+    height: 0.8rem;
+
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.8rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    transition: all 0.2s linear;
+}
+
+.dot-hallow {
+    border: 2px solid #5784ff; /* Blue border creating the outline */
+    background-color: transparent; /* No fill inside the dot */
+    box-sizing: border-box;
+}
+
+.dot-solid {
+    background-color: #995aec;
+    border-radius: 50%;
+
+    display: inline-block;
 }
 
 .hovered {
     outline: 2px dashed #5784ff; /* Define border style and color */
-    animation: hovered 1s infinite; /* Apply animation */
+    animation: hovered 1.5s infinite; /* Apply animation */
 }
 
 @keyframes hovered {
     0% {
-        outline-color: #5784ff; /* Initial border color */
-    }
-    50% {
         outline-color: transparent; /* Border disappears */
     }
-    100% {
+    50% {
         outline-color: #5784ff; /* Border color back to initial */
     }
+    100% {
+        outline-color: transparent; /* Border disappears */
+    }
+}
+
+.mini-card {
+    padding: 0.2rem;
+
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+}
+
+.mini-card > select,
+.mini-card > input {
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    border: none;
+    transition: all 0.5s;
+}
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.grid-item > input {
+    width: 50%;
+}
+
+.grid-item > select {
+    width: 25%;
+}
+
+.grid-item > span {
+    font-size: 0.8rem;
 }
 
 #main {
@@ -128,11 +248,7 @@ html {
     box-sizing: border-box;
     border: 0.5rem solid var(--primary-color);
 
-    background-image: linear-gradient(
-            to right,
-            rgb(207, 207, 207) 1px,
-            transparent 1px
-        ),
+    background-image: linear-gradient(to right, rgb(207, 207, 207) 1px, transparent 1px),
         linear-gradient(to bottom, rgb(207, 207, 207) 1px, transparent 1px);
     background-size: 1rem 1rem;
     background-color: white; /* Background color of the grid cells */
@@ -230,9 +346,43 @@ html {
 #element-options {
     width: calc(75% - 1rem);
     height: 100%;
+    padding: 0.5rem;
 
+    box-sizing: border-box;
     background-color: var(--primary-color);
     border-radius: 0.5rem;
+
+    display: inline;
+}
+
+#element-options > input {
+    margin: 0px;
+    width: 1rem;
+    height: 1rem;
+
+    line-height: 1rem;
+    vertical-align: middle;
+}
+
+#element-options > span {
+    vertical-align: middle;
+
+    font-size: 1rem;
+}
+
+#element-options > h3 {
+    margin: 0.5rem 0rem;
+}
+
+#element-options__slider-assigns {
+    width: 100%;
+    height: auto;
+
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.7rem;
 }
 
 button {
