@@ -53,16 +53,37 @@ function submitForm(fieldName) {
                 first_name: $("#first_name").val(),
                 last_name: $("#last_name").val(),
             };
+
+            if (!validateName(formdata["first_name"]) || !validateName(formdata["last_name"])) {
+                alert(
+                    `Name format is invalid. Allowed characters include 
+                        alphabetical characters, spaces, hyphens, and apostrophes.`
+                );
+            }
+
             break;
         case "email":
             formdata = {
                 email: $("#email").val(),
             };
+
+            if (!validateEmail(formdata["email"])) {
+                alert("Email format is invalid. Please follow standard email format: example@domain.com");
+            }
+
             break;
         case "password":
             formdata = {
                 password: $("#password").val(),
             };
+
+            if (!validatePassword(formdata["password"])) {
+                alert(
+                    `Password format is invalid. Passwords must be at least 
+                        8 characters long and include a number and special character`
+                );
+            }
+
             break;
         default:
             console.log("Field name not recognized");
@@ -94,8 +115,7 @@ function ajaxResponseSuccess(fieldName, formdata) {
 
     switch (fieldName) {
         case "name":
-            displayText =
-                "Name: " + formdata["first_name"] + " " + formdata["last_name"];
+            displayText = "Name: " + formdata["first_name"] + " " + formdata["last_name"];
             break;
         case "email":
             displayText = "Email: " + formdata["email"];
@@ -127,13 +147,11 @@ function ajaxResponseError(fieldName, message) {
                 );
                 break;
             case "email":
-                alert(
-                    "Email format is invalid. Please follow standard email format: example@domain.com"
-                );
+                alert("Email format is invalid. Please follow standard email format: example@domain.com");
                 break;
             case "password":
                 alert(
-                    "Password format is invalid. Passwords must be at least 8 characters long."
+                    "Password format is invalid. Passwords must be at least 8 characters long and include a number and special character"
                 );
                 break;
             default:
@@ -143,4 +161,54 @@ function ajaxResponseError(fieldName, message) {
     } else {
         alert("An unknown error occurred. Please try again.");
     }
+}
+
+/**
+ * Validates if a name follows a standard format.
+ *
+ * Name Format:
+ * - Allows letters (both uppercase and lowercase)
+ * - Allows spaces, apostrophes ('), and hyphens (-)
+ * - Minimum length of 2 characters
+ *
+ * @param {string} name - The name to be validated.
+ * @returns {boolean} - True if the name is valid according to the format, False otherwise.
+ */
+function validateName(name) {
+    const namePattern = /^[a-zA-Z\'\- ]{2,}$/;
+
+    return namePattern.test(name);
+}
+
+/**
+ * Validates if an email address follows a standard format.
+ *
+ * Email Format:
+ * - Valid format with basic structure check
+ * - Matches typical email address patterns
+ *
+ * @param {string} email - The email address to be validated.
+ * @returns {boolean} - True if the email address is valid according to the format, False otherwise.
+ */
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    return emailPattern.test(email);
+}
+
+/**
+ * Validates if a password meets the specified criteria.
+ *
+ * Password Criteria:
+ * - Minimum 8 characters long
+ * - Includes at least one special character (!@#$%^&*()_+={}\[\]:;<>,.?)
+ * - Includes at least one digit
+ *
+ * @param {string} password - The password to be validated.
+ * @returns {boolean} - True if the password is valid according to the criteria, False otherwise.
+ */
+function validatePassword(password) {
+    const passwordPattern = /^(?=.*[!@#$%^&*()_+={}\[\]:;<>,.?])(?=.*\d).{8,}$/;
+
+    return passwordPattern.test(password);
 }
