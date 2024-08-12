@@ -20,36 +20,59 @@
  */
 
 const throttledToggleSize = throttle(toggleSize, 500);
+var activeTimeRange = "Custom";
 
-/**
- * Changes value of date inputs when a time range preset is selected
- *
- * This function calls alterDates() with the current time range value
- */
-$("#time_range").on("change", function () {
-    alterDates($("#time_range").val());
-});
+$(document).ready(function () {
+    /**
+     * Shows dropdown menu on click
+     */
+    $(".dropdown-button").on("click", function (event) {
+        // Prevent the document click event from firing
+        event.stopPropagation();
+        $(this).siblings(".dropdown-content").toggle();
+    });
 
-/**
- * Sets value of time range preset to "Custom" when dates are manually input
- */
-$("#start_date, #end_date").on("change", function () {
-    $("#time_range").val("Custom");
-});
+    /**
+     * Handles when dropdown option has been clicked
+     */
+    $(".dropdown-item").on("click", function () {
+        activeTimeRange = $(this).data("value");
+        alterDates(activeTimeRange);
+        $(".dropdown-button").text($(this).text());
+        $(".dropdown-content").hide();
+    });
 
-/**
- * Calls setTableHeight() when window is resized
- */
-$(window).on("resize", function () {
-    setTableHeight();
-});
+    /**
+     * Hides dropdown when user clicks outside of it
+     */
+    $(document).on("click", function (event) {
+        if (!$(event.target).closest(".dropdown").length) {
+            $(".dropdown-content").hide();
+        }
+    });
 
-/**
- * Calls throttledToggleSize() for history-menu and report-block on click
- * of expand-button
- */
-$("#expand-button").on("click", function () {
-    throttledToggleSize("history-menu", "report-block");
+    /**
+     * Sets value of time range preset to "Custom" when dates are manually input
+     */
+    $("#start_date, #end_date").on("change", function () {
+        $(".dropdown-button").text("Custom");
+        activeTimeRange = "Custom";
+    });
+
+    /**
+     * Calls setTableHeight() when window is resized
+     */
+    $(window).on("resize", function () {
+        setTableHeight();
+    });
+
+    /**
+     * Calls throttledToggleSize() for history-menu and report-block on click
+     * of expand-button
+     */
+    $("#expand-button").on("click", function () {
+        throttledToggleSize("history-menu", "report-block");
+    });
 });
 
 /**
@@ -59,7 +82,7 @@ $("#expand-button").on("click", function () {
  */
 function generateTable() {
     var formdata = {
-        time_range: $("#time_range").val(),
+        time_range: activeTimeRange,
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
     };
@@ -109,9 +132,7 @@ function initalizeTable(data) {
         $("#reportTable").remove(); // Remove the existing table
     }
 
-    $("#report").append(
-        '<table id="reportTable" class="display" style="width:100%;"></table>'
-    );
+    $("#report").append('<table id="reportTable" class="display" style="width:100%;"></table>');
 
     $("#reportTable").DataTable({
         // Initialize DataTable
@@ -143,7 +164,8 @@ function createReportFromHistory(time_range, parameters_json) {
 
     createTable(formdata);
 
-    $("#time_range").val(time_range);
+    activeTimeRange = time_range;
+    $(".dropdown-button").text(time_range);
     $("#start_date").val(paramsJson.start_date);
     $("#end_date").val(paramsJson.end_date);
 }
@@ -179,6 +201,8 @@ function alterDates(range) {
         case "All Time":
             start_date = "1000-01-01";
             end_date = `${year}-${month}-${day}`;
+            break;
+        case "Custom":
             break;
         default:
             console.log("Unknown time range");
@@ -319,8 +343,6 @@ $("#history-menu__history-scroll button").each(function () {
 
 $(".report-kind").each(function () {
     var text = $(this).find("p").text();
-
-    console.log(text)
 
     switch (text) {
         case "YTD":

@@ -91,16 +91,14 @@
                                 required
                             />
 
-                            <select
-                                id="time_range"
-                                class="form__input"
-                                name="time_range"
-                            >
-                                <option value="YTD">YTD</option>
-                                <option value="Last Year">Last Year</option>
-                                <option value="All Time">All Time</option>
-                                <option value="Custom" selected>Custom</option>
-                            </select>
+                                <button class="dropdown-button">Custom</button>
+                                <div class="dropdown-content">
+                                    <div class="dropdown-item" data-value="YTD">YTD</div>
+                                    <div class="dropdown-item" data-value="Last Year">Last Year</div>
+                                    <div class="dropdown-item" data-value="All Time">All Time</div>
+                                    <div class="dropdown-item" data-value="Custom">Custom</div>
+                                </div>
+                                
                         </div>
                         <div id="report-block__menu__buttons">
                             <button class="button-1" onclick="generateTable()">
