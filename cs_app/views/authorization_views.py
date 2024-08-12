@@ -30,7 +30,7 @@ import cs_app.utils.common_functions as cf
 
 def create_account_view(request):
     """
-    View function to handle POST requests for creating a new user account 
+    View function to handle POST requests for creating a new user account
     and rendering create account page.
 
     Processes POST requests containing user registration form data (first name, last name,
@@ -53,6 +53,35 @@ def create_account_view(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirmPassword")
+
+        # Check if names follow proper format
+        if not cf.validate_name(first_name) or not cf.validate_name(last_name):
+            error_message = "Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes."
+            return render(
+                request,
+                "create_account.html",
+                {"error_message": error_message, "request": request},
+            )
+
+        # Check if email follows proper format
+        if not cf.validate_email(email):
+            error_message = "Email format is invalid. Please follow standard email format: example@domain.com"
+
+            return render(
+                request,
+                "create_account.html",
+                {"error_message": error_message, "request": request},
+            )
+
+        # Check if password follows proper format
+        if not cf.validate_password(password):
+            error_message = "Password format is invalid. Passwords must be at least 8 characters long, include a number, and include a special character."
+
+            return render(
+                request,
+                "create_account.html",
+                {"error_message": error_message, "request": request},
+            )
 
         # Check if passwords match
         if password != confirm_password:
