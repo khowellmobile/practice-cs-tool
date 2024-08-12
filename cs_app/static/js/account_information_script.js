@@ -56,11 +56,10 @@ function submitForm(fieldName) {
 
             if (!validateName(formdata["first_name"]) || !validateName(formdata["last_name"])) {
                 alert(
-                    `Name format is invalid. Allowed characters include 
-                        alphabetical characters, spaces, hyphens, and apostrophes.`
+                    `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
                 );
+                return;
             }
-
             break;
         case "email":
             formdata = {
@@ -69,8 +68,8 @@ function submitForm(fieldName) {
 
             if (!validateEmail(formdata["email"])) {
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
+                return;
             }
-
             break;
         case "password":
             formdata = {
@@ -79,11 +78,11 @@ function submitForm(fieldName) {
 
             if (!validatePassword(formdata["password"])) {
                 alert(
-                    `Password format is invalid. Passwords must be at least 
-                        8 characters long and include a number and special character`
+                    `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
                 );
-            }
 
+                return;
+            }
             break;
         default:
             console.log("Field name not recognized");
