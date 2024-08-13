@@ -6,6 +6,12 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
+@media (max-width: 1440px) {
+    html {
+        font-size: 14px; /* Set font size to 12px for smaller screens */
+    }
+}
+
 :root {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
