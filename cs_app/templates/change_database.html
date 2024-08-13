@@ -4,10 +4,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link
-            rel="stylesheet"
-            href="{% static 'css/change_database_style.css' %}"
-        />
+        <link rel="stylesheet" href="{% static 'css/change_database_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
@@ -15,101 +12,66 @@
     <body>
         <p class="login-signifier">Welcome, {{ user.first_name }}</p>
         <div class="container-1">
-            <button
-                id="logout-button"
-                class="button-1"
-                onclick="redirectTo('/logout/')"
-            >
-                Logout
-            </button>
+            <button id="logout-button" class="button-1" onclick="redirectTo('/logout/')">Logout</button>
             <div id="database-change">
                 <div id="database-change__header" class="card">
                     <h1>Change Database</h1>
-                    <button class="button-1" onclick="redirectTo('/home/')">
-                        Back to home
-                    </button>
+                    <button class="button-1" onclick="redirectTo('/home/')">Back to home</button>
                 </div>
                 <div id="database-change__form" class="card">
-                    <h3>Form:</h3>
-                    <label for="input_engine" class="form__label"
-                        >Database Engine</label
-                    >
-                    <input
-                        type="text"
-                        class="form__input"
-                        id="input_engine"
-                        placeholder="Database Engine"
-                        required=""
-                    />
-                    <br />
-                    <label for="input_name" class="form__label"
-                        >Database Name</label
-                    >
-                    <input
-                        type="text"
-                        class="form__input"
-                        id="input_name"
-                        placeholder="Database Name"
-                        required=""
-                    />
-                    <br />
-                    <label for="input_host" class="form__label"
-                        >Database Host</label
-                    >
-                    <input
-                        type="text"
-                        class="form__input"
-                        id="input_host"
-                        placeholder="Database Host"
-                        required=""
-                    />
-                    <h3>Options:</h3>
-                    <label for="input_driver" class="form__label"
-                        >Database Driver</label
-                    >
-                    <input
-                        type="text"
-                        class="form__input"
-                        id="input_driver"
-                        placeholder="Database Driver"
-                        required=""
-                    />
-                    <br />
-                    <label for="input_user" class="form__label">Username</label>
-                    <input
-                        type="text"
-                        class="form__input"
-                        id="input_user"
-                        placeholder="Username"
-                        required=""
-                    />
-                    <br />
-                    <label for="input_pass" class="form__label"
-                        >Password</label
-                    >
-                    <input
-                        type="password"
-                        class="form__input"
-                        id="input_pass"
-                        placeholder="Password"
-                        required=""
-                    />
+                    <div id="database-change__form__inputs">
+                        <h3>Form:</h3>
+                        <label for="input_engine" class="form__label">Database Engine</label>
+                        <input
+                            type="text"
+                            class="form__input"
+                            id="input_engine"
+                            placeholder="Database Engine"
+                            required=""
+                        />
+                        <br />
+                        <label for="input_name" class="form__label">Database Name</label>
+                        <input
+                            type="text"
+                            class="form__input"
+                            id="input_name"
+                            placeholder="Database Name"
+                            required=""
+                        />
+                        <br />
+                        <label for="input_host" class="form__label">Database Host</label>
+                        <input
+                            type="text"
+                            class="form__input"
+                            id="input_host"
+                            placeholder="Database Host"
+                            required=""
+                        />
+                        <h3>Options:</h3>
+                        <label for="input_driver" class="form__label">Database Driver</label>
+                        <input
+                            type="text"
+                            class="form__input"
+                            id="input_driver"
+                            placeholder="Database Driver"
+                            required=""
+                        />
+                        <br />
+                        <label for="input_user" class="form__label">Username</label>
+                        <input type="text" class="form__input" id="input_user" placeholder="Username" required="" />
+                        <br />
+                        <label for="input_pass" class="form__label">Password</label>
+                        <input type="password" class="form__input" id="input_pass" placeholder="Password" required="" />
+                    </div>
                     <p id="form__note">
-                        Note: Leaving the Username and Password Blank will use
-                        Windows Authentication instead
+                        Note: Leaving the Username and Password Blank will use Windows Authentication instead
                     </p>
                 </div>
                 <br />
                 <div id="database-change__info">
                     <div id="d">
                         <div id="database-change__info-button">
-                            <button
-                                id="but"
-                                class="button-1"
-                                onclick="getNewConfig()"
-                            >
-                                Connect Database
-                            </button>
+                            <button id="but" class="button-1" onclick="getNewConfig()">Connect Database</button>
                         </div>
                         <div id="database-change__current-connection" class="card">
                             <div id="database-change__current-connection__info">
