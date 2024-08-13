@@ -6,7 +6,7 @@ html {
     font-family: "Roboto", sans-serif;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1919px) {
     html {
         font-size: 14px; /* Set font size to 12px for smaller screens */
     }
