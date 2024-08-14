@@ -5,7 +5,6 @@ describe("setSpinnerVisiblity function", () => {
     let dom;
 
     beforeEach(() => {
-        // Set up a DOM environment using jsdom
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div>
@@ -16,62 +15,46 @@ describe("setSpinnerVisiblity function", () => {
         global.document = dom.window.document;
         global.window = dom.window;
 
-        // Initialize jQuery within the test environment
         $ = require("jquery")(dom.window);
     });
 
     afterEach(() => {
-        // Clean up the DOM after each test
         dom.window.close();
     });
 
-    // Test ensures setSpinnerVisibility function will change .spinner from hidden to shown
-    // when passed a value of true
     test("should make spinner visible when spinnerVisible is true", () => {
         changeDbScript.setSpinnerVisibility(true);
 
         const spinner = $(".spinner");
-        // Access computed style using getComputedStyle
         const computedStyle = dom.window.getComputedStyle(spinner[0]);
 
         expect(computedStyle.visibility).toBe("visible");
     });
 
-    // Test ensures setSpinnerVisibility function will change .spinner from shown to hidden
-    // when passed a value of false
     test("should hide spinner when spinnerVisible is false", () => {
-        // Modify the inline style to set spinner visible
         $(".spinner").css("visibility", "visible");
 
         changeDbScript.setSpinnerVisibility(false);
 
         const spinner = $(".spinner");
-
-        // Access computed style using getComputedStyle
         const computedStyle = dom.window.getComputedStyle(spinner[0]);
 
         expect(computedStyle.visibility).toBe("hidden");
     });
 
-    // Test ensures setSpinnerVisiblity will not alter the visibility value of .spinner when passed
-    // false when already or hidden or true when already shown
     test("should not alter spinner visibility when already hidden or shown", () => {
-        // Set up initial state: .spinner is hidden
         $(".spinner").css("visibility", "hidden");
 
         changeDbScript.setSpinnerVisibility(false);
 
-        // Ensure .spinner remains hidden
         let spinner = $(".spinner");
         let computedStyle = dom.window.getComputedStyle(spinner[0]);
         expect(computedStyle.visibility).toBe("hidden");
 
-        // Set up initial state: .spinner is visible
         $(".spinner").css("visibility", "visible");
 
         changeDbScript.setSpinnerVisibility(true);
 
-        // Ensure .spinner remains visible
         spinner = $(".spinner");
         computedStyle = dom.window.getComputedStyle(spinner[0]);
         expect(computedStyle.visibility).toBe("visible");
@@ -82,7 +65,6 @@ describe("dbChangeHandler function", () => {
     let dom;
 
     beforeEach(() => {
-        // Set up a DOM environment using jsdom
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div>
@@ -93,19 +75,16 @@ describe("dbChangeHandler function", () => {
         global.document = dom.window.document;
         global.window = dom.window;
 
-        // Initialize jQuery within the test environment
         $ = require("jquery")(dom.window);
 
-        // Mock the global alert function
         global.alert = jest.fn();
     });
 
     afterEach(() => {
-        // Clean up the DOM after each test
         dom.window.close();
     });
 
-    test("Should append success message to div when success is true", () => {
+    test("should append success message to div when success is true", () => {
         changeDbScript.dbChangeHandler(true, {}, jest.fn());
 
         const pElements = $("#database-change__status p");
@@ -118,7 +97,7 @@ describe("dbChangeHandler function", () => {
         expect(pElement.textContent).toBe("Successful Connection");
     });
 
-    test("Should append error message to div when success false and message is non-empty", () => {
+    test("should append error message to div when success false and message is non-empty", () => {
         changeDbScript.dbChangeHandler(false, { responseJSON: { error: "test-error" } }, jest.fn());
 
         const pElements = $("#database-change__status p");
@@ -131,7 +110,7 @@ describe("dbChangeHandler function", () => {
         expect(pElement.textContent).toBe("Error: test-error");
     });
 
-    test("Should alert error when success is false and message is empty", () => {
+    test("should alert error when success is false and message is empty", () => {
         changeDbScript.dbChangeHandler(false, {}, jest.fn());
 
         expect(global.alert).toHaveBeenCalledWith("An error occurred while processing your request. Please try again.");
@@ -145,7 +124,6 @@ describe("getInputValues function", () => {
     let dom;
 
     beforeEach(() => {
-        // Set up a DOM environment using jsdom
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div>
@@ -160,12 +138,10 @@ describe("getInputValues function", () => {
         global.document = dom.window.document;
         global.window = dom.window;
 
-        // Initialize jQuery within the test environment
         $ = require("jquery")(dom.window);
     });
 
     afterEach(() => {
-        // Clean up the DOM after each test
         dom.window.close();
     });
 
@@ -246,3 +222,4 @@ describe("getInputValues function", () => {
         expect(result).toEqual(expected);
     });
 });
+
