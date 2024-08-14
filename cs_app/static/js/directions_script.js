@@ -27,6 +27,11 @@ var currentActiveSubSlide = "slides__genRep__2__repHist";
 var lockTabs = false;
 var lockSubSlides = false;
 
+// Required for global jqeury recognition for use in testing
+// CDN still included in html file
+var jsdom = require('jsdom');
+$ = require('jquery')(new jsdom.JSDOM().window);
+
 /**
  * Handles tab click events with a lock mechanism to prevent click spam.
  *
@@ -238,6 +243,22 @@ function switchSubSlide(newSlideId) {
  * @param {number} timeout - The delay in milliseconds before toggling the class.
  */
 function classToggleTimeout(element, addingClass, cssClass, timeout) {
+
+    if (!element || !element.length) {
+        console.warn("Invalid or empty jQuery element provided.");
+        return; 
+    }
+
+    if (typeof cssClass !== "string" || !cssClass.trim()) {
+        console.warn("Invalid CSS class provided.");
+        return; 
+    }
+
+    if (typeof timeout !== "number" || timeout <= 0) {
+        console.warn("Invalid timeout value provided.");
+        return; 
+    }
+
     if (addingClass) {
         setTimeout(() => {
             element.addClass(cssClass);
@@ -248,3 +269,5 @@ function classToggleTimeout(element, addingClass, cssClass, timeout) {
         }, timeout);
     }
 }
+
+module.exports = { classToggleTimeout }
