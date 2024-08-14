@@ -18,6 +18,7 @@
  * Dependencies: Requires jQuery for DOM manipulation and AJAX operations.
  */
 
+
 /**
  * Gathers input values for database configuration fields, validates them,
  * and initiates the process to submit the new configuration.
@@ -59,10 +60,10 @@ function submitNewConfig(db_info) {
         url: url,
         data: db_info,
         success: function (response) {
-            dbChangeHandler(true, response);
+            dbChangeHandler(true, response, getDisplayDBInfo);
         },
         error: function (xhr) {
-            dbChangeHandler(false, xhr);
+            dbChangeHandler(false, xhr, getDisplayDBInfo);
         },
     });
 }
@@ -70,11 +71,14 @@ function submitNewConfig(db_info) {
 /**
  * Handles the server response for database configuration changes.
  * Updates UI elements based on whether the operation was successful or not.
+ * 
+ * This function uses dependency injection for testing purposes.
  *
  * @param {boolean} success - Indicates if the database configuration change was successful.
  * @param {Object} message - The response message or error object returned from the server.
+ * @param {function} getDisplayDBInfo - Function to get and display new database information.
  */
-function dbChangeHandler(success, message) {
+function dbChangeHandler(success, message, getDisplayDBInfo) {
     setSpinnerVisibility(false);
 
     if (success) {
@@ -85,7 +89,7 @@ function dbChangeHandler(success, message) {
     } else if (message.responseJSON) {
         // captures a failure but one that includes a json response
         $("#database-change__status").append(
-            `<p class='stat__message'> Error: ${message.responseJSON.error}</p>`
+            `<p class='stat__message'>Error: ${message.responseJSON.error}</p>`
         );
     } else {
         // captures a failure due to non-view related circumstances
@@ -151,4 +155,4 @@ function getInputValues() {
 }
 
 // Export for testing using jest and jsdom
-module.exports = { setSpinnerVisibility };
+module.exports = { setSpinnerVisibility, dbChangeHandler, getInputValues};
