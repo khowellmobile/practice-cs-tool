@@ -29,8 +29,22 @@ var lockSubSlides = false;
 
 // Required for global jqeury recognition for use in testing
 // CDN still included in html file
-var jsdom = require('jsdom');
-$ = require('jquery')(new jsdom.JSDOM().window);
+try {
+    var jsdom = require("jsdom");
+    $ = require("jquery")(new jsdom.JSDOM().window);
+} catch (error) {
+    console.log(error);
+}
+
+/**
+ * Handles subslide button click events
+ * 
+ * Runs switchSubSlide on click. This avoids multiple onclick() in the html file.
+ */
+$(".mini-genRep__button").on("click", function () {
+    slideConnection = $(this).data("slide-connection");
+    switchSubSlide("slides__genRep__2__" + slideConnection, currentActiveSubSlide);
+});
 
 /**
  * Handles tab click events with a lock mechanism to prevent click spam.
@@ -206,8 +220,9 @@ function showDoubleSlides(tabId) {
  * then showing the old and new slide.
  *
  * @param {string} newSlideId - The ID of the new sub-slide to switch to.
+ * @param {string} currentActiveSubSlide - The ID of the current active sub-slide
  */
-function switchSubSlide(newSlideId) {
+function switchSubSlide(newSlideId, currentActiveSubSlide) {
     if (!lockSubSlides) {
         lockSubSlides = true;
         setTimeout(() => {
@@ -219,6 +234,7 @@ function switchSubSlide(newSlideId) {
 
         e1.removeClass("scaleUp");
         e1.addClass("scaleDown");
+
         setTimeout(() => {
             e1.css("display", "none");
         }, 500);
@@ -230,8 +246,18 @@ function switchSubSlide(newSlideId) {
         classToggleTimeout(e2, false, "scaleDown", 550);
         classToggleTimeout(e2, true, "scaleUp", 550);
 
-        currentActiveSubSlide = newSlideId;
+        setActiveSubSlide(newSlideId);
     }
+}
+
+/**
+ * Sets the passed in id as the active subslide id for the current
+ * state of the page
+ * 
+ * @param {string} elementId - id of subslide to be set as active
+ */
+function setActiveSubSlide(elementId) {
+    currentActiveSubSlide = elementId;
 }
 
 /**
@@ -243,20 +269,19 @@ function switchSubSlide(newSlideId) {
  * @param {number} timeout - The delay in milliseconds before toggling the class.
  */
 function classToggleTimeout(element, addingClass, cssClass, timeout) {
-
     if (!element || !element.length) {
         console.warn("Invalid or empty jQuery element provided.");
-        return; 
+        return;
     }
 
     if (typeof cssClass !== "string" || !cssClass.trim()) {
         console.warn("Invalid CSS class provided.");
-        return; 
+        return;
     }
 
     if (typeof timeout !== "number" || timeout <= 0) {
         console.warn("Invalid timeout value provided.");
-        return; 
+        return;
     }
 
     if (addingClass) {
@@ -270,4 +295,8 @@ function classToggleTimeout(element, addingClass, cssClass, timeout) {
     }
 }
 
-module.exports = { classToggleTimeout }
+try {
+    module.exports = { classToggleTimeout, switchSubSlide };
+} catch (error) {
+    console.log(error);
+}

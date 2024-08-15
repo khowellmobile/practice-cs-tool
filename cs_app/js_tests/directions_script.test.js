@@ -89,3 +89,55 @@ describe("classToggleTimeout function", () => {
         expect(consoleWarnSpy).toHaveBeenCalledWith("Invalid timeout value provided.");
     });
 });
+
+describe("switchSubSlide function", () => {
+    let dom;
+    let currentActiveSubSlide;
+    let lockSubSlides;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="slide1"></div>
+                    <div id="slide2" style="display: none;"></div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+
+        // Setup initial state
+        currentActiveSubSlide = "slide1";
+        lockSubSlides = false;
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should switch subslides and apply classes correctly", async () => {
+        let slide1 = $("#slide1");
+        let slide2 = $("#slide2");
+
+        slide1.addClass("scaleUp");
+        slide2.addClass("scaleDown");
+
+        // Check initial state
+        expect(slide1.hasClass("scaleUp")).toBe(true);
+        expect(slide1.hasClass("scaleDown")).toBe(false);
+        expect(slide2.hasClass("scaleUp")).toBe(false);
+        expect(slide2.hasClass("scaleDown")).toBe(true);
+
+        // Run Function
+        directionsScript.switchSubSlide("slide2", "slide1");
+
+        await new Promise((resolve) => setTimeout(resolve, 600));
+
+        // Check final state
+        expect(slide1.hasClass("scaleUp")).toBe(false);
+        expect(slide1.hasClass("scaleDown")).toBe(true);
+        expect(slide2.hasClass("scaleUp")).toBe(true);
+        expect(slide2.hasClass("scaleDown")).toBe(false);
+    });
+});
