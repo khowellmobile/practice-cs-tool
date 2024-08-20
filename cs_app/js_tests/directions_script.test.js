@@ -189,3 +189,56 @@ describe("switchSubSlide function", () => {
         expect(directionsScript.getLockSubSlides()).toBe(false);
     });
 });
+
+describe("switchSubSlide function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="slides__test__1" style="display: none;"></div>
+                    <div id="slides__test__2" style="display: none;"></div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should switch subslides and apply classes correctly", async () => {
+        slide1 = $("#slides__test__1");
+        slide2 = $("#slides__test__2");
+
+        slide1.addClass("up");
+        slide2.addClass("down");
+
+        directionsScript.showDoubleSlides("test");
+
+        expect(slide1.css("display")).toBe("flex");
+        expect(slide2.css("display")).toBe("flex");
+
+        await new Promise((resolve) => setTimeout(resolve, 151));
+
+        expect(slide1.hasClass("up")).toBe(false);
+        expect(slide2.hasClass("down")).toBe(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 151));
+
+        expect(slide1.hasClass("down")).toBe(false);
+    });
+
+    test("should warn when elements are not found", async () => {
+        consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+        directionsScript.showDoubleSlides("doesNotExist");
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith("Element not found.");
+
+        consoleWarnSpy.mockRestore();
+    });
+});

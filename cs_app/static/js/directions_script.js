@@ -209,6 +209,11 @@ function showDoubleSlides(tabId) {
     let e1 = $(`#slides__${tabId}__1`);
     let e2 = $(`#slides__${tabId}__2`);
 
+    if (e1.length === 0 || e2.length === 0) {
+        console.warn(`Element not found.`);
+        return;
+    }
+
     e1.css("display", "flex");
     e2.css("display", "flex");
 
