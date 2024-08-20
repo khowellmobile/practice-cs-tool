@@ -13,8 +13,8 @@
  * - $(".tab").on("click", function () { ... }): Event listener for tab clicks with locking mechanism.
  * - hideActive(): Hides the currently active set of slides based on `currentActiveId`.
  * - showNewActive(): Shows the slides corresponding to the newly activated tab after a delay.
- * - hideTripleSlides(tabId): Hides triple slides based on the provided `tabId`.
- * - showTripleSlides(tabId): Shows triple slides based on the provided `tabId` after a delay.
+ * - hideTripleSlides(): Hides triple slides.
+ * - showTripleSlides(): Shows triple slides after delay.
  * - hideDoubleSlides(tabId): Hides double slides based on the provided `tabId`.
  * - showDoubleSlides(tabId): Shows double slides based on the provided `tabId` after a delay.
  * - switchSubSlide(newSlideId): Switches the active sub-slide with animation based on `lockSubSlides`.
@@ -142,9 +142,8 @@ function showNewActive() {
 /**
  * Hides triple slides corresponding to the given tabId.
  *
- * @param {string} tabId - The ID of the tab determining which slides to hide.
  */
-function hideTripleSlides(tabId) {
+function hideTripleSlides() {
     let e1, e2, e3;
 
     e1 = $("#slides__overview__1");
@@ -165,9 +164,8 @@ function hideTripleSlides(tabId) {
 /**
  * Shows triple slides corresponding to the given tabId after a delay.
  *
- * @param {string} tabId - The ID of the tab determining which slides to show.
  */
-function showTripleSlides(tabId) {
+function showTripleSlides() {
     let e1, e2, e3;
     e1 = $("#slides__overview__1");
     e2 = $("#slides__overview__2");

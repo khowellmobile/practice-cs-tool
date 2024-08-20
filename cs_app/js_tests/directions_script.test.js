@@ -197,8 +197,8 @@ describe("showDoubleSlides function", () => {
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div>
-                    <div id="slides__test__1" style="display: none;"></div>
-                    <div id="slides__test__2" style="display: none;"></div>
+                    <div id="slides__test__1" class="up" style="display: none;"></div>
+                    <div id="slides__test__2" class="down" style="display: none;"></div>
                 </div>`
         );
         global.document = dom.window.document;
@@ -210,7 +210,7 @@ describe("showDoubleSlides function", () => {
         dom.window.close();
     });
 
-    test("should switch subslides and apply classes correctly", async () => {
+    test("should show slides and apply classes correctly", async () => {
         slide1 = $("#slides__test__1");
         slide2 = $("#slides__test__2");
 
@@ -263,7 +263,7 @@ describe("hideDoubleSlides function", () => {
         dom.window.close();
     });
 
-    test("should switch subslides and apply classes correctly", async () => {
+    test("should hide slides and apply classes correctly", async () => {
         slide1 = $("#slides__test__1");
         slide2 = $("#slides__test__2");
 
@@ -292,5 +292,105 @@ describe("hideDoubleSlides function", () => {
         expect(consoleWarnSpy).toHaveBeenCalledWith("Element not found.");
 
         consoleWarnSpy.mockRestore();
+    });
+});
+
+describe("showTripleSlides function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="slides__overview__1" class="up" style="display: none;"></div>
+                    <div id="slides__overview__2" class="down" style="display: none;"></div>
+                    <div id="slides__overview__3" class="up" style="display: none;"></div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should show slides and apply classes correctly", async () => {
+        slide1 = $("#slides__overview__1");
+        slide2 = $("#slides__overview__2");
+        slide3 = $("#slides__overview__3")
+
+        directionsScript.showTripleSlides();
+
+        expect(slide1.css("display")).toBe("flex");
+        expect(slide2.css("display")).toBe("flex");
+        expect(slide3.css("display")).toBe("flex");
+
+        await new Promise((resolve) => setTimeout(resolve, 155));
+
+        expect(slide1.hasClass("up")).toBe(false);
+        expect(slide2.hasClass("down")).toBe(true);
+        expect(slide3.hasClass("up")).toBe(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 155));
+
+        expect(slide2.hasClass("down")).toBe(false);
+        expect(slide3.hasClass("up")).toBe(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 155));
+
+        expect(slide3.hasClass("up")).toBe(false);
+    });
+});
+
+describe("hideTripleSlides function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="slides__overview__1" style="display: flex;"></div>
+                    <div id="slides__overview__2" style="display: flex;"></div>
+                    <div id="slides__overview__3" style="display: flex;"></div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should hide slides and apply classes correctly", async () => {
+        slide1 = $("#slides__overview__1");
+        slide2 = $("#slides__overview__2");
+        slide3 = $("#slides__overview__3")
+
+        directionsScript.hideTripleSlides();
+
+        await new Promise((resolve) => setTimeout(resolve, 155));
+
+        expect(slide1.hasClass("up")).toBe(true);
+        expect(slide2.hasClass("down")).toBe(false);
+        expect(slide3.hasClass("up")).toBe(false);
+
+        await new Promise((resolve) => setTimeout(resolve, 155));
+
+        expect(slide2.hasClass("down")).toBe(true);
+        expect(slide3.hasClass("up")).toBe(false);
+
+        await new Promise((resolve) => setTimeout(resolve, 155));
+
+        expect(slide3.hasClass("up")).toBe(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 755));
+
+        expect(slide1.css("display")).toBe("none");
+        expect(slide2.css("display")).toBe("none");
+        expect(slide3.css("display")).toBe("none");
     });
 });
