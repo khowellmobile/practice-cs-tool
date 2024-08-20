@@ -90,10 +90,42 @@ describe("classToggleTimeout function", () => {
     });
 });
 
+describe("testing getter and setter functions", () => {
+    test("should set proper currentActiveId and get currentActiveId", () => {
+        directionsScript.setCurrentActiveId("newActiveId");
+
+        expect(directionsScript.getCurrentActiveId()).toBe("newActiveId");
+    });
+
+    test("should set proper currentActiveSubSlide and get CurrentActiveSubSlide", () => {
+        directionsScript.setCurrentActiveSubSlide("newSlide");
+
+        expect(directionsScript.getCurrentActiveSubSlide()).toBe("newSlide");
+    });
+
+    test("should set proper lockTabs and get lockTabs", () => {
+        directionsScript.setLockTabs(true);
+
+        expect(directionsScript.getLockTabs()).toBe(true);
+
+        directionsScript.setLockTabs(false);
+
+        expect(directionsScript.getLockTabs()).toBe(false);
+    });
+
+    test("should set proper lockSubSlides and get lockSubSlides", () => {
+        directionsScript.setLockSubSlides(true);
+
+        expect(directionsScript.getLockSubSlides()).toBe(true);
+
+        directionsScript.setLockSubSlides(false);
+
+        expect(directionsScript.getLockSubSlides()).toBe(false);
+    });
+});
+
 describe("switchSubSlide function", () => {
     let dom;
-    let currentActiveSubSlide;
-    let lockSubSlides;
 
     beforeEach(() => {
         dom = new JSDOM(
@@ -106,10 +138,6 @@ describe("switchSubSlide function", () => {
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
-
-        // Setup initial state
-        currentActiveSubSlide = "slide1";
-        lockSubSlides = false;
     });
 
     afterEach(() => {
@@ -119,6 +147,8 @@ describe("switchSubSlide function", () => {
     test("should switch subslides and apply classes correctly", async () => {
         let slide1 = $("#slide1");
         let slide2 = $("#slide2");
+        directionsScript.setCurrentActiveSubSlide("slide1");
+        directionsScript.setLockSubSlides(false);
 
         slide1.addClass("scaleUp");
         slide2.addClass("scaleDown");
@@ -130,7 +160,7 @@ describe("switchSubSlide function", () => {
         expect(slide2.hasClass("scaleDown")).toBe(true);
 
         // Run Function
-        directionsScript.switchSubSlide("slide2", "slide1");
+        directionsScript.switchSubSlide("slide2");
 
         await new Promise((resolve) => setTimeout(resolve, 600));
 
@@ -139,5 +169,23 @@ describe("switchSubSlide function", () => {
         expect(slide1.hasClass("scaleDown")).toBe(true);
         expect(slide2.hasClass("scaleUp")).toBe(true);
         expect(slide2.hasClass("scaleDown")).toBe(false);
+        expect(slide1.css("display")).toBe("none");
+        expect(slide2.css("display")).toBe("flex");
+        expect(directionsScript.getCurrentActiveSubSlide()).toBe("slide2");
+    });
+
+    test("should now allow slide change when locked", async () => {
+        directionsScript.setCurrentActiveSubSlide("slide1");
+        directionsScript.setLockSubSlides(false);
+
+        directionsScript.switchSubSlide("slide2");
+
+        await new Promise((resolve) => setTimeout(resolve, 50));
+
+        expect(directionsScript.getLockSubSlides()).toBe(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 550));
+
+        expect(directionsScript.getLockSubSlides()).toBe(false);
     });
 });

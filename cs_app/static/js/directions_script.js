@@ -3,6 +3,7 @@
  * and switch between sub-slides with animation effects within the directions.html template page.
  *
  * Global Variables:
+ * NOTE: These variables are held in a global object named state
  * - currentActiveId: Tracks the ID of the currently active tab.
  * - currentActiveSubSlide: Tracks the ID of the currently active sub-slide.
  * - lockTabs: Prevents tab switch spamming to avoid unintended behavior.
@@ -18,14 +19,17 @@
  * - showDoubleSlides(tabId): Shows double slides based on the provided `tabId` after a delay.
  * - switchSubSlide(newSlideId): Switches the active sub-slide with animation based on `lockSubSlides`.
  * - classToggleTimeout(element, addingClass, cssClass, timeout): Toggles a specified class for an element after a delay
+ * - Getters and Setters: Used to get and set global fields in the global state object.
  *
  * Dependencies: Requires jQuery for DOM manipulation.
  */
 
-var currentActiveId = "overview";
-var currentActiveSubSlide = "slides__genRep__2__repHist";
-var lockTabs = false;
-var lockSubSlides = false;
+var state = {
+    currentActiveId: "overview",
+    currentActiveSubSlide: "slides__genRep__2__repHist",
+    lockTabs: false,
+    lockSubSlides: false,
+};
 
 // Required for global jqeury recognition for use in testing
 // CDN still included in html file
@@ -38,12 +42,12 @@ try {
 
 /**
  * Handles subslide button click events
- * 
+ *
  * Runs switchSubSlide on click. This avoids multiple onclick() in the html file.
  */
 $(".mini-genRep__button").on("click", function () {
     slideConnection = $(this).data("slide-connection");
-    switchSubSlide("slides__genRep__2__" + slideConnection, currentActiveSubSlide);
+    switchSubSlide("slides__genRep__2__" + slideConnection);
 });
 
 /**
@@ -53,17 +57,17 @@ $(".mini-genRep__button").on("click", function () {
  * The tab clicked on will become active and the rest of teh tabs are set to inactive.
  */
 $(".tab").on("click", function () {
-    if (!lockTabs) {
-        lockTabs = true;
+    if (!getLockTabs()) {
+        setLockTabs(true);
         setTimeout(() => {
-            lockTabs = false;
+            setLockTabs(false);
         }, 2400);
 
         hideActive();
 
         let e = $(this);
         let tabId = e.attr("id");
-        currentActiveId = tabId;
+        setCurrentActiveId(tabId);
 
         $(".tab").each(function (index, element) {
             if ($(element).attr("id") === tabId) {
@@ -84,7 +88,7 @@ $(".tab").on("click", function () {
  * @param {string} tabId - The ID of the tab determining which slides to hide.
  */
 function hideActive() {
-    switch (currentActiveId) {
+    switch (getCurrentActiveId()) {
         case "overview":
             hideTripleSlides("overview");
             break;
@@ -110,7 +114,7 @@ function hideActive() {
  * @param {string} tabId - The ID of the tab determining which slides to show.
  */
 function showNewActive() {
-    switch (currentActiveId) {
+    switch (getCurrentActiveId()) {
         case "overview":
             setTimeout(() => {
                 showTripleSlides("overview");
@@ -220,16 +224,20 @@ function showDoubleSlides(tabId) {
  * then showing the old and new slide.
  *
  * @param {string} newSlideId - The ID of the new sub-slide to switch to.
- * @param {string} currentActiveSubSlide - The ID of the current active sub-slide
  */
-function switchSubSlide(newSlideId, currentActiveSubSlide) {
-    if (!lockSubSlides) {
-        lockSubSlides = true;
+function switchSubSlide(newSlideId) {
+    if ($("#" + newSlideId) <= 0|| $("#" + getCurrentActiveSubSlide()) <= 0) {
+        console.warn("No matching element for given id");
+        return;
+    }
+
+    if (!getLockSubSlides()) {
+        setLockSubSlides(true);
         setTimeout(() => {
-            lockSubSlides = false;
+            setLockSubSlides(false);
         }, 550);
 
-        e1 = $("#" + currentActiveSubSlide);
+        e1 = $("#" + getCurrentActiveSubSlide());
         e2 = $("#" + newSlideId);
 
         e1.removeClass("scaleUp");
@@ -246,18 +254,8 @@ function switchSubSlide(newSlideId, currentActiveSubSlide) {
         classToggleTimeout(e2, false, "scaleDown", 550);
         classToggleTimeout(e2, true, "scaleUp", 550);
 
-        setActiveSubSlide(newSlideId);
+        setCurrentActiveSubSlide(newSlideId);
     }
-}
-
-/**
- * Sets the passed in id as the active subslide id for the current
- * state of the page
- * 
- * @param {string} elementId - id of subslide to be set as active
- */
-function setActiveSubSlide(elementId) {
-    currentActiveSubSlide = elementId;
 }
 
 /**
@@ -295,8 +293,98 @@ function classToggleTimeout(element, addingClass, cssClass, timeout) {
     }
 }
 
+/**
+ * Gets the current active ID.
+ *
+ * @returns {string} The current active ID.
+ */
+function getCurrentActiveId() {
+    return state.currentActiveId;
+}
+
+/**
+ * Sets the current active ID.
+ *
+ * @param {string} id - The new ID to set as the current active ID.
+ */
+function setCurrentActiveId(id) {
+    state.currentActiveId = id;
+}
+
+/**
+ * Gets the current active sub-slide ID.
+ *
+ * @returns {string} The current active sub-slide ID.
+ */
+function getCurrentActiveSubSlide() {
+    return state.currentActiveSubSlide;
+}
+
+/**
+ * Sets the current active sub-slide ID.
+ *
+ * @param {string} subSlideId - The new ID to set as the current active sub-slide ID.
+ */
+function setCurrentActiveSubSlide(subSlideId) {
+    state.currentActiveSubSlide = subSlideId;
+}
+
+/**
+ * Checks if tabs are locked.
+ *
+ * @returns {boolean} True if tabs are locked, false otherwise.
+ */
+function getLockTabs() {
+    return state.lockTabs;
+}
+
+/**
+ * Sets whether tabs are locked.
+ *
+ * @param {boolean} lock - The new lock status for tabs.
+ */
+function setLockTabs(lock) {
+    state.lockTabs = lock;
+}
+
+/**
+ * Checks if sub-slides are locked.
+ *
+ * @returns {boolean} True if sub-slides are locked, false otherwise.
+ */
+function getLockSubSlides() {
+    return state.lockSubSlides;
+}
+
+/**
+ * Sets whether sub-slides are locked.
+ *
+ * @param {boolean} lock - The new lock status for sub-slides.
+ */
+function setLockSubSlides(lock) {
+    state.lockSubSlides = lock;
+}
+
 try {
-    module.exports = { classToggleTimeout, switchSubSlide };
+    // Export all functions
+    module.exports = {
+        getCurrentActiveId,
+        setCurrentActiveId,
+        getCurrentActiveSubSlide,
+        setCurrentActiveSubSlide,
+        getLockTabs,
+        setLockTabs,
+        getLockSubSlides,
+        setLockSubSlides,
+        hideActive,
+        showNewActive,
+        hideTripleSlides,
+        showTripleSlides,
+        hideDoubleSlides,
+        showDoubleSlides,
+        switchSubSlide,
+        classToggleTimeout,
+    };
 } catch (error) {
     console.log(error);
 }
