@@ -191,6 +191,11 @@ function hideDoubleSlides(tabId) {
     let e1 = $(`#slides__${tabId}__1`);
     let e2 = $(`#slides__${tabId}__2`);
 
+    if (e1.length == 0 || e2.length == 0) {
+        console.warn(`Element not found.`);
+        return;
+    }
+
     classToggleTimeout(e1, true, "up", 150);
     classToggleTimeout(e2, true, "down", 300);
 
