@@ -62,9 +62,9 @@ describe("passwordChecker function", () => {
     });
 
     test("should return false for invalid passwords", () => {
-        expect(createAcctScript.passwordChecker("short")).toBe(false); 
+        expect(createAcctScript.passwordChecker("short")).toBe(false);
         expect(createAcctScript.passwordChecker("longbutnodigit!")).toBe(false);
-        expect(createAcctScript.passwordChecker("longbutnospecial1")).toBe(false); 
+        expect(createAcctScript.passwordChecker("longbutnospecial1")).toBe(false);
     });
 });
 
