@@ -47,7 +47,7 @@ describe("validateEmail function", () => {
         expect(accountInfoScript.validateEmail(goodEmail)).toBe(true);
     })
 
-    test("should return false without an @ symbol", () => {
+    test("should return false with an email without an @ symbol", () => {
         let eNoAtSymbol = "testtesting.com";
 
         expect(accountInfoScript.validateEmail(eNoAtSymbol)).toBe(false);
@@ -87,5 +87,26 @@ describe("validateEmail function", () => {
         let eWithInvalidChars = "test!#$%&'*+/=?^_`{|}~@testing.com";
 
         expect(accountInfoScript.validateEmail(eWithInvalidChars)).toBe(false);
+    });
+});
+
+describe("validateName function", () => {
+
+    test("should return true with proper name specifications", () => {
+        let goodName = "John Doe-'";
+
+        expect(accountInfoScript.validateName(goodName)).toBe(true);
+    })
+
+    test("should return false with name less than 2 chars", () => {
+        let nLessThanTwo = "a";
+
+        expect(accountInfoScript.validateName(nLessThanTwo)).toBe(false);
+    });
+
+    test("should return false with name with non-allowed chars", () => {
+        let nWithSpecChars = "John#%$#67";
+
+        expect(accountInfoScript.validateName(nWithSpecChars)).toBe(false);
     });
 });
