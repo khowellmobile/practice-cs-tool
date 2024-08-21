@@ -1,11 +1,57 @@
+/**
+ * This file contains functions for validating user input and managing password strength on the account creation page.
+ *
+ * Global Functions:
+ * - validateForm(): Validates form fields (name, email, password) and displays alerts for invalid input.
+ * - validateName(name): Checks if the name follows the allowed format (letters, spaces, apostrophes, hyphens).
+ * - validateEmail(email): Checks if the email follows a standard email format.
+ * - passwordChecker(pass): Validates password strength based on length, special characters, and digits.
+ *
+ * Event Handlers:
+ * - $("#create-account-form").on("submit", function (event) { ... }): Prevents default form submission behavior.
+ * - $("#password").on("input", function () { ... }): Triggers password strength checking on input.
+ *
+ * Dependencies:
+ * - Requires jQuery for DOM manipulation and event handling.
+ */
+
+// Required for global jQuery recognition for use in testing
+// CDN still included in HTML file
+try {
+    var jsdom = require("jsdom");
+    $ = require("jquery")(new jsdom.JSDOM().window);
+} catch (error) {
+    console.log(error);
+}
+
+/**
+ * Handles form submission for the account creation form.
+ *
+ * Prevents the default form submission behavior.
+ */
 $("#create-account-form").on("submit", function (event) {
     event.preventDefault();
 });
 
+/**
+ * Handles input events on the password field to check password validity.
+ *
+ * Runs the passwordChecker function to provide feedback on password strength.
+ */
 $("#password").on("input", function () {
     passwordChecker($(this).val());
 });
 
+/**
+ * Validates the account creation form fields.
+ *
+ * Checks if the name, email, and password fields meet their respective format requirements.
+ * - Name: Must be valid according to the `validateName` function.
+ * - Email: Must be valid according to the `validateEmail` function.
+ * - Password: Must meet the criteria checked by `passwordChecker` function.
+ *
+ * @returns {boolean} True if all fields are valid, False otherwise.
+ */
 function validateForm() {
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
@@ -18,12 +64,12 @@ function validateForm() {
         );
         return false;
     } else if (!validateEmail(email)) {
-        alert(
-            "Email format is invalid. Please follow standard email format: example@domain.com"
-        );
+        alert("Email format is invalid. Please follow standard email format: example@domain.com");
         return false;
     } else if (!passwordChecker(password)) {
-        alert("Password format is invalid. Passwords must be at least 8 characters long, include a number, and include a special character.");
+        alert(
+            "Password format is invalid. Passwords must be at least 8 characters long, include a number, and include a special character."
+        );
         return false;
     }
 
@@ -54,7 +100,7 @@ function validateName(name) {
  * - Matches typical email address patterns
  *
  * @param {string} email - The email address to be validated.
- * @returns {boolean} True if the email address is valid according to the format, False otherwise.
+ * @returns {boolean} - True if the email address is valid according to the format, False otherwise.
  */
 function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -70,11 +116,11 @@ function validateEmail(email) {
  * - Includes at least one digit
  *
  * @param {string} password - The password to be validated.
- * @returns {boolean} True if the password is valid according to the criteria, False otherwise.
+ * @returns {boolean} - True if the password is valid according to the criteria, False otherwise.
  */
 function passwordChecker(pass) {
-    let color1 = "rgb(0, 116, 211)"
-    let color2 = "rgb(223, 0, 0)"
+    let color1 = "rgb(0, 116, 211)";
+    let color2 = "rgb(223, 0, 0)";
 
     // Regular expressions for validation
     let minLength = pass.length >= 8;
@@ -82,26 +128,39 @@ function passwordChecker(pass) {
     let hasDigit = /\d/.test(pass);
 
     if (minLength) {
-        $("#passChars").css("color", color1)
+        $("#passChars").css("color", color1);
     } else {
-        $("#passChars").css("color", color2)
+        $("#passChars").css("color", color2);
     }
 
     if (hasDigit) {
-        $("#passNums").css("color", color1)
+        $("#passNums").css("color", color1);
     } else {
-        $("#passNums").css("color", color2)
+        $("#passNums").css("color", color2);
     }
 
     if (hasSpecialChar) {
-        $("#passSymbols").css("color", color1)
+        $("#passSymbols").css("color", color1);
     } else {
-        $("#passSymbols").css("color", color2)
+        $("#passSymbols").css("color", color2);
     }
 
     if (minLength && hasDigit && hasSpecialChar) {
-        return true
+        return true;
     } else {
-        return false
+        return false;
     }
 }
+
+try {
+    // Export all functions
+    module.exports = {
+        validateForm,
+        validateName,
+        validateEmail,
+        passwordChecker,
+    };
+} catch (error) {
+    console.log(error);
+}
+

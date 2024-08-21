@@ -151,7 +151,7 @@ describe("ajaxResponseError function", () => {
     });
 });
 
-describe("setSpinnerVisiblity function", () => {
+describe("ajaxResponseSuccess function", () => {
     let dom;
 
     beforeEach(() => {
