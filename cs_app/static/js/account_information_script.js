@@ -15,6 +15,15 @@
  * Dependencies: Requires jQuery for DOM manipulation and AJAX requests.
  */
 
+// Required for global jqeury recognition for use in testing
+// CDN still included in html file
+try {
+    var jsdom = require("jsdom");
+    $ = require("jquery")(new jsdom.JSDOM().window);
+} catch (error) {
+    console.log(error);
+}
+
 /**
  * Event listener attached to all toggle buttons
  *
@@ -211,3 +220,18 @@ function validatePassword(password) {
 
     return passwordPattern.test(password);
 }
+
+try {
+    // Export all needed functions
+    module.exports = {
+        submitForm,
+        ajaxResponseSuccess,
+        ajaxResponseError,
+        validateName,
+        validateEmail,
+        validatePassword
+    };
+} catch (error) {
+    console.log(error);
+}
+
