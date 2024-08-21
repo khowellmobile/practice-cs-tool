@@ -15,6 +15,15 @@
  * Dependencies: Requires jQuery for DOM manipulation and AJAX requests.
  */
 
+// Required for global jqeury recognition for use in testing
+// CDN still included in html file
+try {
+    var jsdom = require("jsdom");
+    $ = require("jquery")(new jsdom.JSDOM().window);
+} catch (error) {
+    console.log(error);
+}
+
 /**
  * Event listener attached to all toggle buttons
  *
@@ -110,14 +119,24 @@ function submitForm(fieldName) {
  * @param {Object} formdata - The data object containing updated field information.
  */
 function ajaxResponseSuccess(fieldName, formdata) {
-    var displayText;
+    let displayText;
 
     switch (fieldName) {
         case "name":
-            displayText = "Name: " + formdata["first_name"] + " " + formdata["last_name"];
+            if (!formdata["first_name"] || !formdata["last_name"]) {
+                console.log("Formdata does not include required key-value pairs for name");
+                displayText = "Name data is incomplete.";
+            } else {
+                displayText = "Name: " + formdata["first_name"] + " " + formdata["last_name"];
+            }
             break;
         case "email":
-            displayText = "Email: " + formdata["email"];
+            if (!formdata["email"]) {
+                console.log("Formdata does not include required key-value pair for email");
+                displayText = "Email data is incomplete.";
+            } else {
+                displayText = "Email: " + formdata["email"];
+            }
             break;
         case "password":
             displayText = "New password set.";
@@ -210,4 +229,18 @@ function validatePassword(password) {
     const passwordPattern = /^(?=.*[!@#$%^&*()_+={}\[\]:;<>,.?])(?=.*\d).{8,}$/;
 
     return passwordPattern.test(password);
+}
+
+try {
+    // Export all needed functions
+    module.exports = {
+        submitForm,
+        ajaxResponseSuccess,
+        ajaxResponseError,
+        validateName,
+        validateEmail,
+        validatePassword,
+    };
+} catch (error) {
+    console.log(error);
 }
