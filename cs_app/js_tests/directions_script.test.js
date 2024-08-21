@@ -15,38 +15,40 @@ describe("classToggleTimeout function", () => {
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
 
+        clock = jest.useFakeTimers();
+
         consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
     });
 
     afterEach(() => {
         consoleWarnSpy.mockRestore();
         dom.window.close();
+
+        jest.useRealTimers();
     });
 
-    test("should add classB after a 0.5s timeout", (done) => {
+    test("should add classB after a 0.5s timeout", () => {
         let testElement = $("#test");
 
         directionsScript.classToggleTimeout(testElement, true, "classB", 500);
 
         expect(testElement.hasClass("classB")).toBe(false);
 
-        setTimeout(() => {
-            expect(testElement.hasClass("classB")).toBe(true);
-            done();
-        }, 550);
+        clock.advanceTimersByTime(550);
+
+        expect(testElement.hasClass("classB")).toBe(true);
     });
 
-    test("should remove classA after a 0.5s timeout", (done) => {
+    test("should remove classA after a 0.5s timeout", () => {
         let testElement = $("#test");
 
         directionsScript.classToggleTimeout(testElement, false, "classA", 500);
 
         expect(testElement.hasClass("classA")).toBe(true);
 
-        setTimeout(() => {
-            expect(testElement.hasClass("classA")).toBe(false);
-            done();
-        }, 550);
+        clock.advanceTimersByTime(550);
+
+        expect(testElement.hasClass("classA")).toBe(false);
     });
 
     test("should warn a message if element is empty or non-jQuery", () => {
@@ -135,6 +137,9 @@ describe("switchSubSlide function", () => {
                     <div id="slide2" style="display: none;"></div>
                 </div>`
         );
+
+        clock = jest.useFakeTimers();
+
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -142,9 +147,10 @@ describe("switchSubSlide function", () => {
 
     afterEach(() => {
         dom.window.close();
+        jest.useRealTimers();
     });
 
-    test("should switch subslides and apply classes correctly", async () => {
+    test("should switch subslides and apply classes correctly", () => {
         let slide1 = $("#slide1");
         let slide2 = $("#slide2");
         directionsScript.setCurrentActiveSubSlide("slide1");
@@ -162,7 +168,7 @@ describe("switchSubSlide function", () => {
         // Run Function
         directionsScript.switchSubSlide("slide2");
 
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        clock.advanceTimersByTime(600);
 
         // Check final state
         expect(slide1.hasClass("scaleUp")).toBe(false);
@@ -174,17 +180,17 @@ describe("switchSubSlide function", () => {
         expect(directionsScript.getCurrentActiveSubSlide()).toBe("slide2");
     });
 
-    test("should now allow slide change when locked", async () => {
+    test("should now allow slide change when locked", () => {
         directionsScript.setCurrentActiveSubSlide("slide1");
         directionsScript.setLockSubSlides(false);
 
         directionsScript.switchSubSlide("slide2");
 
-        await new Promise((resolve) => setTimeout(resolve, 50));
+        clock.advanceTimersByTime(50);
 
         expect(directionsScript.getLockSubSlides()).toBe(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 550));
+        clock.advanceTimersByTime(550);
 
         expect(directionsScript.getLockSubSlides()).toBe(false);
     });
@@ -201,6 +207,9 @@ describe("showDoubleSlides function", () => {
                     <div id="slides__test__2" class="down" style="display: none;"></div>
                 </div>`
         );
+
+        clock = jest.useFakeTimers();
+
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -208,6 +217,7 @@ describe("showDoubleSlides function", () => {
 
     afterEach(() => {
         dom.window.close();
+        jest.useRealTimers();
     });
 
     test("should show slides and apply classes correctly", async () => {
@@ -222,12 +232,12 @@ describe("showDoubleSlides function", () => {
         expect(slide1.css("display")).toBe("flex");
         expect(slide2.css("display")).toBe("flex");
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide1.hasClass("up")).toBe(false);
         expect(slide2.hasClass("down")).toBe(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide1.hasClass("down")).toBe(false);
     });
@@ -254,6 +264,9 @@ describe("hideDoubleSlides function", () => {
                     <div id="slides__test__2" style="display: flex;"></div>
                 </div>`
         );
+
+        clock = jest.useFakeTimers();
+
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -261,6 +274,7 @@ describe("hideDoubleSlides function", () => {
 
     afterEach(() => {
         dom.window.close();
+        jest.useRealTimers();
     });
 
     test("should hide slides and apply classes correctly", async () => {
@@ -269,16 +283,16 @@ describe("hideDoubleSlides function", () => {
 
         directionsScript.hideDoubleSlides("test");
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide1.hasClass("up")).toBe(true);
         expect(slide2.hasClass("down")).toBe(false);
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide2.hasClass("down")).toBe(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 905));
+        clock.advanceTimersByTime(905);
 
         expect(slide1.css("display")).toBe("none");
         expect(slide2.css("display")).toBe("none");
@@ -307,6 +321,9 @@ describe("showTripleSlides function", () => {
                     <div id="slides__overview__3" class="up" style="display: none;"></div>
                 </div>`
         );
+
+        clock = jest.useFakeTimers();
+
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -314,12 +331,13 @@ describe("showTripleSlides function", () => {
 
     afterEach(() => {
         dom.window.close();
+        jest.useRealTimers();
     });
 
     test("should show slides and apply classes correctly", async () => {
         slide1 = $("#slides__overview__1");
         slide2 = $("#slides__overview__2");
-        slide3 = $("#slides__overview__3")
+        slide3 = $("#slides__overview__3");
 
         directionsScript.showTripleSlides();
 
@@ -327,18 +345,18 @@ describe("showTripleSlides function", () => {
         expect(slide2.css("display")).toBe("flex");
         expect(slide3.css("display")).toBe("flex");
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide1.hasClass("up")).toBe(false);
         expect(slide2.hasClass("down")).toBe(true);
         expect(slide3.hasClass("up")).toBe(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide2.hasClass("down")).toBe(false);
         expect(slide3.hasClass("up")).toBe(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide3.hasClass("up")).toBe(false);
     });
@@ -356,6 +374,9 @@ describe("hideTripleSlides function", () => {
                     <div id="slides__overview__3" style="display: flex;"></div>
                 </div>`
         );
+
+        clock = jest.useFakeTimers();
+
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -363,31 +384,32 @@ describe("hideTripleSlides function", () => {
 
     afterEach(() => {
         dom.window.close();
+        jest.useRealTimers();
     });
 
     test("should hide slides and apply classes correctly", async () => {
         slide1 = $("#slides__overview__1");
         slide2 = $("#slides__overview__2");
-        slide3 = $("#slides__overview__3")
+        slide3 = $("#slides__overview__3");
 
         directionsScript.hideTripleSlides();
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide1.hasClass("up")).toBe(true);
         expect(slide2.hasClass("down")).toBe(false);
         expect(slide3.hasClass("up")).toBe(false);
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide2.hasClass("down")).toBe(true);
         expect(slide3.hasClass("up")).toBe(false);
 
-        await new Promise((resolve) => setTimeout(resolve, 155));
+        clock.advanceTimersByTime(155);
 
         expect(slide3.hasClass("up")).toBe(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 755));
+        clock.advanceTimersByTime(755);
 
         expect(slide1.css("display")).toBe("none");
         expect(slide2.css("display")).toBe("none");
