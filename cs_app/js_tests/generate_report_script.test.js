@@ -70,8 +70,7 @@ describe("toggleClassDisplay function", () => {
                 <div>
                     <div class="expanded-info"></div>
                     <div class="symbol"></div>
-                </div>`
-        );
+                </div>`);
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -111,8 +110,7 @@ describe("toggleSize function", () => {
                 <div>
                     <div id="element_1"></div>
                     <div id="element_2"></div>
-                </div>`
-        );
+                </div>`);
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
@@ -126,7 +124,7 @@ describe("toggleSize function", () => {
         let e1 = $("#element_1").css("display", "none");
         let e2 = $("#element_2").css("display", "flex");
 
-        e1.addClass("historySmall")
+        e1.addClass("historySmall");
         e2.addClass("reportLarge");
 
         genRepScript.toggleSize("element_1", "element_2");
@@ -141,7 +139,7 @@ describe("toggleSize function", () => {
         let e1 = $("#element_1").css("display", "none");
         let e2 = $("#element_2").css("display", "flex");
 
-        e1.addClass("historyLarge")
+        e1.addClass("historyLarge");
         e2.addClass("reportSmall");
 
         genRepScript.toggleSize("element_1", "element_2");
@@ -153,4 +151,55 @@ describe("toggleSize function", () => {
     });
 });
 
+describe("formatData function", () => {
 
+    test("should correctly format an array of objects", () => {
+        const inputData = [
+            { department_name: "test_dep_1", total_hours: "10" },
+            { department_name: "test_dep_2", total_hours: "20" },
+        ];
+
+        const expectedOutput = [
+            ["test_dep_1", 10],
+            ["test_dep_2", 20],
+        ];
+
+        expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
+    });
+
+    test("should handle missing fields by returning undefined values", () => {
+        const inputData = [
+            { department_name: "test_dep_1" }, 
+            { total_hours: "10" },    
+        ];
+
+        const expectedOutput = [
+            ["test_dep_1", NaN],              
+            [undefined, 10],         
+        ];
+
+        expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
+    });
+
+    test("should handle invalid data types", () => {
+        const inputData = [
+            { department_name: 123, total_hours: "abc" }, 
+            { department_name: null, total_hours: [] }, 
+        ];
+
+        const expectedOutput = [
+            [123, NaN], 
+            [null, NaN], 
+        ];
+
+        expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
+    });
+
+    test("should return an empty array when input is an empty array", () => {
+        const inputData = [];
+
+        const expectedOutput = [];
+
+        expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
+    });
+});
