@@ -152,7 +152,6 @@ describe("toggleSize function", () => {
 });
 
 describe("formatData function", () => {
-
     test("should correctly format an array of objects", () => {
         const inputData = [
             { department_name: "test_dep_1", total_hours: "10" },
@@ -168,14 +167,11 @@ describe("formatData function", () => {
     });
 
     test("should handle missing fields by returning undefined values", () => {
-        const inputData = [
-            { department_name: "test_dep_1" }, 
-            { total_hours: "10" },    
-        ];
+        const inputData = [{ department_name: "test_dep_1" }, { total_hours: "10" }];
 
         const expectedOutput = [
-            ["test_dep_1", NaN],              
-            [undefined, 10],         
+            ["test_dep_1", NaN],
+            [undefined, 10],
         ];
 
         expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
@@ -183,13 +179,13 @@ describe("formatData function", () => {
 
     test("should handle invalid data types", () => {
         const inputData = [
-            { department_name: 123, total_hours: "abc" }, 
-            { department_name: null, total_hours: [] }, 
+            { department_name: 123, total_hours: "abc" },
+            { department_name: null, total_hours: [] },
         ];
 
         const expectedOutput = [
-            [123, NaN], 
-            [null, NaN], 
+            [123, NaN],
+            [null, NaN],
         ];
 
         expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
@@ -201,5 +197,84 @@ describe("formatData function", () => {
         const expectedOutput = [];
 
         expect(genRepScript.formatData(inputData)).toEqual(expectedOutput);
+    });
+});
+
+describe("alterDates function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(`
+            <!DOCTYPE html>
+            <html>
+                <body>
+                    <input type="text" id="start_date" />
+                    <input type="text" id="end_date" />
+                </body>
+            </html>
+        `);
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should set start_date and end_date correctly for 'YTD'", () => {
+        const mockDate = new Date(2024, 7, 22);
+        jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+
+        genRepScript.alterDates("YTD");
+
+        expect($("#start_date").val()).toBe("2023-01-01");
+        expect($("#end_date").val()).toBe("2024-08-22");
+
+        global.Date.mockRestore();
+    });
+
+    test("should set start_date and end_date correctly for 'Last Year'", () => {
+        const mockDate = new Date(2024, 7, 22);
+        jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+
+        genRepScript.alterDates("Last Year");
+
+        expect($("#start_date").val()).toBe("2023-01-01");
+        expect($("#end_date").val()).toBe("2023-12-31");
+
+        global.Date.mockRestore();
+    });
+
+    test("should set start_date and end_date correctly for 'All Time'", () => {
+        const mockDate = new Date(2024, 7, 22);
+        jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+
+        genRepScript.alterDates("All Time");
+
+        expect($("#start_date").val()).toBe("1000-01-01");
+        expect($("#end_date").val()).toBe("2024-08-22");
+
+        global.Date.mockRestore();
+    });
+
+    test("should not alter dates for 'Custom'", () => {
+        const mockDate = new Date(2024, 7, 22);
+        jest.spyOn(global, "Date").mockImplementation(() => mockDate);
+
+        genRepScript.alterDates("Custom");
+
+        expect($("#start_date").val()).toBe("");
+        expect($("#end_date").val()).toBe("");
+
+        global.Date.mockRestore();
+    });
+
+    test("should log a message for unknown time ranges", () => {
+        console.log = jest.fn();
+
+        genRepScript.alterDates("Unknown");
+
+        expect(console.log).toHaveBeenCalledWith("Unknown time range");
     });
 });
