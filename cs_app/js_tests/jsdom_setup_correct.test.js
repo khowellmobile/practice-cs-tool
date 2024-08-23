@@ -1,4 +1,7 @@
-// jsdom setup
+/**
+ * This file is used as a test to ensure jsdom is setup correctly and 
+ * working with jest for testing
+ */
 const { JSDOM } = require("jsdom");
 
 describe("jsdom", () => {
