@@ -32,63 +32,74 @@ const throttledToggleSize = throttle(toggleSize, 500);
 var activeTimeRange = "Custom";
 
 /**
- * Shows dropdown menu on click
+ * Attaching event listeners. Waiting for DOM to load not needed due to javascript file
+ * being loaded at end of html template.
  */
-$(".dropdown-button").on("click", function (event) {
-    // Prevent the document click event from firing
-    event.stopPropagation();
-    $(this).siblings(".dropdown-content").toggle();
-});
+attachEventListeners();
 
 /**
- * Handles when dropdown option has been clicked
+ * Function to attach event listeners
  */
-$(".dropdown-item").on("click", function () {
-    activeTimeRange = $(this).data("value");
-    alterDates(activeTimeRange);
-    $(".dropdown-button").text($(this).text());
-    $(".dropdown-content").hide();
-});
-
-/**
- * Hides dropdown when user clicks outside of it
- *
- * Contained in try catch to allow testing of file
- */
-try {
-    $(document).on("click", function (event) {
-        if (!$(event.target).closest(".dropdown").length) {
-            $(".dropdown-content").hide();
-        }
+function attachEventListeners() {
+    /**
+     * Shows dropdown menu on click
+     */
+    $(".dropdown-button").on("click", function (event) {
+        // Prevent the document click event from firing
+        event.stopPropagation();
+        $(this).siblings(".dropdown-content").toggle();
     });
-} catch (error) {}
 
-/**
- * Sets value of time range preset to "Custom" when dates are manually input
- */
-$("#start_date, #end_date").on("change", function () {
-    $(".dropdown-button").text("Custom");
-    activeTimeRange = "Custom";
-});
-
-/**
- * Calls setTableHeight() when window is resized
- *
- * Contained in try catch to allow testing of file
- */
-try {
-    $(window).on("resize", function () {
-        setTableHeight();
+    /**
+     * Handles when dropdown option has been clicked
+     */
+    $(".dropdown-item").on("click", function () {
+        activeTimeRange = $(this).data("value");
+        alterDates(activeTimeRange);
+        $(".dropdown-button").text($(this).text());
+        $(".dropdown-content").hide();
     });
-} catch (error) {}
 
-/**
- * Calls throttledToggleSize() for history-menu and report-block on click
- * of expand-button
- */
-$("#expand-button").on("click", function () {
-    throttledToggleSize("history-menu", "report-block");
-});
+    /**
+     * Hides dropdown when user clicks outside of it
+     *
+     * Contained in try catch to allow testing of file
+     */
+    try {
+        $(document).on("click", function (event) {
+            if (!$(event.target).closest(".dropdown").length) {
+                $(".dropdown-content").hide();
+            }
+        });
+    } catch (error) {}
+
+    /**
+     * Sets value of time range preset to "Custom" when dates are manually input
+     */
+    $("#start_date, #end_date").on("change", function () {
+        $(".dropdown-button").text("Custom");
+        activeTimeRange = "Custom";
+    });
+
+    /**
+     * Calls setTableHeight() when window is resized
+     *
+     * Contained in try catch to allow testing of file
+     */
+    try {
+        $(window).on("resize", function () {
+            setTableHeight();
+        });
+    } catch (error) {}
+
+    /**
+     * Calls throttledToggleSize() for history-menu and report-block on click
+     * of expand-button
+     */
+    $("#expand-button").on("click", function () {
+        throttledToggleSize("history-menu", "report-block");
+    });
+}
 
 /**
  * Starts the process of generating a table from input data
@@ -380,6 +391,7 @@ $(".report-kind").each(function () {
 try {
     // Export all functions
     module.exports = {
+        attachEventListeners,
         generateTable,
         createTable,
         initalizeTable,
