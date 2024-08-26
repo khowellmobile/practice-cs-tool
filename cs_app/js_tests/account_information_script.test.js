@@ -227,3 +227,40 @@ describe("ajaxResponseSuccess function", () => {
         expect(consoleLogSpy).toHaveBeenCalledWith("Field name not recognized");
     });
 });
+
+describe("toggleButton jquery eventlistener", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div id="testField">
+                    <div id="togBut" class="toggleButton"></div>
+                    <form id="update_testField" style="display: flex;"></form>
+                </div>`
+        );
+
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should toggle display of form correctly", async () => {
+        accountInfoScript.attachEventListeners();
+
+        let tb = $(".toggleButton");
+        let form = $("#update_testField");
+
+        tb.trigger("click");
+
+        expect(form.css("display")).toBe("none");
+
+        tb.trigger("click");
+
+        expect(form.css("display")).toBe("flex");
+    });
+});
