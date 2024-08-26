@@ -249,7 +249,7 @@ describe("toggleButton jquery eventlistener", () => {
         dom.window.close();
     });
 
-    test("should toggle display of form correctly", async () => {
+    test("should toggle display of form correctly", () => {
         accountInfoScript.attachEventListeners();
 
         let tb = $(".toggleButton");

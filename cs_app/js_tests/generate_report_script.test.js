@@ -278,3 +278,97 @@ describe("alterDates function", () => {
         expect(console.log).toHaveBeenCalledWith("Unknown time range");
     });
 });
+
+describe("test dropdown menu jquery eventlistener", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <button class="dropdown-button">ButtonText</button>
+                <div class="dropdown-content" style="display: flex;">
+                    <div class="dropdown-item" id="item-text1">Text1</div>
+                    <div class="dropdown-item">Text2</div>
+                    <div class="dropdown-item">Text3</div>
+                    <div class="dropdown-item">Text4</div>
+                </div>`
+        );
+
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should show/hide drop down", () => {
+        genRepScript.attachEventListeners();
+
+        dropContent = $(".dropdown-content");
+        dropButton = $(".dropdown-button");
+
+        dropButton.trigger("click");
+
+        expect(dropContent.css("display")).toBe("none");
+
+        dropButton.trigger("click");
+
+        expect(dropContent.css("display")).toBe("flex");
+    });
+
+    test("should set dropdown-button text to be clicked on option then hide content", () => {
+        genRepScript.attachEventListeners();
+
+        chosenItem = $("#item-text1");
+        dropContent = $(".dropdown-content");
+        dropButton = $(".dropdown-button");
+
+        chosenItem.trigger("click");
+
+        expect(dropButton.text()).toBe("Text1");
+        expect(dropContent.css("display")).toBe("none");
+    });
+});
+
+describe("test dropdown menu jquery eventlistener", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <button class="dropdown-button"></button>
+                <input type="date" id="start_date"></div>
+                <input type="date" id="end_date"></div>`
+        );
+
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should show/hide drop down", () => {
+        genRepScript.attachEventListeners();
+
+        startDate = $("#start_date");
+        endDate = $("#end_date");
+        dropButton = $(".dropdown-button");
+
+        dropButton.text("ButtonText1");
+        expect(dropButton.text()).toBe("ButtonText1");
+
+        startDate.trigger("change");
+        expect(dropButton.text()).toBe("Custom");
+
+        dropButton.text("ButtonText2");
+        expect(dropButton.text()).toBe("ButtonText2");
+
+        endDate.trigger("change");
+        expect(dropButton.text()).toBe("Custom");
+    });
+});
