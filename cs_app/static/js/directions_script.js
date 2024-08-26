@@ -24,6 +24,7 @@
  * Dependencies: Requires jQuery for DOM manipulation.
  */
 
+// Global object to track the state of various needed variables
 var state = {
     currentActiveId: "overview",
     currentActiveSubSlide: "slides__genRep__2__repHist",
