@@ -16,7 +16,7 @@
  */
 
 // Required for global jqeury recognition for use in testing
-// CDN still included in html file
+// CDN still included in html file.
 try {
     var jsdom = require("jsdom");
     $ = require("jquery")(new jsdom.JSDOM().window);
@@ -25,24 +25,35 @@ try {
 }
 
 /**
- * Event listener attached to all toggle buttons
- *
- * Toggles the visibility of the form used to update the specified field gotten from the parent.
+ * Attaching event listeners. Waiting for DOM to load not needed due to javascript file
+ * being loaded at end of html template.
  */
-$(".toggleButton").on("click", function () {
-    fieldName = $(this).parent().attr("id");
-    $("#update_" + fieldName).toggle();
-});
+attachEventListeners();
 
 /**
- * Event listener attached to all submit buttons
- *
- * Submits the form used to update the specified field gotten from the grandparent.
+ * Function to attach event listeners
  */
-$(".submitButton").on("click", function () {
-    fieldName = $(this).parent().parent().attr("id");
-    submitForm(fieldName);
-});
+function attachEventListeners() {
+    /**
+     * Event listener attached to all toggle buttons
+     *
+     * Toggles the visibility of the form used to update the specified field gotten from the parent.
+     */
+    $(".toggleButton").on("click", function () {
+        fieldName = $(this).parent().attr("id");
+        $("#update_" + fieldName).toggle();
+    });
+
+    /**
+     * Event listener attached to all submit buttons
+     *
+     * Submits the form used to update the specified field gotten from the grandparent.
+     */
+    $(".submitButton").on("click", function () {
+        fieldName = $(this).parent().parent().attr("id");
+        submitForm(fieldName);
+    });
+}
 
 /**
  * Submits form data for updating user information via AJAX based on the field name (name, email, password).
@@ -234,6 +245,7 @@ function validatePassword(password) {
 try {
     // Export all needed functions
     module.exports = {
+        attachEventListeners,
         submitForm,
         ajaxResponseSuccess,
         ajaxResponseError,
