@@ -83,8 +83,66 @@ def validate_password(password):
     password_pattern = r"^(?=.*[!@#$%^&*()_+={}\[\]:;<>,.?])(?=.*\d).{8,}$"
 
     pattern = re.compile(password_pattern)
-
     if pattern.match(password):
         return True
     else:
         return False
+
+
+def validate_db_engine(db_engine):
+    """
+    Validates the database engine field.
+
+    Args:
+        db_engine (str): The database engine (e.g., 'postgresql', 'mysql').
+
+    Returns:
+        bool: True if the engine is valid, False otherwise.
+    """
+    db_engine_pattern = r"^(postgresql|mysql|sqlite|oracle|mssql)$" 
+    return bool(re.match(db_engine_pattern, db_engine))
+
+def validate_db_name(db_name):
+    """
+    Validates the database name field.
+
+    Args:
+        db_name (str): The name of the database.
+
+    Returns:
+        bool: True if the database name is valid, False otherwise.
+    """
+    db_name_pattern = r"^[a-zA-Z0-9_]+$"  
+    return bool(re.match(db_name_pattern, db_name))
+
+def validate_db_host(db_host):
+    """
+    Validates the database host field.
+
+    Args:
+        db_host (str): The hostname or IP address of the database server.
+
+    Returns:
+        bool: True if the host is valid, False otherwise.
+    """
+    db_host_pattern = re.compile(
+        r"^(localhost|"
+        r"([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}|"
+        r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|"
+        r"[a-zA-Z0-9-]+(\\[a-zA-Z0-9-]+)?)$"
+    )
+    return bool(re.match(db_host_pattern, db_host))
+
+def validate_db_driver(db_driver):
+    """
+    Validates the database driver field.
+
+    Args:
+        db_driver (str): The database driver (e.g., 'psycopg2', 'pymysql').
+
+    Returns:
+        bool: True if the driver is valid, False otherwise.
+    """
+    db_driver_pattern = r"^[a-zA-Z0-9_ ]+$"  
+    return bool(re.match(db_driver_pattern, db_driver))
+
