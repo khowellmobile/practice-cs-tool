@@ -22,6 +22,7 @@ from django.conf import settings
 from django.db import connections
 from django.http import JsonResponse
 from django.core.exceptions import ImproperlyConfigured
+import cs_app.utils.common_functions as cf
 
 import pyodbc
 
@@ -123,6 +124,16 @@ def switch_database_view(request):
         db_user = request.POST.get("db_user")
         db_pass = request.POST.get("db_pass")
         trust_conn = "no" if db_user and db_pass else "yes"
+
+        # Validates engine, name, host, and driver.
+        if not cf.validate_db_engine(db_engine):
+            return JsonResponse({"success": False, "error": "Engine name invalid. Only postgresql, mysql, sqlite, oracle, mssql supported"}, status=400)
+        if not cf.validate_db_name(db_name):
+            return JsonResponse({"success": False, "error": "Database name invalid. Alphanumerics only"}, status=400)
+        if not cf.validate_db_host(db_host):
+            return JsonResponse({"success": False, "error": "Database host invalid"}, status=400)
+        if not cf.validate_db_driver(db_driver):
+            return JsonResponse({"success": False, "error": "Database driver invalid. Alphanumerics only"}, status=400)
 
         new_database_config = {
             "ENGINE": db_engine,
