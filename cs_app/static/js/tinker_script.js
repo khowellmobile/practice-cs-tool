@@ -27,8 +27,8 @@
 
 var buttonAssignments = {
     "b-1": `foo()`,
-    "b-2": null,
-    "b-3": null,
+    "b-2": "fade1()",
+    "b-3": "fade2()",
     "b-4": null,
     "b-5": null,
     "b-6": null,
@@ -41,24 +41,22 @@ var buttonAssignments = {
 /*----------------------------------- Dev Functions Go Here -----------------------------------*/
 
 function foo() {
-    console.log("hello!");
+    alert("hello!");
 }
 
+// Show the popup box when the button is clicked
+function fade1() {
+    $("#popupBox").fadeIn(250).addClass("show");
+    $("#pageOverlay").fadeIn(500);
+}
 
-
-
-
-
-
-
-
-
-
-
-
+// Hide the popup box when the close button is clicked
+function fade2() {
+    $("#popupBox").removeClass("show").fadeOut(250);
+    $("#pageOverlay").fadeOut(500);
+}
 
 /*---------------------------------------------------------------------------------------------*/
-
 
 /**
  * Functions written below are used to run the ui and functionality of the page.
@@ -438,7 +436,13 @@ function changeCss(parentId, val) {
     let kL = sliderStates[parentId]["k-l"];
     let kval = leafStates[kL]["k-value"];
 
+    if (units == null) {
+        units = "";
+    }
+
     element = $(`[k-value='${kval}']`);
+
+    console.log(property, val + units);
 
     element.css(property, val + units);
 }

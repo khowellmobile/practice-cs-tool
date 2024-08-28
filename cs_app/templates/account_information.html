@@ -4,10 +4,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link
-            rel="stylesheet"
-            href="{% static 'css/account_information_style.css' %}"
-        />
+        <link rel="stylesheet" href="{% static 'css/account_information_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
@@ -15,34 +12,16 @@
     <body>
         <div class="container-1">
             <p class="login-signifier">Welcome, {{ user.first_name }}</p>
-            <button
-                id="logout-button"
-                class="button-1"
-                onclick="redirectTo('/logout/')"
-            >
-                Logout
-            </button>
+            <button id="logout-button" class="button-1" onclick="redirectTo('/logout/')">Logout</button>
             <div id="content" class="card">
                 <div>
                     <h1>Your Information</h1>
-                    <button
-                        class="button-1 content__button"
-                        onclick="redirectTo('/home/')"
-                    >
-                        Back to home
-                    </button>
+                    <button class="button-1 content__button" onclick="redirectTo('/home/')">Back to home</button>
                 </div>
                 <hr />
                 <div id="name">
-                    <p id="name_text">
-                        Name: {{ user.first_name }} {{user.last_name }}
-                    </p>
-                    <form
-                        id="update_name"
-                        method="POST"
-                        style="display: none"
-                        action
-                    >
+                    <p id="name_text">Name: {{ user.first_name }} {{user.last_name }}</p>
+                    <form id="update_name" method="POST" style="display: none" action>
                         <input
                             type="text"
                             id="first_name"
@@ -55,64 +34,50 @@
                             class="form__input narrow__input"
                             value="{{ user.last_name }}"
                         />
-                        <button
-                            id="but"
-                            type="button"
-                            class="button-1 submitButton"
-                        >
-                            Save
-                        </button>
+                        <button id="but" type="button" class="button-1 submitButton">Save</button>
                     </form>
-                    <button class="button-1 content__button toggleButton">
-                        Change
-                    </button>
+                    <button class="button-1 content__button toggleButton">Change</button>
                 </div>
                 <hr />
                 <div id="email">
                     <p id="email_text">Email: {{ user.email }}</p>
-                    <form
-                        id="update_email"
-                        method="POST"
-                        style="display: none"
-                        action
-                    >
-                        <input
-                            type="text"
-                            id="email"
-                            class="form__input wide__input"
-                            value="{{ user.email}}"
-                        />
-                        <button type="button" class="button-1 submitButton">
-                            Save
-                        </button>
+                    <form id="update_email" method="POST" style="display: none" action>
+                        <input type="text" id="email" class="form__input wide__input" value="{{ user.email}}" />
+                        <button type="button" class="button-1 submitButton">Save</button>
                     </form>
-                    <button class="button-1 content__button toggleButton">
-                        Change
-                    </button>
+                    <button class="button-1 content__button toggleButton">Change</button>
                 </div>
                 <hr />
                 <div id="password">
-                    <p id="password_text">
-                        Password: The tool does not save raw text passwords.
-                    </p>
-                    <form
-                        id="update_password"
-                        method="POST"
-                        style="display: none"
-                        action
-                    >
-                        <input
-                            type="text"
-                            class="form__input wide__input"
-                            id="password"
-                        />
-                        <button type="button" class="button-1 submitButton">
-                            Save
-                        </button>
-                    </form>
-                    <button class="button-1 content__button toggleButton">
-                        Change
-                    </button>
+                    <p id="password_text">Password: The tool does not save raw text passwords.</p>
+                    <div class="popupBox">
+                        <div class="popup-content">
+                            <h2>Change Password</h2>
+                            <input
+                                type="text"
+                                id="old_password"
+                                class="form__input wide__input"
+                                placeholder="Old password"
+                            />
+                            <input
+                                type="text"
+                                id="new_password"
+                                class="form__input wide__input"
+                                placeholder="Create password"
+                            />
+                            <input
+                                type="text"
+                                id="confirm_password"
+                                class="form__input wide__input"
+                                placeholder="Confirm password"
+                            />
+                            <span
+                                ><button type="button" id="save" class="button-1">Save</button>
+                                <button type="button" id="cancel" class="button-1">Cancel</button>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="button-1 content__button toggleButton">Change</button>
                 </div>
             </div>
         </div>
