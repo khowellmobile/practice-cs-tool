@@ -61,32 +61,41 @@ function attachEventListeners() {
      */
     $(".save-button").on("click", function () {
         fieldName = $(this).parents(".popupBox").parent().attr("id");
-        checkFields(fieldName);
+        let formdata;
+        switch (fieldName) {
+            case "name":
+                formdata = {
+                    first_name: $("#first_name").val(),
+                    last_name: $("#last_name").val(),
+                };
+                break;
+            case "email":
+                formdata = {
+                    email: $("#email").val(),
+                };
+                break;
+            case "password":
+                formdata = {
+                    password: $("#password").val(),
+                };
+                break;
+        }
+        checkFields(fieldName, formdata);
+        submitForm(fieldName, formdata);
     });
 }
 
-function checkFields(fieldName) {
+function checkFields(fieldName, formdata) {
     switch (fieldName) {
         case "name":
-            formdata = {
-                first_name: $("#first_name").val(),
-                last_name: $("#last_name").val(),
-            };
-
             if (!validateName(formdata["first_name"]) || !validateName(formdata["last_name"])) {
                 alert(
                     `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
                 );
                 return;
             }
-
-            submitForm(fieldName, formdata);
             break;
         case "email":
-            formdata = {
-                email: $("#email").val(),
-            };
-
             if (formdata["email"] != $("#email_confirm").val()) {
                 alert("Emails do not match");
                 return;
@@ -94,13 +103,8 @@ function checkFields(fieldName) {
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
                 return;
             }
-            submitForm(fieldName, formdata);
             break;
         case "password":
-            formdata = {
-                password: $("#password").val(),
-            };
-
             if (formdata["password"] != $("#password_confirm").val()) {
                 alert("Passwords do not match");
                 return;
@@ -110,11 +114,10 @@ function checkFields(fieldName) {
                 );
                 return;
             }
-            submitForm(fieldName, formdata);
             break;
         default:
-            console.log("Field name not recognized");
-            break;
+            alert("Field name not recognized");
+            return;
     }
     fadeOutPopup(fieldName);
 }
