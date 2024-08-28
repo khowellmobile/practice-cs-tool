@@ -41,7 +41,17 @@ function attachEventListeners() {
      */
     $(".toggleButton").on("click", function () {
         fieldName = $(this).parent().attr("id");
-        $("#update_" + fieldName).toggle();
+        fadeInPopup(fieldName);
+    });
+
+    /**
+     * Event listener attached to all toggle buttons
+     *
+     * Toggles the visibility of the form used to update the specified field gotten from the parent.
+     */
+    $(".cancel-button").on("click", function () {
+        fieldName = $(this).parents(".popupBox").parent().attr("id");
+        fadeOutPopup(fieldName);
     });
 
     /**
@@ -240,6 +250,22 @@ function validatePassword(password) {
     const passwordPattern = /^(?=.*[!@#$%^&*()_+={}\[\]:;<>,.?])(?=.*\d).{8,}$/;
 
     return passwordPattern.test(password);
+}
+
+// Show the popup box when the button is clicked
+function fadeInPopup(fieldName) {
+    $("#update_" + fieldName)
+        .fadeIn(250)
+        .addClass("show");
+    $("#pageOverlay").fadeIn(500);
+}
+
+// Hide the popup box when the close button is clicked
+function fadeOutPopup(fieldName) {
+    $("#update_" + fieldName)
+        .removeClass("show")
+        .fadeOut(250);
+    $("#pageOverlay").fadeOut(500);
 }
 
 try {
