@@ -24,11 +24,16 @@
                     <p id="name_text">Name: {{ user.first_name }} {{user.last_name }}</p>
                     <div class="popupBox" id="update_name">
                         <div class="popup-content">
-                            <h2>Change email</h2>
-                            <input type="text" class="form__input wide__input" placeholder="First name" />
-                            <input type="text" class="form__input wide__input" placeholder="Last name" />
+                            <h2>Change name</h2>
+                            <input
+                                type="text"
+                                id="first_name"
+                                class="form__input wide__input"
+                                placeholder="First name"
+                            />
+                            <input type="text" id="last_name" class="form__input wide__input" placeholder="Last name" />
                             <span>
-                                <button type="button" id="save" class="button-1 submitButton">Save</button>
+                                <button type="button" id="save" class="button-1 save-button">Save</button>
                                 <button type="button" class="button-1 cancel-button">Cancel</button>
                             </span>
                         </div>
@@ -41,10 +46,15 @@
                     <div class="popupBox" id="update_email">
                         <div class="popup-content">
                             <h2>Change email</h2>
-                            <input type="text" class="form__input wide__input" placeholder="New email" />
-                            <input type="text" class="form__input wide__input" placeholder="Confirm email" />
+                            <input type="text" id="email" class="form__input wide__input" placeholder="New email" />
+                            <input
+                                type="text"
+                                id="email_confirm"
+                                class="form__input wide__input"
+                                placeholder="Confirm email"
+                            />
                             <span>
-                                <button type="button" id="save" class="button-1 submitButton">Save</button>
+                                <button type="button" id="save" class="button-1 save-button">Save</button>
                                 <button type="button" class="button-1 cancel-button">Cancel</button>
                             </span>
                         </div>
@@ -57,11 +67,20 @@
                     <div class="popupBox" id="update_password">
                         <div class="popup-content">
                             <h2>Change Password</h2>
-                            <input type="text" class="form__input wide__input" placeholder="Old password" />
-                            <input type="text" class="form__input wide__input" placeholder="Create password" />
-                            <input type="text" class="form__input wide__input" placeholder="Confirm password" />
+                            <input
+                                type="text"
+                                id="password"
+                                class="form__input wide__input"
+                                placeholder="Create password"
+                            />
+                            <input
+                                type="text"
+                                id="password_confirm"
+                                class="form__input wide__input"
+                                placeholder="Confirm password"
+                            />
                             <span>
-                                <button type="button" id="save" class="button-1 submitButton">Save</button>
+                                <button type="button" id="save" class="button-1 save-button">Save</button>
                                 <button type="button" class="button-1 cancel-button">Cancel</button>
                             </span>
                         </div>

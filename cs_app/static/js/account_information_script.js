@@ -59,24 +59,13 @@ function attachEventListeners() {
      *
      * Submits the form used to update the specified field gotten from the grandparent.
      */
-    $(".submitButton").on("click", function () {
-        fieldName = $(this).parent().parent().attr("id");
-        submitForm(fieldName);
+    $(".save-button").on("click", function () {
+        fieldName = $(this).parents(".popupBox").parent().attr("id");
+        checkFields(fieldName);
     });
 }
 
-/**
- * Submits form data for updating user information via AJAX based on the field name (name, email, password).
- *
- * The passed fieldName will determine the format of that data and the view the data is sent to.
- *
- * @param {string} fieldName - The name of the field to update (name, email, password).
- */
-function submitForm(fieldName) {
-    $("#update_" + fieldName).hide();
-
-    var formdata;
-
+function checkFields(fieldName) {
     switch (fieldName) {
         case "name":
             formdata = {
@@ -90,35 +79,55 @@ function submitForm(fieldName) {
                 );
                 return;
             }
+
+            submitForm(fieldName, formdata);
             break;
         case "email":
             formdata = {
                 email: $("#email").val(),
             };
 
-            if (!validateEmail(formdata["email"])) {
+            if (formdata["email"] != $("#email_confirm").val()) {
+                alert("Emails do not match");
+                return;
+            } else if (!validateEmail(formdata["email"])) {
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
                 return;
             }
+            submitForm(fieldName, formdata);
             break;
         case "password":
             formdata = {
                 password: $("#password").val(),
             };
 
-            if (!validatePassword(formdata["password"])) {
+            if (formdata["password"] != $("#password_confirm").val()) {
+                alert("Passwords do not match");
+                return;
+            } else if (!validatePassword(formdata["password"])) {
                 alert(
                     `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
                 );
-
                 return;
             }
+            submitForm(fieldName, formdata);
             break;
         default:
             console.log("Field name not recognized");
             break;
     }
+    fadeOutPopup(fieldName);
+}
 
+/**
+ * Submits form data for updating user information via AJAX based on the field name (name, email, password).
+ *
+ * The passed fieldName will determine the format of that data and the view the data is sent to.
+ *
+ * @param {string} fieldName - The name of the field to update (name, email, password).
+ * @param {object} formdata - Object containing the information to be submitted
+ */
+function submitForm(fieldName, formdata) {
     $.ajax({
         type: "POST",
         headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
