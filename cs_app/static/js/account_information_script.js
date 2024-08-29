@@ -6,11 +6,18 @@
  * AJAX responses by updating corresponding elements on the page dynamically.
  *
  * Functions:
- * - toggleForm(fieldName): Toggles the display of the form for updating the specified field.
- * - submitForm(fieldName): Submits form data for updating user information via AJAX based on
- *                           the field name (name, email, password).
+ * - attachEventListeners(): Attaches event listeners to toggle buttons, cancel buttons, and submit buttons.
+ * - checkFields(fieldName, formdata): Validates form data based on the specified field name and its criteria.
+ * - submitForm(fieldName, formdata): Submits form data for updating user information via AJAX based on
+ *                                       the field name (name, email, password).
  * - ajaxResponseSuccess(fieldName, formdata): Updates UI elements with new information upon
  *                                             successful AJAX response for the specified field.
+ * - ajaxResponseError(fieldName, message): Alerts the user about specific errors encountered after an AJAX call.
+ * - validateName(name): Validates if a name follows a standard format.
+ * - validateEmail(email): Validates if an email address follows a standard format.
+ * - validatePassword(password): Validates if a password meets the specified criteria.
+ * - fadeInPopup(fieldName): Displays the popup box and overlay for a given field name.
+ * - fadeOutPopup(fieldName): Hides the popup box and overlay for a given field name.
  *
  * Dependencies: Requires jQuery for DOM manipulation and AJAX requests.
  */
@@ -41,7 +48,17 @@ function attachEventListeners() {
      */
     $(".toggleButton").on("click", function () {
         fieldName = $(this).parent().attr("id");
-        $("#update_" + fieldName).toggle();
+        fadeInPopup(fieldName);
+    });
+
+    /**
+     * Event listener attached to all toggle buttons
+     *
+     * Toggles the visibility of the form used to update the specified field gotten from the parent.
+     */
+    $(".cancel-button").on("click", function () {
+        fieldName = $(this).parents(".popupBox").parent().attr("id");
+        fadeOutPopup(fieldName);
     });
 
     /**
@@ -49,10 +66,85 @@ function attachEventListeners() {
      *
      * Submits the form used to update the specified field gotten from the grandparent.
      */
-    $(".submitButton").on("click", function () {
-        fieldName = $(this).parent().parent().attr("id");
-        submitForm(fieldName);
+    $(".save-button").on("click", function () {
+        fieldName = $(this).parents(".popupBox").parent().attr("id");
+        let formdata;
+        switch (fieldName) {
+            case "name":
+                formdata = {
+                    first_name: $("#first_name").val(),
+                    last_name: $("#last_name").val(),
+                };
+                break;
+            case "email":
+                formdata = {
+                    email: $("#email").val(),
+                };
+                break;
+            case "password":
+                formdata = {
+                    password: $("#password").val(),
+                };
+                break;
+        }
+        if (checkFields(fieldName, formdata)) {
+            submitForm(fieldName, formdata);
+        };
     });
+}
+
+/**
+ * Validates form data based on the specified field name and its criteria.
+ *
+ * This function performs validation checks on form data depending on the field name provided.
+ * It checks for specific criteria related to names, emails, and passwords. If any validation fails,
+ * an appropriate alert message is displayed, and the function exits. If all validations pass,
+ * it hides the corresponding popup by calling `fadeOutPopup`.
+ *
+ * @param {string} fieldName - The name of the field to validate. Can be "name", "email", or "password".
+ * @param {Object} formdata - An object containing the form data to be validated.
+ *                             The keys in this object vary based on the field name:
+ *                             - For "name": includes "first_name" and "last_name".
+ *                             - For "email": includes "email".
+ *                             - For "password": includes "password".
+ * @returns {boolean} - True if all fields pass and false otherwise.
+ */
+function checkFields(fieldName, formdata) {
+    switch (fieldName) {
+        case "name":
+            if (!validateName(formdata["first_name"]) || !validateName(formdata["last_name"])) {
+                alert(
+                    `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
+                );
+                return false;
+            }
+            break;
+        case "email":
+            if (formdata["email"] != $("#email_confirm").val()) {
+                alert("Emails do not match");
+                return false;
+            } else if (!validateEmail(formdata["email"])) {
+                alert("Email format is invalid. Please follow standard email format: example@domain.com");
+                return false;
+            }
+            break;
+        case "password":
+            if (formdata["password"] != $("#password_confirm").val()) {
+                alert("Passwords do not match");
+                return false;
+            } else if (!validatePassword(formdata["password"])) {
+                alert(
+                    `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
+                );
+                return false;
+            }
+            break;
+        default:
+            alert("Field name not recognized");
+            return false;
+    }
+    fadeOutPopup(fieldName);
+    return true;
 }
 
 /**
@@ -61,54 +153,10 @@ function attachEventListeners() {
  * The passed fieldName will determine the format of that data and the view the data is sent to.
  *
  * @param {string} fieldName - The name of the field to update (name, email, password).
+ * @param {object} formdata - Object containing the information to be submitted
  */
-function submitForm(fieldName) {
-    $("#update_" + fieldName).hide();
-
-    var formdata;
-
-    switch (fieldName) {
-        case "name":
-            formdata = {
-                first_name: $("#first_name").val(),
-                last_name: $("#last_name").val(),
-            };
-
-            if (!validateName(formdata["first_name"]) || !validateName(formdata["last_name"])) {
-                alert(
-                    `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
-                );
-                return;
-            }
-            break;
-        case "email":
-            formdata = {
-                email: $("#email").val(),
-            };
-
-            if (!validateEmail(formdata["email"])) {
-                alert("Email format is invalid. Please follow standard email format: example@domain.com");
-                return;
-            }
-            break;
-        case "password":
-            formdata = {
-                password: $("#password").val(),
-            };
-
-            if (!validatePassword(formdata["password"])) {
-                alert(
-                    `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
-                );
-
-                return;
-            }
-            break;
-        default:
-            console.log("Field name not recognized");
-            break;
-    }
-
+function submitForm(fieldName, formdata) {
+    console.log("submbitin");
     $.ajax({
         type: "POST",
         headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
@@ -242,16 +290,64 @@ function validatePassword(password) {
     return passwordPattern.test(password);
 }
 
+/**
+ * Displays the popup box and overlay for a given field name.
+ *
+ * @param {string} fieldName - The name of the field used to construct the ID of the popup box.
+ */
+function fadeInPopup(fieldName) {
+    const popup = $("#update_" + fieldName);
+    const overlay = $("#pageOverlay");
+
+    if (popup.length === 0) {
+        console.warn(`Popup with id "update_${fieldName}" does not exist.`);
+        return;
+    }
+
+    if (overlay.length === 0) {
+        console.warn("Page overlay does not exist.");
+        return;
+    }
+
+    popup.fadeIn(250).addClass("show");
+    overlay.fadeIn(500);
+}
+
+/**
+ * Hides the popup box and overlay for a given field name.
+ *
+ * @param {string} fieldName - The name of the field used to construct the ID of the popup box.
+ */
+function fadeOutPopup(fieldName) {
+    const popup = $("#update_" + fieldName);
+    const overlay = $("#pageOverlay");
+
+    if (popup.length === 0) {
+        console.warn(`Popup with id "update_${fieldName}" does not exist.`);
+        return;
+    }
+
+    if (overlay.length === 0) {
+        console.warn("Page overlay does not exist.");
+        return;
+    }
+
+    popup.removeClass("show").fadeOut(250);
+    overlay.fadeOut(500);
+}
+
 try {
     // Export all needed functions
     module.exports = {
         attachEventListeners,
-        submitForm,
+        checkFields,
         ajaxResponseSuccess,
         ajaxResponseError,
         validateName,
         validateEmail,
         validatePassword,
+        fadeInPopup,
+        fadeOutPopup,
     };
 } catch (error) {
     console.log(error);
