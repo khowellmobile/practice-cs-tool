@@ -26,54 +26,7 @@ hr {
     align-self: center;
 }
 
-#content {
-    width: 80%;
-    height: 60%;
-
-    background-color: var(--primary-color);
-
-    display: flex;
-    flex-direction: column;
-}
-
-#content > div {
-    width: 100%;
-    height: calc(100% / 4);
-
-    margin: 0.25em 0rem 0.25 0rem;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.content__button {
-    margin-right: 2rem;
-
-    z-index: 1;
-}
-
-.narrow__input {
-    width: 7rem;
-    height: 1.5rem;
-    margin: 0rem 1rem 0rem 0rem;
-    padding: 0.5rem 1rem;
-}
-
-#pageOverlay {
-    width: 100%;
-    height: 100%;
-
-    background: rgba(128, 128, 128, 0.5);
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
 .popupBox {
-
     overflow: hidden;
     border-radius: 0.5rem;
 
@@ -137,11 +90,49 @@ hr {
     vertical-align: middle;
 }
 
+.content__button {
+    margin-right: 2rem;
+
+    z-index: 1;
+}
+
 .cancel-button {
     width: 5rem;
+}
+
+#pageOverlay {
+    width: 100%;
+    height: 100%;
+
+    background: rgba(128, 128, 128, 0.5);
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#content {
+    width: 80%;
+    height: 60%;
+
+    background-color: var(--primary-color);
+
+    display: flex;
+    flex-direction: column;
+}
+
+#content > div {
+    width: 100%;
+    height: calc(100% / 4);
+
+    margin: 0.25em 0rem 0.25 0rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #save {
     width: 5rem;
 }
-

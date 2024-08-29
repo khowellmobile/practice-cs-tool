@@ -44,18 +44,6 @@ function foo() {
     alert("hello!");
 }
 
-// Show the popup box when the button is clicked
-function fade1() {
-    $("#popupBox").fadeIn(250).addClass("show");
-    $("#pageOverlay").fadeIn(500);
-}
-
-// Hide the popup box when the close button is clicked
-function fade2() {
-    $("#popupBox").removeClass("show").fadeOut(250);
-    $("#pageOverlay").fadeOut(500);
-}
-
 /*---------------------------------------------------------------------------------------------*/
 
 /**
