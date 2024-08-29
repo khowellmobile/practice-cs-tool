@@ -49,7 +49,7 @@ describe("fadeInPopup function", () => {
 
         accountInfoScript.fadeInPopup("testField");
 
-        expect(consoleWarnSpy).toHaveBeenCalledWith('Page overlay does not exist.');
+        expect(consoleWarnSpy).toHaveBeenCalledWith("Page overlay does not exist.");
     });
 });
 
@@ -290,6 +290,10 @@ describe("checkFields function", () => {
                 <div id="testField">
                     <input id="email_confirm" value="test@example.com" />
                     <input id="password_confirm" value="Password123!" />
+                    <div id="update_name">
+                    <div id="update_email">
+                    <div id="update_password">
+                    <div id="pageOverlay">
                 </div>`
         );
 
@@ -298,7 +302,7 @@ describe("checkFields function", () => {
         global.$ = require("jquery")(dom.window);
 
         // Spy on alert function
-        consoleAlertSpy = jest.spyOn(global, 'alert').mockImplementation(() => {});
+        consoleAlertSpy = jest.spyOn(global, "alert").mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -306,78 +310,112 @@ describe("checkFields function", () => {
         consoleAlertSpy.mockRestore();
     });
 
-    test("should alert invalid name format", () => {
+    test("should return true with proper name", () => {
         const formData = {
-            "first_name": "John123",
-            "last_name": "Doe"
+            first_name: "John",
+            last_name: "Doe",
         };
 
-        accountInfoScript.checkFields("name", formData);
+        let result = accountInfoScript.checkFields("name", formData);
+        expect(result).toBe(true);
+    });
+
+    test("should alert invalid name format and return false", () => {
+        const formData = {
+            first_name: "John123",
+            last_name: "Doe",
+        };
+
+        let result = accountInfoScript.checkFields("name", formData);
+        expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith(
             `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
         );
     });
 
-    test("should alert emails do not match", () => {
+    test("should return true with proper email", () => {
+        const formData = {
+            email: "test@example.com",
+        };
+
+        let result = accountInfoScript.checkFields("email", formData);
+        expect(result).toBe(true);
+    });
+
+    test("should alert emails do not match and return false", () => {
         $("#email_confirm").val("different@example.com");
 
         const formData = {
-            "email": "test@example.com"
+            email: "test@example.com",
         };
 
-        accountInfoScript.checkFields("email", formData);
+        let result = accountInfoScript.checkFields("email", formData);
+        expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith("Emails do not match");
     });
 
-    test("should alert invalid email format", () => {
+    test("should alert invalid email format and return false", () => {
         $("#email_confirm").val("invalid-email");
 
         const formData = {
-            "email": "invalid-email"
+            email: "invalid-email",
         };
 
-        accountInfoScript.checkFields("email", formData);
+        let result = accountInfoScript.checkFields("email", formData);
+        expect(result).toBe(false);
 
-        expect(consoleAlertSpy).toHaveBeenCalledWith("Email format is invalid. Please follow standard email format: example@domain.com");
+        expect(consoleAlertSpy).toHaveBeenCalledWith(
+            "Email format is invalid. Please follow standard email format: example@domain.com"
+        );
     });
 
-    test("should alert passwords do not match", () => {
-        $("#password_confirm").val("DifferentPassword123!"); 
-
+    test("should return true with proper password", () => {
         const formData = {
-            "password": "Password123!"
+            password: "Password123!",
         };
 
-        accountInfoScript.checkFields("password", formData);
+        let result = accountInfoScript.checkFields("password", formData);
+        expect(result).toBe(true);
+    });
+
+    test("should alert passwords do not match and return false", () => {
+        $("#password_confirm").val("DifferentPassword123!");
+
+        const formData = {
+            password: "Password123!",
+        };
+
+        let result = accountInfoScript.checkFields("password", formData);
+        expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith("Passwords do not match");
     });
 
-    test("should alert invalid password format", () => {
-        $("#password_confirm").val("short"); 
+    test("should alert invalid password format and return false", () => {
+        $("#password_confirm").val("short");
 
         const formData = {
-            "password": "short"
+            password: "short",
         };
 
-        accountInfoScript.checkFields("password", formData);
+        let result = accountInfoScript.checkFields("password", formData);
+        expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith(
             `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
         );
     });
 
-    test("should alert field name not recognized for unknown fieldName", () => {
+    test("should alert field name not recognized for unknown fieldName and return false", () => {
         const formData = {
-            "unknown_field": "value"
+            unknown_field: "value",
         };
 
-        accountInfoScript.checkFields("unknown", formData);
+        let result = accountInfoScript.checkFields("unknown", formData);
+        expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith("Field name not recognized");
     });
 });
-
-

@@ -87,8 +87,9 @@ function attachEventListeners() {
                 };
                 break;
         }
-        checkFields(fieldName, formdata);
-        submitForm(fieldName, formdata);
+        if (checkFields(fieldName, formdata)) {
+            submitForm(fieldName, formdata);
+        };
     });
 }
 
@@ -106,6 +107,7 @@ function attachEventListeners() {
  *                             - For "name": includes "first_name" and "last_name".
  *                             - For "email": includes "email".
  *                             - For "password": includes "password".
+ * @returns {boolean} - True if all fields pass and false otherwise.
  */
 function checkFields(fieldName, formdata) {
     switch (fieldName) {
@@ -114,34 +116,35 @@ function checkFields(fieldName, formdata) {
                 alert(
                     `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
                 );
-                return;
+                return false;
             }
             break;
         case "email":
             if (formdata["email"] != $("#email_confirm").val()) {
                 alert("Emails do not match");
-                return;
+                return false;
             } else if (!validateEmail(formdata["email"])) {
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
-                return;
+                return false;
             }
             break;
         case "password":
             if (formdata["password"] != $("#password_confirm").val()) {
                 alert("Passwords do not match");
-                return;
+                return false;
             } else if (!validatePassword(formdata["password"])) {
                 alert(
                     `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
                 );
-                return;
+                return false;
             }
             break;
         default:
             alert("Field name not recognized");
-            return;
+            return false;
     }
     fadeOutPopup(fieldName);
+    return true;
 }
 
 /**
@@ -153,6 +156,7 @@ function checkFields(fieldName, formdata) {
  * @param {object} formdata - Object containing the information to be submitted
  */
 function submitForm(fieldName, formdata) {
+    console.log("submbitin");
     $.ajax({
         type: "POST",
         headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
