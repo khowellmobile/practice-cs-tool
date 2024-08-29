@@ -1,6 +1,58 @@
 const accountInfoScript = require("../static/js/account_information_script");
 const { JSDOM } = require("jsdom");
 
+describe("fadeOutPopup function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div id="testField">
+                    <div id="update_testField" style="display: none;"></div>
+                    <div id="pageOverlay" style="display: none;"></div>
+                </div>`
+        );
+
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+
+        consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        dom.window.close();
+        consoleWarnSpy.mockRestore();
+    });
+
+    test("should hide the popup and page overlay correctly", () => {
+        const form = $("#update_testField");
+        const overlay = $("#pageOverlay");
+
+        accountInfoScript.fadeOutPopup("testField");
+
+        expect(form.css("display")).toBe("none");
+        expect(form.hasClass("show")).toBe(false);
+        expect(overlay.css("display")).toBe("none");
+    });
+
+    test("should log warning if popup element does not exist", () => {
+        $("#update_testField").remove();
+
+        accountInfoScript.fadeOutPopup("testField");
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith('Popup with id "update_testField" does not exist.');
+    });
+
+    test("should log warning if overlay element does not exist", () => {
+        $("#pageOverlay").remove();
+
+        accountInfoScript.fadeOutPopup("testField");
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith("Page overlay does not exist.");
+    });
+});
+
 describe("fadeInPopup function", () => {
     let dom;
 
