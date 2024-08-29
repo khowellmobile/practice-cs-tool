@@ -6,11 +6,18 @@
  * AJAX responses by updating corresponding elements on the page dynamically.
  *
  * Functions:
- * - toggleForm(fieldName): Toggles the display of the form for updating the specified field.
- * - submitForm(fieldName): Submits form data for updating user information via AJAX based on
- *                           the field name (name, email, password).
+ * - attachEventListeners(): Attaches event listeners to toggle buttons, cancel buttons, and submit buttons.
+ * - checkFields(fieldName, formdata): Validates form data based on the specified field name and its criteria.
+ * - submitForm(fieldName, formdata): Submits form data for updating user information via AJAX based on
+ *                                       the field name (name, email, password).
  * - ajaxResponseSuccess(fieldName, formdata): Updates UI elements with new information upon
  *                                             successful AJAX response for the specified field.
+ * - ajaxResponseError(fieldName, message): Alerts the user about specific errors encountered after an AJAX call.
+ * - validateName(name): Validates if a name follows a standard format.
+ * - validateEmail(email): Validates if an email address follows a standard format.
+ * - validatePassword(password): Validates if a password meets the specified criteria.
+ * - fadeInPopup(fieldName): Displays the popup box and overlay for a given field name.
+ * - fadeOutPopup(fieldName): Hides the popup box and overlay for a given field name.
  *
  * Dependencies: Requires jQuery for DOM manipulation and AJAX requests.
  */
@@ -85,6 +92,21 @@ function attachEventListeners() {
     });
 }
 
+/**
+ * Validates form data based on the specified field name and its criteria.
+ *
+ * This function performs validation checks on form data depending on the field name provided.
+ * It checks for specific criteria related to names, emails, and passwords. If any validation fails,
+ * an appropriate alert message is displayed, and the function exits. If all validations pass,
+ * it hides the corresponding popup by calling `fadeOutPopup`.
+ *
+ * @param {string} fieldName - The name of the field to validate. Can be "name", "email", or "password".
+ * @param {Object} formdata - An object containing the form data to be validated.
+ *                             The keys in this object vary based on the field name:
+ *                             - For "name": includes "first_name" and "last_name".
+ *                             - For "email": includes "email".
+ *                             - For "password": includes "password".
+ */
 function checkFields(fieldName, formdata) {
     switch (fieldName) {
         case "name":
@@ -264,7 +286,11 @@ function validatePassword(password) {
     return passwordPattern.test(password);
 }
 
-// Show the popup box when the button is clicked
+/**
+ * Displays the popup box and overlay for a given field name.
+ *
+ * @param {string} fieldName - The name of the field used to construct the ID of the popup box.
+ */
 function fadeInPopup(fieldName) {
     const popup = $("#update_" + fieldName);
     const overlay = $("#pageOverlay");
@@ -283,7 +309,11 @@ function fadeInPopup(fieldName) {
     overlay.fadeIn(500);
 }
 
-// Hide the popup box when the close button is clicked
+/**
+ * Hides the popup box and overlay for a given field name.
+ *
+ * @param {string} fieldName - The name of the field used to construct the ID of the popup box.
+ */
 function fadeOutPopup(fieldName) {
     const popup = $("#update_" + fieldName);
     const overlay = $("#pageOverlay");
@@ -313,7 +343,7 @@ try {
         validateEmail,
         validatePassword,
         fadeInPopup,
-        fadeOutPopup
+        fadeOutPopup,
     };
 } catch (error) {
     console.log(error);
