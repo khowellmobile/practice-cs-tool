@@ -1,6 +1,58 @@
 const accountInfoScript = require("../static/js/account_information_script");
 const { JSDOM } = require("jsdom");
 
+describe("fadeInPopup function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div id="testField">
+                    <div id="update_testField" style="display: none;"></div>
+                    <div id="pageOverlay" style="display: none;"></div>
+                </div>`
+        );
+
+        global.document = dom.window.document;
+        global.window = dom.window;
+        global.$ = require("jquery")(dom.window);
+
+        consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        dom.window.close();
+        consoleWarnSpy.mockRestore();
+    });
+
+    test("should show the popup and page overlay correctly", () => {
+        const form = $("#update_testField");
+        const overlay = $("#pageOverlay");
+
+        accountInfoScript.fadeInPopup("testField");
+
+        expect(form.css("display")).toBe("block");
+        expect(form.hasClass("show")).toBe(true);
+        expect(overlay.css("display")).toBe("block");
+    });
+
+    test("should log warning if popup element does not exist", () => {
+        $("#update_testField").remove();
+
+        accountInfoScript.fadeInPopup("testField");
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith('Popup with id "update_testField" does not exist.');
+    });
+
+    test("should log warning if overlay element does not exist", () => {
+        $("#pageOverlay").remove();
+
+        accountInfoScript.fadeInPopup("testField");
+
+        expect(consoleWarnSpy).toHaveBeenCalledWith('Page overlay does not exist.');
+    });
+});
+
 describe("validatePassword function", () => {
     test("should return true with proper password specifications", () => {
         let goodPass = "goodPass1#";
@@ -228,39 +280,104 @@ describe("ajaxResponseSuccess function", () => {
     });
 });
 
-describe("toggleButton jquery eventlistener", () => {
+describe("checkFields function", () => {
     let dom;
+    let consoleAlertSpy;
 
     beforeEach(() => {
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div id="testField">
-                    <div id="togBut" class="toggleButton"></div>
-                    <form id="update_testField" style="display: flex;"></form>
+                    <input id="email_confirm" value="test@example.com" />
+                    <input id="password_confirm" value="Password123!" />
                 </div>`
         );
 
         global.document = dom.window.document;
         global.window = dom.window;
         global.$ = require("jquery")(dom.window);
+
+        // Spy on alert function
+        consoleAlertSpy = jest.spyOn(global, 'alert').mockImplementation(() => {});
     });
 
     afterEach(() => {
         dom.window.close();
+        consoleAlertSpy.mockRestore();
     });
 
-    test("should toggle display of form correctly", () => {
-        accountInfoScript.attachEventListeners();
+    test("should alert invalid name format", () => {
+        const formData = {
+            "first_name": "John123",
+            "last_name": "Doe"
+        };
 
-        let tb = $(".toggleButton");
-        let form = $("#update_testField");
+        accountInfoScript.checkFields("name", formData);
 
-        tb.trigger("click");
+        expect(consoleAlertSpy).toHaveBeenCalledWith(
+            `Name format is invalid. Allowed characters include alphabetical characters, spaces, hyphens, and apostrophes.`
+        );
+    });
 
-        expect(form.css("display")).toBe("none");
+    test("should alert emails do not match", () => {
+        $("#email_confirm").val("different@example.com");
 
-        tb.trigger("click");
+        const formData = {
+            "email": "test@example.com"
+        };
 
-        expect(form.css("display")).toBe("flex");
+        accountInfoScript.checkFields("email", formData);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith("Emails do not match");
+    });
+
+    test("should alert invalid email format", () => {
+        $("#email_confirm").val("invalid-email");
+
+        const formData = {
+            "email": "invalid-email"
+        };
+
+        accountInfoScript.checkFields("email", formData);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith("Email format is invalid. Please follow standard email format: example@domain.com");
+    });
+
+    test("should alert passwords do not match", () => {
+        $("#password_confirm").val("DifferentPassword123!"); 
+
+        const formData = {
+            "password": "Password123!"
+        };
+
+        accountInfoScript.checkFields("password", formData);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith("Passwords do not match");
+    });
+
+    test("should alert invalid password format", () => {
+        $("#password_confirm").val("short"); 
+
+        const formData = {
+            "password": "short"
+        };
+
+        accountInfoScript.checkFields("password", formData);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith(
+            `Password format is invalid. Passwords must be at least 8 characters long and include a number and special character`
+        );
+    });
+
+    test("should alert field name not recognized for unknown fieldName", () => {
+        const formData = {
+            "unknown_field": "value"
+        };
+
+        accountInfoScript.checkFields("unknown", formData);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith("Field name not recognized");
     });
 });
+
+

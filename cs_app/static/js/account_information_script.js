@@ -266,30 +266,54 @@ function validatePassword(password) {
 
 // Show the popup box when the button is clicked
 function fadeInPopup(fieldName) {
-    $("#update_" + fieldName)
-        .fadeIn(250)
-        .addClass("show");
-    $("#pageOverlay").fadeIn(500);
+    const popup = $("#update_" + fieldName);
+    const overlay = $("#pageOverlay");
+
+    if (popup.length === 0) {
+        console.warn(`Popup with id "update_${fieldName}" does not exist.`);
+        return;
+    }
+
+    if (overlay.length === 0) {
+        console.warn("Page overlay does not exist.");
+        return;
+    }
+
+    popup.fadeIn(250).addClass("show");
+    overlay.fadeIn(500);
 }
 
 // Hide the popup box when the close button is clicked
 function fadeOutPopup(fieldName) {
-    $("#update_" + fieldName)
-        .removeClass("show")
-        .fadeOut(250);
-    $("#pageOverlay").fadeOut(500);
+    const popup = $("#update_" + fieldName);
+    const overlay = $("#pageOverlay");
+
+    if (popup.length === 0) {
+        console.warn(`Popup with id "update_${fieldName}" does not exist.`);
+        return;
+    }
+
+    if (overlay.length === 0) {
+        console.warn("Page overlay does not exist.");
+        return;
+    }
+
+    popup.removeClass("show").fadeOut(250);
+    overlay.fadeOut(500);
 }
 
 try {
     // Export all needed functions
     module.exports = {
         attachEventListeners,
-        submitForm,
+        checkFields,
         ajaxResponseSuccess,
         ajaxResponseError,
         validateName,
         validateEmail,
         validatePassword,
+        fadeInPopup,
+        fadeOutPopup
     };
 } catch (error) {
     console.log(error);
