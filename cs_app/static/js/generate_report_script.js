@@ -1,22 +1,22 @@
 /**
- * JavaScript file for handling dynamic UI interactions and AJAX requests for the generate_report.html page.
+ * JavaScript file for handling dynamic UI interactions and fetch requests for the generate_report.html page.
  *
  * This file includes functions to manage UI behavior such as toggling div sizes, altering date inputs based on
  * preset selections, generating and displaying tables from server data, and throttling function calls to optimize
- * performance. It utilizes jQuery for DOM manipulation and AJAX operations.
+ * performance. It utilizes jQuery for DOM manipulation and fetch operations.
  *
  * Functions:
  * - toggleSize(e1Id, e2Id): Toggles the size of two div elements based on size classes.
  * - alterDates(range): Adjusts date inputs according to a predefined time range selection.
  * - generateTable(): Initiates the process of generating a table based on user input.
- * - createTable(formdata): Sends AJAX request to load table data based on provided form data.
+ * - createTable(formdata): Sends fetch request to load table data based on provided form data.
  * - initializeTable(data): Renders a DataTable with formatted data and manages table height.
  * - createReportFromHistory(time_range, parameters_json): Generates a report using history buttons on page and updates UI elements.
  * - setTableHeight(): Sets the height of the report table dynamically based on its container.
  * - formatData(data): Formats raw data from the server into a format suitable for DataTables.
  * - throttle(func, delay): Creates a throttled version of a function to limit its invocation rate.
  *
- * Dependencies: Requires jQuery for DOM manipulation and AJAX operations.
+ * Dependencies: Requires jQuery for DOM manipulation and fetch operations.
  */
 
 // Required for global jqeury recognition for use in testing
@@ -119,28 +119,34 @@ function generateTable() {
 /**
  * Gets needed table information
  *
- * Uses ajax to send inputs to a view which will return report
+ * Uses fetch to send inputs to a view which will return report
  * information to be used to create a table
  *
- * Calls initalizeTable() to render table
+ * Calls initializeTable () to render table
  *
  * @param {string} formData - The input data used to create the report
  */
 function createTable(formdata) {
-    let url = "/load_table/";
-
-    $.ajax({
-        type: "POST",
-        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
-        url: url,
-        data: formdata,
-        success: function (response) {
-            initalizeTable(formatData(response.data));
+    fetch("/load_table/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrf_token,
         },
-        error: function (xhr, errmsg, err) {
-            alert("error");
-        },
-    });
+        body: JSON.stringify(formdata),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                alert("error");
+            }
+            return response.json();
+        })
+        .then((response) => {
+            initializeTable(formatData(response.data));
+        })
+        .catch((error) => {
+            alert("error:", error);
+        });
 }
 
 /**
@@ -152,7 +158,7 @@ function createTable(formdata) {
  *
  * @param {string} data - Formatted input data for new data table
  */
-function initalizeTable(data) {
+function initializeTable(data) {
     if ($.fn.DataTable.isDataTable("#reportTable")) {
         $("#reportTable").DataTable().destroy(); // Destroy the existing DataTable instance
         $("#reportTable").remove(); // Remove the existing table
@@ -394,7 +400,7 @@ try {
         attachEventListeners,
         generateTable,
         createTable,
-        initalizeTable,
+        initializeTable,
         createReportFromHistory,
         alterDates,
         setTableHeight,
