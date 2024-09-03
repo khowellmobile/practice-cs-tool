@@ -22,8 +22,9 @@ from django.conf import settings
 from django.db import connections
 from django.http import JsonResponse
 from django.core.exceptions import ImproperlyConfigured
-import cs_app.utils.common_functions as cf
 
+import cs_app.utils.common_functions as cf
+import json
 import pyodbc
 
 
@@ -117,12 +118,13 @@ def switch_database_view(request):
     """
 
     if request.method == "POST":
-        db_engine = request.POST.get("db_engine")
-        db_name = request.POST.get("db_name")
-        db_host = request.POST.get("db_host")
-        db_driver = request.POST.get("db_driver")
-        db_user = request.POST.get("db_user")
-        db_pass = request.POST.get("db_pass")
+        data = json.loads(request.body.decode("utf-8"))
+        db_engine = data.get("db_engine")
+        db_name = data.get("db_name")
+        db_host = data.get("db_host")
+        db_driver = data.get("db_driver")
+        db_user = data.get("db_user")
+        db_pass = data.get("db_pass")
         trust_conn = "no" if db_user and db_pass else "yes"
 
         # Validates engine, name, host, and driver.

@@ -1,23 +1,22 @@
 /**
- * JavaScript file for handling database configuration changes and AJAX interactions for the change_database.html page.
+ * JavaScript file for handling database configuration changes and fetch interactions for the change_database.html page.
  *
- * This file contains functions to gather new database configuration, submit it via AJAX,
+ * This file contains functions to gather new database configuration, submit it via fetch,
  * handle the response from the server, retrieve current database information, and manage
- * the visibility of a spinner during AJAX requests.
+ * the visibility of a spinner during fetch requests.
  *
  * Functions:
  * - getNewConfig(): Gathers input values for database configuration fields, validates them,
  *                  and submits them for processing.
- * - submitNewConfig(db_info): Submits the new database configuration data via AJAX to the server.
+ * - submitNewConfig(db_info): Submits the new database configuration data via fetch to the server.
  * - dbChangeHandler(success, message): Handles the server response for database configuration changes,
  *                                      updating UI elements accordingly.
- * - getDisplayDBInfo(alias): Retrieves current database information via AJAX based on the alias provided.
+ * - getDisplayDBInfo(alias): Retrieves current database information via fetch based on the alias provided.
  * - setSpinnerVisibility(spinnerVisible): Controls the visibility of a spinner element based on the
  *                                        spinnerVisible parameter.
  *
- * Dependencies: Requires jQuery for DOM manipulation and AJAX operations.
+ * Dependencies: Requires jQuery for DOM manipulation and fetch operations.
  */
-
 
 /**
  * Gathers input values for database configuration fields, validates them,
@@ -47,31 +46,37 @@ function getNewConfig() {
 }
 
 /**
- * Submits the new database configuration data to the server via AJAX.
+ * Submits the new database configuration data to the server via fetch.
  *
  * @param {Object} db_info - The object containing the database configuration information.
  */
 function submitNewConfig(db_info) {
-    let url = "/switch_config/";
-
-    $.ajax({
-        type: "POST",
-        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
-        url: url,
-        data: db_info,
-        success: function (response) {
-            dbChangeHandler(true, response, getDisplayDBInfo);
+    fetch("/switch_config/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrf_token,
         },
-        error: function (xhr) {
-            dbChangeHandler(false, xhr, getDisplayDBInfo);
-        },
-    });
+        body: JSON.stringify(db_info),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((err) => Promise.reject(err));
+            }
+            return response.json();
+        })
+        .then((data) => {
+            dbChangeHandler(true, data, getDisplayDBInfo);
+        })
+        .catch((error) => {
+            dbChangeHandler(false, error, getDisplayDBInfo);
+        });
 }
 
 /**
  * Handles the server response for database configuration changes.
  * Updates UI elements based on whether the operation was successful or not.
- * 
+ *
  * This function uses dependency injection for testing purposes.
  *
  * @param {boolean} success - Indicates if the database configuration change was successful.
@@ -81,46 +86,49 @@ function submitNewConfig(db_info) {
 function dbChangeHandler(success, message, getDisplayDBInfo) {
     setSpinnerVisibility(false);
 
+    console.log(message.error);
+
     if (success) {
-        $("#database-change__status").append(
-            "<p class='stat__message'>Successful Connection</p>"
-        );
+        $("#database-change__status").append("<p class='stat__message'>Successful Connection</p>");
         getDisplayDBInfo(message.db_alias);
-    } else if (message.responseJSON) {
+    } else if (message.error) {
         // captures a failure but one that includes a json response
-        $("#database-change__status").append(
-            `<p class='stat__message'>Error: ${message.responseJSON.error}</p>`
-        );
+        $("#database-change__status").append(`<p class='stat__message'>Error: ${message.error}</p>`);
     } else {
         // captures a failure due to non-view related circumstances
-        alert(
-            "An error occurred while processing your request. Please try again."
-        );
+        alert("An error occurred while processing your request. Please try again.");
     }
 }
 
 /**
- * Retrieves current database information via AJAX based on the alias provided.
+ * Retrieves current database information via fetch based on the alias provided.
  *
  * @param {string} alias - The alias or identifier for the database to retrieve information for.
  */
 function getDisplayDBInfo(alias) {
-    let url = "/get_db_info/";
-
-    $.ajax({
-        type: "GET",
-        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
-        url: url,
-        data: { db_alias: alias },
-        success: function (response) {
+    fetch(`/get_db_info/?db_alias=${encodeURIComponent(alias)}`, {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            "X-CSRFToken": csrf_token,
+        },
+    })
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((errorData) => {
+                    alert(errorData.error);
+                });
+            }
+            return response.json();
+        })
+        .then((response) => {
             $("#curr_engine").text(response["db_engine"]);
             $("#curr_name").text(response["db_name"]);
             $("#curr_host").text(response["db_host"]);
-        },
-        error: function (xhr) {
-            alert("Error");
-        },
-    });
+        })
+        .catch((error) => {
+            alert("Error: " + error.message);
+        });
 }
 
 /**
@@ -155,4 +163,4 @@ function getInputValues() {
 }
 
 // Export for testing using jest and jsdom
-module.exports = { setSpinnerVisibility, dbChangeHandler, getInputValues};
+module.exports = { setSpinnerVisibility, dbChangeHandler, getInputValues };
