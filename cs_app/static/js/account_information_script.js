@@ -78,18 +78,18 @@ function attachEventListeners() {
                 break;
             case "email":
                 formdata = {
-                    email: $("#email").val(),
+                    email: $("#email_new").val(),
                 };
                 break;
             case "password":
                 formdata = {
-                    password: $("#password").val(),
+                    password: $("#password_new").val(),
                 };
                 break;
         }
         if (checkFields(fieldName, formdata)) {
             submitForm(fieldName, formdata);
-        };
+        }
     });
 }
 
@@ -156,19 +156,26 @@ function checkFields(fieldName, formdata) {
  * @param {object} formdata - Object containing the information to be submitted
  */
 function submitForm(fieldName, formdata) {
-    console.log("submbitin");
-    $.ajax({
-        type: "POST",
-        headers: { "X-CSRFToken": csrf_token }, // csrf_token gotten from js code in html template
-        url: `/account_information/update_${fieldName}/`,
-        data: formdata,
-        success: function (response) {
+    fetch(`/account_information/update_${fieldName}/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrf_token,
+        },
+        body: JSON.stringify(formdata),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((err) => Promise.reject(err));
+            }
+            return response.json();
+        })
+        .then((data) => {
             ajaxResponseSuccess(fieldName, formdata);
-        },
-        error: function (xhr) {
-            ajaxResponseError(fieldName, xhr.responseJSON);
-        },
-    });
+        })
+        .catch((error) => {
+            ajaxResponseError(fieldName, error);
+        });
 }
 
 /**
