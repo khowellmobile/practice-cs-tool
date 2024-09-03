@@ -27,6 +27,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+import json
 import cs_app.utils.common_functions as cf
 
 
@@ -68,8 +69,9 @@ def update_name_view(request):
                       or an error message if the request method is not POST.
     """
     if request.method == "POST":
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
+        data = json.loads(request.body.decode("utf-8"))
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
 
         # Validation for name formats
         if not cf.validate_name(first_name) or not cf.validate_name(last_name):
@@ -106,10 +108,11 @@ def update_email_view(request):
                       or an error message if the request method is not POST.
     """
     if request.method == "POST":
-        email = request.POST.get("email")
+        data = json.loads(request.body.decode("utf-8"))
+        email = data.get("email")
 
         # Validation for email format
-        if not cf.validate_name(email):
+        if not cf.validate_email(email):
             return JsonResponse({"error": "Invalid format"}, status=400)
 
         user = request.user
@@ -140,7 +143,8 @@ def update_password_view(request):
                       or an error message if the request method is not POST.
     """
     if request.method == "POST":
-        password = request.POST.get("password")
+        data = json.loads(request.body.decode("utf-8"))
+        password = data.get("password")
 
         # Validation for password format
         if not cf.validate_name(password):

@@ -55,6 +55,7 @@ def validate_email(email):
     Returns:
         bool: True if the email address is valid according to the format, False otherwise.
     """
+
     email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 
     pattern = re.compile(email_pattern)
@@ -99,8 +100,9 @@ def validate_db_engine(db_engine):
     Returns:
         bool: True if the engine is valid, False otherwise.
     """
-    db_engine_pattern = r"^(postgresql|mysql|sqlite|oracle|mssql)$" 
+    db_engine_pattern = r"^(postgresql|mysql|sqlite|oracle|mssql)$"
     return bool(re.match(db_engine_pattern, db_engine))
+
 
 def validate_db_name(db_name):
     """
@@ -112,8 +114,9 @@ def validate_db_name(db_name):
     Returns:
         bool: True if the database name is valid, False otherwise.
     """
-    db_name_pattern = r"^[a-zA-Z0-9_]+$"  
+    db_name_pattern = r"^[a-zA-Z0-9_]+$"
     return bool(re.match(db_name_pattern, db_name))
+
 
 def validate_db_host(db_host):
     """
@@ -133,6 +136,7 @@ def validate_db_host(db_host):
     )
     return bool(re.match(db_host_pattern, db_host))
 
+
 def validate_db_driver(db_driver):
     """
     Validates the database driver field.
@@ -143,6 +147,5 @@ def validate_db_driver(db_driver):
     Returns:
         bool: True if the driver is valid, False otherwise.
     """
-    db_driver_pattern = r"^[a-zA-Z0-9_ ]+$"  
+    db_driver_pattern = r"^[a-zA-Z0-9_ ]+$"
     return bool(re.match(db_driver_pattern, db_driver))
-

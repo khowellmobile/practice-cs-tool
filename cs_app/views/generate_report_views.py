@@ -30,6 +30,8 @@ from datetime import datetime
 
 from ..models import PastParameter
 
+import json
+
 
 @login_required
 def generate_report_view(request):
@@ -77,10 +79,11 @@ def load_table_view(request):
         JsonResponse: JSON response with data if successful, or error message if request method is not POST.
     """
     if request.method == "POST":
-        start_date = request.POST.get("start_date")
-        end_date = request.POST.get("end_date")
+        data = json.loads(request.body.decode("utf-8"))
+        start_date = data.get("start_date")
+        end_date = data.get("end_date")
+        time_range = data.get("time_range")
         current_date = datetime.now().date()
-        time_range = request.POST.get("time_range")
 
         PastParameter.objects.create(
             text_field=time_range,
