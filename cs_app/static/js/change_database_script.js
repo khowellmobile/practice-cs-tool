@@ -86,8 +86,6 @@ function submitNewConfig(db_info) {
 function dbChangeHandler(success, message, getDisplayDBInfo) {
     setSpinnerVisibility(false);
 
-    console.log(message.error);
-
     if (success) {
         $("#database-change__status").append("<p class='stat__message'>Successful Connection</p>");
         getDisplayDBInfo(message.db_alias);
