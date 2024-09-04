@@ -98,7 +98,7 @@ describe("dbChangeHandler function", () => {
     });
 
     test("should append error message to div when success false and message is non-empty", () => {
-        changeDbScript.dbChangeHandler(false, { responseJSON: { error: "test-error" } }, jest.fn());
+        changeDbScript.dbChangeHandler(false, {error: "test-error"}, jest.fn());
 
         const pElements = $("#database-change__status p");
 
