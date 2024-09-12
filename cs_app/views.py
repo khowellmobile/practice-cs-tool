@@ -126,6 +126,7 @@ def directions_view(request):
 
     return render(request, "directions.html", context)
 
+
 @login_required
 def tinker_view(request):
     user = request.user
