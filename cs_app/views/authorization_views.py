@@ -29,7 +29,6 @@ import cs_app.utils.common_functions as cf
 
 
 def create_account_view(request):
-    print("new account view")
     """
     View function to handle POST requests for creating a new user account
     and rendering create account page.
@@ -48,8 +47,6 @@ def create_account_view(request):
     """
 
     if request.method == "POST":
-        print("running post")
-
         # Get fields
         first_name = request.POST.get("firstName")
         last_name = request.POST.get("lastName")

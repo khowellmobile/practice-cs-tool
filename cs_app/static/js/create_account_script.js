@@ -44,8 +44,6 @@ $("#password").on("input", function () {
  * @returns {boolean} True if all fields are valid, False otherwise.
  */
 function validateForm() {
-    console.log("checking forms");
-
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
     var email = $("#email").val();
@@ -65,7 +63,6 @@ function validateForm() {
         );
         return false;
     }
-    console.log("good to go");
     return true;
 }
 
