@@ -83,6 +83,7 @@ function attachEventListeners() {
                 break;
             case "password":
                 formdata = {
+                    old_password: $("#password_old").val(),
                     password: $("#password_new").val(),
                 };
                 break;
@@ -242,6 +243,8 @@ function ajaxResponseError(fieldName, message) {
                 console.log("Field name not recognized");
                 break;
         }
+    } else if (message["error"] == "Old password is incorrect") {
+        alert("Old password is incorrect.");
     } else {
         alert("An unknown error occurred. Please try again.");
     }

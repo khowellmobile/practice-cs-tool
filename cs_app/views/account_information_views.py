@@ -26,6 +26,8 @@ Dependencies:
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 import json
 import cs_app.utils.common_functions as cf
@@ -144,13 +146,18 @@ def update_password_view(request):
     """
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
+        old_password = data.get("old_password")
         password = data.get("password")
 
-        # Validation for password format
-        if not cf.validate_name(password):
-            return JsonResponse({"error": "Invalid format"}, status=400)
-
         user = request.user
+
+        # Check if the old password is correct
+        if not user.check_password(old_password):
+            return JsonResponse({"error": "Old password is incorrect"}, status=400)
+
+        # Validation for password format
+        if not cf.validate_password(password):
+            return JsonResponse({"error": "Invalid format"}, status=400)
 
         user.set_password(password)
         user.save()
