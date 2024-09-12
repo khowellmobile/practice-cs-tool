@@ -25,15 +25,6 @@ try {
 }
 
 /**
- * Handles form submission for the account creation form.
- *
- * Prevents the default form submission behavior.
- */
-$("#create-account-form").on("submit", function (event) {
-    event.preventDefault();
-});
-
-/**
  * Handles input events on the password field to check password validity.
  *
  * Runs the passwordChecker function to provide feedback on password strength.
@@ -53,6 +44,8 @@ $("#password").on("input", function () {
  * @returns {boolean} True if all fields are valid, False otherwise.
  */
 function validateForm() {
+    console.log("checking forms");
+
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
     var email = $("#email").val();
@@ -72,7 +65,7 @@ function validateForm() {
         );
         return false;
     }
-
+    console.log("good to go");
     return true;
 }
 
@@ -163,4 +156,3 @@ try {
 } catch (error) {
     console.log(error);
 }
-

@@ -25,6 +25,8 @@ def main_view(request):
 
 
 def create_account_view(request):
+    print("old create account view")
+
     if request.method == "POST":
         # Get fields
         first_name = request.POST.get("firstName")
@@ -125,6 +127,7 @@ def directions_view(request):
     }
 
     return render(request, "directions.html", context)
+
 
 @login_required
 def tinker_view(request):
