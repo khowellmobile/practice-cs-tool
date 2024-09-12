@@ -249,6 +249,13 @@ describe("ajaxResponseError function", () => {
         expect(consoleLogSpy).toHaveBeenCalledWith("Field name not recognized");
     });
 
+    test("should log to console for unknown field name", () => {
+        accountInfoScript.ajaxResponseError("password", { error: "Old password is incorrect" });
+        expect(global.alert).toHaveBeenCalledWith(
+            "Old password is incorrect."
+        );
+    });
+
     test("should show alert for unknown error", () => {
         accountInfoScript.ajaxResponseError("name", { error: "Some other error" });
         expect(global.alert).toHaveBeenCalledWith("An unknown error occurred. Please try again.");
