@@ -3,10 +3,9 @@ name: Run Jest Tests
 on:
     push:
         branches:
-            - 163-automate-testing 
+            - main
     pull_request:
         branches:
-            - 163-automate-testing
 
 jobs:
     test:
