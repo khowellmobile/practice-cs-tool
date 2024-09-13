@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "test": "jest"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "jquery": "^3.7.1",
+        "jsdom": "^24.1.0"
+    },
+    "jest": {
+        "setupFiles": [
+            "./source/setup-jest.js"
+        ]
+    }
+}
