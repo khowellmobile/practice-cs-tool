@@ -3,10 +3,10 @@ name: Run Jest Tests
 on:
     push:
         branches:
-            - main 
+            - 163-automate-testing 
     pull_request:
         branches:
-            - main
+            - 163-automate-testing
 
 jobs:
     test:
@@ -19,7 +19,7 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version:
+                  node-version: 'v20.14.0'
 
             - name: Install dependencies
               run: npm install
