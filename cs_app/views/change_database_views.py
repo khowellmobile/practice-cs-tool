@@ -171,23 +171,6 @@ def switch_database_view(request):
 
             settings.DATABASES[alias] = new_database_config
 
-            query = """SELECT * FROM HumanResources.EmployeeDepartmentHistory"""
-
-            conn = connections[alias]
-
-            conn.connect()
-
-            cursor = conn.cursor()
-
-            cursor.execute(query)
-
-            rows = cursor.fetchall()
-
-            if rows:
-                print("TRUE")
-            else:
-                print("FALSE")
-
             return JsonResponse({"success": True, "db_alias": alias})
 
         # Wrong engine error
