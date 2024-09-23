@@ -8,8 +8,6 @@ from django.db import connections
 
 from unittest.mock import patch
 
-
-# Import the function to be tested
 from cs_app.views import generate_unique_alias, remove_config, remove_conn
 
 
