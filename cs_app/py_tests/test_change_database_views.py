@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.db import connections
 
 from unittest.mock import patch
 
@@ -256,13 +255,14 @@ class SwitchDatabaseViewTests(TestCase):
             response.content, {"success": False, "error": "Invalid request method"}
         )
 
+
 class RemoveConfigTests(TestCase):
-    
+
     def setUp(self):
-        self.alias = 'test_db'
+        self.alias = "test_db"
         settings.DATABASES[self.alias] = {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'test_db.sqlite',
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "test_db.sqlite",
         }
 
     def test_remove_config_success(self):
@@ -271,19 +271,20 @@ class RemoveConfigTests(TestCase):
         self.assertNotIn(self.alias, settings.DATABASES)
 
     def test_remove_config_nonexistent(self):
-        remove_config('nonexistent_db')
+        remove_config("nonexistent_db")
         self.assertIn(self.alias, settings.DATABASES)
+
 
 class RemoveConnTests(TestCase):
 
     def setUp(self):
-        self.alias = 'test_db'
+        self.alias = "test_db"
         settings.DATABASES[self.alias] = {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'test_db.sqlite',
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "test_db.sqlite",
         }
 
-    @patch('django.db.connections')
+    @patch("django.db.connections")
     def test_remove_conn_success(self, mock_connections):
         mock_connection = mock_connections[self.alias]
         mock_connection.alias = self.alias
