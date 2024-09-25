@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
 from unittest.mock import patch
 
 class CreateAccountViewTests(TestCase):
