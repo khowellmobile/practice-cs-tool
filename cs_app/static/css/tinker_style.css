@@ -1,5 +1,76 @@
 /* Write all dev css below here */
 
+#over_card {
+    width: 35rem;
+    height: 20rem;
+    padding: 1rem;
+}
+
+.history_card {
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
+}
+
+.expanded-info {
+    height: 2rem;
+    width: 25rem;
+
+    background-color: white;
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.report-kind {
+    width: 20%;
+    height: 100%;
+    padding: 0.5rem;
+
+    background-color: lightsalmon;
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+}
+
+.report-date {
+    width: 40%;
+    height: 100%;
+    padding: 0.5rem;
+
+    font-size: 0.9rem;
+    background-color: rgb(255, 203, 183);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rep-type {
+    color: white;
+}
+
+.dates {
+    width: 40%;
+    margin: 0.2rem;
+
+    font-size: 0.9rem;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+}
+
+p {
+    margin: 0px;
+}
+
 /* Write all dev css above here */
 
 /* all css written below here is for the ui and functionality of the page */
@@ -250,10 +321,7 @@ span {
     box-sizing: border-box;
     border: 0.5rem solid var(--primary-color);
 
-    background-image: linear-gradient(to right, rgb(207, 207, 207) 1px, transparent 1px),
-        linear-gradient(to bottom, rgb(207, 207, 207) 1px, transparent 1px);
     background-size: 1rem 1rem;
-    background-color: white; /* Background color of the grid cells */
 
     display: flex;
     justify-content: center;
