@@ -10,6 +10,10 @@ html {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
 
+p {
+    margin: 0px;
+}
+
 .card-container {
     width: 65%;
     height: 65%;
@@ -20,6 +24,62 @@ html {
     gap: 20px;
     align-items: center;
     justify-items: center;
+}
+
+.history-info {
+    height: 2.5rem;
+    width: 100%;
+
+    background-color: white;
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.report-kind {
+    width: 25%;
+    height: 100%;
+    padding: 0.5rem;
+
+    background-color: lightsalmon;
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+}
+
+.report-date {
+    width: 30%;
+    height: 100%;
+    padding: 0.5rem;
+
+    font-size: 0.75rem;
+    background-color: rgb(255, 203, 183);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rep-type {
+    color: white;
+}
+
+.dates {
+    width: 45%;
+    margin: 0.2rem;
+
+    font-size: 0.75rem;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
 }
 
 .card-container > .home-card:nth-child(1) {
@@ -78,69 +138,6 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-
-
-
-p {
-    margin: 0px;
-}
-
-.history-info {
-    height: 2.5rem;
-    width: 100%;
-
-    background-color: white;
-    border-radius: 0.5rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.report-kind {
-    width: 25%;
-    height: 100%;
-    padding: 0.5rem;
-
-    background-color: lightsalmon;
-    border-radius: 0.5rem 0rem 0rem 0.5rem;
-    box-sizing: border-box;
-
-    display: flex;
-    align-items: center;
-}
-
-.report-date {
-    width: 30%;
-    height: 100%;
-    padding: 0.5rem;
-
-    font-size: 0.75rem;
-    background-color: rgb(255, 203, 183);
-    box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.rep-type {
-    color: white;
-}
-
-.dates {
-    width: 45%;
-    margin: 0.2rem;
-
-    font-size: 0.75rem;
-
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: space-between;
 }
 
 #genRep-card {
