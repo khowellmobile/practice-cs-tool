@@ -1,5 +1,57 @@
 /* Write all dev css below here */
 
+hr {
+    width: 100%;
+    margin: 1rem 0rem;
+
+    align-self: center;
+}
+
+#acctInfo-card {
+    width: 35rem;
+    height: 10rem;
+    margin: 1rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#acctInfo-card__header {
+    width: 100%;
+    height: 2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.1rem;
+    box-sizing: border-box;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#acctInfo-card__header > button {
+    height: 1.5rem;
+
+    justify-self: end;
+}
+
+#acctInfo-card__content {
+    width: 100%;
+    height: 90%;
+    padding-top: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 /* Write all dev css above here */
 
 /* all css written below here is for the ui and functionality of the page */

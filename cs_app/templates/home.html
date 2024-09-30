@@ -57,17 +57,19 @@
                         />
                     </div>
                 </div>
-                <div class="home-card" onclick="redirectTo('/account_information/')">
-                    <div class="home-card__header">
-                        <h2>Account Information</h2>
+                <div id="acctInfo-card">
+                    <div id="acctInfo-card__header">
+                        <h3>Account Information</h3>
+                        <button class="button-1" onclick="redirectTo('/account_information/')">Change</button>
                     </div>
-                    <div class="home-card__icon">
-                        <img
-                            src="{% static 'images/account_icon.png' %}"
-                            alt="Generate Report Image"
-                            width="150"
-                            height="150"
-                        />
+                    <div id="acctInfo-card__content">
+                        <div>
+                            <span><b>Name:</b> {{ user.first_name }} {{user.last_name }}</span>
+                        </div>
+                        <hr />
+                        <div>
+                            <span><b>Email:</b> {{ user.email }}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="home-card" onclick="redirectTo('/change_database/')">
