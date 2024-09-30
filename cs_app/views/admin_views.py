@@ -22,6 +22,8 @@ from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from ..models import PastParameter
+
 
 def main_view(request):
     """
@@ -52,9 +54,11 @@ def home_view(request):
         HttpResponse: Renders the 'home.html' template with user context.
     """
 
+    data = list(PastParameter.objects.order_by("-date_field")[:5])[::-1]
     user = request.user
     context = {
         "user": user,
+        "data": data,
     }
 
     return render(request, "home.html", context)

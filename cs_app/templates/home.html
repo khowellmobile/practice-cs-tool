@@ -5,26 +5,43 @@
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
         <link rel="stylesheet" href="{% static 'css/home_style.css' %}" />
-        <script src="{% static 'js/common_script.js' %}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container-1">
             <p class="login-signifier">Welcome, {{ user.first_name }}</p>
-            <button id="logout-button" class="button-1" onclick="redirectTo('/logout/')">
-                Logout
-            </button>
+            <button id="logout-button" class="button-1" onclick="redirectTo('/logout/')">Logout</button>
             <div class="card-container">
-                <div class="home-card" onclick="redirectTo('/generate_report/')">
-                    <div class="home-card__header">
-                        <h2>Generate Report</h2>
+                <div id="genRep-card">
+                    <div id="genRep-card__header">
+                        <h2>Reports</h2>
                     </div>
-                    <div class="home-card__icon">
-                        <img
-                            src="{% static 'images/report_icon.png' %}"
-                            alt="Generate Report Image"
-                            width="150"
-                            height="150"
-                        />
+                    <div id="genRep-card__content">
+                        <div id="genRep-card__content__history">
+                            {% for param in data reversed %}
+                            <div class="history-info">
+                                <div class="report-kind"><b class="rep-type">{{ param.text_field }}</b></div>
+                                <div class="report-date">
+                                    <p><b>Ran On</b></p>
+                                    <p>{{ param.date_field }}</p>
+                                </div>
+                                <div class="dates">
+                                    <div>
+                                        <p><b>Start</b></p>
+                                        <p>{{ param.parameters_json.start_date }}</p>
+                                    </div>
+                                    <div>
+                                        <p><b>End</b></p>
+                                        <p>{{ param.parameters_json.end_date }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div id="genRep-card__content__button">
+                            <button class="button-1" onclick="redirectTo('/generate_report/')">Generate Reports</button>
+                        </div>
                     </div>
                 </div>
                 <div class="home-card" onclick="redirectTo('/directions/')">
@@ -68,5 +85,7 @@
                 </div>
             </div>
         </div>
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/home_script.js' %}"></script>
     </body>
 </html>
