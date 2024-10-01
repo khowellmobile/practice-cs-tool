@@ -1,5 +1,29 @@
 /* Write all dev css below here */
 
+#direactions-card {
+    padding: 0.5rem;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#directions-card__header {
+    width: 100%;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Write all dev css above here */
 
 /* all css written below here is for the ui and functionality of the page */

@@ -44,17 +44,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="home-card" onclick="redirectTo('/directions/', 'changeDB')">
-                    <div class="home-card__header">
-                        <h2>How to Use</h2>
-                    </div>
-                    <div class="home-card__icon">
-                        <img
-                            src="{% static 'images/question_icon.png' %}"
-                            alt="Generate Report Image"
-                            width="150"
-                            height="150"
-                        />
+                <div id="direactions-card">
+                    <div id="directions-card__header"><h3>Directions</h3></div>
+                    <div>
+                        <button class="button-1" onclick="redirectTo('/directions/', 'overview')">Overview</button>
+                        <button class="button-1" onclick="redirectTo('/directions/', 'genRep')">Generate Report</button>
+                        <button class="button-1" onclick="redirectTo('/directions/', 'changeDB')">
+                            Change DB
+                        </button>
+                        <button class="button-1" onclick="redirectTo('/directions/', 'acctInfo')">Account Info</button>
                     </div>
                 </div>
                 <div id="acctInfo-card">
