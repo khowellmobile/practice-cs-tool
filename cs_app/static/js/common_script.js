@@ -10,7 +10,17 @@
  * - [Function 3]
  */
 
-function redirectTo(url) {
+function redirectTo(url, additionalInfo) {
+
+    console.log("RUN")
+    
+    if (additionalInfo) {
+        // Encode the optionalField to make it URL-safe
+        const encodedField = encodeURIComponent(additionalInfo);
+        // Append the optionalField as a query parameter
+        url += `?additionalInfo=${encodedField}`;
+    }
+    
     window.location.href = url;
 }
 
