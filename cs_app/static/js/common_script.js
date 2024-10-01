@@ -11,6 +11,8 @@
  */
 
 function redirectTo(url, additionalInfo) {
+
+    console.log("RUN")
     
     if (additionalInfo) {
         // Encode the optionalField to make it URL-safe
