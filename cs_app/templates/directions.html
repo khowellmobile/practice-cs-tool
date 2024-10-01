@@ -11,16 +11,8 @@
     <body>
         <div class="container-1">
             <p class="login-signifier">Welcome, {{ user.first_name }}</p>
-            <button class="button-1 home-button" onclick="redirectTo('/home/')">
-                Back to home
-            </button>
-            <button
-                id="logout-button"
-                class="button-1"
-                onclick="redirectTo('/logout/')"
-            >
-                Logout
-            </button>
+            <button class="button-1 home-button" onclick="redirectTo('/home/')">Back to home</button>
+            <button id="logout-button" class="button-1" onclick="redirectTo('/logout/')">Logout</button>
             <div id="d1">
                 <div id="tabs">
                     <div id="overview" class="tab active">
@@ -41,37 +33,31 @@
                         <h2>Generate Report</h2>
                         <div class="explanation">
                             <p>
-                                Generate report is used to create a table
-                                listing times spent on each client. Enter in the
-                                time date and range or select one of the preset
-                                time ranges. If you have a report type you use
-                                often, check the history section on the left. It
-                                keeps the 25 most recent reports.
+                                Generate report is used to create a table listing times spent on each client. Enter in
+                                the time date and range or select one of the preset time ranges. If you have a report
+                                type you use often, check the history section on the left. It keeps the 25 most recent
+                                reports.
                             </p>
                         </div>
                         <div class="list">
                             <h4>Time Range Presets</h4>
                             <ul>
                                 <li>
-                                    <strong>Year to Date (YTD)</strong> - This
-                                    preset is the time range from January 1st of
-                                    the current year to the current date
+                                    <strong>Year to Date (YTD)</strong> - This preset is the time range from January 1st
+                                    of the current year to the current date
                                 </li>
                                 <li>
-                                    <strong>All Time</strong> - This preset is
-                                    the time range of the current date to the
+                                    <strong>All Time</strong> - This preset is the time range of the current date to the
                                     beginning of time!
                                 </li>
                                 <li>
-                                    <strong>Last Year</strong> - This preset is
-                                    the time range of January 1st of last year
-                                    to December 31st of last year
+                                    <strong>Last Year</strong> - This preset is the time range of January 1st of last
+                                    year to December 31st of last year
                                 </li>
                                 <li>
-                                    <strong>Custom</strong> - This is more an
-                                    indicator that a custom time range has been
-                                    entered. The preset automatically will
-                                    change to custom when a user enters a date.
+                                    <strong>Custom</strong> - This is more an indicator that a custom time range has
+                                    been entered. The preset automatically will change to custom when a user enters a
+                                    date.
                                 </li>
                             </ul>
                         </div>
@@ -80,45 +66,27 @@
                         <h2>Change Database</h2>
                         <div class="explanation">
                             <p>
-                                Change Database lets you switch the web
-                                application's source database. It requires four
-                                fields, with optional username and password
-                                inputs. Entering these disables Windows
-                                authentication. The current connection is shown
-                                on the right, with status updates and errors
-                                displayed in the Status/Messages box during
-                                connection setup
+                                Change Database lets you switch the web application's source database. It requires four
+                                fields, with optional username and password inputs. Entering these disables Windows
+                                authentication. The current connection is shown on the right, with status updates and
+                                errors displayed in the Status/Messages box during connection setup
                             </p>
                         </div>
                         <div class="list">
                             <h4>Form Field Inputs</h4>
                             <ul>
                                 <li>
-                                    <strong>Database Engine</strong> - The
-                                    engine for the database (mssql, sqlite,
+                                    <strong>Database Engine</strong> - The engine for the database (mssql, sqlite,
                                     mysql, etc)
                                 </li>
+                                <li><strong>Database Name</strong> - The name of the database</li>
+                                <li><strong>Database Host</strong> - This is the host server of the database</li>
                                 <li>
-                                    <strong>Database Name</strong> - The name of
-                                    the database
-                                </li>
-                                <li>
-                                    <strong>Database Host</strong> - This is the
-                                    host server of the database
-                                </li>
-                                <li>
-                                    <strong>Database Driver</strong> - This is
-                                    the set of protocols used to control the
+                                    <strong>Database Driver</strong> - This is the set of protocols used to control the
                                     databse
                                 </li>
-                                <li>
-                                    <strong>Username (optional)</strong> - Your
-                                    username to login to the database
-                                </li>
-                                <li>
-                                    <strong>Password (optional)</strong> - Your
-                                    password to login to the database
-                                </li>
+                                <li><strong>Username (optional)</strong> - Your username to login to the database</li>
+                                <li><strong>Password (optional)</strong> - Your password to login to the database</li>
                             </ul>
                         </div>
                     </div>
@@ -126,31 +94,25 @@
                         <h2>Account Information</h2>
                         <div class="explanation">
                             <p>
-                                Account Information lets you change your
-                                accounts name, username/email, and password.
-                                Each of these fields have limits as to their
-                                length and allowed characters. Check below more
-                                more information on the paramters.
+                                Account Information lets you change your accounts name, username/email, and password.
+                                Each of these fields have limits as to their length and allowed characters. Check below
+                                more more information on the paramters.
                             </p>
                         </div>
                         <div class="list">
                             <h4>Information Fields</h4>
                             <ul>
                                 <li>
-                                    <strong>Account Name</strong> - Your first
-                                    and last name. Limited to only alphabet
+                                    <strong>Account Name</strong> - Your first and last name. Limited to only alphabet
                                     characters.
                                 </li>
                                 <li>
-                                    <strong>Email</strong> - Your email is used
-                                    as both your username and email. It is
-                                    limited to normal email characters and the
-                                    email format.
+                                    <strong>Email</strong> - Your email is used as both your username and email. It is
+                                    limited to normal email characters and the email format.
                                 </li>
                                 <li>
-                                    <strong>Password</strong> - Your password
-                                    must be at least 8 characters long, contain
-                                    one special character, and one number.
+                                    <strong>Password</strong> - Your password must be at least 8 characters long,
+                                    contain one special character, and one number.
                                 </li>
                             </ul>
                         </div>
@@ -158,11 +120,9 @@
                     <div id="slides__genRep__1" class="slide doubleSlide up">
                         <h2>Generate Report General Information</h2>
                         <p>
-                            The generate report page has 3 segments, history,
-                            parameter/buttons, and table display. History
-                            displays past reports, parameter/buttons are how you
-                            control the report, and the table allows for
-                            searching and pagination.
+                            The generate report page has 3 segments, history, parameter/buttons, and table display.
+                            History displays past reports, parameter/buttons are how you control the report, and the
+                            table allows for searching and pagination.
                         </p>
                         <h4>Click a section below to learn more!</h4>
                         <div id="mini-genRep">
@@ -195,35 +155,25 @@
                         <div id="slides__genRep__2__repHist" class="scaleUp">
                             <h2>Report History</h2>
                             <p>
-                                Report history is an expanding side menu with a
-                                scroll set of buttons that represent the 25 most
-                                recent reports. Click on a history button to
-                                regenerate that report with the same paramters.
+                                Report history is an expanding side menu with a scroll set of buttons that represent the
+                                25 most recent reports. Click on a history button to regenerate that report with the
+                                same paramters.
                             </p>
 
                             <div class="list">
-                                <h4>
-                                    Each history button is split into 4 parts
-                                </h4>
+                                <h4>Each history button is split into 4 parts</h4>
                                 <ul>
                                     <li>
-                                        <strong>Time Range Preset</strong> -
-                                        This word or symbol represents the time
-                                        range at a glance (All Time, Last Year,
-                                        Etc).
+                                        <strong>Time Range Preset</strong> - This word or symbol represents the time
+                                        range at a glance (All Time, Last Year, Etc).
                                     </li>
+                                    <li><strong>Report Date</strong> - This is the date that the report was ran on.</li>
                                     <li>
-                                        <strong>Report Date</strong> - This is
-                                        the date that the report was ran on.
-                                    </li>
-                                    <li>
-                                        <strong>Start Date</strong> - This is
-                                        the starting date for the range of the
+                                        <strong>Start Date</strong> - This is the starting date for the range of the
                                         report data.
                                     </li>
                                     <li>
-                                        <strong>End Date</strong> - This is the
-                                        ending date for the range of the report
+                                        <strong>End Date</strong> - This is the ending date for the range of the report
                                         data.
                                     </li>
                                 </ul>
@@ -232,34 +182,26 @@
                                 <h4>Symbol Meanings</h4>
                                 <ul>
                                     <li>
-                                        <strong>YTD - Year to Date</strong> -
-                                        Time range from January 1st of the
-                                        current year to today.
+                                        <strong>YTD - Year to Date</strong> - Time range from January 1st of the current
+                                        year to today.
                                     </li>
                                     <li>
-                                        <strong>AT - All Time</strong> - Time
-                                        range from beginning of records to
-                                        current date.
+                                        <strong>AT - All Time</strong> - Time range from beginning of records to current
+                                        date.
                                     </li>
                                     <li>
-                                        <strong>LY - Last Year</strong> - Time
-                                        range spanning from January 1st of last
+                                        <strong>LY - Last Year</strong> - Time range spanning from January 1st of last
                                         year to December 31st of last year.
                                     </li>
-                                    <li>
-                                        <strong>C - Custom</strong> - Indicates
-                                        a custom time range.
-                                    </li>
+                                    <li><strong>C - Custom</strong> - Indicates a custom time range.</li>
                                 </ul>
                             </div>
                         </div>
                         <div id="slides__genRep__2__params" class="scaleDown">
                             <h2>Parameters/Buttons</h2>
                             <p>
-                                The section at the top is used to hold parameter
-                                inputs and buttons to do functions. Listed below
-                                are the fields and buttons in order from left to
-                                right.
+                                The section at the top is used to hold parameter inputs and buttons to do functions.
+                                Listed below are the fields and buttons in order from left to right.
                             </p>
 
                             <div class="list">
@@ -267,40 +209,33 @@
                                 <ul>
                                     <li>
                                         <strong>Left Date Input</strong>
-                                        - This field holds the date for the
-                                        start date of your report.
+                                        - This field holds the date for the start date of your report.
                                     </li>
                                     <li>
                                         <strong>Right Date Input</strong>
-                                        - This field holds the date for the enf
-                                        date of your report.
+                                        - This field holds the date for the enf date of your report.
                                     </li>
                                     <li>
                                         <strong>Preset Selector</strong>
-                                        - Select a date preset. Changing either
-                                        of the date inputs will set this field
+                                        - Select a date preset. Changing either of the date inputs will set this field
                                         to custom.
                                     </li>
                                     <li>
                                         <strong>Create Report Button</strong>
-                                        - Once entering the parameters click
-                                        create report to generate a table
+                                        - Once entering the parameters click create report to generate a table
                                         containing your data.
                                     </li>
                                     <li>
                                         <strong>Placeholder</strong>
-                                        - This is a placeholder button for
-                                        future functions
+                                        - This is a placeholder button for future functions
                                     </li>
                                     <li>
                                         <strong>Placeholder</strong>
-                                        - This is a placeholder button for
-                                        future functions
+                                        - This is a placeholder button for future functions
                                     </li>
                                     <li>
                                         <strong>Return Home Button</strong>
-                                        - Click this button to go back to the
-                                        home screen
+                                        - Click this button to go back to the home screen
                                     </li>
                                 </ul>
                             </div>
@@ -309,49 +244,35 @@
                             <h2>Data Table</h2>
                             <p>
                                 The data table is generated using the
-                                <a
-                                    href="https://datatables.net/"
-                                    target="_blank"
-                                    >DataTables</a
-                                >
-                                library. It has multiple features such as
-                                pagination, search, and sorting.
+                                <a href="https://datatables.net/" target="_blank">DataTables</a>
+                                library. It has multiple features such as pagination, search, and sorting.
                             </p>
                             <div class="list">
                                 <h4>Table Features</h4>
                                 <ul>
                                     <li>
                                         <strong>Searching</strong>
-                                        - In the top right is a search bar.
-                                        Search by key words and the table will
-                                        pull up the results immediately. No need
-                                        to press a button.
+                                        - In the top right is a search bar. Search by key words and the table will pull
+                                        up the results immediately. No need to press a button.
                                     </li>
                                     <li>
                                         <strong>Sorting</strong>
-                                        - Click at the top of a column to order
-                                        by that column. Click again to switch
+                                        - Click at the top of a column to order by that column. Click again to switch
                                         between descending and ascending order.
                                     </li>
                                     <li>
                                         <strong>Pagination</strong>
-                                        - Select different pages in the lower
-                                        right hand corner. One arrow will
-                                        advance or go back a single page.
-                                        Clicking on the double arrows will take
-                                        you to the first or last page.
+                                        - Select different pages in the lower right hand corner. One arrow will advance
+                                        or go back a single page. Clicking on the double arrows will take you to the
+                                        first or last page.
                                     </li>
                                 </ul>
                             </div>
                             <h4>More Information</h4>
                             <p>
                                 For more information on DataTables, click
-                                <a
-                                    href="https://datatables.net/"
-                                    target="_blank"
-                                    >Here. </a
-                                >The link has a full listing of fucntions and
-                                customization options.
+                                <a href="https://datatables.net/" target="_blank">Here. </a>The link has a full listing
+                                of fucntions and customization options.
                             </p>
                         </div>
                     </div>
@@ -359,96 +280,74 @@
                         <h2>Form</h2>
                         <div class="explanation">
                             <p>
-                                The Form is where you will input the database
-                                information you wish to connect to. Fields are
-                                case sensitive so double check your inputs to
-                                avoid errors. Keep in mind leaving the username
-                                and password blank will result in the tool using
-                                windows authentication for login.
+                                The Form is where you will input the database information you wish to connect to. Fields
+                                are case sensitive so double check your inputs to avoid errors. Keep in mind leaving the
+                                username and password blank will result in the tool using windows authentication for
+                                login.
                             </p>
                         </div>
                         <div class="list">
                             <h4>Database Form Fields</h4>
                             <ul>
                                 <li>
-                                    <strong>Database Engine</strong> - Manages
-                                    data storage and retrieval in a DBMS like
+                                    <strong>Database Engine</strong> - Manages data storage and retrieval in a DBMS like
                                     MySQL or PostgreSQL.
                                 </li>
                                 <li>
-                                    <strong>Database Name</strong> - Identifier
-                                    for a specific database instance within the
-                                    DBMS.
+                                    <strong>Database Name</strong> - Identifier for a specific database instance within
+                                    the DBMS.
                                 </li>
                                 <li>
-                                    <strong>Database Host</strong> - Server or
-                                    network location where the database engine
-                                    and its data are stored.
+                                    <strong>Database Host</strong> - Server or network location where the database
+                                    engine and its data are stored.
                                 </li>
                                 <li>
-                                    <strong>Database Driver</strong> - Enables
-                                    applications to communicate with specific
+                                    <strong>Database Driver</strong> - Enables applications to communicate with specific
                                     types of databases.
                                 </li>
                                 <li>
-                                    <strong>Database Username</strong> -
-                                    Credential used to authenticate access to a
+                                    <strong>Database Username</strong> - Credential used to authenticate access to a
                                     database.
                                 </li>
                                 <li>
-                                    <strong>Database Password</strong> -
-                                    Security key required for secure access to a
+                                    <strong>Database Password</strong> - Security key required for secure access to a
                                     database instance.
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div
-                        id="slides__changeDB__2"
-                        class="slide doubleSlide down"
-                    >
+                    <div id="slides__changeDB__2" class="slide doubleSlide down">
                         <h2>Current Connection and Status</h2>
                         <div class="explanation">
                             <p>
-                                In the right pane is the database you are
-                                currently connected to. Beneath that is your
-                                status/messages box. This is where any status
-                                messages will appear to let you know about any
-                                errors. The errors come directly from the system
-                                to give you the most information possible when
-                                one arises.
+                                In the right pane is the database you are currently connected to. Beneath that is your
+                                status/messages box. This is where any status messages will appear to let you know about
+                                any errors. The errors come directly from the system to give you the most information
+                                possible when one arises.
                             </p>
                         </div>
                         <div class="list">
                             <h4>Common Messages</h4>
                             <ul>
                                 <li>
-                                    <strong>Successful Connection</strong> -
-                                    This messages appears when a successful
+                                    <strong>Successful Connection</strong> - This messages appears when a successful
                                     connection is made.
                                 </li>
                                 <li>
-                                    <strong
-                                        >Error: 'EngineName' isn't an available
-                                        database backend</strong
-                                    >
-                                    - This will appear when an invalid engine is
-                                    entered
+                                    <strong>Error: 'EngineName' isn't an available database backend</strong>
+                                    - This will appear when an invalid engine is entered
                                 </li>
                                 <li>
-                                    <strong>Error: '28000',... </strong> - This
-                                    will appear when a database name could not
-                                    be found
-                                </li>
-                                <li>
-                                    <strong>Error: '08001',... </strong> - This
-                                    will appear when the database host could not
-                                    be found
-                                </li>
-                                <li>
-                                    <strong>Error: 'IM002',... </strong> - This
-                                    will appear when the database driver could
+                                    <strong>Error: '28000',... </strong> - This will appear when a database name could
                                     not be found
+                                </li>
+                                <li>
+                                    <strong>Error: '08001',... </strong> - This will appear when the database host could
+                                    not be found
+                                </li>
+                                <li>
+                                    <strong>Error: 'IM002',... </strong> - This will appear when the database driver
+                                    could not be found
                                 </li>
                             </ul>
                         </div>
@@ -457,82 +356,59 @@
                         <h2>Account Information Fields</h2>
                         <div class="explanation">
                             <p>
-                                Your account information consists of three
-                                crucial fields: first and last name, email, and
-                                password. Each field has specific requirements
-                                and formats, detailed below. Please exercise
-                                caution when making changes, as once confirmed,
-                                they cannot be reverted.
+                                Your account information consists of three crucial fields: first and last name, email,
+                                and password. Each field has specific requirements and formats, detailed below. Please
+                                exercise caution when making changes, as once confirmed, they cannot be reverted.
                             </p>
                         </div>
                         <div class="list">
                             <h4>Information Fields</h4>
                             <ul>
                                 <li>
-                                    <strong>First and Last Name</strong> - Your
-                                    first and last name uniquely identify your
-                                    account and serve as additional identifiers
-                                    beyond your username/email. These fields
-                                    accept only alphabetical characters, spaces,
-                                    hyphens, and apostrophes.
+                                    <strong>First and Last Name</strong> - Your first and last name uniquely identify
+                                    your account and serve as additional identifiers beyond your username/email. These
+                                    fields accept only alphabetical characters, spaces, hyphens, and apostrophes.
                                 </li>
                                 <li>
-                                    <strong>Email</strong> - Your email serves
-                                    both as your username and contact email. It
-                                    must adhere to standard email character
-                                    limitations and maintain the format
+                                    <strong>Email</strong> - Your email serves both as your username and contact email.
+                                    It must adhere to standard email character limitations and maintain the format
                                     "example@company.com".
                                 </li>
                                 <li>
-                                    <strong>Password</strong> - Your password is
-                                    securely hashed and not stored in plain
-                                    text. It must be at least 8 characters long,
-                                    including at least one special character and
-                                    one number, for enhanced security.
+                                    <strong>Password</strong> - Your password is securely hashed and not stored in plain
+                                    text. It must be at least 8 characters long, including at least one special
+                                    character and one number, for enhanced security.
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div
-                        id="slides__acctInfo__2"
-                        class="slide doubleSlide down"
-                    >
+                    <div id="slides__acctInfo__2" class="slide doubleSlide down">
                         <h2>Place Holder</h2>
                         <div class="explanation">
                             <p>
-                                Mutatio rationum est processus ubi tu potes
-                                mutare nomina, emailes, vel codices accedentis
-                                in tua conto. Hoc operatio utile est ut tuas
-                                actiones et consilium tutum et accurate
-                                reserces. Tamen, cura debetur cum mutationes,
-                                quia post confirmationem non revertentur!
+                                Mutatio rationum est processus ubi tu potes mutare nomina, emailes, vel codices
+                                accedentis in tua conto. Hoc operatio utile est ut tuas actiones et consilium tutum et
+                                accurate reserces. Tamen, cura debetur cum mutationes, quia post confirmationem non
+                                revertentur!
                             </p>
                         </div>
                         <div class="list">
                             <h4>Place Holder</h4>
                             <ul>
                                 <li>
-                                    <strong>Place Holder 1</strong> - Mutatio
-                                    rationum est processus ubi possis mutare
-                                    nomina, emailes, et codices accedentis in
-                                    conto tuo. Cura maxima habenda est, quia
-                                    mutationes post confirmationem non possunt
-                                    reverti.
+                                    <strong>Place Holder 1</strong> - Mutatio rationum est processus ubi possis mutare
+                                    nomina, emailes, et codices accedentis in conto tuo. Cura maxima habenda est, quia
+                                    mutationes post confirmationem non possunt reverti.
                                 </li>
                                 <li>
-                                    <strong>Place Holder 2</strong> - Mutatio
-                                    rationum in conto te adiuvat emendare
-                                    nomina, emailes, et codices accedentis.
-                                    Securitati et fidelitati tuarum actionum
-                                    conducit, sed mutationes post confirmationem
-                                    permanentes sunt.
+                                    <strong>Place Holder 2</strong> - Mutatio rationum in conto te adiuvat emendare
+                                    nomina, emailes, et codices accedentis. Securitati et fidelitati tuarum actionum
+                                    conducit, sed mutationes post confirmationem permanentes sunt.
                                 </li>
                                 <li>
-                                    <strong>Place Holder 3</strong> - Emendatio
-                                    rationum in conto te permitit configurare
-                                    nomina, emailes, et codices accedentis. Cura
-                                    maxima habenda est, quia mutationes post
-                                    confirmationem firmatae sunt.
+                                    <strong>Place Holder 3</strong> - Emendatio rationum in conto te permitit
+                                    configurare nomina, emailes, et codices accedentis. Cura maxima habenda est, quia
+                                    mutationes post confirmationem firmatae sunt.
                                 </li>
                             </ul>
                         </div>
@@ -544,5 +420,12 @@
         <!-- Links to .js files -->
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/directions_script.js' %}"></script>
+
+        <script>
+            addInfo = "{{ context.additionalInfo }}"
+            if (addInfo && addInfo !== "overview") {
+                $("#" + addInfo).toggleClass("active inactive");
+            }
+        </script>
     </body>
 </html>
