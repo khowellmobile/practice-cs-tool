@@ -1,5 +1,56 @@
 /* Write all dev css below here */
 
+#changeDB-card {
+    width: 35rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#changeDB-card__header {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0.5rem;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#changeDB-card__content {
+    display: flex;
+}
+
+#changeDB-card__content__info {
+    width: 70%;
+}
+
+#changeDB-card__content__info h3 {
+    margin: 0px;
+}
+
+#changeDB-card__content__info > div {
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+#changeDB-card__content__button {
+    width: 30%;
+}
+
+#changeDB-card__content__button button {
+    width: 100%;
+    height: 100%;
+}
+
 /* Write all dev css above here */
 
 /* all css written below here is for the ui and functionality of the page */

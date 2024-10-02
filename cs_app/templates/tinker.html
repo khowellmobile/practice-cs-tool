@@ -20,6 +20,21 @@
                         <div id="dev-container">
                             <!-- Add all html below here -->
 
+                            <div id="changeDB-card">
+                                <div id="changeDB-card__header"><h2>Change Database</h2></div>
+                                <div id="changeDB-card__content">
+                                    <div id="changeDB-card__content__info">
+                                        <h3>Currently Connected To:</h3>
+                                        <div><b>Engine: </b>{{ db_info.db_engine }}</div>
+                                        <div><b>Name: </b>{{ db_info.db_name }}</div>
+                                        <div><b>Host: </b>{{ db_info.db_host }}</div>
+                                    </div>
+                                    <div id="changeDB-card__content__button">
+                                        <button class="button-1">Change</button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Add all html above here -->
                         </div>
                     </div>

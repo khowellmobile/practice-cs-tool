@@ -70,17 +70,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="home-card" onclick="redirectTo('/change_database/')">
-                    <div class="home-card__header">
-                        <h2>Change Database</h2>
-                    </div>
-                    <div class="home-card__icon">
-                        <img
-                            src="{% static 'images/database_icon.png' %}"
-                            alt="Generate Report Image"
-                            width="150"
-                            height="150"
-                        />
+                <div id="changeDB-card">
+                    <div id="changeDB-card__header"><h2>Change Database</h2></div>
+                    <div id="changeDB-card__content">
+                        <div id="changeDB-card__content__info">
+                            <h3>Currently Connected To:</h3>
+                            <div><b>Engine: </b>{{ db_info.db_engine }}</div>
+                            <div><b>Name: </b>{{ db_info.db_name }}</div>
+                            <div><b>Host: </b>{{ db_info.db_host }}</div>
+                        </div>
+                        <div id="changeDB-card__content__button">
+                            <button class="button-1" onclick="redirectTo('/change_database/')">Change</button>
+                        </div>
                     </div>
                 </div>
             </div>
