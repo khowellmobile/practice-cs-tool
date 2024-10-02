@@ -34,9 +34,12 @@ def directions_view(request):
     Returns:
         HttpResponse: Rendered template with user context.
     """
+
+    print(request.GET.get("additionalInfo", None))
     user = request.user
     context = {
         "user": user,
+        "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
     return render(request, "directions.html", context)

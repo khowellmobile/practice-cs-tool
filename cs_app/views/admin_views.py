@@ -18,9 +18,11 @@ Dependencies:
 
 from django.http import HttpResponse
 from django.template import loader
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.conf import settings
+
+from ..models import PastParameter
 
 
 def main_view(request):
@@ -52,9 +54,20 @@ def home_view(request):
         HttpResponse: Renders the 'home.html' template with user context.
     """
 
+    data = list(PastParameter.objects.order_by("-date_field")[:7])[::-1]
     user = request.user
+    data_db = settings.DATABASES["data"]
+
+    db_info = {
+        "db_engine": data_db["ENGINE"],
+        "db_name": data_db["NAME"],
+        "db_host": data_db["HOST"],
+    }
+    
     context = {
         "user": user,
+        "data": data,
+        "db_info": db_info,
     }
 
     return render(request, "home.html", context)
