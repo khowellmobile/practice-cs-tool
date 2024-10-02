@@ -12,75 +12,85 @@
         <div class="container-1">
             <p class="login-signifier">Welcome, {{ user.first_name }}</p>
             <button id="logout-button" class="button-1" onclick="redirectTo('/logout/')">Logout</button>
-            <div class="card-container">
-                <div id="genRep-card">
-                    <div id="genRep-card__header">
-                        <h2>Reports</h2>
-                    </div>
-                    <div id="genRep-card__content">
-                        <div id="genRep-card__content__history">
-                            {% for param in data reversed %}
-                            <div class="history-info">
-                                <div class="report-kind"><b class="rep-type">{{ param.text_field }}</b></div>
-                                <div class="report-date">
-                                    <p><b>Ran On</b></p>
-                                    <p>{{ param.date_field }}</p>
-                                </div>
-                                <div class="dates">
-                                    <div>
-                                        <p><b>Start</b></p>
-                                        <p>{{ param.parameters_json.start_date }}</p>
+            <div id="card-container">
+                <div id="card-container__main">
+                    <div id="genRep-card" class="home-card">
+                        <div id="genRep-card__header" class="home-card__header">
+                            <h2>Reports</h2>
+                        </div>
+                        <div id="genRep-card__content">
+                            <div id="genRep-card__content__history">
+                                {% for param in data reversed %}
+                                <div class="history-info">
+                                    <div class="report-kind"><b class="rep-type">{{ param.text_field }}</b></div>
+                                    <div class="report-date">
+                                        <p><b>Ran On</b></p>
+                                        <p>{{ param.date_field }}</p>
                                     </div>
-                                    <div>
-                                        <p><b>End</b></p>
-                                        <p>{{ param.parameters_json.end_date }}</p>
+                                    <div class="dates">
+                                        <div>
+                                            <p><b>Start</b></p>
+                                            <p>{{ param.parameters_json.start_date }}</p>
+                                        </div>
+                                        <div>
+                                            <p><b>End</b></p>
+                                            <p>{{ param.parameters_json.end_date }}</p>
+                                        </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                        </div>
-                        <div id="genRep-card__content__button">
-                            <button class="button-1" onclick="redirectTo('/generate_report/')">Generate Reports</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="direactions-card">
-                    <div id="directions-card__header"><h3>Directions</h3></div>
-                    <div>
-                        <button class="button-1" onclick="redirectTo('/directions/', 'overview')">Overview</button>
-                        <button class="button-1" onclick="redirectTo('/directions/', 'genRep')">Generate Report</button>
-                        <button class="button-1" onclick="redirectTo('/directions/', 'changeDB')">
-                            Change DB
-                        </button>
-                        <button class="button-1" onclick="redirectTo('/directions/', 'acctInfo')">Account Info</button>
-                    </div>
-                </div>
-                <div id="acctInfo-card">
-                    <div id="acctInfo-card__header">
-                        <h3>Account Information</h3>
-                        <button class="button-1" onclick="redirectTo('/account_information/')">Change</button>
-                    </div>
-                    <div id="acctInfo-card__content">
-                        <div>
-                            <span><b>Name:</b> {{ user.first_name }} {{user.last_name }}</span>
-                        </div>
-                        <hr />
-                        <div>
-                            <span><b>Email:</b> {{ user.email }}</span>
+                            <div id="genRep-card__content__button">
+                                <button class="button-1" onclick="redirectTo('/generate_report/')">
+                                    Generate Reports
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="changeDB-card">
-                    <div id="changeDB-card__header"><h2>Change Database</h2></div>
-                    <div id="changeDB-card__content">
-                        <div id="changeDB-card__content__info">
-                            <h3>Currently Connected To:</h3>
-                            <div><b>Engine: </b>{{ db_info.db_engine }}</div>
-                            <div><b>Name: </b>{{ db_info.db_name }}</div>
-                            <div><b>Host: </b>{{ db_info.db_host }}</div>
+                <div id="card-container__sub">
+                    <div id="directions-card" class="home-card">
+                        <div class="home-card__header"><h3>Directions</h3></div>
+                        <div id="directions-card__buttons">
+                            <button class="button-1" onclick="redirectTo('/directions/', 'overview')">Overview</button>
+                            <button class="button-1" onclick="redirectTo('/directions/', 'genRep')">
+                                Generate Report
+                            </button>
+                            <button class="button-1" onclick="redirectTo('/directions/', 'changeDB')">
+                                Change Database
+                            </button>
+                            <button class="button-1" onclick="redirectTo('/directions/', 'acctInfo')">
+                                Account Info
+                            </button>
                         </div>
-                        <div id="changeDB-card__content__button">
-                            <button class="button-1" onclick="redirectTo('/change_database/')">Change</button>
+                    </div>
+                    <div id="acctInfo-card" class="home-card">
+                        <div id="acctInfo-card__header" class="home-card__header">
+                            <h3>Account Information</h3>
+                            <button class="button-1" onclick="redirectTo('/account_information/')">Change</button>
+                        </div>
+                        <div id="acctInfo-card__content">
+                            <div>
+                                <span><b>Name:</b> {{ user.first_name }} {{user.last_name }}</span>
+                            </div>
+                            <hr />
+                            <div>
+                                <span><b>Email:</b> {{ user.email }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="changeDB-card" class="home-card">
+                        <div class="home-card__header"><h3>Change Database</h3></div>
+                        <div id="changeDB-card__content">
+                            <div id="changeDB-card__content__info">
+                                <h4>Currently Connected To:</h4>
+                                <div><b>Engine: </b>{{ db_info.db_engine }}</div>
+                                <div><b>Name: </b>{{ db_info.db_name }}</div>
+                                <div><b>Host: </b>{{ db_info.db_host }}</div>
+                            </div>
+                            <div id="changeDB-card__content__button">
+                                <button class="button-1" onclick="redirectTo('/change_database/')">Change</button>
+                            </div>
                         </div>
                     </div>
                 </div>

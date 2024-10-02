@@ -1,7 +1,7 @@
 /* Write all dev css below here */
 
 #changeDB-card {
-    width: 35rem;
+    min-width: 35rem;
     padding: 0.5rem;
     box-sizing: border-box;
 

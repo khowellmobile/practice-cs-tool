@@ -21,17 +21,30 @@ hr {
     align-self: center;
 }
 
-.card-container {
-    width: 65%;
-    height: 65%;
+.home-card {
+    min-width: 35rem;
+    box-sizing: border-box;
 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.home-card__header {
+    width: 100%;
+    height: 2.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+
+    display: flex;
     align-items: center;
-    justify-items: center;
-
-    outline: 1px solid red;
 }
 
 .history-info {
@@ -81,6 +94,7 @@ hr {
 .dates {
     width: 45%;
     margin: 0.2rem;
+    padding: 0.5rem;
 
     font-size: 0.75rem;
 
@@ -90,87 +104,32 @@ hr {
     justify-content: space-between;
 }
 
-.card-container > .home-card:nth-child(1) {
-    background-image: linear-gradient(to bottom, #783de4, #955cff);
+#card-container {
+    height: 50%;
+
+    display: flex;
 }
 
-.card-container > .home-card:nth-child(2) {
-    background-image: linear-gradient(to bottom, #a955e0, #bf5fff);
-}
-
-.card-container > .home-card:nth-child(3) {
-    background-image: linear-gradient(to bottom, #4c74e4, #5f89ff);
-}
-
-.card-container > .home-card:nth-child(4) {
-    background-image: linear-gradient(to bottom, #62d9e9, #6aeeff);
-}
-
-.home-card {
-    width: 100%;
+#card-container__main {
+    width: 40rem;
     height: 100%;
+    margin-right: 1rem;
+}
 
-    background-color: var(--primary-color);
-
-    background-size: 100% 50px;
-    background-repeat: no-repeat;
-    border-radius: 0.5rem;
-    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
+#card-container__sub {
+    width: 50%;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
-}
-
-.home-card:hover {
-    transform: scale(1.01);
-}
-
-.home-card__header {
-    width: 100%;
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.home-card__header > h2 {
-    position: relative;
-    top: 0.2rem;
-}
-
-.home-card__icon {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #genRep-card {
-    min-width: 35rem;
-    height: 20rem;
+    height: 100%;
     padding: 1rem;
-    box-sizing: border-box;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-    box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
-
-    display: flex;
-    flex-direction: column;
 }
 
 #genRep-card__header {
-    width: 100%;
-    height: 50px;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
-    display: flex;
-    align-items: center;
     justify-content: center;
 }
 
@@ -205,30 +164,15 @@ hr {
 }
 
 #acctInfo-card {
-    min-width: 35rem;
     height: 10rem;
+    margin: 1rem 0px;
     padding: 0.5rem;
-    box-sizing: border-box;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
-    display: flex;
-    flex-direction: column;
 }
 
 #acctInfo-card__header {
-    width: 100%;
-    height: 2.5rem;
     padding-left: 0.5rem;
     padding-right: 0.1rem;
-    box-sizing: border-box;
 
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
-    display: flex;
-    align-items: center;
     justify-content: space-between;
 }
 
@@ -241,60 +185,23 @@ hr {
 #acctInfo-card__content {
     width: 100%;
     height: 90%;
-    padding-top: 0.5rem;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#direactions-card {
+#directions-card {
     padding: 0.5rem;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
-#directions-card__header {
-    width: 100%;
-    height: 2rem;
-    margin-bottom: 0.5rem;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
+#directions-card__buttons {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 #changeDB-card {
-    width: 35rem;
     padding: 0.5rem;
-    box-sizing: border-box;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
-    display: flex;
-    flex-direction: column;
-}
-
-#changeDB-card__header {
-    width: 100%;
-    height: 50px;
-    margin-bottom: 0.5rem;
-
-    background-color: var(--primary-color);
-    border-radius: 0.5rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #changeDB-card__content {
@@ -305,7 +212,7 @@ hr {
     width: 70%;
 }
 
-#changeDB-card__content__info h3 {
+#changeDB-card__content__info h4 {
     margin: 0px;
 }
 
