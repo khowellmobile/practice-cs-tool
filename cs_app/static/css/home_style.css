@@ -14,6 +14,15 @@ p {
     margin: 0px;
 }
 
+p,
+span,
+b,
+h2,
+h3,
+h4 {
+    cursor: default;
+}
+
 hr {
     width: 100%;
     margin: 1rem 0rem;

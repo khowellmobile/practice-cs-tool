@@ -84,9 +84,9 @@
                         <div id="changeDB-card__content">
                             <div id="changeDB-card__content__info">
                                 <h4>Currently Connected To:</h4>
-                                <div><b>Engine: </b>{{ db_info.db_engine }}</div>
-                                <div><b>Name: </b>{{ db_info.db_name }}</div>
-                                <div><b>Host: </b>{{ db_info.db_host }}</div>
+                                <div><b>Engine: </b><span>{{ db_info.db_engine }}</span></div>
+                                <div><b>Name: </b><span>{{ db_info.db_name }}</span></div>
+                                <div><b>Host: </b><span>{{ db_info.db_host }}</span></div>
                             </div>
                             <div id="changeDB-card__content__button">
                                 <button class="button-1" onclick="redirectTo('/change_database/')">Change</button>
