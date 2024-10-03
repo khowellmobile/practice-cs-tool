@@ -10,6 +10,10 @@ html {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
 
+h3 {
+    margin: 0.75rem;
+}
+
 form {
     width: 75%;
 
@@ -33,26 +37,20 @@ form > p {
     align-self: flex-start;
 }
 
-#form-names {
-    width: 100%;
-    margin-bottom: 1rem;
-    
-    display: flex;
-}
+.card {
+    width: 35%;
+    height: 70%;
+    padding: 2rem;
 
-#form-names__first-name, #form-names__last-name {
-    width: calc(100% - 0.5rem);
-
+    background-color: var(--primary-color);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-#form-names__first-name {
-    margin-right: 0.25rem
-}
-
-#form-names__last-name {
-    margin-left: 0.25rem
+.error {
+    margin: 0.5rem;
 }
 
 .input {
@@ -71,19 +69,30 @@ form > p {
     border-bottom: 0.3rem solid transparent;
 }
 
+#form-names {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    display: flex;
+}
+
+#form-names__first-name,
+#form-names__last-name {
+    width: calc(100% - 0.5rem);
+
+    display: flex;
+    flex-direction: column;
+}
+
+#form-names__first-name {
+    margin-right: 0.25rem;
+}
+
+#form-names__last-name {
+    margin-left: 0.25rem;
+}
+
 form > button {
     margin: 1.25rem;
     width: 100%;
-}
-
-.card {
-    width: 35%;
-    height: 70%;
-    padding: 2rem;
-
-    background-color: var(--primary-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
