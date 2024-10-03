@@ -286,13 +286,18 @@ span {
     height: calc(80% - 1rem);
     margin-top: 1rem;
     padding: 0.5rem;
+    box-sizing: border-box;
 
     background-color: var(--primary-color);
     border-radius: 0.5rem;
 
-    box-sizing: border-box;
+    overflow-y: auto;
 
     z-index: 1000;
+}
+
+#tree-container::-webkit-scrollbar {
+    display: none;
 }
 
 #d2 {
