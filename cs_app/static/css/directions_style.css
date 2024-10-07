@@ -20,7 +20,6 @@ a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
-
     transition: all 0.3s;
 }
 
@@ -39,11 +38,11 @@ a:hover {
     height: 100%;
 
     border: none;
+    transition: height 0.3s;
+
     display: flex;
     justify-content: center;
     align-items: center;
-
-    transition: height 0.3s;
 }
 
 .tab:nth-child(2) {
@@ -59,29 +58,23 @@ a:hover {
 .tab.active {
     background-color: var(--primary-color);
     height: calc(3rem);
-
     border-radius: 0.3rem 0.3rem 0rem 0rem;
 }
 
 .tab.inactive {
     background-color: var(--primary-color);
     height: 2.5rem;
-
     border-radius: 0.3rem;
-}
-
-#slides {
-    background-color: var(--primary-color);
 }
 
 .slide {
     height: 100%;
-    padding: 1rem;
     margin: 0rem 0.25rem 0rem 0.25rem;
-
+    padding: 1rem;
     box-sizing: border-box;
+
     background-color: white;
-    border-radius: 0.5rem; /* Rounded corners */
+    border-radius: 0.5rem;
     box-shadow: 5px 5px 7px -1px rgba(51, 51, 51, 0.23);
     transition: transform ease-in-out 0.75s;
 }
@@ -155,13 +148,15 @@ a:hover {
 }
 
 .scaleDown {
-    transform: scale(0);
     transition: all 0.5s;
+
+    transform: scale(0);
 }
 
 .scaleUp {
-    transform: scale(1);
     transition: all 0.5s;
+
+    transform: scale(1);
 }
 
 .mini-genRep__button {
@@ -172,9 +167,9 @@ a:hover {
 
 .mini-genRep__button:hover {
     background-color: rgb(167, 191, 255, 1);
-    transform: translateY(-2px);
-
     transition: all 0.4s;
+
+    transform: translateY(-2px);
 }
 
 .mini-genRep__button:active {
@@ -182,6 +177,7 @@ a:hover {
     background-color: #f0f0f1;
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+
     transform: translateY(1px);
 }
 

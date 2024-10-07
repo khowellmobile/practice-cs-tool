@@ -10,8 +10,65 @@ html {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 h3 {
     margin: 0.5rem 0rem 0.5rem 0.5rem;
+}
+
+.form__label {
+    width: 10rem;
+    margin: 0.5rem 0rem 0rem 1rem;
+
+    font-size: 1rem;
+    transition: all 0.5s;
+
+    display: inline-block;
+}
+
+.form__input {
+    width: 40%;
+    margin: 0.5rem 0rem 0rem 0.5rem;
+    padding: 0.5rem 1rem;
+
+    font-size: 1rem;
+    color: #333;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.2rem;
+    border: none;
+    border-bottom: 0.3rem solid transparent;
+    transition: all 0.5s;
+
+    display: inline-block;
+}
+
+.form__label + .form__input:placeholder-shown {
+    -webkit-transform: translateX(-11rem);
+    transform: translateX(-11rem);
+}
+
+.stat__message {
+    margin: 1rem 0rem 0rem 2rem;
+}
+
+.scroller {
+    overflow-y: auto;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #3d76f1;
+    animation: spin 1.5s linear infinite;
+
+    visibility: hidden;
 }
 
 #database-change {
@@ -57,40 +114,7 @@ h3 {
     width: 100%;
     height: 100%;
 
-
     display: inline-block;
-}
-
-.form__label {
-    width: 10rem;
-    margin-left: 1rem;
-    margin-top: 0.5rem;
-
-    font-size: 1rem;
-    transition: all 0.5s;
-
-    display: inline-block;
-}
-
-.form__input {
-    width: 40%;
-    margin: 0.5rem 0rem 0rem 0.5rem;
-    padding: 0.5rem 1rem;
-
-    font-size: 1rem;
-    color: #333;
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.2rem;
-    border: none;
-    border-bottom: 0.3rem solid transparent;
-    transition: all 0.5s;
-
-    display: inline-block;
-}
-
-.form__label + .form__input:placeholder-shown {
-    -webkit-transform: translateX(-11rem);
-    transform: translateX(-11rem);
 }
 
 #form__note {
@@ -114,9 +138,9 @@ h3 {
     width: 100%;
     height: 40%;
     margin-bottom: 0.5rem;
-    
+
     background-color: transparent;
-    
+
     display: flex;
     flex-direction: column;
 }
@@ -136,8 +160,8 @@ h3 {
     width: 100%;
     height: 70%;
     padding-bottom: 0.5rem;
-    
     box-sizing: border-box;
+
     background-color: rgb(255, 255, 255, 0.5);
     border-radius: 0.5rem;
 
@@ -175,32 +199,6 @@ h3 {
     width: 100%;
     height: 100%;
 
-    background-color: rgb(255, 255, 255,1);
+    background-color: rgb(255, 255, 255, 1);
     border-radius: 0.5rem;
-}
-
-.stat__message {
-    margin: 1rem 0rem 0rem 2rem;
-}
-
-.scroller {
-    overflow-y: auto;
-}
-
-.spinner {
-    width: 40px;
-    height: 40px;
-
-    border-radius: 50%;
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top-color: #3d76f1;
-    animation: spin 1.5s linear infinite;
-
-    visibility: hidden;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
 }
