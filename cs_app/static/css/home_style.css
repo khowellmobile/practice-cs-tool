@@ -72,10 +72,9 @@ hr {
     width: 25%;
     height: 100%;
     padding: 0.5rem;
-
-    background-color: lightsalmon;
-    border-radius: 0.5rem 0rem 0rem 0.5rem;
     box-sizing: border-box;
+
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
 
     display: flex;
     align-items: center;
@@ -85,10 +84,9 @@ hr {
     width: 30%;
     height: 100%;
     padding: 0.5rem;
+    box-sizing: border-box;
 
     font-size: 0.75rem;
-    background-color: rgb(255, 203, 183);
-    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
@@ -163,7 +161,6 @@ hr {
 #genRep-card__content__button {
     width: 40%;
     padding-left: 0.5rem;
-
     box-sizing: border-box;
 }
 

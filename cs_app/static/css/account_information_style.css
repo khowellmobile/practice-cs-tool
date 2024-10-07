@@ -44,19 +44,19 @@ hr {
     width: 30rem;
     height: 23rem;
     padding: 1rem;
+    box-sizing: border-box;
 
     background: rgb(235, 235, 235, 1);
-    box-sizing: border-box;
     opacity: 0;
-    transform: scale(0.1);
-    transition: opacity 0.5s ease, transform 0.5s ease;
     border-radius: 0.5rem;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+    transform: scale(0.1);
     z-index: 30;
 }
 
@@ -105,6 +105,7 @@ hr {
     height: 100%;
 
     background: rgba(128, 128, 128, 0.5);
+
     display: none;
     position: fixed;
     top: 0;
@@ -125,7 +126,6 @@ hr {
 #content > div {
     width: 100%;
     height: calc(100% / 4);
-
     margin: 0.25em 0rem 0.25 0rem;
 
     display: flex;
