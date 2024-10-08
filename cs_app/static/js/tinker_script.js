@@ -44,6 +44,14 @@ function foo() {
     alert("hello!");
 }
 
+$(".form__input")
+    .on("focus", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+    })
+    .on("blur", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
+    });
+
 /*---------------------------------------------------------------------------------------------*/
 
 /**

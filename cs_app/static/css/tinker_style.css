@@ -3,7 +3,7 @@
 #c1 {
     width: 27rem;
     height: 27rem;
-    padding: 2rem;
+    padding: 2rem 0.75rem;
     box-sizing: border-box;
 
     background-color: white;
@@ -57,7 +57,7 @@
     height: 2.8rem;
     margin-bottom: 0.5rem;
 
-    border-bottom: 2px solid rgb(105, 105, 236);
+    border-bottom: 2px solid rgb(114, 114, 134);
 
     display: inline-block;
 }
@@ -100,6 +100,10 @@
 
 .form__cluster > input::placeholder {
     color: rgb(0, 0, 0, 0);
+}
+
+.form__input:focus + .form__label {
+    color: rgb(105, 105, 236);
 }
 
 .form__input:not(:placeholder-shown) + .form__label,
