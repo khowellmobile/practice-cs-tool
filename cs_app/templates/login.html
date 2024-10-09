@@ -11,12 +11,13 @@
     <body>
         <div class="container-1">
             <form method="post">
+                {% csrf_token %}
                 <div id="login-card">
                     <div id="login-card__logo"><b>H</b></div>
                     <div id="login-card__header">
                         <b>Welcome Back</b>
                         <p>Please enter your details.</p>
-                        {% csrf_token %} {% if error_message %}
+                        {% if error_message %}
                         <p class="error">{{ error_message }}</p>
                         {% endif %}
                     </div>
