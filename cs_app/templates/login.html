@@ -5,44 +5,51 @@
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
         <link rel="stylesheet" href="{% static 'css/login_style.css' %}" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container-1">
-            <div class="card">
-                <div class="title-div">
-                    <h3>Please Input Your Login Information</h3>
-                </div>
-                <div class="form-div">
-                    <form method="post">
-                        {% csrf_token %} {% if error_message %}
+            <form method="post">
+                {% csrf_token %}
+                <div id="login-card">
+                    <div id="login-card__logo"><b>H</b></div>
+                    <div id="login-card__header">
+                        <b>Welcome Back</b>
+                        <p>Please enter your details.</p>
+                        {% if error_message %}
                         <p class="error">{{ error_message }}</p>
                         {% endif %}
-                        <label for="username">Username:</label><br />
-                        <input
-                            type="text"
-                            class="form_control"
-                            id="username"
-                            name="username"
-                            required
-                        /><br />
-                        <label for="password">Password:</label><br />
+                    </div>
+                    <div class="form__cluster">
+                        <input type="text" class="form__input" id="username" name="username" placeholder="" required />
+                        <p class="form__label">Email</p>
+                    </div>
+
+                    <div class="form__cluster">
                         <input
                             type="password"
-                            class="form_control"
+                            class="form__input"
                             id="password"
                             name="password"
+                            placeholder=""
                             required
-                        /><br />
-                        <button type="submit" class="button-1">Login</button>
-                    </form>
-                </div>
-                <div class="create-div">
+                        />
+                        <p class="form__label">Password</p>
+                    </div>
+
+                    <div id="login-card__button">
+                        <button id="login-button"><b>Login</b></button>
+                    </div>
+
                     <p>
-                        Dont have an account?
-                        <a href="{% url 'create_account' %}">Create one</a>
+                        Dont have an Account? <b><a href="{% url 'create_account' %}">Sign Up</a></b>
                     </p>
                 </div>
-            </div>
+            </form>
         </div>
+
+        <script src="{% static 'js/common_script.js' %}"></script>
+        <script src="{% static 'js/login_script.js' %}"></script>
     </body>
 </html>

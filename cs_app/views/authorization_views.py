@@ -131,26 +131,24 @@ def login_view(request):
                       or redirects to '/home/' upon successful login.
     """
 
+    error_message = None
+
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
-            # Get fields
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                # Redirect to a success page after login
-                return redirect("/home/")
-            else:
-                # Invalid login credentials
-                error_message = "Invalid username or password."
+            # Get the user from the form
+            user = form.get_user()
+            login(request, user)
+
+            # Redirect to a success page after login
+            return redirect("/home/")
         else:
-            # Form is not valid
-            error_message = "Invalid form data. Please check the input fields."
+            # Bad username or password
+            error_message = "Invalid username or password."
+
     else:
         form = AuthenticationForm()
-        error_message = None
+
     return render(request, "login.html", {"form": form, "error_message": error_message})
 
 
