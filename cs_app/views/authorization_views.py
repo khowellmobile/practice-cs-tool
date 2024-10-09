@@ -139,10 +139,11 @@ def login_view(request):
             # Get the user from the form
             user = form.get_user()
             login(request, user)
+
             # Redirect to a success page after login
             return redirect("/home/")
         else:
-            # Check for specific errors (username/password)
+            # Bad username or password
             error_message = "Invalid username or password."
 
     else:
