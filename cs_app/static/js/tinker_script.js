@@ -27,8 +27,8 @@
 
 var buttonAssignments = {
     "b-1": `foo()`,
-    "b-2": "fade1()",
-    "b-3": "fade2()",
+    "b-2": null,
+    "b-3": null,
     "b-4": null,
     "b-5": null,
     "b-6": null,
@@ -43,6 +43,14 @@ var buttonAssignments = {
 function foo() {
     alert("hello!");
 }
+
+$(".form__input")
+    .on("focus", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+    })
+    .on("blur", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
+    });
 
 /*---------------------------------------------------------------------------------------------*/
 
