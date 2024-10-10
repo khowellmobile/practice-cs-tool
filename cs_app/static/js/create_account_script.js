@@ -129,8 +129,6 @@ function validateEmail(email) {
  * @returns {boolean} - True if the password is valid according to the criteria, False otherwise.
  */
 function passwordChecker(pass) {
-    let pass = $("#password").val();
-
     // Regular expressions for validation
     let minLength = pass.length >= 8;
     let hasSpecialChar = /[!@#$%^&*()_+={}[\]:;<>,.?]/.test(pass);
