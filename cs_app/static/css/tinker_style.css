@@ -1,5 +1,230 @@
 /* Write all dev css below here */
 
+.form__cluster {
+    width: 80%;
+    height: 2.8rem;
+    margin-bottom: 0.5rem;
+
+    border-bottom: 2px solid rgb(114, 114, 134);
+
+    display: inline-block;
+}
+
+.form__cluster > p {
+    margin: 0px;
+
+    font-size: 0.8rem;
+    transition: all ease-out 0.2s;
+
+    position: relative;
+    z-index: 0;
+}
+
+.form__cluster > input {
+    width: 90%;
+
+    background-color: rgb(0, 0, 0, 0);
+
+    position: relative;
+    top: 1.2rem;
+    right: 2px;
+
+    z-index: 1000;
+}
+
+.form__cluster > input[type="text"] {
+    font-size: 0.9rem;
+}
+
+.form__cluster > input[type="password"] {
+    font-size: 0.9rem;
+}
+
+.form__cluster > input,
+.form__cluster > input:focus {
+    outline: none;
+    border: none;
+}
+
+.form__cluster > input::placeholder {
+    color: rgb(0, 0, 0, 0);
+}
+
+.form__input:focus + .form__label {
+    color: rgb(105, 105, 236);
+}
+
+.form__input:not(:placeholder-shown) + .form__label,
+.form__input:focus + .form__label {
+    -webkit-transform: translateY(-1rem);
+    transform: translateY(-1rem);
+}
+
+.full-cluster {
+    width: 90%;
+}
+
+.half-cluster {
+    width: 45%;
+}
+
+.req-text {
+    font-size: 0.9rem;
+}
+
+.password-req {
+    height: 1rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.circle {
+    width: 10px;
+    height: 10px;
+    margin-right: 6.8px;
+
+    border: 2px solid rgb(255, 53, 53);
+    border-radius: 50%;
+    transition: background-color 0.3s;
+
+    display: flex;
+}
+
+.check-mark {
+    margin-right: 0.5rem;
+
+    color: rgb(2, 153, 2);
+    font-size: 1rem;
+
+    display: none;
+}
+
+.uncompleted {
+    color: rgb(255, 53, 53);
+}
+
+.completed {
+    color: rgb(2, 153, 2);
+}
+
+#create-account-card {
+    width: 27rem;
+    height: 27rem;
+    padding: 2rem 0.75rem;
+    box-sizing: border-box;
+
+    background-color: white;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#create-account-card__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#create-account-card__header > b {
+    font-size: 1.5rem;
+}
+
+#create-account-card__header > p {
+    margin-top: 0.2rem;
+    margin-bottom: 0px;
+
+    font-size: 0.8rem;
+}
+
+#create-account-card__header > p > b > a {
+    color: black;
+    text-decoration: none;
+}
+
+#create-account-card__first-last {
+    display: flex;
+    justify-content: space-between;
+}
+
+#tool-tip-anchor {
+    position: relative;
+}
+
+#tool-tip {
+    height: 5rem;
+    width: 15rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: rgb(255, 255, 255);
+    border: solid 2px rgb(87, 87, 194);
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: absolute;
+    top: -2.7rem;
+    left: -16rem;
+}
+
+#tool-tip::after {
+    content: "";
+    border-width: 0.75rem;
+    border-style: solid;
+    border-color: transparent transparent transparent rgb(87, 87, 194);
+
+    position: absolute;
+    top: 1.6rem;
+    right: -1.45rem;
+}
+
+#login-card__button {
+    width: 80%;
+    height: 2rem;
+    margin-top: 1rem 1rem 1rem 1rem;
+}
+
+#login-button {
+    width: 100%;
+    height: 100%;
+
+    background-color: rgb(105, 105, 236);
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all ease-out 0.2s;
+}
+
+#login-button {
+    color: white;
+    font-size: 1rem;
+}
+
+#login-button:hover,
+#login-button:focus {
+    background-color: rgb(87, 87, 194);
+}
+
+#login-button:hover {
+    transform: translateY(-1px);
+}
+
+#login-button:active {
+    transform: translateY(1px);
+}
+
+#login-card__button + p {
+    font-size: 0.9rem;
+}
+
 /* Write all dev css above here */
 
 /* all css written below here is for the ui and functionality of the page */

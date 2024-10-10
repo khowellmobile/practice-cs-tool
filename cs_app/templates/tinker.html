@@ -20,6 +20,102 @@
                         <div id="dev-container">
                             <!-- Add all html below here -->
 
+                            <form method="post">
+                                {% csrf_token %}
+                                <div id="create-account-card">
+                                    <div id="create-account-card__header">
+                                        <b>Create Account</b>
+                                        <p>
+                                            Already have an Account?
+                                            <b><a href="{% url 'login' %}">Sign in</a></b>
+                                        </p>
+                                    </div>
+
+                                    <div class="form__cluster full-cluster">
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            class="form__input"
+                                            name="email"
+                                            placeholder=""
+                                            required
+                                        />
+                                        <p class="form__label">Email</p>
+                                    </div>
+
+                                    <div id="create-account-card__first-last">
+                                        <div class="form__cluster half-cluster">
+                                            <input
+                                                type="text"
+                                                id="firstName"
+                                                class="form__input"
+                                                name="firstName"
+                                                placeholder=""
+                                                required
+                                            />
+                                            <p class="form__label">First Name</p>
+                                        </div>
+                                        <div class="form__cluster half-cluster">
+                                            <input
+                                                type="text"
+                                                id="lastname"
+                                                class="form__input"
+                                                name="lastName"
+                                                placeholder=""
+                                                required
+                                            />
+                                            <p class="form__label">Last Name</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form__cluster full-cluster">
+                                        <input
+                                            type="password"
+                                            class="form__input"
+                                            id="password"
+                                            name="password"
+                                            placeholder=""
+                                            required
+                                        />
+                                        <p class="form__label">Password</p>
+                                        <div id="tool-tip-anchor">
+                                            <div id="tool-tip">
+                                                <div id="passChars" class="password-req">
+                                                    <span class="circle"></span>
+                                                    <span class="check-mark">✔</span>
+                                                    <div class="req-text uncompleted">At Least 8 Characters</div>
+                                                </div>
+                                                <div id="passNums" class="password-req">
+                                                    <span class="circle"></span>
+                                                    <span class="check-mark">✔</span>
+                                                    <div class="req-text uncompleted">Contains 1 or More Numbers</div>
+                                                </div>
+                                                <div id="passSymbols" class="password-req">
+                                                    <span class="circle"></span>
+                                                    <span class="check-mark">✔</span>
+                                                    <div class="req-text uncompleted">Contains 1 or More Symbols</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form__cluster full-cluster">
+                                        <input
+                                            type="password"
+                                            class="form__input"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            placeholder=""
+                                            required
+                                        />
+                                        <p class="form__label">Confirm Password</p>
+                                    </div>
+
+                                    <div id="login-card__button">
+                                        <button id="login-button"><b>Login</b></button>
+                                    </div>
+                                </div>
+                            </form>
                             <!-- Add all html above here -->
                         </div>
                     </div>

@@ -14,58 +14,6 @@ html {
     margin: 0px;
 }
 
-#login-card {
-    width: 27rem;
-    height: 27rem;
-    padding: 2rem 0.75rem;
-    box-sizing: border-box;
-
-    background-color: white;
-    border-radius: 1rem;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#login-card__logo {
-    width: 3rem;
-    height: 3rem;
-    margin-bottom: 1rem;
-
-    background-color: rgb(105, 105, 236);
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#login-card__logo > b {
-    margin: 0px;
-
-    color: white;
-    font-size: 1.7rem;
-}
-
-#login-card__header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#login-card__header > b {
-    font-size: 1.5rem;
-}
-
-#login-card__header > p {
-    margin-top: 0.2rem;
-
-    font-size: 0.8rem;
-}
-
 .form__cluster {
     width: 80%;
     height: 2.8rem;
@@ -124,6 +72,58 @@ html {
 .form__input:focus + .form__label {
     -webkit-transform: translateY(-1rem);
     transform: translateY(-1rem);
+}
+
+#login-card {
+    width: 27rem;
+    height: 27rem;
+    padding: 2rem 0.75rem;
+    box-sizing: border-box;
+
+    background-color: white;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#login-card__logo {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+
+    background-color: rgb(105, 105, 236);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-card__logo > b {
+    margin: 0px;
+
+    color: white;
+    font-size: 1.7rem;
+}
+
+#login-card__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-card__header > b {
+    font-size: 1.5rem;
+}
+
+#login-card__header > p {
+    margin-top: 0.2rem;
+
+    font-size: 0.8rem;
 }
 
 #login-card__button {
