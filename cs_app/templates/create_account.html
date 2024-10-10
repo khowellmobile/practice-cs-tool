@@ -15,10 +15,13 @@
                 <div id="create-account-card">
                     <div id="create-account-card__header">
                         <b>Create Account</b>
-                        <p>
+                        <p id="create-account-card__header__link">
                             Already have an Account?
                             <b><a href="{% url 'login' %}">Sign in</a></b>
                         </p>
+                        {% if error_message %}
+                        <p class="error">{{ error_message }}</p>
+                        {% endif %}
                     </div>
 
                     <div class="form__cluster full-cluster">

@@ -10,8 +10,15 @@ html {
     --primary-color: rgb(255, 255, 255, 0.5);
 }
 
+.error {
+    width: 90%;
+
+    font-size: 0.8rem;
+
+    text-align: center;
+}
+
 .form__cluster {
-    width: 80%;
     height: 2.8rem;
     margin-bottom: 0.5rem;
 
@@ -42,11 +49,7 @@ html {
     z-index: 1000;
 }
 
-.form__cluster > input[type="text"] {
-    font-size: 0.9rem;
-}
-
-.form__cluster > input[type="password"] {
+.form__cluster > input {
     font-size: 0.9rem;
 }
 
@@ -144,19 +147,21 @@ html {
     font-size: 1.5rem;
 }
 
-#create-account-card__header > p {
+#create-account-card__header > p > b > a {
+    color: black;
+    text-decoration: none;
+}
+
+#create-account-card__header__link {
     margin-top: 0.2rem;
     margin-bottom: 0px;
 
     font-size: 0.8rem;
 }
 
-#create-account-card__header > p > b > a {
-    color: black;
-    text-decoration: none;
-}
-
 #create-account-card__first-last {
+    width: 90%;
+
     display: flex;
     justify-content: space-between;
 }
