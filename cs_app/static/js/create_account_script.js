@@ -166,6 +166,7 @@ try {
         validateName,
         validateEmail,
         passwordChecker,
+        toggleReqs,
     };
 } catch (error) {
     console.log(error);

@@ -1,6 +1,53 @@
 const createAcctScript = require("../static/js/create_account_script");
 const { JSDOM } = require("jsdom");
 
+describe("toggleReqs function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="testDiv">
+                        <div class="circle" style="display:flex"></div>
+                        <div class="check-mark" style="display:none"></div>
+                        <div class="req-text uncompleted"></div>
+                    </div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+
+        $ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should have proper classes and displays when passed true", () => {
+        createAcctScript.toggleReqs("testDiv", true);
+
+        expect($(".circle").css("display")).toBe("none");
+        expect($(".check-mark").css("display")).toBe("flex");
+        expect($(".req-text").hasClass("completed")).toBe(true);
+        expect($(".req-text").hasClass("uncompleted")).toBe(false);
+    });
+
+    test("should have proper classes and displays when passed false", () => {
+        $(".circle").css("display", "none");
+        $(".check-mark").css("display", "flex");
+        $(".req-text").toggleClass("completed uncompleted");
+
+        createAcctScript.toggleReqs("testDiv", false);
+
+        expect($(".circle").css("display")).toBe("flex");
+        expect($(".check-mark").css("display")).toBe("none");
+        expect($(".req-text").hasClass("completed")).toBe(false);
+        expect($(".req-text").hasClass("uncompleted")).toBe(true);
+    });
+});
+
 describe("passwordChecker function", () => {
     let dom;
 
@@ -21,36 +68,6 @@ describe("passwordChecker function", () => {
 
     afterEach(() => {
         dom.window.close();
-    });
-
-    test("#passChars should have proper class based on minimum length", () => {
-        createAcctScript.passwordChecker("#12345678");
-        expect($("#passChars").hasClass("completed")).toBe(true);
-        expect($("#passChars").hasClass("uncompleted")).toBe(false);
-
-        createAcctScript.passwordChecker("#1234");
-        expect($("#passChars").hasClass("uncompleted")).toBe(true);
-        expect($("#passChars").hasClass("completed")).toBe(false);
-    });
-
-    test("#passNums should have proper class based on presence of digit", () => {
-        createAcctScript.passwordChecker("#12345678");
-        expect($("#passNums").hasClass("completed")).toBe(true);
-        expect($("#passNums").hasClass("uncompleted")).toBe(false);
-
-        createAcctScript.passwordChecker("#abcdefgh");
-        expect($("#passNums").hasClass("uncompleted")).toBe(true);
-        expect($("#passNums").hasClass("completed")).toBe(false);
-    });
-
-    test("#passSymbols should have proper class based on presence of special character", () => {
-        createAcctScript.passwordChecker("#12345678");
-        expect($("#passSymbols").hasClass("completed")).toBe(true);
-        expect($("#passSymbols").hasClass("uncompleted")).toBe(false);
-
-        createAcctScript.passwordChecker("12345678");
-        expect($("#passSymbols").hasClass("uncompleted")).toBe(true);
-        expect($("#passSymbols").hasClass("completed")).toBe(false);
     });
 
     test("should return true for valid passwords", () => {
