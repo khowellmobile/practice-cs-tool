@@ -39,6 +39,8 @@ var buttonAssignments = {
 };
 
 /*----------------------------------- Dev Functions Go Here -----------------------------------*/
+attachEventListeners();
+
 function attachEventListeners() {
     $(".form__input")
         .on("focus", function () {
