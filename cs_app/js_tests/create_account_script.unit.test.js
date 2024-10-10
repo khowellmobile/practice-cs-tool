@@ -23,37 +23,34 @@ describe("passwordChecker function", () => {
         dom.window.close();
     });
 
-    test("should set color for #passChars based on minimum length", () => {
-        const color1 = "rgb(0, 116, 211)";
-        const color2 = "rgb(223, 0, 0)";
-
+    test("#passChars should have proper class based on minimum length", () => {
         createAcctScript.passwordChecker("#12345678");
-        expect($("#passChars").css("color")).toBe(color1);
+        expect($("#passChars").hasClass("completed")).toBe(true);
+        expect($("#passChars").hasClass("uncompleted")).toBe(false);
 
         createAcctScript.passwordChecker("#1234");
-        expect($("#passChars").css("color")).toBe(color2);
+        expect($("#passChars").hasClass("uncompleted")).toBe(true);
+        expect($("#passChars").hasClass("completed")).toBe(false);
     });
 
-    test("should set color for #passNums based on presence of digit", () => {
-        const color1 = "rgb(0, 116, 211)";
-        const color2 = "rgb(223, 0, 0)";
-
+    test("#passNums should have proper class based on presence of digit", () => {
         createAcctScript.passwordChecker("#12345678");
-        expect($("#passNums").css("color")).toBe(color1);
+        expect($("#passNums").hasClass("completed")).toBe(true);
+        expect($("#passNums").hasClass("uncompleted")).toBe(false);
 
         createAcctScript.passwordChecker("#abcdefgh");
-        expect($("#passNums").css("color")).toBe(color2);
+        expect($("#passNums").hasClass("uncompleted")).toBe(true);
+        expect($("#passNums").hasClass("completed")).toBe(false);
     });
 
-    test("should set color for #passSymbols based on presence of special character", () => {
-        const color1 = "rgb(0, 116, 211)";
-        const color2 = "rgb(223, 0, 0)";
-
+    test("#passSymbols should have proper class based on presence of special character", () => {
         createAcctScript.passwordChecker("#12345678");
-        expect($("#passSymbols").css("color")).toBe(color1);
+        expect($("#passSymbols").hasClass("completed")).toBe(true);
+        expect($("#passSymbols").hasClass("uncompleted")).toBe(false);
 
         createAcctScript.passwordChecker("12345678");
-        expect($("#passSymbols").css("color")).toBe(color2);
+        expect($("#passSymbols").hasClass("uncompleted")).toBe(true);
+        expect($("#passSymbols").hasClass("completed")).toBe(false);
     });
 
     test("should return true for valid passwords", () => {
