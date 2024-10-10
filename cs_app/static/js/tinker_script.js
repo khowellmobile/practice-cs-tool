@@ -27,9 +27,9 @@
 
 var buttonAssignments = {
     "b-1": `foo()`,
-    "b-2": null,
-    "b-3": null,
-    "b-4": null,
+    "b-2": `passwordChecker()`,
+    "b-3": `foo(true)`,
+    "b-4": `foo(false)`,
     "b-5": null,
     "b-6": null,
     "b-7": null,
@@ -39,6 +39,52 @@ var buttonAssignments = {
 };
 
 /*----------------------------------- Dev Functions Go Here -----------------------------------*/
+$("#pass")
+    .on("focus", () => {
+        $("#c1-1").css("display", "flex").hide().fadeIn(150);
+    })
+    .on("blur", () => {
+        $("#c1-1").fadeOut(150);
+    });
+
+$("#pass").on("input", function () {
+    passwordChecker($(this).val());
+});
+
+function passwordChecker() {
+    console.log("working");
+
+    let pass = $("#pass").val();
+
+    // Regular expressions for validation
+    let minLength = pass.length >= 8;
+    let hasSpecialChar = /[!@#$%^&*()_+={}[\]:;<>,.?]/.test(pass);
+    let hasDigit = /\d/.test(pass);
+
+    toggleReqs("passChars", minLength);
+    toggleReqs("passNums", hasDigit);
+    toggleReqs("passSymbols", hasSpecialChar);
+
+    if (minLength && hasDigit && hasSpecialChar) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function toggleReqs(id, complete) {
+    if (complete) {
+        $(`#${id} .circle`).css("display", "none");
+        $(`#${id} .check-mark`).css("display", "flex");
+        $(`#${id} .req-text`).addClass("completed");
+        $(`#${id} .req-text`).removeClass("uncompleted");
+    } else {
+        $(`#${id} .circle`).css("display", "flex");
+        $(`#${id} .check-mark`).css("display", "none");
+        $(`#${id} .req-text`).addClass("uncompleted");
+        $(`#${id} .req-text`).removeClass("completed");
+    }
+}
 
 /*---------------------------------------------------------------------------------------------*/
 
