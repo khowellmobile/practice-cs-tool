@@ -2,6 +2,7 @@
  * This file contains functions for validating user input and managing password strength on the account creation page.
  *
  * Global Functions:
+ * - attachEventListeners(): Attaches focus, blue, and input events to input elements.
  * - validateForm(): Validates form fields (name, email, password) and displays alerts for invalid input.
  * - validateName(name): Checks if the name follows the allowed format (letters, spaces, apostrophes, hyphens).
  * - validateEmail(email): Checks if the email follows a standard email format.
@@ -24,14 +25,33 @@ try {
     console.log(error);
 }
 
+attachEventListeners();
+
 /**
- * Handles input events on the password field to check password validity.
+ * Attaches event listeners to form input elements to handle focus, blur, and input events.
  *
- * Runs the passwordChecker function to provide feedback on password strength.
  */
-$("#password").on("input", function () {
-    passwordChecker($(this).val());
-});
+function attachEventListeners() {
+    $(".form__input")
+        .on("focus", function () {
+            $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+        })
+        .on("blur", function () {
+            $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
+        });
+
+    $("#password")
+        .on("focus", () => {
+            $("#tool-tip").css("display", "flex").hide().fadeIn(150);
+        })
+        .on("blur", () => {
+            $("#tool-tip").fadeOut(150);
+        });
+
+    $("#password").on("input", function () {
+        passwordChecker($(this).val());
+    });
+}
 
 /**
  * Validates the account creation form fields.
@@ -109,36 +129,33 @@ function validateEmail(email) {
  * @returns {boolean} - True if the password is valid according to the criteria, False otherwise.
  */
 function passwordChecker(pass) {
-    let color1 = "rgb(0, 116, 211)";
-    let color2 = "rgb(223, 0, 0)";
-
     // Regular expressions for validation
     let minLength = pass.length >= 8;
     let hasSpecialChar = /[!@#$%^&*()_+={}[\]:;<>,.?]/.test(pass);
     let hasDigit = /\d/.test(pass);
 
-    if (minLength) {
-        $("#passChars").css("color", color1);
-    } else {
-        $("#passChars").css("color", color2);
-    }
-
-    if (hasDigit) {
-        $("#passNums").css("color", color1);
-    } else {
-        $("#passNums").css("color", color2);
-    }
-
-    if (hasSpecialChar) {
-        $("#passSymbols").css("color", color1);
-    } else {
-        $("#passSymbols").css("color", color2);
-    }
+    toggleReqs("passChars", minLength);
+    toggleReqs("passNums", hasDigit);
+    toggleReqs("passSymbols", hasSpecialChar);
 
     if (minLength && hasDigit && hasSpecialChar) {
         return true;
     } else {
         return false;
+    }
+}
+
+function toggleReqs(id, complete) {
+    if (complete) {
+        $(`#${id} .circle`).css("display", "none");
+        $(`#${id} .check-mark`).css("display", "flex");
+        $(`#${id} .req-text`).addClass("completed");
+        $(`#${id} .req-text`).removeClass("uncompleted");
+    } else {
+        $(`#${id} .circle`).css("display", "flex");
+        $(`#${id} .check-mark`).css("display", "none");
+        $(`#${id} .req-text`).addClass("uncompleted");
+        $(`#${id} .req-text`).removeClass("completed");
     }
 }
 
@@ -149,6 +166,7 @@ try {
         validateName,
         validateEmail,
         passwordChecker,
+        toggleReqs,
     };
 } catch (error) {
     console.log(error);

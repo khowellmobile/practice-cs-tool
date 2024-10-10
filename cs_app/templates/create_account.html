@@ -4,81 +4,104 @@
 <html>
     <head>
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
-        <link
-            rel="stylesheet"
-            href="{% static 'css/create_account_style.css' %}"
-        />
+        <link rel="stylesheet" href="{% static 'css/create_account_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container-1">
-            <div class="card">
-                <h3>Please Fill Out The Information Below</h3>
-                {% if error_message %}
-                <p class="error">{{ error_message }}</p>
-                {% endif %}
-                <form method="post" id="create-account-form" onsubmit="return validateForm()">
-                    {% csrf_token %}
-                    <div id="form-names">
-                        <div id="form-names__first-name">
-                            <label for="firstName">First Name:</label
-                            ><input
+            <form method="post">
+                {% csrf_token %}
+                <div id="create-account-card">
+                    <div id="create-account-card__header">
+                        <b>Create Account</b>
+                        <p id="create-account-card__header__link">
+                            Already have an Account?
+                            <b><a href="{% url 'login' %}">Sign in</a></b>
+                        </p>
+                        {% if error_message %}
+                        <p class="error">{{ error_message }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="form__cluster full-cluster">
+                        <input type="email" id="email" class="form__input" name="email" placeholder="" required />
+                        <p class="form__label">Email</p>
+                    </div>
+
+                    <div id="create-account-card__first-last">
+                        <div class="form__cluster half-cluster">
+                            <input
                                 type="text"
                                 id="firstName"
-                                class="input"
+                                class="form__input"
                                 name="firstName"
-                                value="{{ request.POST.firstName }}"
+                                placeholder=""
                                 required
                             />
+                            <p class="form__label">First Name</p>
                         </div>
-                        <div id="form-names__last-name">
-                            <label for="lastName">Last Name:</label
-                            ><input
+                        <div class="form__cluster half-cluster">
+                            <input
                                 type="text"
-                                id="lastName"
-                                class="input"
+                                id="lastname"
+                                class="form__input"
                                 name="lastName"
-                                value="{{ request.POST.lastName }}"
+                                placeholder=""
                                 required
                             />
+                            <p class="form__label">Last Name</p>
                         </div>
                     </div>
 
-                    <label for="email">Email Address:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        class="input"
-                        name="email"
-                        value="{{ request.POST.email }}"
-                        required
-                    /><br />
+                    <div class="form__cluster full-cluster">
+                        <input
+                            type="password"
+                            class="form__input"
+                            id="password"
+                            name="password"
+                            placeholder=""
+                            required
+                        />
+                        <p class="form__label">Password</p>
+                        <div id="tool-tip-anchor">
+                            <div id="tool-tip">
+                                <div id="passChars" class="password-req">
+                                    <span class="circle"></span>
+                                    <span class="check-mark">✔</span>
+                                    <div class="req-text uncompleted">At Least 8 Characters</div>
+                                </div>
+                                <div id="passNums" class="password-req">
+                                    <span class="circle"></span>
+                                    <span class="check-mark">✔</span>
+                                    <div class="req-text uncompleted">Contains 1 or More Numbers</div>
+                                </div>
+                                <div id="passSymbols" class="password-req">
+                                    <span class="circle"></span>
+                                    <span class="check-mark">✔</span>
+                                    <div class="req-text uncompleted">Contains 1 or More Symbols</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="password">Password:</label>
-                    <p id="passChars">8 Characters</p>
-                    <p id="passNums">1 or more Number</p>
-                    <p id="passSymbols">1 or more Special Character (!@#$%^&*()_+={}[]:;<>,.?) </p>
-                    <input
-                        type="password"
-                        id="password"
-                        class="input"
-                        name="password"
-                        required
-                    /><br />
+                    <div class="form__cluster full-cluster">
+                        <input
+                            type="password"
+                            class="form__input"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder=""
+                            required
+                        />
+                        <p class="form__label">Confirm Password</p>
+                    </div>
 
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        class="input"
-                        name="confirmPassword"
-                        required
-                    /><br />
-                    <button type="submit" class="button-1">Submit</button>
-                </form>
-                <a href="{% url 'login' %}">Back to Login</a>
-            </div>
+                    <div id="login-card__button">
+                        <button id="login-button"><b>Login</b></button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!-- Links to .js files -->

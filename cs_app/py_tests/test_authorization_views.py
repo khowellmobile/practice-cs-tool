@@ -140,7 +140,7 @@ class LoginViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "login.html")
         self.assertIn('error_message', response.context)
-        self.assertEqual(response.context['error_message'], "Invalid form data. Please check the input fields.")
+        self.assertEqual(response.context['error_message'], "Invalid username or password.")
 
     def test_login_view_post_invalid_form_data(self):
         response = self.client.post(reverse("login"), {
@@ -151,7 +151,7 @@ class LoginViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "login.html")
         self.assertIn('error_message', response.context)
-        self.assertEqual(response.context['error_message'], "Invalid form data. Please check the input fields.")
+        self.assertEqual(response.context['error_message'], "Invalid username or password.")
 
 class LogoutViewTests(TestCase):
 
