@@ -39,22 +39,32 @@ var buttonAssignments = {
 };
 
 /*----------------------------------- Dev Functions Go Here -----------------------------------*/
-$("#pass")
-    .on("focus", () => {
-        $("#c1-1").css("display", "flex").hide().fadeIn(150);
-    })
-    .on("blur", () => {
-        $("#c1-1").fadeOut(150);
-    });
+function attachEventListeners() {
+    $(".form__input")
+        .on("focus", function () {
+            $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+        })
+        .on("blur", function () {
+            $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
+        });
 
-$("#pass").on("input", function () {
-    passwordChecker($(this).val());
-});
+    $("#password")
+        .on("focus", () => {
+            $("#tool-tip").css("display", "flex").hide().fadeIn(150);
+        })
+        .on("blur", () => {
+            $("#tool-tip").fadeOut(150);
+        });
+
+    $("#password").on("input", function () {
+        passwordChecker($(this).val());
+    });
+}
 
 function passwordChecker() {
     console.log("working");
 
-    let pass = $("#pass").val();
+    let pass = $("#password").val();
 
     // Regular expressions for validation
     let minLength = pass.length >= 8;
