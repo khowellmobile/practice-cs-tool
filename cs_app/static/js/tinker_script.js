@@ -27,8 +27,8 @@
 
 var buttonAssignments = {
     "b-1": `foo()`,
-    "b-2": null,
-    "b-3": null,
+    "b-2": `foo1()`,
+    "b-3": `foo2()`,
     "b-4": null,
     "b-5": null,
     "b-6": null,
@@ -39,6 +39,26 @@ var buttonAssignments = {
 };
 
 /*----------------------------------- Dev Functions Go Here -----------------------------------*/
+
+$(".pill")
+    .on("mouseenter", function () {
+        $(this).css("width", "21.9rem");
+    })
+    .on("mouseleave", function () {
+        $(this).css("width", "3.85rem");
+    });
+
+function foo() {
+    $(".mutate").toggleClass("m-hide m-show");
+}
+
+function foo1() {
+    $(".pill").css("width", "3.85rem");
+}
+
+function foo2() {
+    $(".pill").css("width", "21.9rem");
+}
 
 /*---------------------------------------------------------------------------------------------*/
 

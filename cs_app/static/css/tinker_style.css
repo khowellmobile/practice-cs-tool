@@ -1,5 +1,108 @@
 /* Write all dev css below here */
 
+
+
+.pill {
+    width: 3.85rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: white;
+    box-shadow: 5px 5px 15px -1px rgba(51, 51, 51, 0.23);
+    border-radius: 2rem;
+    transition: all ease-out 0.35s;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.pill * {
+    flex-shrink: 0;
+}
+
+.sym {
+    background-color: rgb(105, 105, 236);
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sym > span {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.seperator {
+    width: 1px;
+    height: 100%;
+    margin: 0rem 0.5rem;
+
+    background-color: rgba(180, 180, 180, 0.603);
+}
+
+.report-date {
+    height: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    border-radius: 2rem;
+    background-color: rgb(177, 177, 247);
+
+    display: flex;
+    align-items: center;
+}
+
+.report-date > p {
+    margin: 0px;
+
+    font-size: 0.9rem;
+}
+
+.reportSE {
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    background-color: rgb(150, 150, 255, 0.3);
+    border-radius: 2rem;
+
+    display: flex;
+}
+
+.reportSE > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reportSE > div > p {
+    margin: 0px;
+
+    font-size: 0.8rem;
+}
+
+#c1 {
+    width: 35rem;
+    height: 30rem;
+
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#c1-1-1 {
+    width: 2.85rem;
+    height: 2.85rem;
+}
+
 /* Write all dev css above here */
 
 /* all css written below here is for the ui and functionality of the page */
