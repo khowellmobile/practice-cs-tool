@@ -54,7 +54,7 @@ def home_view(request):
         HttpResponse: Renders the 'home.html' template with user context.
     """
 
-    data = list(PastParameter.objects.order_by("-date_field")[:7])[::-1]
+    data = list(PastParameter.objects.order_by("-date_field")[:5])[::-1]
     user = request.user
     data_db = settings.DATABASES["data"]
 

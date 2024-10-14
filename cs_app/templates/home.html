@@ -21,17 +21,31 @@
                         <div id="genRep-card__content">
                             <div id="genRep-card__content__history">
                                 {% for param in data reversed %}
-                                <div class="history-info">
-                                    <div class="report-kind"><b class="rep-type">{{ param.text_field }}</b></div>
-                                    <div class="report-date">
-                                        <p><b>Ran On</b></p>
-                                        <p>{{ param.date_field }}</p>
+                                <div class="pill">
+                                    <div class="report-kind">
+                                        <span><b>{% if param.text_field == 'YTD' %} 
+                                            YTD 
+                                        {% elif param.text_field == 'Last Year' %} 
+                                            LY
+                                        {% elif param.text_field == 'Custom' %} 
+                                            C
+                                        {% elif param.text_field == 'All Time' %} 
+                                            AT
+                                        {% else %} 
+                                            ?
+                                        {% endif %}</b></span>
                                     </div>
-                                    <div class="dates">
+                                    <div class="seperator"></div>
+                                    <div class="report-date">
+                                        <p><b>{{ param.date_field }}</b></p>
+                                    </div>
+                                    <div class="seperator"></div>
+                                    <div class="reportSE">
                                         <div>
                                             <p><b>Start</b></p>
                                             <p>{{ param.parameters_json.start_date }}</p>
                                         </div>
+                                        <div class="seperator"></div>
                                         <div>
                                             <p><b>End</b></p>
                                             <p>{{ param.parameters_json.end_date }}</p>

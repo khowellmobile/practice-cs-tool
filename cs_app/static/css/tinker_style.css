@@ -1,7 +1,5 @@
 /* Write all dev css below here */
 
-
-
 .pill {
     width: 3.85rem;
     padding: 0.5rem;
@@ -22,7 +20,10 @@
     flex-shrink: 0;
 }
 
-.sym {
+.report-kind {
+    width: 2.85rem;
+    height: 2.85rem;
+
     background-color: rgb(105, 105, 236);
     border-radius: 50%;
 
@@ -31,7 +32,7 @@
     align-items: center;
 }
 
-.sym > span {
+.report-kind > span {
     color: white;
     font-size: 0.9rem;
 }
@@ -96,11 +97,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-}
-
-#c1-1-1 {
-    width: 2.85rem;
-    height: 2.85rem;
 }
 
 /* Write all dev css above here */
