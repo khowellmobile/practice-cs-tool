@@ -7,6 +7,7 @@ urlpatterns = [
     path('', admin_views.main_view, name='main'),
     path('home/', admin_views.home_view, name='home'),
     path('tinker/', admin_views.tinker_view, name='tinker'),
+    path('one_page/', admin_views.one_page_view, name="one_page"),
 
     # Authorization
     path('login/', authorization_views.login_view, name='login'),

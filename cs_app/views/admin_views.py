@@ -91,3 +91,13 @@ def tinker_view(request):
     }
 
     return render(request, "tinker.html", context)
+
+@login_required
+def one_page_view(request):
+    user = request.user
+    context = {
+        "user": user,
+    }
+
+    return render(request, "one_page.html", context)
+
