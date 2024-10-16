@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="{% static 'css/one_page_style.css' %}" />
         <link rel="stylesheet" href="{% static 'css/common_style.css' %}" />
 
+        {% block sub_css %}
+        {% endblock %}
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -19,51 +22,54 @@
         <div class="container-1">
             <div id="c1" class="small-menu">
                 <div id="c1-1">
-                    <div class="symbol">
+                    <div class="symbol flex-center">
                         <b>H</b>
                     </div>
                     <p><b>Practice Report</b></p>
                 </div>
                 <div class="seperator-h"></div>
-                <div id="c1-2">
+                <div id="c1-2" class="flex-col">
                     <div class="page-link">
-                        <div class="symbol-sm">
+                        <div class="symbol-sm flex-center">
                             <b>O</b>
                         </div>
                         <p>Home</p>
                     </div>
                     <div class="page-link">
-                        <div class="symbol-sm">
+                        <div class="symbol-sm flex-center">
                             <b>G</b>
                         </div>
                         <p>Generate Report</p>
                     </div>
                     <div class="page-link">
-                        <div class="symbol-sm">
+                        <div class="symbol-sm flex-center">
                             <b>C</b>
                         </div>
                         <p>Change Database</p>
                     </div>
                     <div class="page-link">
-                        <div class="symbol-sm">
+                        <div class="symbol-sm flex-center">
                             <b>A</b>
                         </div>
                         <p>Account Information</p>
                     </div>
                 </div>
             </div>
-            <div id="c2" class="large-content">
+            <div id="c2" class="large-content flex-col">
                 <div id="c2-1">
                     <div class="seperator-v"></div>
-                    <div class="back-arrow"><p>&lt;</p></div>
+                    <div class="back-arrow flex-center"><p>&lt;</p></div>
                     <p>Home</p>
                 </div>
-                <div id="c2-2"></div>
+                {% block content %}
+                {% endblock %}
             </div>
         </div>
 
         <!-- Links to .js files and getting csrf_token -->
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/one_page_script.js' %}"></script>
+        {% block sub_js %}
+        {% endblock %}
     </body>
 </html>

@@ -1,0 +1,91 @@
+{% extends "one_page.html" %} 
+{% load static %} 
+
+{% block sub_css %}
+<link rel="stylesheet" href="{% static 'css/sub_styles/account_information_sub_style.css' %}" />
+{% endblock %} 
+
+{% block content %}
+<div id="main-container" class="flex-col">
+    <div id="header">
+        <h3>Your Account Details</h3>
+        <h4>Manage your Practice Information</h4>
+    </div>
+    <div id="card-holder">
+        <div id="profile-picture-card" class="flex-col">
+            <div id="profile-picture"></div>
+            <p><b>Kent Howell</b></p>
+            <p>Howell Associates</p>
+            <button>Change Company</button><button>Delete Account</button>
+        </div>
+        <div id="account-info" class="flex-col">
+            <div id="name">
+                <p><b>Name:</b> {{ user.first_name }} {{user.last_name }}</p>
+                <button class="toggleButton">Change</button>
+            </div>
+            <div class="seperator-h"></div>
+            <div id="email">
+                <p><b>Email:</b> {{ user.email }}</p>
+                <button class="toggleButton">Change</button>
+            </div>
+            <div class="seperator-h"></div>
+            <div id="phone">
+                <p><b>Phone:</b> (124) 456-7891</p>
+                <button class="toggleButton">Change</button>
+            </div>
+            <div class="seperator-h"></div>
+            <div id="password">
+                <p><b>Password:</b> This tool does not save raw text passwords</p>
+                <button class="toggleButton">Change</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup Content -->
+<div id="pageOverlay" class="overlay-hidden"></div>
+
+<div class="popupBox" id="update_name">
+    <div class="popup-content">
+        <h2>Change name</h2>
+        <div class="form__cluster">
+            <input type="text" class="form__input" id="first_name" placeholder="" required />
+            <p class="form__label">First Name</p>
+        </div>
+        <div class="form__cluster">
+            <input type="text" class="form__input" id="last_name" placeholder="" required />
+            <p class="form__label">Last Name</p>
+        </div>
+        <span>
+            <button type="button" id="save" class="button-1 save-button">Save</button>
+            <button type="button" class="button-1 cancel-button">Cancel</button>
+        </span>
+    </div>
+</div>
+
+<div class="popupBox" id="update_email">
+    <div class="popup-content">
+        <h2>Change email</h2>
+        <div class="form__cluster">
+            <input type="text" class="form__input" id="email_new" placeholder="" required />
+            <p class="form__label">Email</p>
+        </div>
+        <div class="form__cluster">
+            <input type="text" class="form__input" id="email_confirm" placeholder="" required />
+            <p class="form__label">Confirm Email</p>
+        </div>
+        <span>
+            <button type="button" id="save" class="button-1 save-button">Save</button>
+            <button type="button" class="button-1 cancel-button">Cancel</button>
+        </span>
+    </div>
+</div>
+{% endblock %} 
+
+{% block sub_js %}
+<script src="{% static 'js/sub_scripts/account_information_sub_script.js' %}"></script>
+<script>
+    // Easier to get csrf token from template
+    var csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}
