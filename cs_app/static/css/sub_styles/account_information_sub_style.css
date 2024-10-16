@@ -45,7 +45,7 @@
 
 #profile-picture-card {
     width: 25rem;
-    height: 25rem;
+    height: 23.5rem;
     margin: 1rem 0rem 0rem 1rem;
     padding: var(--md-gap);
     box-sizing: border-box;
@@ -99,7 +99,7 @@
 
 #account-info {
     width: calc(100% - 28rem);
-    height: 25rem;
+    height: 23.5rem;
     margin: 1rem 0rem 0rem 1rem;
     padding: var(--md-gap);
     box-sizing: border-box;
