@@ -80,6 +80,28 @@
         </span>
     </div>
 </div>
+
+<div class="popupBox" id="update_password">
+    <div class="popup-content">
+        <h2>Change Password</h2>
+        <div class="form__cluster">
+            <input type="password" class="form__input" id="password_old" placeholder="" required />
+            <p class="form__label">Old Password</p>
+        </div>
+        <div class="form__cluster">
+            <input type="password" class="form__input" id="password_new" placeholder="" required />
+            <p class="form__label">New Password</p>
+        </div>
+        <div class="form__cluster">
+            <input type="password" class="form__input" id="password_confirm" placeholder="" required />
+            <p class="form__label">Confirm New Password</p>
+        </div>
+        <span>
+            <button type="button" id="save" class="button-1 save-button">Save</button>
+            <button type="button" class="button-1 cancel-button">Cancel</button>
+        </span>
+    </div>
+</div>
 {% endblock %} 
 
 {% block sub_js %}
