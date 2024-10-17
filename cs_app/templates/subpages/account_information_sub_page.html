@@ -15,8 +15,6 @@
         <div id="profile-picture-card" class="flex-col">
             <div id="profile-picture"></div>
             <p><b>Kent Howell</b></p>
-
-            <p id="company_text">Howell Associates</p>
             <p>
                 {% if user.company %}
                     {{ user.company }}
@@ -24,7 +22,7 @@
                      No Company Listed
                 {% endif %}
             </p>
-            <button>Change Company</button><button>Delete Account</button>
+            <div id="company"><button class="toggleButton">Change Company</button></div><button>Delete Account</button>
         </div>
         <div id="account-info" class="flex-col">
             <div id="name">
@@ -38,7 +36,6 @@
             </div>
             <div class="seperator-h"></div>
             <div id="phone">
-                <p><b>Phone:</b id="phone_number_text"> (124) 456-7891</p>
                 <p><b>Phone:</b> 
                     {% if user.phone_number %}
                         {{ user.phone_number }}
@@ -88,6 +85,34 @@
         <div class="form__cluster">
             <input type="text" class="form__input" id="email_confirm" placeholder="" required />
             <p class="form__label">Confirm Email</p>
+        </div>
+        <span>
+            <button type="button" id="save" class="button-1 save-button">Save</button>
+            <button type="button" class="button-1 cancel-button">Cancel</button>
+        </span>
+    </div>
+</div>
+
+<div class="popupBox" id="update_phone">
+    <div class="popup-content">
+        <h2>Change Phone Number</h2>
+        <div class="form__cluster">
+            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+            <p class="form__label">Phone Number</p>
+        </div>
+        <span>
+            <button type="button" id="save" class="button-1 save-button">Save</button>
+            <button type="button" class="button-1 cancel-button">Cancel</button>
+        </span>
+    </div>
+</div>
+
+<div class="popupBox" id="update_company">
+    <div class="popup-content">
+        <h2>Change Company</h2>
+        <div class="form__cluster">
+            <input type="text" class="form__input" id="company_new" placeholder="" required />
+            <p class="form__label">Company Name</p>
         </div>
         <span>
             <button type="button" id="save" class="button-1 save-button">Save</button>

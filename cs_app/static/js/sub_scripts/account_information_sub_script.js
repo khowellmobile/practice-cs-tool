@@ -85,14 +85,15 @@ function attachEventListeners() {
                     email: $("#email_new").val(),
                 };
                 break;
-            case "phone_number":
+            case "phone":
+                console.log($("#phone_new").val())
                 formdata = {
-                    phone_number: $("#phone_number").val(),
+                    phone_number: $("#phone_new").val(),
                 };
                 break;
             case "company":
                 formdata = {
-                    company: $("#company").val(),
+                    company: $("#company_new").val(),
                 };
                 break;
             case "password":
@@ -145,7 +146,7 @@ function checkFields(fieldName, formdata) {
                 return false;
             }
             break;
-        case "phone_number":
+        case "phone":
             if (!validatePhoneNumber(formdata["phone_number"])) {
                 alert(`Phone number format is invalid. Please follow standard phone number format: (123) 456-7891`);
                 return false;
@@ -187,6 +188,7 @@ function checkFields(fieldName, formdata) {
  * @param {object} formdata - Object containing the information to be submitted
  */
 function submitForm(fieldName, formdata) {
+    console.log(formdata);
     fetch(`/account_information/update_${fieldName}/`, {
         method: "POST",
         headers: {
@@ -348,7 +350,7 @@ function validateEmail(email) {
 function validatePhoneNumber(number) {
     const phonePattern = /^(?:(?:\+?\d{1,3}[- ]?)?(?:\(?\d{1,4}?\)?[- ]?)?\d{1,4}[- ]?\d{1,9}){1,2}$/;
 
-    return phonePattern.test(number) && (number.replace(/\D/g, '').length >= 7);
+    return phonePattern.test(number) && number.replace(/\D/g, "").length >= 7;
 }
 
 /**
