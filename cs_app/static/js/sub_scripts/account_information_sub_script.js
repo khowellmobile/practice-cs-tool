@@ -86,7 +86,6 @@ function attachEventListeners() {
                 };
                 break;
             case "phone":
-                console.log($("#phone_new").val())
                 formdata = {
                     phone_number: $("#phone_new").val(),
                 };
@@ -188,7 +187,6 @@ function checkFields(fieldName, formdata) {
  * @param {object} formdata - Object containing the information to be submitted
  */
 function submitForm(fieldName, formdata) {
-    console.log(formdata);
     fetch(`/account_information/update_${fieldName}/`, {
         method: "POST",
         headers: {

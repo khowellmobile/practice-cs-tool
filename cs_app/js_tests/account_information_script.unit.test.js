@@ -410,6 +410,8 @@ describe("checkFields function", () => {
                     <div id="update_name">
                     <div id="update_email">
                     <div id="update_password">
+                    <div id="update_phone">
+                    <div id="update_company">
                     <div id="pageOverlay">
                 </div>`
         );
@@ -493,7 +495,7 @@ describe("checkFields function", () => {
             phone_number: "(123) 456-7891"
         };
 
-        let result = accountInfoScript.checkFields("phone_number", formData);
+        let result = accountInfoScript.checkFields("phone", formData);
         expect(result).toBe(true);
     });
 
@@ -502,7 +504,7 @@ describe("checkFields function", () => {
             phone_number: "123"
         };
 
-        let result = accountInfoScript.checkFields("phone_number", formData);
+        let result = accountInfoScript.checkFields("phone", formData);
         expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith(
