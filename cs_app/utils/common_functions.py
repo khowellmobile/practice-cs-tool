@@ -79,6 +79,7 @@ def validate_phone_number(number):
     - Allows optional country code (e.g., +1)
     - Allows spaces, dashes, and parentheses
     - Matches typical phone number patterns
+    - Requires at least 7 digits in total
 
     Args:
         number (str): The phone number to be validated.
@@ -88,10 +89,13 @@ def validate_phone_number(number):
     """
 
     number_pattern = r"^(\+?\d{1,3}[- ]?)?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,9}$"
-
     pattern = re.compile(number_pattern)
 
-    return bool(pattern.match(number))
+    if pattern.match(number):
+        digit_count = sum(c.isdigit() for c in number)
+        return digit_count >= 7
+    
+    return False
 
 def validate_company(company):
     """

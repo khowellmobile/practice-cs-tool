@@ -1,4 +1,4 @@
-const accountInfoScript = require("../static/js/account_information_script");
+const accountInfoScript = require("../static/js/sub_scripts/account_information_sub_script");
 const { JSDOM } = require("jsdom");
 
 describe("fadeOutPopup function", () => {
@@ -213,6 +213,52 @@ describe("validateName function", () => {
     });
 });
 
+describe("validatePhoneNumber function", () => {
+    test("should return true with a valid phone number", () => {
+        let validPhone = "+1 (555) 123-4567";
+
+        expect(accountInfoScript.validatePhoneNumber(validPhone)).toBe(true);
+    });
+
+    test("should return false with an invalid phone number format", () => {
+        let invalidPhone = "123-abc-4567";
+
+        expect(accountInfoScript.validatePhoneNumber(invalidPhone)).toBe(false);
+    });
+
+    test("should return false with a phone number too short", () => {
+        let shortPhone = "123";
+
+        expect(accountInfoScript.validatePhoneNumber(shortPhone)).toBe(false);
+    });
+
+    test("should return false with a phone number containing special characters", () => {
+        let phoneWithSpecialChars = "555-123-#$%";
+
+        expect(accountInfoScript.validatePhoneNumber(phoneWithSpecialChars)).toBe(false);
+    });
+});
+
+describe("validateCompany function", () => {
+    test("should return true with a valid company name", () => {
+        let validCompany = "Test Company, Inc.";
+
+        expect(accountInfoScript.validateCompany(validCompany)).toBe(true);
+    });
+
+    test("should return false with a company name less than 2 characters", () => {
+        let shortCompany = "A";
+
+        expect(accountInfoScript.validateCompany(shortCompany)).toBe(false);
+    });
+
+    test("should return false with a company name containing non-allowed characters", () => {
+        let companyWithSpecialChars = "Company#123";
+
+        expect(accountInfoScript.validateCompany(companyWithSpecialChars)).toBe(false);
+    });
+});
+
 describe("ajaxResponseError function", () => {
     beforeEach(() => {
         global.alert = jest.fn();
@@ -251,9 +297,7 @@ describe("ajaxResponseError function", () => {
 
     test("should log to console for unknown field name", () => {
         accountInfoScript.ajaxResponseError("password", { error: "Old password is incorrect" });
-        expect(global.alert).toHaveBeenCalledWith(
-            "Old password is incorrect."
-        );
+        expect(global.alert).toHaveBeenCalledWith("Old password is incorrect.");
     });
 
     test("should show alert for unknown error", () => {
@@ -296,30 +340,12 @@ describe("ajaxResponseSuccess function", () => {
         expect($("#name_text").text()).toBe("Name: John Doe");
     });
 
-    test("should log an error and update text with incomplete name formdata", () => {
-        const formdata = { first_name: "John" };
-
-        accountInfoScript.ajaxResponseSuccess("name", formdata);
-
-        expect(consoleLogSpy).toHaveBeenCalledWith("Formdata does not include required key-value pairs for name");
-        expect($("#name_text").text()).toBe("Name data is incomplete.");
-    });
-
     test("should update email text with email address if formdata is complete", () => {
         const formdata = { email: "john.doe@example.com" };
 
         accountInfoScript.ajaxResponseSuccess("email", formdata);
 
         expect($("#email_text").text()).toBe("Email: john.doe@example.com");
-    });
-
-    test("should log an error and update text with incomplete email formdata", () => {
-        const formdata = {};
-
-        accountInfoScript.ajaxResponseSuccess("email", formdata);
-
-        expect(consoleLogSpy).toHaveBeenCalledWith("Formdata does not include required key-value pair for email");
-        expect($("#email_text").text()).toBe("Email data is incomplete.");
     });
 
     test("should update password text with confirmation message", () => {

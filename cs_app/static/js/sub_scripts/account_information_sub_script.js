@@ -340,14 +340,15 @@ function validateEmail(email) {
  * - Allows optional country code (e.g., +1)
  * - Allows spaces, dashes, and parentheses
  * - Matches typical phone number patterns
+ * - Requires phone number to be atleast 7 digits
  *
  * @param {string} number - The phone number to be validated.
  * @returns {boolean} - True if the phone number is valid according to the format, False otherwise.
  */
 function validatePhoneNumber(number) {
-    const phonePattern = /^(\+?\d{1,3}[- ]?)?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,9}$/;
+    const phonePattern = /^(?:(?:\+?\d{1,3}[- ]?)?(?:\(?\d{1,4}?\)?[- ]?)?\d{1,4}[- ]?\d{1,9}){1,2}$/;
 
-    return phonePattern.test(number);
+    return phonePattern.test(number) && (number.replace(/\D/g, '').length >= 7);
 }
 
 /**
@@ -446,6 +447,8 @@ try {
         ajaxResponseError,
         validateName,
         validateEmail,
+        validatePhoneNumber,
+        validateCompany,
         validatePassword,
         fadeInPopup,
         fadeOutPopup,
