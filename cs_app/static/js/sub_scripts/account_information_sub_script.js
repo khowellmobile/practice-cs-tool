@@ -286,6 +286,39 @@ function validateEmail(email) {
 }
 
 /**
+ * Validates if a phone number follows a standard format.
+ *
+ * Phone Number Format:
+ * - Allows optional country code (e.g., +1)
+ * - Allows spaces, dashes, and parentheses
+ * - Matches typical phone number patterns
+ *
+ * @param {string} phone - The phone number to be validated.
+ * @returns {boolean} - True if the phone number is valid according to the format, False otherwise.
+ */
+function validatePhone(phone) {
+    const phonePattern = /^(\+?\d{1,3}[- ]?)?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,9}$/;
+
+    return phonePattern.test(phone);
+}
+
+/**
+ * Validates if a company name follows a standard format.
+ *
+ * Company Name Format:
+ * - Should contain only letters, numbers, spaces, and certain special characters
+ * - Minimum length of 2 characters
+ *
+ * @param {string} company - The company name to be validated.
+ * @returns {boolean} - True if the company name is valid according to the format, False otherwise.
+ */
+function validateCompany(company) {
+    const companyPattern = /^[a-zA-Z0-9\s&.,'-]{2,}$/;
+
+    return companyPattern.test(company);
+}
+
+/**
  * Validates if a password meets the specified criteria.
  *
  * Password Criteria:
