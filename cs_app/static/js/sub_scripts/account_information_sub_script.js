@@ -15,6 +15,8 @@
  * - ajaxResponseError(fieldName, message): Alerts the user about specific errors encountered after an AJAX call.
  * - validateName(name): Validates if a name follows a standard format.
  * - validateEmail(email): Validates if an email address follows a standard format.
+ * - validatePhoneNumber(number): Validates if a phone number follows a standard format
+ * - validateCompany(company): Validates if a company name follows a standard format
  * - validatePassword(password): Validates if a password meets the specified criteria.
  * - fadeInPopup(fieldName): Displays the popup box and overlay for a given field name.
  * - fadeOutPopup(fieldName): Hides the popup box and overlay for a given field name.
@@ -83,12 +85,24 @@ function attachEventListeners() {
                     email: $("#email_new").val(),
                 };
                 break;
+            case "phone_number":
+                formdata = {
+                    phone_number: $("#phone_number").val(),
+                };
+                break;
+            case "company":
+                formdata = {
+                    company: $("#company").val(),
+                };
+                break;
             case "password":
                 formdata = {
                     old_password: $("#password_old").val(),
                     password: $("#password_new").val(),
                 };
                 break;
+            default:
+                console.log("field name not reocgnized");
         }
         if (checkFields(fieldName, formdata)) {
             submitForm(fieldName, formdata);
@@ -128,6 +142,20 @@ function checkFields(fieldName, formdata) {
                 return false;
             } else if (!validateEmail(formdata["email"])) {
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
+                return false;
+            }
+            break;
+        case "name":
+            if (!validatePhoneNumber(formdata["phone_number"])) {
+                alert(`Phone number format is invalid. Please follow standard phone number format: (123) 456-7891`);
+                return false;
+            }
+            break;
+        case "name":
+            if (!validateCompany(formdata["company"])) {
+                alert(
+                    `Company Name format is invalid. Allowed characters include alphabetical characters and common special characters`
+                );
                 return false;
             }
             break;
@@ -194,7 +222,6 @@ function ajaxResponseSuccess(fieldName, formdata) {
         case "name":
             if (!formdata["first_name"] || !formdata["last_name"]) {
                 console.log("Formdata does not include required key-value pairs for name");
-                displayText = "Name data is incomplete.";
             } else {
                 displayText = "Name: " + formdata["first_name"] + " " + formdata["last_name"];
             }
@@ -202,9 +229,22 @@ function ajaxResponseSuccess(fieldName, formdata) {
         case "email":
             if (!formdata["email"]) {
                 console.log("Formdata does not include required key-value pair for email");
-                displayText = "Email data is incomplete.";
             } else {
                 displayText = "Email: " + formdata["email"];
+            }
+            break;
+        case "phone_number":
+            if (!formdata["phone_number"]) {
+                console.log("Formdata does not include required key-value pair for phone number");
+            } else {
+                displayText = formdata["phone_number"];
+            }
+            break;
+        case "company":
+            if (!formdata["company"]) {
+                console.log("Formdata does not include required key-value pair for company");
+            } else {
+                displayText = formdata["company"];
             }
             break;
         case "password":
@@ -235,6 +275,14 @@ function ajaxResponseError(fieldName, message) {
                 break;
             case "email":
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
+                break;
+            case "phone_number":
+                alert("Phone number format is invalid. Please follow standard phone number format: (123) 456-7891");
+                break;
+            case "company":
+                alert(
+                    "Company name format is invalid. Allowed characters include alphabetical characters and standard special characters"
+                );
                 break;
             case "password":
                 alert(
@@ -293,13 +341,13 @@ function validateEmail(email) {
  * - Allows spaces, dashes, and parentheses
  * - Matches typical phone number patterns
  *
- * @param {string} phone - The phone number to be validated.
+ * @param {string} number - The phone number to be validated.
  * @returns {boolean} - True if the phone number is valid according to the format, False otherwise.
  */
-function validatePhone(phone) {
+function validatePhoneNumber(number) {
     const phonePattern = /^(\+?\d{1,3}[- ]?)?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,9}$/;
 
-    return phonePattern.test(phone);
+    return phonePattern.test(number);
 }
 
 /**
