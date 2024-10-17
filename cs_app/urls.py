@@ -30,7 +30,10 @@ urlpatterns = [
     path('account_information/', account_information_views.account_information_view, name='change_account'),
     path('account_information/update_name/', account_information_views.update_name_view, name='update_name'),
     path('account_information/update_email/', account_information_views.update_email_view, name='update_email'),
+    path('account_information/update_phone_number/', account_information_views.update_phone_number_view, name='update_phone_number'),
+    path('account_information/update_company/', account_information_views.update_company_view, name='update_company'),
     path('account_information/update_password/', account_information_views.update_password_view, name='update_password'),
-    path('account_information_sub_page/', account_information_views.account_information_sub_view, name='account_sub')
+    path('account_information_sub_page/', account_information_views.account_information_sub_view, name='account_sub'),
+
 
 ]
