@@ -27,7 +27,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from ..models import User
 
 import json
 import cs_app.utils.common_functions as cf
