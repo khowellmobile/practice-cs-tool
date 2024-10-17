@@ -23,6 +23,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 from ..models import PastParameter
+from ..models import User
 
 
 def main_view(request):
