@@ -15,7 +15,13 @@
         <div id="profile-picture-card" class="flex-col">
             <div id="profile-picture"></div>
             <p><b>Kent Howell</b></p>
-            <p>Howell Associates</p>
+            <p>
+                {% if user.company %}
+                    {{ user.company }}
+                {% else %}
+                     No Company Listed
+                {% endif %}
+            </p>
             <button>Change Company</button><button>Delete Account</button>
         </div>
         <div id="account-info" class="flex-col">
@@ -30,7 +36,13 @@
             </div>
             <div class="seperator-h"></div>
             <div id="phone">
-                <p><b>Phone:</b> (124) 456-7891</p>
+                <p><b>Phone:</b> 
+                    {% if user.phone_number %}
+                        {{ user.phone_number }}
+                    {% else %}
+                         No Phone Number Listed
+                    {% endif %}
+                </p>
                 <button class="toggleButton">Change</button>
             </div>
             <div class="seperator-h"></div>
