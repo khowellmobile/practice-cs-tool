@@ -283,6 +283,20 @@ describe("ajaxResponseError function", () => {
         );
     });
 
+    test("should show correct alert message for phone number field error", () => {
+        accountInfoScript.ajaxResponseError("phone_number", { error: "Invalid format" });
+        expect(global.alert).toHaveBeenCalledWith(
+            "Phone number format is invalid. Please follow standard phone number format: (123) 456-7891"
+        );
+    });
+
+    test("should show correct alert message for company field error", () => {
+        accountInfoScript.ajaxResponseError("company", { error: "Invalid format" });
+        expect(global.alert).toHaveBeenCalledWith(
+            "Company name format is invalid. Allowed characters include alphabetical characters and standard special characters"
+        );
+    });
+
     test("should show correct alert message for password field error", () => {
         accountInfoScript.ajaxResponseError("password", { error: "Invalid format" });
         expect(global.alert).toHaveBeenCalledWith(
@@ -315,6 +329,8 @@ describe("ajaxResponseSuccess function", () => {
                 <div>
                     <div id="name_text"></div>
                     <div id="email_text"></div>
+                    <div id="phone_number_text"></div>
+                    <div id="company_text"></div>
                     <div id="password_text"></div>
                 </div>`
         );
@@ -346,6 +362,22 @@ describe("ajaxResponseSuccess function", () => {
         accountInfoScript.ajaxResponseSuccess("email", formdata);
 
         expect($("#email_text").text()).toBe("Email: john.doe@example.com");
+    });
+
+    test("should update phone number text with phone number if formdata is complete", () => {
+        const formdata = { phone_number: "(123) 456-7891" };
+
+        accountInfoScript.ajaxResponseSuccess("phone_number", formdata);
+
+        expect($("#phone_number_text").text()).toBe("(123) 456-7891");
+    });
+
+    test("should update company text with company name if formdata is complete", () => {
+        const formdata = { company: "Test Company" };
+
+        accountInfoScript.ajaxResponseSuccess("company", formdata);
+
+        expect($("#company_text").text()).toBe("Test Company");
     });
 
     test("should update password text with confirmation message", () => {
@@ -453,6 +485,50 @@ describe("checkFields function", () => {
 
         expect(consoleAlertSpy).toHaveBeenCalledWith(
             "Email format is invalid. Please follow standard email format: example@domain.com"
+        );
+    });
+
+    test("should return true with proper phone number", () => {
+        const formData = {
+            phone_number: "(123) 456-7891"
+        };
+
+        let result = accountInfoScript.checkFields("phone_number", formData);
+        expect(result).toBe(true);
+    });
+
+    test("should alert invalid phone number format and return false", () => {
+        const formData = {
+            phone_number: "123"
+        };
+
+        let result = accountInfoScript.checkFields("phone_number", formData);
+        expect(result).toBe(false);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith(
+            `Phone number format is invalid. Please follow standard phone number format: (123) 456-7891`
+        );
+    });
+
+    test("should return true with proper company name", () => {
+        const formData = {
+            company: "Test Company",
+        };
+
+        let result = accountInfoScript.checkFields("company", formData);
+        expect(result).toBe(true);
+    });
+
+    test("should alert invalid company name format and return false", () => {
+        const formData = {
+            company: "A",
+        };
+
+        let result = accountInfoScript.checkFields("company", formData);
+        expect(result).toBe(false);
+
+        expect(consoleAlertSpy).toHaveBeenCalledWith(
+            `Company Name format is invalid. Allowed characters include alphabetical characters and common special characters`
         );
     });
 

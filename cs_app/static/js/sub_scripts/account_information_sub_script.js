@@ -145,13 +145,13 @@ function checkFields(fieldName, formdata) {
                 return false;
             }
             break;
-        case "name":
+        case "phone_number":
             if (!validatePhoneNumber(formdata["phone_number"])) {
                 alert(`Phone number format is invalid. Please follow standard phone number format: (123) 456-7891`);
                 return false;
             }
             break;
-        case "name":
+        case "company":
             if (!validateCompany(formdata["company"])) {
                 alert(
                     `Company Name format is invalid. Allowed characters include alphabetical characters and common special characters`
