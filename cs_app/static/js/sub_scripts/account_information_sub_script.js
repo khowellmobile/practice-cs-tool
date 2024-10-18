@@ -33,6 +33,9 @@ try {
     console.log(error);
 }
 
+/**
+ * Makes sure menu is open to match with open menu on home screen
+ */
 $("#c1").toggleClass("small-menu large-menu")
 $("#c2").toggleClass("large-content small-content");
 
