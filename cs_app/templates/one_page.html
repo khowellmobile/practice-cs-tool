@@ -29,7 +29,7 @@
                 </div>
                 <div class="seperator-h"></div>
                 <div id="c1-2" class="flex-col">
-                    <div class="page-link">
+                    <div class="page-link" onclick="redirectTo('/one_page/', 'menu_open')">
                         <div class="symbol-sm flex-center">
                             <b>O</b>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                         <p>Change Database</p>
                     </div>
-                    <div class="page-link">
+                    <div class="page-link" onclick="redirectTo('/account_information_sub_page/')">
                         <div class="symbol-sm flex-center">
                             <b>A</b>
                         </div>
@@ -69,6 +69,13 @@
         <!-- Links to .js files and getting csrf_token -->
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/one_page_script.js' %}"></script>
+        <script>
+            addInfo = "{{ additionalInfo|escapejs }}";
+            if (addInfo && addInfo == "menu_open") {
+                $("#c1").toggleClass("small-menu large-menu")
+                $("#c2").toggleClass("large-content small-content");
+            }
+        </script>
         {% block sub_js %}
         {% endblock %}
     </body>

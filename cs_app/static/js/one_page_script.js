@@ -1,15 +1,21 @@
 $("#c1")
     .on("mouseenter", function () {
-        $("#c1").toggleClass("small-menu large-menu");
-        $("#c2").toggleClass("small-content large-content");
-
-        $("#c1-1 > p").fadeIn(250);
-        $("#c1-2 > div > p").fadeIn(250);
+        switchClass(true);
     })
     .on("mouseleave", function () {
-        $("#c1").toggleClass("small-menu large-menu");
-        $("#c2").toggleClass("small-content large-content");
-
-        $("#c1-1 > p").fadeOut(250);
-        $("#c1-2 > div > p").fadeOut(250);
+        switchClass(false);
     });
+
+function switchClass(expand) {
+    if (expand) {
+        $("#c1").removeClass("small-menu");
+        $("#c1").addClass("large-menu");
+        $("#c2").removeClass("large-content");
+        $("#c2").addClass("small-content");
+    } else {
+        $("#c1").removeClass("large-menu");
+        $("#c1").addClass("small-menu");
+        $("#c2").removeClass("small-content");
+        $("#c2").addClass("large-content");
+    }
+}

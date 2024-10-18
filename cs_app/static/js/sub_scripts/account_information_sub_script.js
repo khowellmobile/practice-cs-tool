@@ -33,6 +33,9 @@ try {
     console.log(error);
 }
 
+$("#c1").toggleClass("small-menu large-menu")
+$("#c2").toggleClass("large-content small-content");
+
 /**
  * Attaching event listeners. Waiting for DOM to load not needed due to javascript file
  * being loaded at end of html template.
