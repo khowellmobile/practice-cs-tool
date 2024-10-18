@@ -53,17 +53,7 @@ def account_information_view(request):
         "user": user,
     }
 
-    return render(request, "account_information.html", context)
-
-
-@login_required
-def account_information_sub_view(request):
-    user = request.user
-    context = {
-        "user": user,
-    }
-
-    return render(request, "subpages/account_information_sub_page.html", context)
+    return render(request, "subpages/account_information.html", context)
 
 
 @login_required

@@ -1,4 +1,4 @@
-const accountInfoScript = require("../static/js/sub_scripts/account_information_sub_script");
+const accountInfoScript = require("../static/js/sub_scripts/account_information_script");
 const { JSDOM } = require("jsdom");
 
 describe("fadeOutPopup function", () => {

@@ -16,7 +16,7 @@ class AccountInformationViewTests(TestCase):
         response = self.client.get(reverse("change_account"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "account_information.html")
+        self.assertTemplateUsed(response, "subpages/account_information.html")
         self.assertEqual(response.context["user"], self.user)
 
     def test_account_information_view_unauthenticated(self):
@@ -142,7 +142,7 @@ class UpdatePhoneNumberViewTests(TestCase):
         data = {"phone_number": "+1 (555) 123-4567"}
 
         response = self.client.post(
-            reverse("update_phone_number"),
+            reverse("update_phone"),
             data=json.dumps(data),
             content_type="application/json",
         )
@@ -157,7 +157,7 @@ class UpdatePhoneNumberViewTests(TestCase):
         data = {"phone_number": "123"}
 
         response = self.client.post(
-            reverse("update_phone_number"),
+            reverse("update_phone"),
             data=json.dumps(data),
             content_type="application/json",
         )
@@ -166,7 +166,7 @@ class UpdatePhoneNumberViewTests(TestCase):
         self.assertJSONEqual(response.content, {"error": "Invalid format"})
 
     def test_update_phone_number_view_invalid_method(self):
-        response = self.client.get(reverse("update_phone_number"))
+        response = self.client.get(reverse("update_phone"))
 
         self.assertEqual(response.status_code, 405)
         self.assertJSONEqual(response.content, {"error": "Invalid request method"})
@@ -174,10 +174,10 @@ class UpdatePhoneNumberViewTests(TestCase):
     def test_update_phone_number_view_unauthenticated(self):
         self.client.logout()
 
-        response = self.client.post(reverse("update_phone_number"))
+        response = self.client.post(reverse("update_phone"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f'/login/?next={reverse("update_phone_number")}')
+        self.assertRedirects(response, f'/login/?next={reverse("update_phone")}')
 
 
 class UpdateCompanyViewTests(TestCase):

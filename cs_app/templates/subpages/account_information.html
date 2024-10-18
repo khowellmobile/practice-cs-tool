@@ -2,7 +2,7 @@
 {% load static %} 
 
 {% block sub_css %}
-<link rel="stylesheet" href="{% static 'css/sub_styles/account_information_sub_style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/sub_styles/account_information_style.css' %}" />
 {% endblock %} 
 
 {% block content %}
@@ -145,7 +145,7 @@
 {% endblock %} 
 
 {% block sub_js %}
-<script src="{% static 'js/sub_scripts/account_information_sub_script.js' %}"></script>
+<script src="{% static 'js/sub_scripts/account_information_script.js' %}"></script>
 <script>
     // Easier to get csrf token from template
     var csrf_token = "{{ csrf_token }}";
