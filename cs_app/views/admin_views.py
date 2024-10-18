@@ -23,6 +23,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 from ..models import PastParameter
+from ..models import User
 
 
 def main_view(request):
@@ -91,3 +92,14 @@ def tinker_view(request):
     }
 
     return render(request, "tinker.html", context)
+
+@login_required
+def one_page_view(request):
+    user = request.user
+    context = {
+        "user": user,
+        "additionalInfo": request.GET.get("additionalInfo", None),
+    }
+
+    return render(request, "one_page.html", context)
+

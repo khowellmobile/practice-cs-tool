@@ -422,11 +422,8 @@
         <script src="{% static 'js/directions_script.js' %}"></script>
 
         <script>
-            console.log("here");
             addInfo = "{{ additionalInfo|escapejs }}";
-            console.log(addInfo);
             if (addInfo && addInfo !== "overview") {
-                console.log("running");
                 $("#" + addInfo).toggleClass("active inactive");
                 $("#overview").toggleClass("active inactive");
             }

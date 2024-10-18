@@ -1,0 +1,179 @@
+:root {
+    --sm-gap: 0.5rem;
+    --md-gap: 1rem;
+    --lg-gap: 2rem;
+
+    --primary-blue: rgb(35, 35, 73);
+    --primary-grey: rgb(235, 235, 235);
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
+}
+
+.seperator-h {
+    width: calc(100% - 1rem);
+    height: 1px;
+    margin: 0rem 0rem 0rem var(--sm-gap);
+
+    background-color: rgba(180, 180, 180, 0.603);
+}
+
+.seperator-v {
+    width: 1px;
+    height: calc(100% - 1rem);
+
+    background-color: rgba(180, 180, 180, 0.603);
+
+    position: relative;
+    right: 1px;
+}
+
+.small-menu {
+    width: 3%;
+}
+
+.large-menu {
+    width: 15%;
+}
+
+.small-content {
+    width: 85%;
+}
+
+.large-content {
+    width: 97%;
+}
+
+.symbol {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    background-color: white;
+    border-radius: 0.5rem;
+
+    flex-shrink: 0;
+}
+
+.symbol > b {
+    color: rgb(35, 35, 73);
+    font-size: 1.5rem;
+}
+
+.symbol-sm {
+    width: 2rem;
+    height: 2rem;
+
+    background-color: var(--primary-grey);
+    border-radius: 0.5rem;
+
+    flex-shrink: 0;
+}
+
+.symbol-sm > b {
+    color: rgb(35, 35, 73);
+    font-size: 1.5rem;
+}
+
+.page-link {
+    width: 100%;
+    padding: 0.75rem;
+
+    cursor: pointer;
+
+    display: flex;
+}
+
+.page-link > p {
+    margin: 0px 0px 0px 1rem;
+
+    color: white;
+
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.page-link:hover {
+    background-color: rgba(109, 109, 122, 0.5);
+}
+
+.back-arrow {
+    margin-left: 0.5rem;
+
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.back-arrow > p {
+    color: white;
+    font-size: 1.3rem;
+}
+
+#c1 {
+    height: 100%;
+
+    background-color: var(--primary-blue);
+    overflow: hidden;
+    transition: all linear 0.35s;
+}
+
+#c1-1 {
+    width: 100%;
+    height: 3.5rem;
+    padding: var(--sm-gap);
+    box-sizing: border-box;
+
+    cursor: default;
+
+    display: flex;
+    align-items: center;
+}
+
+#c1-1 > p {
+    margin-left: var(--sm-gap);
+
+    color: white;
+    font-size: 1.3rem;
+
+    display: none;
+    flex-shrink: 0;
+}
+
+#c2 {
+    height: 100%;
+
+    transition: all linear 0.35s;
+}
+
+#c2-1 {
+    width: 100%;
+    height: 3.5rem;
+
+    background-color: var(--primary-blue);
+
+    display: flex;
+    align-items: center;
+}
+
+#c2-1 > p {
+    margin-left: 0.5rem;
+
+    color: White;
+    font-size: 1rem;
+}

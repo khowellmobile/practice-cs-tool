@@ -7,7 +7,13 @@ Any helper function needed for views that are reused will go here.
 Functions:
 - validate_name(name): Validates a name using regex to ensure security and consistency
 - validate_email(email): Validates an email using regex to ensure security and consistency
-- validate_password(password): Validates a password using regex to ensure security and consistency
+- validate_phone_number(number): Validates a phone number using regex to ensure proper formatting
+- validate_company(company): Validates a company name using regex for allowed characters and length
+- validate_password(password): Validates a password to ensure it meets security criteria
+- validate_db_engine(db_engine): Validates the database engine field for allowed values
+- validate_db_name(db_name): Validates the database name field to ensure it follows naming conventions
+- validate_db_host(db_host): Validates the database host field for valid hostname or IP address format
+- validate_db_driver(db_driver): Validates the database driver field for allowed driver names
 
 Dependencies:
 - Python Modules: re
@@ -64,6 +70,53 @@ def validate_email(email):
         return True
     else:
         return False
+    
+def validate_phone_number(number):
+    """
+    Validates if a phone number follows a standard format.
+
+    Phone Number Format:
+    - Allows optional country code (e.g., +1)
+    - Allows spaces, dashes, and parentheses
+    - Matches typical phone number patterns
+    - Requires at least 7 digits in total
+
+    Args:
+        number (str): The phone number to be validated.
+
+    Returns:
+        bool: True if the phone number is valid according to the format, False otherwise.
+    """
+
+    number_pattern = r"^(\+?\d{1,3}[- ]?)?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,9}$"
+    pattern = re.compile(number_pattern)
+
+    if pattern.match(number):
+        digit_count = sum(c.isdigit() for c in number)
+        return digit_count >= 7
+    
+    return False
+
+def validate_company(company):
+    """
+    Validates if a company name follows a standard format.
+
+    Company Name Format:
+    - Should contain only letters, numbers, spaces, and certain special characters
+    - Minimum length of 2 characters
+
+    Args:
+        company (str): The company name to be validated.
+
+    Returns:
+        bool: True if the company name is valid according to the format, False otherwise.
+    """
+
+    company_pattern = r"^[a-zA-Z0-9\s&.,'-]{2,}$"
+
+    pattern = re.compile(company_pattern)
+
+    return bool(pattern.match(company))
 
 
 def validate_password(password):
