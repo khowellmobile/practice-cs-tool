@@ -51,6 +51,7 @@ def account_information_view(request):
     user = request.user
     context = {
         "user": user,
+        "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
     return render(request, "subpages/account_information.html", context)
