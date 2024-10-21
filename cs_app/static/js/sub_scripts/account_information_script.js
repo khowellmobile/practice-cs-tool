@@ -34,12 +34,6 @@ try {
 }
 
 /**
- * Makes sure menu is open to match with open menu on home screen
- */
-$("#c1").toggleClass("small-menu large-menu")
-$("#c2").toggleClass("large-content small-content");
-
-/**
  * Attaching event listeners. Waiting for DOM to load not needed due to javascript file
  * being loaded at end of html template.
  */
