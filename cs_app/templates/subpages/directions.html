@@ -1,0 +1,52 @@
+{% extends "one_page.html" %} {% load static %} {% block sub_css %}
+<link rel="stylesheet" href="{% static 'css/sub_styles/directions_style.css' %}" />
+{% endblock %} {% block content %}
+
+<div id="main-container" class="flex-col">
+    <div id="header">
+        <h3>Directions</h3>
+        <h4>Learn to use Practice Report</h4>
+    </div>
+    <div id="card-holder">
+        <div id="card-grid">
+            <div id="overview-card" class="content-card content-card-small show">
+                <h3>Purpose</h3>
+                <div class="sep-h"></div>
+                <p>
+                    The purpose of this application is to empower users to generate reports from Practice CS that are
+                    otherwise inaccessible.
+                </p>
+                <p><b>Choose</b> a <b>card</b> to discover more about its features and functions.</p>
+            </div>
+            <div id="generate-report-card" class="content-card content-card-small show">
+                <h3>Generate Report</h3>
+                <div class="sep-h"></div>
+                <p>
+                    Create custom reports effortlessly. Select from a curated list of available reports. Access your
+                    history to view recently generated reports.
+                </p>
+            </div>
+            <div id="change-database-card" class="content-card content-card-small show">
+                <h3>Change Database</h3>
+                <div class="sep-h"></div>
+                <p>
+                    Seamlessly switch to a different database by entering all required fields. Monitor the connection
+                    status and stay informed about any potential issues that may arise during the process.
+                </p>
+            </div>
+
+            <div id="account-information-card" class="content-card content-card-small show">
+                <h3>Account Information</h3>
+                <div class="sep-h"></div>
+                <p>
+                    Review your account information easily. Add optional details to enhance your profile and update your
+                    information as needed.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block sub_js %}
+<script src="{% static 'js/sub_scripts/directions_script.js' %}"></script>
+{% endblock %}
