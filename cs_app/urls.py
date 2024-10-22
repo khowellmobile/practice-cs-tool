@@ -20,7 +20,6 @@ urlpatterns = [
 
     # Directions page
     path('directions/', directions_views.directions_view, name='directions'),
-    path('directions_sub/', directions_views.directions_sub_view, name='directions_sub'),
 
     # Change database page and functions
     path('change_database/', change_database_views.change_database_view, name='change_database'),
