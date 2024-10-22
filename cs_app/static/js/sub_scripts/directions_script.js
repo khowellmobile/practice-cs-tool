@@ -22,14 +22,14 @@ $(".content-card").on("click", function () {
     let clickedId = $(this).attr("id");
 
     $(".content-card").each(function () {
-        if ($(this).attr("id") === clickedId && $(this).hasClass("content-card-small")) {
-            $(this).toggleClass("content-card-small content-card-large");
-            $(`#${clickedId} > p.small-text`).fadeOut(300);
-            $(`#${clickedId} > p.large-text`).fadeIn(300);
+        if ($(this).attr("id") === clickedId && $(this).hasClass("content-card-initial")) {
+            $(this).toggleClass("content-card-initial content-card-expanded");
+            $(`#${clickedId} > p.initial-card-text`).fadeOut(300);
+            $(`#${clickedId} > .hidden-div`).fadeIn(300);
         } else if ($(this).attr("id") === clickedId) {
-            $(this).toggleClass("content-card-small content-card-large");
-            $(`#${clickedId} > p.small-text`).fadeIn(300);
-            $(`#${clickedId} > p.large-text`).fadeOut(300);
+            $(this).toggleClass("content-card-initial content-card-expanded");
+            $(`#${clickedId} > p.initial-card-text`).fadeIn(300);
+            $(`#${clickedId} > .hidden-div`).fadeOut(300);
         }
     });
 });
