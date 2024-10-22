@@ -47,7 +47,7 @@ describe("class toggle on click function", () => {
         clock.advanceTimersByTime(305);
 
         expect(card1.find("p.initial-card-text").is(":visible")).toBe(false);
-        expect($('#testCard > .hidden-div').css("display")).toBe("block");
+        expect($("#testCard > .hidden-div").css("display")).toBe("block");
     });
 
     test("toggles classes and fades in/out properly on second click", () => {
@@ -66,7 +66,7 @@ describe("class toggle on click function", () => {
         clock.advanceTimersByTime(305);
 
         expect(card1.find("p.initial-card-text").css("display")).toBe("block");
-        expect($('#testCard > .hidden-div').is(":visible")).toBe(false);
+        expect($("#testCard > .hidden-div").is(":visible")).toBe(false);
     });
 
     test("doesnt affect other cards", () => {

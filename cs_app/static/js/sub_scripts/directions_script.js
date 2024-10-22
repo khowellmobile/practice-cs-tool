@@ -20,7 +20,6 @@ try {
 attachEventListeners();
 
 function attachEventListeners() {
-
     /**
      * This event listener toggles classes when a card is clicked to change what information
      * is being displayed
@@ -45,7 +44,7 @@ function attachEventListeners() {
 try {
     // Export all functions
     module.exports = {
-        attachEventListeners
+        attachEventListeners,
     };
 } catch (error) {
     console.log(error);
