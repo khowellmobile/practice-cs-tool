@@ -31,7 +31,7 @@ $(".content-card").on("click", function () {
             $(`#${clickedId} > p.small-text`).fadeIn(300);
             $(`#${clickedId} > p.large-text`).fadeOut(300);
         }
-    })
+    });
 });
 
 try {
@@ -40,4 +40,3 @@ try {
 } catch (error) {
     console.log(error);
 }
-
