@@ -1,0 +1,18 @@
+{% extends "one_page.html" %} {% load static %} {% block sub_css %}
+<link rel="stylesheet" href="{% static 'css/sub_styles/generate_report_style.css' %}" />
+{% endblock %} {% block content %}
+
+<div id="main-container" class="flex-col">
+    <div id="header">
+        <h3>Generate Report</h3>
+        <h4>Create your custom reports</h4>
+    </div>
+    <div id="card-holder">
+        <div id="k1" class="content-card"></div>
+        <div id="k2" class="content-card"></div>
+    </div>
+</div>
+
+{% endblock %} {% block sub_js %}
+<script src="{% static 'js/sub_scripts/generate_report_script.js' %}"></script>
+{% endblock %}
