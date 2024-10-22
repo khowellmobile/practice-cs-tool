@@ -18,13 +18,6 @@
     align-items: center;
 }
 
-.hide {
-    display: none;
-}
-
-.show {
-    display: flex;
-}
 
 .seperator-h {
     width: calc(100% - 1rem);
