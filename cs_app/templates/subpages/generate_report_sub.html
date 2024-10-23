@@ -8,8 +8,23 @@
         <h4>Create your custom reports</h4>
     </div>
     <div id="card-holder">
-        <div id="k1" class="content-card"></div>
-        <div id="k2" class="content-card"></div>
+        <div id="k1" class="content-card">
+            <input type="date" id="start_date" class="form__input" name="start_date" required />
+            <p>to</p>
+            <input type="date" id="end_date" class="form__input" name="end_date" required />
+
+            <div class="dropdown-button">Custom</div>
+            <div class="dropdown-content">
+                <div class="dropdown-item" data-value="YTD">YTD</div>
+                <div class="dropdown-item" data-value="Last Year">Last Year</div>
+                <div class="dropdown-item" data-value="All Time">All Time</div>
+                <div class="dropdown-item" data-value="Custom">Custom</div>
+            </div>
+            <div class="button" id="run-report-button"><strong>Run Report</strong></div>
+        </div>
+        <div id="k2" class="content-card">
+            <div id="k2-1"></div>
+        </div>
     </div>
 </div>
 
