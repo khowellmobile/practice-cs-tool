@@ -1,5 +1,9 @@
 {% extends "one_page.html" %} {% load static %} {% block sub_css %}
 <link rel="stylesheet" href="{% static 'css/sub_styles/generate_report_style.css' %}" />
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css" />
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+
 {% endblock %} {% block content %}
 
 <div id="main-container" class="flex-col">
@@ -8,7 +12,7 @@
         <h4>Create your custom reports</h4>
     </div>
     <div id="card-holder">
-        <div id="k1" class="content-card">
+        <div id="inputs" class="content-card">
             <input type="date" id="start_date" class="form__input" name="start_date" required />
             <p>to</p>
             <input type="date" id="end_date" class="form__input" name="end_date" required />
@@ -20,14 +24,18 @@
                 <div class="dropdown-item" data-value="All Time">All Time</div>
                 <div class="dropdown-item" data-value="Custom">Custom</div>
             </div>
-            <div class="button" id="run-report-button"><strong>Run Report</strong></div>
+            <div class="button" id="run-report-button" onclick="generateTable()"><strong>Run Report</strong></div>
         </div>
-        <div id="k2" class="content-card">
-            <div id="k2-1"></div>
+        <div id="report-holder" class="content-card">
+            <div id="report"></div>
         </div>
     </div>
 </div>
 
 {% endblock %} {% block sub_js %}
 <script src="{% static 'js/sub_scripts/generate_report_script.js' %}"></script>
+<script>
+    // Easier to get csrf token from template
+    var csrf_token = "{{ csrf_token }}";
+</script>
 {% endblock %}
