@@ -170,6 +170,8 @@ function createTable(formdata) {
         })
         .then((response) => {
             initializeTable(formatData(response.data));
+        }).catch((error) => {
+            alert("error:", error);
         });
 }
 
@@ -234,4 +236,21 @@ function formatData(data) {
     });
 
     return res;
+}
+
+
+
+try {
+    // Export all functions
+    module.exports = {
+        attachEventListeners,
+        generateTable,
+        createTable,
+        initializeTable,
+        alterDates,
+        setTableHeight,
+        formatData,
+    };
+} catch (error) {
+    console.log(error);
 }
