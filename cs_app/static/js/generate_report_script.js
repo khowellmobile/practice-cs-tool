@@ -117,6 +117,7 @@ function generateTable() {
 }
 
 /**
+ *
  * Gets needed table information
  *
  * Uses fetch to send inputs to a view which will return report
