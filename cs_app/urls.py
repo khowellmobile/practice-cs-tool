@@ -16,7 +16,6 @@ urlpatterns = [
 
     # Generate report and functions
     path('generate_report/', generate_report_views.generate_report_view, name='generate_report'),
-    path('generate_report_sub/', generate_report_views.generate_report_sub_view, name='generate_report_sub'),
     path('load_table/', generate_report_views.load_table_view, name='load_table'),
 
     # Directions page

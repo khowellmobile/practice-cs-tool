@@ -84,6 +84,87 @@ function attachEventListeners() {
 }
 
 /**
+ * Starts the process of generating a table from input data
+ *
+ * Calls createTable() after pulling input values
+ */
+function generateTable() {
+    var formdata = {
+        time_range: $(".dropdown-button").text(),
+        start_date: $("#start_date").val(),
+        end_date: $("#end_date").val(),
+    };
+
+    if (formdata["start_date"] == "" || formdata["end_date"] == "") {
+        alert("Please fill out starting and ending dates");
+        return;
+    }
+
+    if (formdata !== currentReportParameters) {
+        createTable(formdata);
+    }
+}
+
+/**
+ * Gets needed table information
+ *
+ * Uses fetch to send inputs to a view which will return report
+ * information to be used to create a table
+ *
+ * Calls initializeTable () to render table
+ *
+ * @param {string} formData - The input data used to create the report
+ */
+function createTable(formdata) {
+    fetch("/load_table/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrf_token,
+        },
+        body: JSON.stringify(formdata),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                alert("error");
+            }
+            return response.json();
+        })
+        .then((response) => {
+            initializeTable(formatData(response.data));
+        })
+        .catch((error) => {
+            alert("error:", error);
+        });
+}
+
+/**
+ * Initializes and renders data table to display report information
+ *
+ * Destroys old table, adds new html for new table, and initializes new table
+ *
+ * Calls setTableHeight() to set proper table height
+ *
+ * @param {string} data - Formatted input data for new data table
+ */
+function initializeTable(data) {
+    if ($.fn.DataTable.isDataTable("#reportTable")) {
+        $("#reportTable").DataTable().destroy(); // Destroy the existing DataTable instance
+        $("#reportTable").remove(); // Remove the existing table
+    }
+
+    $("#report").append('<table id="reportTable" class="display" style="width:100%;"></table>');
+
+    $("#reportTable").DataTable({
+        // Initialize DataTable
+        columns: [{ title: "Name" }, { title: "Hours" }],
+        data: data,
+    });
+
+    setTableHeight();
+}
+
+/**
  * Sets date inputs to proper range
  *
  * This function handles calculating and displaying time
@@ -127,86 +208,6 @@ function alterDates(range) {
 }
 
 /**
- * Starts the process of generating a table from input data
- *
- * Calls createTable() after pulling input values
- */
-function generateTable() {
-    var formdata = {
-        time_range: $(".dropdown-button").text(),
-        start_date: $("#start_date").val(),
-        end_date: $("#end_date").val(),
-    };
-
-    if (formdata["start_date"] == "" || formdata["end_date"] == "") {
-        alert("Please fill out starting and ending dates");
-        return
-    }
-
-    if (formdata !== currentReportParameters) {
-        createTable(formdata);
-    }
-}
-
-/**
- * Gets needed table information
- *
- * Uses fetch to send inputs to a view which will return report
- * information to be used to create a table
- *
- * Calls initializeTable () to render table
- *
- * @param {string} formData - The input data used to create the report
- */
-function createTable(formdata) {
-    fetch("/load_table/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrf_token,
-        },
-        body: JSON.stringify(formdata),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                alert("error");
-            }
-            return response.json();
-        })
-        .then((response) => {
-            initializeTable(formatData(response.data));
-        }).catch((error) => {
-            alert("error:", error);
-        });
-}
-
-/**
- * Initializes and renders data table to display report information
- *
- * Destroys old table, adds new html for new table, and initializes new table
- *
- * Calls setTableHeight() to set proper table height
- *
- * @param {string} data - Formatted input data for new data table
- */
-function initializeTable(data) {
-    if ($.fn.DataTable.isDataTable("#reportTable")) {
-        $("#reportTable").DataTable().destroy(); // Destroy the existing DataTable instance
-        $("#reportTable").remove(); // Remove the existing table
-    }
-
-    $("#report").append('<table id="reportTable" class="display" style="width:100%;"></table>');
-
-    $("#reportTable").DataTable({
-        // Initialize DataTable
-        columns: [{ title: "Name" }, { title: "Hours" }],
-        data: data,
-    });
-
-    setTableHeight();
-}
-
-/**
  * Sets table height to proper height
  *
  * This function handles calculating and setting the height for a
@@ -242,8 +243,6 @@ function formatData(data) {
 
     return res;
 }
-
-
 
 try {
     // Export all functions
