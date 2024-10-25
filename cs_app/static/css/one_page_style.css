@@ -7,6 +7,11 @@
     --primary-grey: rgb(235, 235, 235);
 }
 
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
 .flex-col {
     display: flex;
     flex-direction: column;
