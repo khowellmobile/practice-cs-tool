@@ -138,6 +138,11 @@ function generateTable() {
         end_date: $("#end_date").val(),
     };
 
+    if (formdata["start_date"] == "" || formdata["end_date"] == "") {
+        alert("Please fill out starting and ending dates");
+        return
+    }
+
     if (formdata !== currentReportParameters) {
         createTable(formdata);
     }
