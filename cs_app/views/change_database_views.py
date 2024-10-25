@@ -28,7 +28,7 @@ import json
 import pyodbc
 
 
-@login_required
+
 def change_database_view(request):
     """
     View function to render the change database page.
@@ -62,7 +62,7 @@ def change_database_view(request):
     return render(request, "change_database.html", context)
 
 
-@login_required
+
 def get_db_info_view(request):
     """
     View function to retrieve database information based on alias via AJAX GET request.
@@ -98,7 +98,6 @@ def get_db_info_view(request):
         return JsonResponse({"Error": "Missing database alias"}, status=400)
 
 
-@login_required
 def switch_database_view(request):
     """
     View function to handle POST request to switch database configuration dynamically.

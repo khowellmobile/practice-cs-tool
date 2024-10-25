@@ -33,7 +33,7 @@ from ..models import PastParameter
 import json
 
 
-@login_required
+
 def generate_report_view(request):
     """
     View function to generate the generate report page
@@ -60,7 +60,7 @@ def generate_report_view(request):
     return render(request, "generate_report.html", context)
 
 
-@login_required
+
 def load_table_view(request):
     """
     View function to handle AJAX POST requests for loading data into a table.

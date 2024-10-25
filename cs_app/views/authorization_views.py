@@ -152,7 +152,7 @@ def login_view(request):
     return render(request, "login.html", {"form": form, "error_message": error_message})
 
 
-@login_required
+
 def logout_view(request):
     """
     View function to handle user logout.

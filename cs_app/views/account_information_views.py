@@ -33,7 +33,7 @@ import json
 import cs_app.utils.common_functions as cf
 
 
-@login_required
+
 def account_information_view(request):
     """
     View function to render the account information page.
@@ -54,7 +54,7 @@ def account_information_view(request):
     return render(request, "account_information.html", context)
 
 
-@login_required
+
 def update_name_view(request):
     """
     View function to handle POST requests for updating user's first name and last name.
@@ -93,7 +93,7 @@ def update_name_view(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
-@login_required
+
 def update_email_view(request):
     """
     View function to handle POST requests for updating user's email address.
@@ -128,7 +128,7 @@ def update_email_view(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
-@login_required
+
 def update_password_view(request):
     """
     View function to handle POST requests for updating user's password.

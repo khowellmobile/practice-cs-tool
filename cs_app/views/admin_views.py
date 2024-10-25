@@ -40,7 +40,7 @@ def main_view(request):
     return HttpResponse(template.render())
 
 
-@login_required
+
 def home_view(request):
     """
     View function to render the home page for authenticated users.
@@ -73,7 +73,7 @@ def home_view(request):
     return render(request, "home.html", context)
 
 
-@login_required
+
 def tinker_view(request):
     """
     View function to render the tinker page for authenticated users.
