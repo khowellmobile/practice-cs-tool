@@ -96,13 +96,11 @@ def login_view(request):
     return render(request, "login.html", {"form": form, "error_message": error_message})
 
 
-@login_required
 def logout_view(request):
     logout(request)
     return redirect("login")
 
 
-@login_required
 def home_view(request):
     user = request.user
     context = {
@@ -112,7 +110,6 @@ def home_view(request):
     return render(request, "home.html", context)
 
 
-@login_required
 def generate_report_view(request):
     data = PastParameter.objects.order_by("-date_field")[:16]
     user = request.user
@@ -123,8 +120,6 @@ def generate_report_view(request):
 
     return render(request, "generate_report.html", context)
 
-
-@login_required
 def directions_view(request):
     user = request.user
     context = {
@@ -134,7 +129,6 @@ def directions_view(request):
     return render(request, "directions.html", context)
 
 
-@login_required
 def change_database_view(request):
     user = request.user
     data_db = settings.DATABASES["data"]
@@ -153,7 +147,6 @@ def change_database_view(request):
     return render(request, "change_database.html", context)
 
 
-@login_required
 def get_db_info_view(request):
     db_alias = request.GET.get("db_alias")
 
@@ -172,8 +165,6 @@ def get_db_info_view(request):
     else:
         return JsonResponse({"Error": "Missing database alias"}, status=400)
 
-
-@login_required
 def switch_database_view(request):
     if request.method == "POST":
         db_engine = request.POST.get("db_engine")
@@ -286,7 +277,6 @@ def generate_unique_alias(base_alias):
     return unique_alias
 
 
-@login_required
 def change_account_view(request):
     user = request.user
     context = {
@@ -296,7 +286,6 @@ def change_account_view(request):
     return render(request, "change_account.html", context)
 
 
-@login_required
 def update_name_view(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
@@ -315,8 +304,6 @@ def update_name_view(request):
     # Return an error response if the request method is not POST
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
-
-@login_required
 def update_email_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -332,7 +319,6 @@ def update_email_view(request):
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
-@login_required
 def update_password_view(request):
     if request.method == "POST":
         password = request.POST.get("password")
@@ -347,7 +333,6 @@ def update_password_view(request):
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
-@login_required
 def load_table_view(request):
     if request.method == "POST":
         start_date = request.POST.get("start_date")
