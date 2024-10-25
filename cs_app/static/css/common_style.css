@@ -1,6 +1,6 @@
 body {
 	background: white;
-	height: 98vh;
+	height: 100vh;
 }
 
 html {
@@ -24,7 +24,7 @@ html {
 }
 
 .container-1 {
-    height: 98vh;
+    height: 100vh;
 
     display: flex;
     align-items: center;

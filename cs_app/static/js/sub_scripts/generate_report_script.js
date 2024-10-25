@@ -1,20 +1,17 @@
 /**
  * JavaScript file for handling dynamic UI interactions and fetch requests for the generate_report.html page.
  *
- * This file includes functions to manage UI behavior such as toggling div sizes, altering date inputs based on
+ * This file includes functions to manage UI behavior such as altering date inputs based on
  * preset selections, generating and displaying tables from server data, and throttling function calls to optimize
  * performance. It utilizes jQuery for DOM manipulation and fetch operations.
  *
  * Functions:
- * - toggleSize(e1Id, e2Id): Toggles the size of two div elements based on size classes.
  * - alterDates(range): Adjusts date inputs according to a predefined time range selection.
  * - generateTable(): Initiates the process of generating a table based on user input.
  * - createTable(formdata): Sends fetch request to load table data based on provided form data.
  * - initializeTable(data): Renders a DataTable with formatted data and manages table height.
- * - createReportFromHistory(time_range, parameters_json): Generates a report using history buttons on page and updates UI elements.
  * - setTableHeight(): Sets the height of the report table dynamically based on its container.
  * - formatData(data): Formats raw data from the server into a format suitable for DataTables.
- * - throttle(func, delay): Creates a throttled version of a function to limit its invocation rate.
  *
  * Dependencies: Requires jQuery for DOM manipulation and fetch operations.
  */
@@ -28,18 +25,11 @@ try {
     console.log(error);
 }
 
-const throttledToggleSize = throttle(toggleSize, 500);
-var activeTimeRange = "Custom";
+// Global variable to disallow spamming same report type
+var currentReportParameters = "";
 
-/**
- * Attaching event listeners. Waiting for DOM to load not needed due to javascript file
- * being loaded at end of html template.
- */
 attachEventListeners();
 
-/**
- * Function to attach event listeners
- */
 function attachEventListeners() {
     /**
      * Shows dropdown menu on click
@@ -47,7 +37,7 @@ function attachEventListeners() {
     $(".dropdown-button").on("click", function (event) {
         // Prevent the document click event from firing
         event.stopPropagation();
-        $(this).siblings(".dropdown-content").toggle();
+        $(".dropdown-content").css("visibility", "visible");
     });
 
     /**
@@ -57,7 +47,7 @@ function attachEventListeners() {
         activeTimeRange = $(this).data("value");
         alterDates(activeTimeRange);
         $(".dropdown-button").text($(this).text());
-        $(".dropdown-content").hide();
+        $(".dropdown-content").css("visibility", "hidden");
     });
 
     /**
@@ -68,7 +58,7 @@ function attachEventListeners() {
     try {
         $(document).on("click", function (event) {
             if (!$(event.target).closest(".dropdown").length) {
-                $(".dropdown-content").hide();
+                $(".dropdown-content").css("visibility", "hidden");
             }
         });
     } catch (error) {}
@@ -91,14 +81,6 @@ function attachEventListeners() {
             setTableHeight();
         });
     } catch (error) {}
-
-    /**
-     * Calls throttledToggleSize() for history-menu and report-block on click
-     * of expand-button
-     */
-    $("#expand-button").on("click", function () {
-        throttledToggleSize("history-menu", "report-block");
-    });
 }
 
 /**
@@ -108,12 +90,19 @@ function attachEventListeners() {
  */
 function generateTable() {
     var formdata = {
-        time_range: activeTimeRange,
+        time_range: $(".dropdown-button").text(),
         start_date: $("#start_date").val(),
         end_date: $("#end_date").val(),
     };
 
-    createTable(formdata);
+    if (formdata["start_date"] == "" || formdata["end_date"] == "") {
+        alert("Please fill out starting and ending dates");
+        return;
+    }
+
+    if (formdata !== currentReportParameters) {
+        createTable(formdata);
+    }
 }
 
 /**
@@ -176,33 +165,6 @@ function initializeTable(data) {
 }
 
 /**
- * Creates a report from history
- *
- * Uses history button parameters to generate a previously created report
- *
- * Calls createTable() to create new table
- *
- * @param {string} time_range - The time range preset used for report
- * @param {string} parameters_json - The parameters used for report
- */
-function createReportFromHistory(time_range, parameters_json) {
-    let paramsJson = JSON.parse(parameters_json.replace(/'/g, '"'));
-
-    formdata = {
-        time_range: time_range,
-        start_date: paramsJson.start_date,
-        end_date: paramsJson.end_date,
-    };
-
-    createTable(formdata);
-
-    activeTimeRange = time_range;
-    $(".dropdown-button").text(time_range);
-    $("#start_date").val(paramsJson.start_date);
-    $("#end_date").val(paramsJson.end_date);
-}
-
-/**
  * Sets date inputs to proper range
  *
  * This function handles calculating and displaying time
@@ -223,7 +185,7 @@ function alterDates(range) {
 
     switch (range) {
         case "YTD":
-            start_date = `${year - 1}-01-01`;
+            start_date = `${year}-01-01`;
             end_date = `${year}-${month}-${day}`;
             break;
         case "Last Year":
@@ -237,7 +199,7 @@ function alterDates(range) {
         case "Custom":
             break;
         default:
-            console.log("Unknown time range");
+            console.warn("Unknown time range");
             break;
     }
 
@@ -282,118 +244,6 @@ function formatData(data) {
     return res;
 }
 
-/**
- * Toggles the size classes of two specified divs.
- *
- * This function manages the size toggling of two div elements identified
- * by their respective IDs, adjusting them between small and large sizes
- * based on their current state of classes.
- *
- * @param {string} e1Id - The ID of the first div element.
- * @param {string} e2Id - The ID of the second div element.
- */
-function toggleSize(e1Id, e2Id) {
-    let e1 = $("#" + e1Id);
-    let e2 = $("#" + e2Id);
-
-    e1.toggleClass("historySmall historyLarge");
-
-    e2.toggleClass("reportLarge reportSmall");
-
-    let e1Large = e1.hasClass("historyLarge");
-    let e2Small = e2.hasClass("reportSmall");
-
-    toggleClassDisplay(e1Large && e2Small);
-}
-
-/**
- * Toggles the display of .expandedInfo elements and .symbol elements
- *
- * If hideSymbols is true .expandedInfo items are shown and .symbol items are hidden
- * If hideSymbols is false .expandedInfo items are hidden and .symbol items are shown
- *
- * @param {boolean} hideSymbols - flag to indicate if symbols should be hidden
- */
-function toggleClassDisplay(hideSymbols) {
-    let c1 = $(".expanded-info");
-    let c2 = $(".symbol");
-
-    if (hideSymbols) {
-        c1.css("display", "flex");
-        c2.css("display", "none");
-    } else {
-        c1.css("display", "none");
-        c2.css("display", "flex");
-    }
-}
-
-/**
- * Creates a throttled version of a function that limits its use to once in a delay period.
- *
- * This function ensures a function can only get called once in a delay. If the function is
- * called again during the delay the function the function is not executed
- *
- * @param {Function} func - The function to be throttled.
- * @param {number} delay - The delay in milliseconds before allowing the function to be called again.
- * @returns {Function} A throttled version of the original function `func`.
- */
-function throttle(func, delay) {
-    let throttled = false;
-
-    return function () {
-        if (!throttled) {
-            throttled = true;
-            func.apply(this, arguments);
-            setTimeout(() => {
-                throttled = false;
-            }, delay);
-        }
-    };
-}
-
-$("#history-menu__history-scroll button").each(function () {
-    var symbol = $(this).find(".symbol");
-    let symbolText = symbol.text().trim();
-
-    switch (symbolText) {
-        case "YTD":
-            symbol.css("background-color", "#783de4");
-            break;
-        case "LY":
-            symbol.css("background-color", "#b25aec");
-            break;
-        case "C":
-            symbol.css("background-color", "#5784ff");
-            break;
-        case "AT":
-            symbol.css("background-color", "#62d9e9");
-            break;
-        default:
-            console.log("unknown symbol text");
-    }
-});
-
-$(".report-kind").each(function () {
-    var text = $(this).find("p").text();
-
-    switch (text) {
-        case "YTD":
-            $(this).css("background-color", "#783de4");
-            break;
-        case "Last Year":
-            $(this).css("background-color", "#b25aec");
-            break;
-        case "Custom":
-            $(this).css("background-color", "#5784ff");
-            break;
-        case "All Time":
-            $(this).css("background-color", "#62d9e9");
-            break;
-        default:
-            console.log("unknown symbol text");
-    }
-});
-
 try {
     // Export all functions
     module.exports = {
@@ -401,13 +251,9 @@ try {
         generateTable,
         createTable,
         initializeTable,
-        createReportFromHistory,
         alterDates,
         setTableHeight,
         formatData,
-        toggleSize,
-        toggleClassDisplay,
-        throttle,
     };
 } catch (error) {
     console.log(error);

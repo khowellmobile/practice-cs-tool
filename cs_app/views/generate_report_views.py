@@ -32,7 +32,6 @@ from ..models import PastParameter
 
 import json
 
-
 @login_required
 def generate_report_view(request):
     """
@@ -55,9 +54,10 @@ def generate_report_view(request):
     context = {
         "user": user,
         "data": data,
+        "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
-    return render(request, "generate_report.html", context)
+    return render(request, "subpages/generate_report.html", context)
 
 
 @login_required
