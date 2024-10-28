@@ -259,7 +259,7 @@ button {
     width: calc(100% - 28rem);
     height: 23.5rem;
     margin: 1rem 0rem 0rem 1rem;
-    padding: var(--md-gap);
+    padding: var(--lg-gap) var(--md-gap);
     box-sizing: border-box;
 
     background-color: white;
