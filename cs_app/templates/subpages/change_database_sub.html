@@ -1,0 +1,28 @@
+{% extends "one_page.html" %} 
+{% load static %} 
+
+{% block sub_css %}
+<link rel="stylesheet" href="{% static 'css/sub_styles/change_database_style.css' %}" />
+{% endblock %} 
+
+{% block content %}
+
+<div id="main-container" class="flex-col">
+    <div id="header">
+        <h3>Change Database</h3>
+        <h4>Manage your Practice Information</h4>
+    </div>
+    <div id="card-holder">
+        
+    </div>
+</div>
+
+{% endblock %} 
+
+{% block sub_js %}
+<script src="{% static 'js/sub_scripts/change_database_script.js' %}"></script>
+<script>
+    // Easier to get csrf token from template
+    var csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}
