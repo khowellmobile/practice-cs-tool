@@ -68,22 +68,6 @@ button {
     border: 2px solid var(--primary-blue);
 }
 
-.wide__input {
-    width: 22rem;
-    height: 1.5rem;
-    margin-bottom: 1.5rem;
-    padding: 0.5rem 1rem;
-
-    line-height: 1.5rem;
-    vertical-align: middle;
-}
-
-.content__button {
-    margin-right: 2rem;
-
-    z-index: 1;
-}
-
 .cancel-button {
     width: 5rem;
 }

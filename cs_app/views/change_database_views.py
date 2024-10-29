@@ -90,6 +90,7 @@ def change_database_sub_view(request):
     context = {
         "user": user,
         "db_info": db_info,
+        "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
     return render(request, "subpages/change_database_sub.html", context)

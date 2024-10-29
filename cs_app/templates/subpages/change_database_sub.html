@@ -1,25 +1,71 @@
-{% extends "one_page.html" %} 
-{% load static %} 
-
-{% block sub_css %}
+{% extends "one_page.html" %} {% load static %} {% block sub_css %}
 <link rel="stylesheet" href="{% static 'css/sub_styles/change_database_style.css' %}" />
-{% endblock %} 
-
-{% block content %}
+{% endblock %} {% block content %}
 
 <div id="main-container" class="flex-col">
     <div id="header">
         <h3>Change Database</h3>
-        <h4>Manage your Practice Information</h4>
+        <h4>Connect to a New Database</h4>
     </div>
     <div id="card-holder">
-        
+        <span id="spanny">
+            <div id="current-database-card" class="content-card">
+                <h5>Current Connection</h5>
+                <div class="sep-h"></div>
+                <p><strong>Database Engine:</strong> mssql</p>
+                <p><strong>Database Name:</strong> AdventureWorks2022</p>
+                <p><strong>Database Host:</strong> HOWELL-PC8\SQLEXPRESS</p>
+            </div>
+            <div id="database-inputs-card" class="content-card">
+                <h5>Connect Database</h5>
+                <div class="sep-h"></div>
+                <div>
+                    <div id="database-inputs-card__mains">
+                        <p>Database Information</p>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+                            <p class="form__label">Engine</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+                            <p class="form__label">Name</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+                            <p class="form__label">Host</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+                            <p class="form__label">Driver</p>
+                        </div>
+                    </div>
+                    <div id="database-inputs-card__options">
+                        <p>Authentication</p>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+                            <p class="form__label">Username</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="phone_new" placeholder="" required />
+                            <p class="form__label">Password</p>
+                        </div>
+                        <span>Leave auth fields <strong>empty</strong> for windows authentication</span>
+                    </div>
+                </div>
+            </div>
+            <div id="database-inputs-card__status">
+                <div id="connect-button">Connect</div>
+                <div id="connect-status" class="content-card">
+                    <p>Connection Status:</p>
+                    <div></div>
+                </div>
+            </div>
+        </span>
+        <div id="database-history-card" class="content-card"></div>
     </div>
 </div>
 
-{% endblock %} 
-
-{% block sub_js %}
+{% endblock %} {% block sub_js %}
 <script src="{% static 'js/sub_scripts/change_database_script.js' %}"></script>
 <script>
     // Easier to get csrf token from template
