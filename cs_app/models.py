@@ -11,7 +11,7 @@ class PastParameter(models.Model):
     date_field = models.DateField()
     parameters_json = models.JSONField()
 
-class DatabastConnections(models.Model):
+class DatabaseConnection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="database_connections")
     engine = models.CharField(max_length=100)
     name = models.CharField(max_length=100)

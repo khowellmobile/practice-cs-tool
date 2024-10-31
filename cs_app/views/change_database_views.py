@@ -23,6 +23,8 @@ from django.db import connections
 from django.http import JsonResponse
 from django.core.exceptions import ImproperlyConfigured
 
+from ..models import DatabaseConnection
+
 import cs_app.utils.common_functions as cf
 import json
 import pyodbc
@@ -60,6 +62,7 @@ def change_database_view(request):
     }
 
     return render(request, "change_database.html", context)
+
 
 @login_required
 def change_database_sub_view(request):
@@ -163,13 +166,33 @@ def switch_database_view(request):
 
         # Validates engine, name, host, and driver.
         if not cf.validate_db_engine(db_engine):
-            return JsonResponse({"success": False, "error": "Engine name invalid. Only postgresql, mysql, sqlite, oracle, mssql supported"}, status=400)
+            return JsonResponse(
+                {
+                    "success": False,
+                    "error": "Engine name invalid. Only postgresql, mysql, sqlite, oracle, mssql supported",
+                },
+                status=400,
+            )
         if not cf.validate_db_name(db_name):
-            return JsonResponse({"success": False, "error": "Database name invalid. Alphanumerics only"}, status=400)
+            return JsonResponse(
+                {
+                    "success": False,
+                    "error": "Database name invalid. Alphanumerics only",
+                },
+                status=400,
+            )
         if not cf.validate_db_host(db_host):
-            return JsonResponse({"success": False, "error": "Database host invalid"}, status=400)
+            return JsonResponse(
+                {"success": False, "error": "Database host invalid"}, status=400
+            )
         if not cf.validate_db_driver(db_driver):
-            return JsonResponse({"success": False, "error": "Database driver invalid. Alphanumerics only"}, status=400)
+            return JsonResponse(
+                {
+                    "success": False,
+                    "error": "Database driver invalid. Alphanumerics only",
+                },
+                status=400,
+            )
 
         new_database_config = {
             "ENGINE": db_engine,
@@ -205,6 +228,8 @@ def switch_database_view(request):
 
             settings.DATABASES[alias] = new_database_config
 
+            save_database_into_history(request.user, db_engine, db_name, db_host, db_name)
+
             return JsonResponse({"success": True, "db_alias": alias})
 
         # Wrong engine error
@@ -229,6 +254,14 @@ def switch_database_view(request):
     return JsonResponse(
         {"success": False, "error": "Invalid request method"}, status=405
     )
+
+
+def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver):
+    db_connection = DatabaseConnection(
+        user=req_user, engine=db_engine, name=db_name, host=db_host, driver=db_driver
+    )
+
+    db_connection.save()
 
 
 def remove_config(alias):
@@ -274,7 +307,7 @@ def generate_unique_alias(base_alias):
     Returns:
         str: A unique database configuration alias.
     """
-    
+
     index = 1
     unique_alias = base_alias
 
