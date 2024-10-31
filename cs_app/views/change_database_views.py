@@ -279,10 +279,8 @@ def test_database_connection(db_config):
         connection.close()
         return None
     except pyodbc.Error as e:
-        error_code = e.args[0]  # Get the error code
-        error_message = str(e)  # Get the full error message
+        error_message = str(e) 
         
-        # Map error codes to custom messages
         custom_errors = {
             '28000': "(Code 2800) Connection failed. Checking database name is recommended.",
             '08001': "(Code 08001) Connection failed. Checking database host is recommended",
