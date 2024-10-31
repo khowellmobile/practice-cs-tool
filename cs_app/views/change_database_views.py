@@ -234,8 +234,9 @@ def switch_database_view(request):
             if connection_error:
                 remove_conn(alias)
                 remove_config(alias)
-                return JsonResponse({"success": False, "error": connection_error}, status=400)
-
+                return JsonResponse(
+                    {"success": False, "error": connection_error}, status=400
+                )
 
             settings.DATABASES[alias] = new_database_config
 
@@ -255,9 +256,24 @@ def switch_database_view(request):
         {"success": False, "error": "Invalid request method"}, status=405
     )
 
+
 def test_database_connection(db_config):
+    """
+    Helper function to test database connection.
+
+    Attempts to establish a connection to the database using the provided
+    configuration. Supports both SQL and Windows authentication.
+
+    Args:
+        db_config (dict): A dictionary containing database connection parameters,
+                          including engine, name, host, user, password, and options.
+
+    Returns:
+        str or None: Returns a custom error message if the connection fails,
+                     otherwise returns None.
+    """
     try:
-        if db_config['USER'] and db_config['PASSWORD']:
+        if db_config["USER"] and db_config["PASSWORD"]:
             # Use SQL authentication
             conn_str = (
                 f"DRIVER={db_config['OPTIONS']['driver']};"
@@ -274,19 +290,19 @@ def test_database_connection(db_config):
                 f"DATABASE={db_config['NAME']};"
                 f"Trusted_Connection=Yes;"
             )
-        
+
         connection = pyodbc.connect(conn_str)
         connection.close()
         return None
     except pyodbc.Error as e:
-        error_message = str(e) 
-        
+        error_message = str(e)
+
         custom_errors = {
-            '28000': "(Code 2800) Connection failed. Checking database name is recommended.",
-            '08001': "(Code 08001) Connection failed. Checking database host is recommended",
-            'IM002': "(Code IM002) Connection failed. Checking database driver is recommended.",
+            "28000": "(Code 2800) Connection failed. Checking database name is recommended.",
+            "08001": "(Code 08001) Connection failed. Checking database host is recommended",
+            "IM002": "(Code IM002) Connection failed. Checking database driver is recommended.",
         }
-        
+
         # Extract specific error code from the message
         for code in custom_errors.keys():
             if code in error_message:
@@ -296,7 +312,19 @@ def test_database_connection(db_config):
 
 
 def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver):
+    """
+    Helper function to save database connection details into history.
 
+    Checks if a database connection with the specified parameters already exists
+    for the user. If not, creates a new record to store the connection details.
+
+    Args:
+        req_user (User): The user requesting the database connection.
+        db_engine (str): The database engine being used.
+        db_name (str): The name of the database.
+        db_host (str): The host of the database.
+        db_driver (str): The driver used to connect to the database.
+    """
     existing_connection = DatabaseConnection.objects.filter(
         user=req_user, engine=db_engine, name=db_name, host=db_host, driver=db_driver
     ).first()
