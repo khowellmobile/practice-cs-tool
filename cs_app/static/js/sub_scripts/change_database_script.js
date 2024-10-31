@@ -1,3 +1,24 @@
+/**
+ * JavaScript file for managing database configuration updates via fetch for the database change page.
+ *
+ * This file contains functions to attach event listeners to form inputs, gather input values for
+ * database configurations, and submit the new configuration data to the server via AJAX requests.
+ * It handles successful and error responses from the server, updating the user interface accordingly.
+ *
+ * Functions:
+ * - attachEventListeners(): Attaches event listeners to form input elements to handle focus and blur events.
+ * - createNewConfig(): Gathers input values for database configuration fields, validates them,
+ *                      and initiates the submission process.
+ * - submitNewConfig(db_info): Submits the new database configuration data to the server via fetch.
+ * - dbChangeHandler(success, message): Handles the server response for database configuration changes,
+ *                                      updating UI elements based on success or failure.
+ * - getInputValues(): Gathers input values of all inputs in the form and formats them into an object
+ *                    for creating the new database configuration.
+ * - showOverlay(show): Controls the display of the overlay for loading indications.
+ *
+ * Dependencies: Requires jQuery for DOM manipulation.
+ */
+
 // Required for global jqeury recognition for use in testing
 // CDN still included in html file
 try {
@@ -127,7 +148,7 @@ function getInputValues() {
 /**
  * Controls the display of the overlay. Pass true to show overlay.
  * Pass false to hide it.
- * 
+ *
  * @param {boolean} show - true to show overlay, false to hide it
  */
 function showOverlay(show) {

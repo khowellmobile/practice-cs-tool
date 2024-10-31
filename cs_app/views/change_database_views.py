@@ -10,6 +10,11 @@ Functions:
 - change_database_view(request): Renders 'change_database.html' with current database information.
 - get_db_info_view(request): Retrieves database information based on the provided alias via AJAX GET request.
 - switch_database_view(request): Handles POST request to switch database configurations dynamically.
+- test_database_connection(db_config): Creates connection to ensure proper config.
+- save_database_into_history(req_user, db_engine, db_name, db_host, db_driver): Saves database information into history
+- remove_config(alias): Removes a config from settings
+- remove_conn(alias): Removes a connection from the list of connections
+- generate_unique_alias(base_alias): Generates a unique alias to ensure no duplicate aliases
 
 Dependencies:
 - Django modules: render, JsonResponse, settings, connections, ImproperlyConfigured
@@ -21,7 +26,6 @@ from django.shortcuts import render
 from django.conf import settings
 from django.db import connections
 from django.http import JsonResponse
-from django.core.exceptions import ImproperlyConfigured
 
 from ..models import DatabaseConnection
 
