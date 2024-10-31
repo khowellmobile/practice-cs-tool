@@ -69,23 +69,16 @@
                 <p>Name</p>
                 <p>Host</p>
                 <p>Driver</p>
-                <p>Auth Method</p>
             </div>
             <div id="db_history__listing">
+                {% for past_conn in past_connections %}
                 <div>
-                    <p>mssql</p>
-                    <p>AdventureWorks2022</p>
-                    <p>Cranon\server-p\SQL-8</p>
-                    <p>OCDB</p>
-                    <p>Windows Auth</p>
+                    <p class="past-engine">{{ past_conn.engine }}</p>
+                    <p class="past-name">{{ past_conn.name }}</p>
+                    <p class="past-host">{{ past_conn.host }}</p>
+                    <p class="past-driver">{{ past_conn.driver }}</p>
                 </div>
-                <div>
-                    <p>postgresql</p>
-                    <p>Tester Database</p>
-                    <p>HOWELL-PC8\SQLEXPRESS</p>
-                    <p>MicroDrive</p>
-                    <p>Windows Auth</p>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -254,6 +254,14 @@ h5 {
     border-radius: var(--sm-gap);
 }
 
+#database-change__status {
+    overflow-y: auto;
+}
+
+#database-change__status::-webkit-scrollbar {
+    display: none;
+}
+
 #database-history-card {
     height: 23.5rem;
     width: calc(100% - 2rem);
@@ -270,7 +278,7 @@ h5 {
     background-color: rgb(231, 231, 231);
 
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
     gap: 0;
 }
@@ -282,15 +290,21 @@ h5 {
 #db_history__listing {
     box-sizing: border-box;
 
+    overflow-y: auto;
+
     display: flex;
     flex-direction: column;
+}
+
+#db_history__listing::-webkit-scrollbar {
+    display: none;
 }
 
 #db_history__listing > div {
     box-sizing: border-box;
 
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
     gap: 0;
 }

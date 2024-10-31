@@ -14,6 +14,13 @@ function attachEventListeners() {
         .on("blur", function () {
             $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
         });
+
+    $("#db_history__listing > div").on("click", function () {
+        $("#input_engine").val($(this).find(".past-engine").text());
+        $("#input_name").val($(this).find(".past-name").text());
+        $("#input_host").val($(this).find(".past-host").text());
+        $("#input_driver").val($(this).find(".past-driver").text());
+    });
 }
 
 /**

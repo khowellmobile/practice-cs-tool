@@ -90,9 +90,12 @@ def change_database_sub_view(request):
         "db_host": data_db["HOST"],
     }
 
+    past_connections = DatabaseConnection.objects.filter(user = request.user)
+
     context = {
         "user": user,
         "db_info": db_info,
+        "past_connections": past_connections,
         "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
@@ -228,7 +231,9 @@ def switch_database_view(request):
 
             settings.DATABASES[alias] = new_database_config
 
-            save_database_into_history(request.user, db_engine, db_name, db_host, db_name)
+            save_database_into_history(
+                request.user, db_engine, db_name, db_host, db_driver
+            )
 
             return JsonResponse({"success": True, "db_alias": alias})
 
@@ -257,11 +262,20 @@ def switch_database_view(request):
 
 
 def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver):
-    db_connection = DatabaseConnection(
-        user=req_user, engine=db_engine, name=db_name, host=db_host, driver=db_driver
-    )
 
-    db_connection.save()
+    existing_connection = DatabaseConnection.objects.filter(
+        user=req_user, engine=db_engine, name=db_name, host=db_host, driver=db_driver
+    ).first()
+
+    if not existing_connection:
+        db_connection = DatabaseConnection(
+            user=req_user,
+            engine=db_engine,
+            name=db_name,
+            host=db_host,
+            driver=db_driver,
+        )
+        db_connection.save()
 
 
 def remove_config(alias):
