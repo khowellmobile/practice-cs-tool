@@ -22,7 +22,6 @@ from django.conf import settings
 from django.db import connections
 from django.http import JsonResponse
 from django.core.exceptions import ImproperlyConfigured
-from django.db.utils import InterfaceError
 
 from ..models import DatabaseConnection
 
@@ -173,7 +172,7 @@ def switch_database_view(request):
             return JsonResponse(
                 {
                     "success": False,
-                    "error": "Engine name invalid. Only postgresql, mysql, sqlite, oracle, mssql supported",
+                    "error": "Engine name invalid.",
                 },
                 status=400,
             )
@@ -230,39 +229,24 @@ def switch_database_view(request):
 
         try:
 
+            connection_error = test_database_connection(new_database_config)
+
+            if connection_error:
+                remove_conn(alias)
+                remove_config(alias)
+                return JsonResponse({"success": False, "error": connection_error}, status=400)
+
+
             settings.DATABASES[alias] = new_database_config
 
-            """ save_database_into_history(
+            save_database_into_history(
                 request.user, db_engine, db_name, db_host, db_driver
-            ) """
+            )
 
             return JsonResponse({"success": True, "db_alias": alias})
 
-        # Wrong engine error
-        # Only remove config required
-        except ImproperlyConfigured as e:
-            print("error-1----------------------------------------------")
-            remove_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
-
-        # Wrong driver error
-        # DB Driver error requires that both the conn and config be removed in this order!
-        except pyodbc.InterfaceError as e:
-            print("error-2----------------------------------------------")
-            remove_conn(alias)
-            remove_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
-
-        # No Matching DB Name
-        except InterfaceError as e:
-            print("error-4--------------------------------------------------------------------------------------")
-            remove_conn(alias)
-            remove_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
-
-        # No Matching DB Host
+        # Catch general exceptions not caught by "test_database_connection"
         except Exception as e:
-            print("error-3----------------------------------------------")
             remove_conn(alias)
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
@@ -270,6 +254,47 @@ def switch_database_view(request):
     return JsonResponse(
         {"success": False, "error": "Invalid request method"}, status=405
     )
+
+def test_database_connection(db_config):
+    try:
+        if db_config['USER'] and db_config['PASSWORD']:
+            # Use SQL authentication
+            conn_str = (
+                f"DRIVER={db_config['OPTIONS']['driver']};"
+                f"SERVER={db_config['HOST']};"
+                f"DATABASE={db_config['NAME']};"
+                f"UID={db_config['USER']};"
+                f"PWD={db_config['PASSWORD']};"
+            )
+        else:
+            # Use Windows authentication
+            conn_str = (
+                f"DRIVER={db_config['OPTIONS']['driver']};"
+                f"SERVER={db_config['HOST']};"
+                f"DATABASE={db_config['NAME']};"
+                f"Trusted_Connection=Yes;"
+            )
+        
+        connection = pyodbc.connect(conn_str)
+        connection.close()
+        return None
+    except pyodbc.Error as e:
+        error_code = e.args[0]  # Get the error code
+        error_message = str(e)  # Get the full error message
+        
+        # Map error codes to custom messages
+        custom_errors = {
+            '28000': "(Code 2800) Connection failed. Checking database name is recommended.",
+            '08001': "(Code 08001) Connection failed. Checking database host is recommended",
+            'IM002': "(Code IM002) Connection failed. Checking database driver is recommended.",
+        }
+        
+        # Extract specific error code from the message
+        for code in custom_errors.keys():
+            if code in error_message:
+                return custom_errors[code]
+
+        return "An unknown error occurred: " + error_message
 
 
 def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver):
