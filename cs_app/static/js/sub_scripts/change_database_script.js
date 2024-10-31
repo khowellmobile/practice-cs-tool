@@ -1,3 +1,12 @@
+// Required for global jqeury recognition for use in testing
+// CDN still included in html file
+try {
+    var jsdom = require("jsdom");
+    $ = require("jquery")(new jsdom.JSDOM().window);
+} catch (error) {
+    console.log(error);
+}
+
 attachEventListeners();
 
 /**
@@ -127,4 +136,16 @@ function showOverlay(show) {
     } else {
         $("#page-overlay").hide();
     }
+}
+
+try {
+    // Export all functions
+    module.exports = {
+        attachEventListeners,
+        dbChangeHandler,
+        getInputValues,
+        showOverlay,
+    };
+} catch (error) {
+    console.log(error);
 }

@@ -13,7 +13,7 @@ class AccountInformationViewTests(TestCase):
         self.client.login(username="testuser", password="testpass")
 
     def test_account_information_view_authenticated(self):
-        response = self.client.get(reverse("change_account"))
+        response = self.client.get(reverse("account_information"))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "subpages/account_information.html")
@@ -22,10 +22,10 @@ class AccountInformationViewTests(TestCase):
     def test_account_information_view_unauthenticated(self):
         self.client.logout()
 
-        response = self.client.post(reverse("change_account"))
+        response = self.client.post(reverse("account_information"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f'/login/?next={reverse("change_account")}')
+        self.assertRedirects(response, f'/login/?next={reverse("account_information")}')
 
 
 class UpdateNameViewTests(TestCase):

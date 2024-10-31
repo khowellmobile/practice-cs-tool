@@ -11,7 +11,7 @@ class DirectionsViewTests(TestCase):
         response = self.client.get(reverse("directions"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "directions.html")
+        self.assertTemplateUsed(response, "subpages/directions.html")
         self.assertEqual(response.context["user"], self.user)
 
     def test_directions_view_unauthenticated(self):

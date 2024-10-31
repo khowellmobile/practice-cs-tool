@@ -23,7 +23,6 @@ urlpatterns = [
 
     # Change database page and functions
     path('change_database/', change_database_views.change_database_view, name='change_database'),
-    path('change_database_sub/', change_database_views.change_database_sub_view, name='change_database_sub'),
     path('switch_config/', change_database_views.switch_database_view, name='switch_database'),
     path('get_db_info/', change_database_views.get_db_info_view, name='get_db_info'),
 

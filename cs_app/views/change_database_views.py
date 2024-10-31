@@ -56,40 +56,6 @@ def change_database_view(request):
         "db_host": data_db["HOST"],
     }
 
-    context = {
-        "user": user,
-        "db_info": db_info,
-    }
-
-    return render(request, "change_database.html", context)
-
-
-@login_required
-def change_database_sub_view(request):
-    """
-    View function to render the change database page.
-
-    Requires the user to be logged in to access the view.
-
-    Retrieves current database configuration details from Django settings and renders
-    the 'change_database.html' template with the user and database information.
-
-    Args:
-        request (HttpRequest): The HTTP request object.
-
-    Returns:
-        HttpResponse: Rendered template with user and database information context.
-    """
-
-    user = request.user
-    data_db = settings.DATABASES["data"]
-
-    db_info = {
-        "db_engine": data_db["ENGINE"],
-        "db_name": data_db["NAME"],
-        "db_host": data_db["HOST"],
-    }
-
     past_connections = DatabaseConnection.objects.filter(user=request.user)
 
     context = {
@@ -99,7 +65,7 @@ def change_database_sub_view(request):
         "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
-    return render(request, "subpages/change_database_sub.html", context)
+    return render(request, "subpages/change_database.html", context)
 
 
 @login_required
