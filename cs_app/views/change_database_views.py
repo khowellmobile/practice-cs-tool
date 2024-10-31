@@ -22,6 +22,7 @@ from django.conf import settings
 from django.db import connections
 from django.http import JsonResponse
 from django.core.exceptions import ImproperlyConfigured
+from django.db.utils import InterfaceError
 
 from ..models import DatabaseConnection
 
@@ -90,7 +91,7 @@ def change_database_sub_view(request):
         "db_host": data_db["HOST"],
     }
 
-    past_connections = DatabaseConnection.objects.filter(user = request.user)
+    past_connections = DatabaseConnection.objects.filter(user=request.user)
 
     context = {
         "user": user,
@@ -231,27 +232,37 @@ def switch_database_view(request):
 
             settings.DATABASES[alias] = new_database_config
 
-            save_database_into_history(
+            """ save_database_into_history(
                 request.user, db_engine, db_name, db_host, db_driver
-            )
+            ) """
 
             return JsonResponse({"success": True, "db_alias": alias})
 
         # Wrong engine error
         # Only remove config required
         except ImproperlyConfigured as e:
+            print("error-1----------------------------------------------")
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
 
         # Wrong driver error
         # DB Driver error requires that both the conn and config be removed in this order!
         except pyodbc.InterfaceError as e:
+            print("error-2----------------------------------------------")
             remove_conn(alias)
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)
 
-        # No Matching DB Name, DB Host
+        # No Matching DB Name
+        except InterfaceError as e:
+            print("error-4--------------------------------------------------------------------------------------")
+            remove_conn(alias)
+            remove_config(alias)
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+        # No Matching DB Host
         except Exception as e:
+            print("error-3----------------------------------------------")
             remove_conn(alias)
             remove_config(alias)
             return JsonResponse({"success": False, "error": str(e)}, status=400)

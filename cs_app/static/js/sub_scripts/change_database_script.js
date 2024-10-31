@@ -49,6 +49,8 @@ function createNewConfig() {
  * @param {Object} db_info - The object containing the database configuration information.
  */
 function submitNewConfig(db_info) {
+    showOverlay(true);
+
     fetch("/switch_config/", {
         method: "POST",
         headers: {
@@ -89,8 +91,10 @@ function dbChangeHandler(success, message) {
         $("#database-change__status").append(`<p class='stat__message'>Error: ${message.error}</p>`);
     } else {
         // captures a failure due to non-view related circumstances
-        alert("An error occurred while processing your request. Please try again.");
+        alert("An error occurred while processing your request. Please check fields and try again.");
     }
+
+    showOverlay(false);
 }
 
 /**
@@ -109,4 +113,18 @@ function getInputValues() {
         });
 
     return db_info;
+}
+
+/**
+ * Controls the display of the overlay. Pass true to show overlay.
+ * Pass false to hide it.
+ * 
+ * @param {boolean} show - true to show overlay, false to hide it
+ */
+function showOverlay(show) {
+    if (show) {
+        $("#page-overlay").show();
+    } else {
+        $("#page-overlay").hide();
+    }
 }

@@ -7,6 +7,12 @@
     --primary-grey: rgb(235, 235, 235);
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 h5 {
     font-size: 1.2rem;
     font-weight: 500;
@@ -171,7 +177,7 @@ h5 {
 }
 
 #database-inputs-card__mains,
-#database-inputs-card__options {
+#database-inputs-card__auth {
     height: 100%;
     width: 50%;
 
@@ -179,14 +185,14 @@ h5 {
     flex-direction: column;
 }
 
-#database-inputs-card__options > span {
+#database-inputs-card__auth > span {
     margin-top: var(--md-gap);
     color: rgb(68, 68, 68);
     font-size: 0.8rem;
     font-weight: 400;
 }
 
-#database-inputs-card__options > span > strong {
+#database-inputs-card__auth > span > strong {
     font-weight: 600;
 }
 
@@ -315,4 +321,31 @@ h5 {
 
 #db_history__listing > div:hover {
     background-color: rgb(245, 245, 245);
+}
+
+#page-overlay {
+    width: 100%;
+    height: 100%;
+
+    background: rgba(128, 128, 128, 0.185);
+
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#spinner {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--primary-blue);
+    animation: spin 1.5s linear infinite;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
