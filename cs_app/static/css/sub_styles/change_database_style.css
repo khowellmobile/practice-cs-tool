@@ -7,6 +7,11 @@
     --primary-grey: rgb(235, 235, 235);
 }
 
+h5 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
 .content-card {
     padding: var(--md-gap);
     box-sizing: border-box;
@@ -138,11 +143,6 @@
     align-items: center;
 }
 
-#current-database-card > h5 {
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
 #current-database-card > p > strong {
     font-size: 1rem;
     font-weight: 500;
@@ -164,21 +164,10 @@
     flex-direction: column;
 }
 
-#database-inputs-card > h5 {
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
 #database-inputs-card > :nth-child(3) {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#database-history-card {
-    height: 23.5rem;
-    width: calc(100% - 2rem);
-    margin: 1rem 1rem 0rem 1rem;
 }
 
 #database-inputs-card__mains,
@@ -263,4 +252,53 @@
 
     background-color: white;
     border-radius: var(--sm-gap);
+}
+
+#database-history-card {
+    height: 23.5rem;
+    width: calc(100% - 2rem);
+    margin: 1rem 1rem 0rem 1rem;
+}
+
+#history-sep-h {
+    margin: 0rem 0rem 0rem 0rem;
+}
+
+#db_history__header {
+    box-sizing: border-box;
+
+    background-color: rgb(231, 231, 231);
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0;
+}
+
+#db_history__header > p {
+    font-weight: 500;
+}
+
+#db_history__listing {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#db_history__listing > div {
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0;
+}
+
+#db_history__listing > div > p {
+    cursor: pointer;
+}
+
+#db_history__listing > div:hover {
+    background-color: rgb(245, 245, 245);
 }
