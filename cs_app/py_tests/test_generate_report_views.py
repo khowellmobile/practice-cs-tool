@@ -26,7 +26,7 @@ class GenerateReportViewTests(TestCase):
         response = self.client.get(reverse("generate_report"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "generate_report.html")
+        self.assertTemplateUsed(response, "subpages/generate_report.html")
         self.assertEqual(response.context["user"], self.user)
         self.assertIn("data", response.context)
 

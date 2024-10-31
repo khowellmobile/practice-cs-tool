@@ -10,6 +10,11 @@ Functions:
 - change_database_view(request): Renders 'change_database.html' with current database information.
 - get_db_info_view(request): Retrieves database information based on the provided alias via AJAX GET request.
 - switch_database_view(request): Handles POST request to switch database configurations dynamically.
+- test_database_connection(db_config): Creates connection to ensure proper config.
+- save_database_into_history(req_user, db_engine, db_name, db_host, db_driver): Saves database information into history
+- remove_config(alias): Removes a config from settings
+- remove_conn(alias): Removes a connection from the list of connections
+- generate_unique_alias(base_alias): Generates a unique alias to ensure no duplicate aliases
 
 Dependencies:
 - Django modules: render, JsonResponse, settings, connections, ImproperlyConfigured
@@ -21,7 +26,8 @@ from django.shortcuts import render
 from django.conf import settings
 from django.db import connections
 from django.http import JsonResponse
-from django.core.exceptions import ImproperlyConfigured
+
+from ..models import DatabaseConnection
 
 import cs_app.utils.common_functions as cf
 import json
@@ -54,12 +60,16 @@ def change_database_view(request):
         "db_host": data_db["HOST"],
     }
 
+    past_connections = DatabaseConnection.objects.filter(user=request.user)
+
     context = {
         "user": user,
         "db_info": db_info,
+        "past_connections": past_connections,
+        "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
-    return render(request, "change_database.html", context)
+    return render(request, "subpages/change_database.html", context)
 
 
 @login_required
@@ -129,13 +139,33 @@ def switch_database_view(request):
 
         # Validates engine, name, host, and driver.
         if not cf.validate_db_engine(db_engine):
-            return JsonResponse({"success": False, "error": "Engine name invalid. Only postgresql, mysql, sqlite, oracle, mssql supported"}, status=400)
+            return JsonResponse(
+                {
+                    "success": False,
+                    "error": "Engine name invalid.",
+                },
+                status=400,
+            )
         if not cf.validate_db_name(db_name):
-            return JsonResponse({"success": False, "error": "Database name invalid. Alphanumerics only"}, status=400)
+            return JsonResponse(
+                {
+                    "success": False,
+                    "error": "Database name invalid. Alphanumerics only",
+                },
+                status=400,
+            )
         if not cf.validate_db_host(db_host):
-            return JsonResponse({"success": False, "error": "Database host invalid"}, status=400)
+            return JsonResponse(
+                {"success": False, "error": "Database host invalid"}, status=400
+            )
         if not cf.validate_db_driver(db_driver):
-            return JsonResponse({"success": False, "error": "Database driver invalid. Alphanumerics only"}, status=400)
+            return JsonResponse(
+                {
+                    "success": False,
+                    "error": "Database driver invalid. Alphanumerics only",
+                },
+                status=400,
+            )
 
         new_database_config = {
             "ENGINE": db_engine,
@@ -169,24 +199,24 @@ def switch_database_view(request):
 
         try:
 
+            connection_error = test_database_connection(new_database_config)
+
+            if connection_error:
+                remove_conn(alias)
+                remove_config(alias)
+                return JsonResponse(
+                    {"success": False, "error": connection_error}, status=400
+                )
+
             settings.DATABASES[alias] = new_database_config
+
+            save_database_into_history(
+                request.user, db_engine, db_name, db_host, db_driver
+            )
 
             return JsonResponse({"success": True, "db_alias": alias})
 
-        # Wrong engine error
-        # Only remove config required
-        except ImproperlyConfigured as e:
-            remove_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
-
-        # Wrong driver error
-        # DB Driver error requires that both the conn and config be removed in this order!
-        except pyodbc.InterfaceError as e:
-            remove_conn(alias)
-            remove_config(alias)
-            return JsonResponse({"success": False, "error": str(e)}, status=400)
-
-        # No Matching DB Name, DB Host
+        # Catch general exceptions not caught by "test_database_connection"
         except Exception as e:
             remove_conn(alias)
             remove_config(alias)
@@ -195,6 +225,89 @@ def switch_database_view(request):
     return JsonResponse(
         {"success": False, "error": "Invalid request method"}, status=405
     )
+
+
+def test_database_connection(db_config):
+    """
+    Helper function to test database connection.
+
+    Attempts to establish a connection to the database using the provided
+    configuration. Supports both SQL and Windows authentication.
+
+    Args:
+        db_config (dict): A dictionary containing database connection parameters,
+                          including engine, name, host, user, password, and options.
+
+    Returns:
+        str or None: Returns a custom error message if the connection fails,
+                     otherwise returns None.
+    """
+    try:
+        if db_config["USER"] and db_config["PASSWORD"]:
+            # Use SQL authentication
+            conn_str = (
+                f"DRIVER={db_config['OPTIONS']['driver']};"
+                f"SERVER={db_config['HOST']};"
+                f"DATABASE={db_config['NAME']};"
+                f"UID={db_config['USER']};"
+                f"PWD={db_config['PASSWORD']};"
+            )
+        else:
+            # Use Windows authentication
+            conn_str = (
+                f"DRIVER={db_config['OPTIONS']['driver']};"
+                f"SERVER={db_config['HOST']};"
+                f"DATABASE={db_config['NAME']};"
+                f"Trusted_Connection=Yes;"
+            )
+
+        connection = pyodbc.connect(conn_str)
+        connection.close()
+        return None
+    except pyodbc.Error as e:
+        error_message = str(e)
+
+        custom_errors = {
+            "28000": "(Code 2800) Connection failed. Checking database name is recommended.",
+            "08001": "(Code 08001) Connection failed. Checking database host is recommended",
+            "IM002": "(Code IM002) Connection failed. Checking database driver is recommended.",
+        }
+
+        # Extract specific error code from the message
+        for code in custom_errors.keys():
+            if code in error_message:
+                return custom_errors[code]
+
+        return "An unknown error occurred: " + error_message
+
+
+def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver):
+    """
+    Helper function to save database connection details into history.
+
+    Checks if a database connection with the specified parameters already exists
+    for the user. If not, creates a new record to store the connection details.
+
+    Args:
+        req_user (User): The user requesting the database connection.
+        db_engine (str): The database engine being used.
+        db_name (str): The name of the database.
+        db_host (str): The host of the database.
+        db_driver (str): The driver used to connect to the database.
+    """
+    existing_connection = DatabaseConnection.objects.filter(
+        user=req_user, engine=db_engine, name=db_name, host=db_host, driver=db_driver
+    ).first()
+
+    if not existing_connection:
+        db_connection = DatabaseConnection(
+            user=req_user,
+            engine=db_engine,
+            name=db_name,
+            host=db_host,
+            driver=db_driver,
+        )
+        db_connection.save()
 
 
 def remove_config(alias):
@@ -240,7 +353,7 @@ def generate_unique_alias(base_alias):
     Returns:
         str: A unique database configuration alias.
     """
-    
+
     index = 1
     unique_alias = base_alias
 

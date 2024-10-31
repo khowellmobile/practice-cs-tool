@@ -1,0 +1,351 @@
+:root {
+    --sm-gap: 0.5rem;
+    --md-gap: 1rem;
+    --lg-gap: 2rem;
+
+    --primary-blue: rgb(35, 35, 73);
+    --primary-grey: rgb(235, 235, 235);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+h5 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.content-card {
+    padding: var(--md-gap);
+    box-sizing: border-box;
+
+    background-color: white;
+    border: 2px solid rgb(221, 221, 221);
+}
+
+.sep-h {
+    width: calc(100%1rem);
+    height: 1px;
+    margin: 0rem 0rem var(--sm-gap) 0rem;
+
+    background-color: rgba(180, 180, 180, 0.603);
+}
+
+.form__cluster {
+    width: 80%;
+    height: 2.8rem;
+    margin-bottom: 1rem;
+
+    border-bottom: 2px solid rgb(114, 114, 134);
+
+    display: inline-block;
+}
+
+.form__cluster > p {
+    margin: 0px;
+
+    font-size: 0.8rem;
+    transition: all ease-out 0.2s;
+
+    position: relative;
+    top: -0.6rem;
+    z-index: 0;
+}
+
+.form__cluster > input {
+    width: 90%;
+
+    background-color: rgb(0, 0, 0, 0);
+
+    position: relative;
+    top: 1.2rem;
+    right: 2px;
+
+    z-index: 1000;
+}
+
+.form__cluster > input[type="text"] {
+    font-size: 0.9rem;
+}
+
+.form__cluster > input[type="password"] {
+    font-size: 0.9rem;
+}
+
+.form__cluster > input,
+.form__cluster > input:focus {
+    outline: none;
+    border: none;
+}
+
+.form__cluster > input::placeholder {
+    color: rgb(0, 0, 0, 0);
+}
+
+.form__input:focus + .form__label {
+    color: rgb(105, 105, 236);
+}
+
+.form__input:not(:placeholder-shown) + .form__label,
+.form__input:focus + .form__label {
+    -webkit-transform: translateY(-1rem);
+    transform: translateY(-1rem);
+}
+
+#main-container {
+    width: 100%;
+    height: 95%;
+
+    background-color: rgb(235, 235, 235);
+}
+
+#main-container p,
+#main-container h3,
+#main-container h4 {
+    cursor: default;
+}
+
+#header {
+    width: 100%;
+
+    background-color: white;
+}
+
+#header > h3 {
+    margin: 1rem 1rem 0rem 1rem;
+
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+#header > h4 {
+    margin: 0rem 1rem 1rem 1rem;
+
+    color: rgb(68, 68, 68);
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#card-holder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#card-holder > :nth-child(1) {
+    display: flex;
+}
+
+#current-database-card {
+    width: 25rem;
+    height: 23.5rem;
+    margin: 1rem 0rem 0rem 1rem;
+
+    align-items: center;
+}
+
+#current-database-card > p > strong {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#current-database-card > p {
+    margin: 0rem 0rem 0.25rem 0.25rem;
+
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+#database-inputs-card {
+    height: 23.5rem;
+    width: calc(100% - 54rem);
+    margin: 1rem 0rem 0rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#database-inputs-card > :nth-child(3) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#database-inputs-card__mains,
+#database-inputs-card__auth {
+    height: 100%;
+    width: 50%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#database-inputs-card__auth > span {
+    margin-top: var(--md-gap);
+    color: rgb(68, 68, 68);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+#database-inputs-card__auth > span > strong {
+    font-weight: 600;
+}
+
+#database-inputs-card__status {
+    height: 23.5rem;
+    width: 25rem;
+    margin: 1rem 0rem 0rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#connect-button {
+    height: 2.5rem;
+    width: 25rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+
+    background-color: var(--primary-blue);
+    color: white;
+    border: 2px solid rgb(221, 221, 221);
+    cursor: pointer;
+    transition: all linear 0.15s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#connect-button:hover,
+#connect-button:focus {
+    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 12px;
+    transform: translateY(-1px);
+}
+
+#connect-button:active {
+    transform: translateY(1px);
+}
+
+#connect-status {
+    height: 20rem;
+    width: 25rem;
+    padding: var(--sm-gap);
+    box-sizing: border-box;
+
+    background-color: var(--primary-blue);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#connect-status > p {
+    color: white;
+    font-weight: 500;
+}
+
+#connect-status > div {
+    width: 100%;
+    height: 90%;
+    padding: var(--sm-gap);
+    box-sizing: border-box;
+
+    background-color: white;
+    border-radius: var(--sm-gap);
+}
+
+#database-change__status {
+    overflow-y: auto;
+}
+
+#database-change__status::-webkit-scrollbar {
+    display: none;
+}
+
+#database-history-card {
+    height: 23.5rem;
+    width: calc(100% - 2rem);
+    margin: 1rem 1rem 0rem 1rem;
+}
+
+#history-sep-h {
+    margin: 0rem 0rem 0rem 0rem;
+}
+
+#db_history__header {
+    box-sizing: border-box;
+
+    background-color: rgb(231, 231, 231);
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0;
+}
+
+#db_history__header > p {
+    font-weight: 500;
+}
+
+#db_history__listing {
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#db_history__listing::-webkit-scrollbar {
+    display: none;
+}
+
+#db_history__listing > div {
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0;
+}
+
+#db_history__listing > div > p {
+    cursor: pointer;
+}
+
+#db_history__listing > div:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+#page-overlay {
+    width: 100%;
+    height: 100%;
+
+    background: rgba(128, 128, 128, 0.185);
+
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#spinner {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--primary-blue);
+    animation: spin 1.5s linear infinite;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}

@@ -1,14 +1,14 @@
-const changeDbScript = require("../static/js/change_database_script");
+const changeDbScript = require("../static/js/sub_scripts/change_database_script");
 const { JSDOM } = require("jsdom");
 
-describe("setSpinnerVisiblity function", () => {
+describe("showOverlay function", () => {
     let dom;
 
     beforeEach(() => {
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div>
-                    <div class="spinner" style="visibility: hidden;">
+                    <div id="page-overlay" style="display:none;">
                 </div>
             </div>`
         );
@@ -22,42 +22,28 @@ describe("setSpinnerVisiblity function", () => {
         dom.window.close();
     });
 
-    test("should make spinner visible when spinnerVisible is true", () => {
-        changeDbScript.setSpinnerVisibility(true);
+    test("should make overlay visible when passed true", () => {
+        let overlay = $("#page-overlay");
 
-        const spinner = $(".spinner");
-        const computedStyle = dom.window.getComputedStyle(spinner[0]);
+        changeDbScript.showOverlay(true);
 
-        expect(computedStyle.visibility).toBe("visible");
+        expect(overlay.css("display")).toBe("block");
+
+        changeDbScript.showOverlay(true);
+
+        expect(overlay.css("display")).toBe("block");
     });
 
-    test("should hide spinner when spinnerVisible is false", () => {
-        $(".spinner").css("visibility", "visible");
+    test("should make overlay visible when passed false", () => {
+        let overlay = $("#page-overlay");
 
-        changeDbScript.setSpinnerVisibility(false);
+        changeDbScript.showOverlay(false);
 
-        const spinner = $(".spinner");
-        const computedStyle = dom.window.getComputedStyle(spinner[0]);
+        expect(overlay.css("display")).toBe("none");
 
-        expect(computedStyle.visibility).toBe("hidden");
-    });
+        changeDbScript.showOverlay(false);
 
-    test("should not alter spinner visibility when already hidden or shown", () => {
-        $(".spinner").css("visibility", "hidden");
-
-        changeDbScript.setSpinnerVisibility(false);
-
-        let spinner = $(".spinner");
-        let computedStyle = dom.window.getComputedStyle(spinner[0]);
-        expect(computedStyle.visibility).toBe("hidden");
-
-        $(".spinner").css("visibility", "visible");
-
-        changeDbScript.setSpinnerVisibility(true);
-
-        spinner = $(".spinner");
-        computedStyle = dom.window.getComputedStyle(spinner[0]);
-        expect(computedStyle.visibility).toBe("visible");
+        expect(overlay.css("display")).toBe("none");
     });
 });
 
@@ -98,7 +84,7 @@ describe("dbChangeHandler function", () => {
     });
 
     test("should append error message to div when success false and message is non-empty", () => {
-        changeDbScript.dbChangeHandler(false, {error: "test-error"}, jest.fn());
+        changeDbScript.dbChangeHandler(false, { error: "test-error" }, jest.fn());
 
         const pElements = $("#database-change__status p");
 
@@ -113,7 +99,7 @@ describe("dbChangeHandler function", () => {
     test("should alert error when success is false and message is empty", () => {
         changeDbScript.dbChangeHandler(false, {}, jest.fn());
 
-        expect(global.alert).toHaveBeenCalledWith("An error occurred while processing your request. Please try again.");
+        expect(global.alert).toHaveBeenCalledWith("An error occurred while processing your request. Please check fields and try again.");
 
         const pElements = $("#database-change__status p");
         expect(pElements.length).toBe(0);
@@ -127,7 +113,7 @@ describe("getInputValues function", () => {
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <div>
-                    <form id="database-change__form">
+                    <form class="form__cluster">
                         <input id="input_engine" value="MySQL" />
                         <input id="input_name" value="test_db" />
                         <input id="input_host" value="localhost" />
@@ -150,9 +136,9 @@ describe("getInputValues function", () => {
             db_engine: "MySQL",
             db_name: "test_db",
             db_host: "localhost",
-            db_driver: "driver_name"
+            db_driver: "driver_name",
         };
-        
+
         const result = changeDbScript.getInputValues();
 
         expect(result).toEqual(expected);
@@ -168,47 +154,47 @@ describe("getInputValues function", () => {
             db_engine: "MySQL",
             db_name: "test_db",
             db_host: "localhost",
-            db_driver: "driver_name"
+            db_driver: "driver_name",
         };
-        
+
         const result = changeDbScript.getInputValues();
 
         expect(result).toEqual(expected);
     });
 
     test("should return an empty object if no inputs are present", () => {
-        $("#database-change__form").empty();
+        $(".form__cluster").empty();
 
         const expected = {};
-        
+
         const result = changeDbScript.getInputValues();
 
         expect(result).toEqual(expected);
     });
 
     test("should handle missing inputs", () => {
-        $("#database-change__form").empty();
+        $(".form__cluster").empty();
 
-        $("#database-change__form").append('<input id="input_engine" value="MySQL" />');
-        $("#database-change__form").append('<input id="input_name" value="test_db" />');
+        $(".form__cluster").append('<input id="input_engine" value="MySQL" />');
+        $(".form__cluster").append('<input id="input_name" value="test_db" />');
 
         const expected = {
             db_engine: "MySQL",
             db_name: "test_db",
         };
-        
+
         const result = changeDbScript.getInputValues();
 
         expect(result).toEqual(expected);
     });
 
     test("should handle empty inputs", () => {
-        $("#database-change__form").empty();
+        $(".form__cluster").empty();
 
-        $("#database-change__form").append('<input id="input_engine" value="MySQL" />');
-        $("#database-change__form").append('<input id="input_name" value="test_db" />');
-        $("#database-change__form").append('<input id="input_host" />');
-        $("#database-change__form").append('<input id="input_driver" />');
+        $(".form__cluster").append('<input id="input_engine" value="MySQL" />');
+        $(".form__cluster").append('<input id="input_name" value="test_db" />');
+        $(".form__cluster").append('<input id="input_host" />');
+        $(".form__cluster").append('<input id="input_driver" />');
 
         const expected = {
             db_engine: "MySQL",
@@ -216,10 +202,9 @@ describe("getInputValues function", () => {
             db_host: "",
             db_driver: "",
         };
-        
+
         const result = changeDbScript.getInputValues();
 
         expect(result).toEqual(expected);
     });
 });
-
