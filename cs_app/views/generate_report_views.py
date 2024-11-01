@@ -28,7 +28,7 @@ from django.db import connections
 
 from datetime import datetime
 
-from ..models import PastParameter
+from ..models import RanReportParameter
 
 import json
 
@@ -49,11 +49,10 @@ def generate_report_view(request):
     Returns:
         HttpResponse: Rendered template with user and data context.
     """
-    data = list(PastParameter.objects.order_by("-date_field")[:25])[::-1]
+
     user = request.user
     context = {
         "user": user,
-        "data": data,
         "additionalInfo": request.GET.get("additionalInfo", None),
     }
 
@@ -85,22 +84,13 @@ def load_table_view(request):
         time_range = data.get("time_range")
         current_date = datetime.now().date()
 
-        PastParameter.objects.create(
-            text_field=time_range,
-            date_field=current_date,
-            parameters_json={
-                "start_date": start_date,
-                "end_date": end_date,
-            },
+        RanReportParameter.objects.create(
+            user = request.user,
+            report_type = time_range,
+            ran_on_date = current_date,
+            start_date = start_date,
+            end_date = end_date
         )
-
-        excess_record_count = PastParameter.objects.count() - 25
-        if excess_record_count > 0:
-            excess_records = PastParameter.objects.order_by("date_field")[
-                :excess_record_count
-            ]
-            excess_record_ids = excess_records.values_list("id", flat=True)
-            PastParameter.objects.filter(id__in=excess_record_ids).delete()
 
         conn = connections["data"]
 

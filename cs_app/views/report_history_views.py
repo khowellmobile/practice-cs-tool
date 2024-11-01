@@ -1,8 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from ..models import PastParameter
-
 @login_required
 def report_history_view(request):
     """
@@ -20,11 +18,9 @@ def report_history_view(request):
     Returns:
         HttpResponse: Rendered template with user and data context.
     """
-    data = list(PastParameter.objects.order_by("-date_field")[:25])[::-1]
     user = request.user
     context = {
         "user": user,
-        "data": data,
         "additionalInfo": request.GET.get("additionalInfo", None),
     }
 

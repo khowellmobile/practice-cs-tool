@@ -1,0 +1,16 @@
+{% extends "one_page.html" %} {% load static %} {% block sub_css %}
+<link rel="stylesheet" href="{% static 'css/sub_styles/report_history_style.css' %}" />
+{% endblock %} {% block content %}
+
+<div id="main-container" class="flex-col">
+    <div id="header">
+        <h3>Report History</h3>
+        <h4>Find Previously Run Reports</h4>
+    </div>
+    <div id="card-holder">
+    </div>
+</div>
+
+{% endblock %} {% block sub_js %}
+<script src="{% static 'js/sub_scripts/report_history_script.js' %}"></script>
+{% endblock %}
