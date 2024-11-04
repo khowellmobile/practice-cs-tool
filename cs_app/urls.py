@@ -18,6 +18,9 @@ urlpatterns = [
     path('generate_report/', generate_report_views.generate_report_view, name='generate_report'),
     path('load_table/', generate_report_views.load_table_view, name='load_table'),
 
+    # Report history and functions
+    path('report_history/', report_history_views.report_history_view, name='report_history'),
+
     # Directions page
     path('directions/', directions_views.directions_view, name='directions'),
 

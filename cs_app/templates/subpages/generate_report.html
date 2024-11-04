@@ -13,11 +13,25 @@
     </div>
     <div id="card-holder">
         <div id="inputs" class="content-card">
-            <input type="date" id="start_date" class="form__input" name="start_date" required />
+            <input
+                type="date"
+                id="start_date"
+                class="form__input"
+                name="start_date"
+                value="{{ start_date|default:'' }}"
+                required
+            />
             <p>to</p>
-            <input type="date" id="end_date" class="form__input" name="end_date" required />
+            <input
+                type="date"
+                id="end_date"
+                class="form__input"
+                name="end_date"
+                value="{{ end_date|default:'' }}"
+                required
+            />
 
-            <div class="dropdown-button">Custom</div>
+            <div class="dropdown-button">{{ report_type|default:"Custom" }}</div>
             <div class="dropdown-content">
                 <div class="dropdown-item" data-value="YTD">YTD</div>
                 <div class="dropdown-item" data-value="Last Year">Last Year</div>
