@@ -64,13 +64,13 @@
         <div id="database-history-card" class="content-card">
             <h5>Your Databases</h5>
             <div id="history-sep-h" class="sep-h"></div>
-            <div id="db_history__header">
+            <div id="db-history__header">
                 <p>Engine</p>
                 <p>Name</p>
                 <p>Host</p>
                 <p>Driver</p>
             </div>
-            <div id="db_history__listing">
+            <div id="db-history__listing">
                 {% for past_conn in past_connections %}
                 <div>
                     <p class="past-engine">{{ past_conn.engine }}</p>

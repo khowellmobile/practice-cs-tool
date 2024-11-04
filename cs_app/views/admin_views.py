@@ -22,8 +22,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.conf import settings
 
-from ..models import PastParameter
 from ..models import User
+import json
 
 
 def main_view(request):
@@ -55,7 +55,6 @@ def home_view(request):
         HttpResponse: Renders the 'home.html' template with user context.
     """
 
-    data = list(PastParameter.objects.order_by("-date_field")[:5])[::-1]
     user = request.user
     data_db = settings.DATABASES["data"]
 
@@ -67,7 +66,6 @@ def home_view(request):
     
     context = {
         "user": user,
-        "data": data,
         "db_info": db_info,
     }
 
@@ -95,10 +93,20 @@ def tinker_view(request):
 
 @login_required
 def one_page_view(request):
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
     user = request.user
+
     context = {
         "user": user,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
     }
 
     return render(request, "one_page.html", context)

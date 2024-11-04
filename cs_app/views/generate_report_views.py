@@ -28,7 +28,7 @@ from django.db import connections
 
 from datetime import datetime
 
-from ..models import PastParameter
+from ..models import RanReportParameter
 
 import json
 
@@ -39,8 +39,7 @@ def generate_report_view(request):
 
     Requires the user to be logged in to access the view.
 
-    Retrieves the latest 25 entries from PastParameter ordered by date_field,
-    prepares the data along with the current user's information, and renders
+    Prepares the data along with the current user's information, and renders
     the 'generate_report.html' template with the context.
 
     Args:
@@ -49,12 +48,32 @@ def generate_report_view(request):
     Returns:
         HttpResponse: Rendered template with user and data context.
     """
-    data = list(PastParameter.objects.order_by("-date_field")[:25])[::-1]
+
     user = request.user
+
+    menu_status = None
+    start_date = None
+    end_date = None
+    report_type = None
+
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status", None)
+            start_date = format_date(decoded_info.get("start_date", None))
+            end_date = format_date(decoded_info.get("end_date", None))
+            report_type = decoded_info.get("report_type", None)
+        except (ValueError, TypeError) as e:
+            print(f"Error decoding additional_info: {e}")
+
     context = {
         "user": user,
-        "data": data,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
+        "start_date": start_date,
+        "end_date": end_date,
+        "report_type": report_type,
     }
 
     return render(request, "subpages/generate_report.html", context)
@@ -85,22 +104,13 @@ def load_table_view(request):
         time_range = data.get("time_range")
         current_date = datetime.now().date()
 
-        PastParameter.objects.create(
-            text_field=time_range,
-            date_field=current_date,
-            parameters_json={
-                "start_date": start_date,
-                "end_date": end_date,
-            },
+        RanReportParameter.objects.create(
+            user = request.user,
+            report_type = time_range,
+            ran_on_date = current_date,
+            start_date = start_date,
+            end_date = end_date
         )
-
-        excess_record_count = PastParameter.objects.count() - 25
-        if excess_record_count > 0:
-            excess_records = PastParameter.objects.order_by("date_field")[
-                :excess_record_count
-            ]
-            excess_record_ids = excess_records.values_list("id", flat=True)
-            PastParameter.objects.filter(id__in=excess_record_ids).delete()
 
         conn = connections["data"]
 
@@ -136,3 +146,16 @@ def load_table_view(request):
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
+    
+
+def format_date(date_str):
+    """Convert a date string to the format YYYY-MM-DD."""
+    try:
+        # Parse the date string to a datetime object
+        date_obj = datetime.strptime(date_str, "%b. %d, %Y")
+
+        # Return the date in the format YYYY-MM-DD
+        return date_obj.strftime("%Y-%m-%d")
+    except ValueError:
+        return None
+        

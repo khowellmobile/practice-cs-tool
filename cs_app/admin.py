@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PastParameter, User, DatabaseConnection
+from .models import User, DatabaseConnection, RanReportParameter
 from django.contrib.auth.admin import UserAdmin
 
 class UserAdminCustom(UserAdmin):
@@ -16,16 +16,10 @@ class UserAdminCustom(UserAdmin):
 
 admin.site.register(User, UserAdminCustom)
 
-@admin.register(PastParameter)
-class PastParametersAdmin(admin.ModelAdmin):
-    list_display = ["text_field", "date_field", "display_parameters"]
-    # You can customize other attributes and methods here as needed
-
-    def display_parameters(self, obj):
-        return obj.parameters_json
-
-    display_parameters.short_description = "Parameters"
-
 @admin.register(DatabaseConnection)
 class DatabaseConnectionsAdmin(admin.ModelAdmin):
     list_display = ["user", "engine", "name", "host", "driver"]
+
+@admin.register(RanReportParameter)
+class RanReportParametersAdmin(admin.ModelAdmin):
+    list_display = ["user", "report_type", "ran_on_date", "start_date", "end_date"]

@@ -7,6 +7,9 @@ from .authorization_views import *
 # Import all generate report-related views
 from .generate_report_views import *
 
+# Import all report history-related views
+from .report_history_views import *
+
 # Import all directions-related views
 from .directions_views import *
 
