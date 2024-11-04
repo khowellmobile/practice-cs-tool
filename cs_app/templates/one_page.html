@@ -20,7 +20,7 @@
 
     <body>
         <div class="container-1">
-            <div id="c1" class="{% if additionalInfo == 'menu_open' %}large-menu{% else %}small-menu{% endif %}">
+            <div id="c1" class="{% if menu_status == 'menu_open' %}large-menu{% else %}small-menu{% endif %}">
                 <div id="c1-1">
                     <div class="symbol flex-center">
                         <b>H</b>
@@ -29,37 +29,37 @@
                 </div>
                 <div class="seperator-h"></div>
                 <div id="c1-2" class="flex-col">
-                    <div class="page-link" onclick="redirectTo('/one_page/', 'menu_open')">
+                    <div class="page-link" onclick="redirectTo('/one_page/', {menu_status : 'menu_open'})">
                         <div class="symbol-sm flex-center">
                             <b>O</b>
                         </div>
                         <p>Home</p>
                     </div>
-                    <div class="page-link" onclick="redirectTo('/generate_report/', 'menu_open')">
+                    <div class="page-link" onclick="redirectTo('/generate_report/', {menu_status : 'menu_open'})">
                         <div class="symbol-sm flex-center">
                             <b>G</b>
                         </div>
                         <p>Generate Report</p>
                     </div>
-                    <div class="page-link" onclick="redirectTo('/report_history/', 'menu_open')">
+                    <div class="page-link" onclick="redirectTo('/report_history/', {menu_status : 'menu_open'})">
                         <div class="symbol-sm flex-center">
                             <b>R</b>
                         </div>
                         <p>Report History</p>
                     </div>
-                    <div class="page-link" onclick="redirectTo('/change_database/', 'menu_open')">
+                    <div class="page-link" onclick="redirectTo('/change_database/', {menu_status : 'menu_open'})">
                         <div class="symbol-sm flex-center">
                             <b>C</b>
                         </div>
                         <p>Change Database</p>
                     </div>
-                    <div class="page-link" onclick="redirectTo('/account_information/', 'menu_open')">
+                    <div class="page-link" onclick="redirectTo('/account_information/', {menu_status : 'menu_open'})">
                         <div class="symbol-sm flex-center">
                             <b>A</b>
                         </div>
                         <p>Account Information</p>
                     </div>
-                    <div class="page-link" onclick="redirectTo('/directions/', 'menu_open')">
+                    <div class="page-link" onclick="redirectTo('/directions/', {menu_status : 'menu_open'})">
                         <div class="symbol-sm flex-center">
                             <b>D</b>
                         </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div id="c2" class="{% if additionalInfo == 'menu_open' %}small-content{% else %}large-content{% endif %} flex-col">
+            <div id="c2" class="{% if menu_status == 'menu_open' %}small-content{% else %}large-content{% endif %} flex-col">
                 <div id="c2-1">
                     <div class="seperator-v"></div>
                     <div class="back-arrow flex-center"><p>&lt;</p></div>

@@ -23,6 +23,7 @@ from django.shortcuts import render
 from django.conf import settings
 
 from ..models import User
+import json
 
 
 def main_view(request):
@@ -92,10 +93,20 @@ def tinker_view(request):
 
 @login_required
 def one_page_view(request):
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
     user = request.user
+
     context = {
         "user": user,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
     }
 
     return render(request, "one_page.html", context)

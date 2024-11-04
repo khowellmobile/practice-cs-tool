@@ -8,6 +8,26 @@
         <h4>Find Previously Run Reports</h4>
     </div>
     <div id="card-holder">
+        <div id="report-history-card" class="content-card">
+            <h5>Your Reports</h5>
+            <div id="history-sep-h" class="sep-h"></div>
+            <div id="report-history__header">
+                <p>Type</p>
+                <p>Ran On</p>
+                <p>From</p>
+                <p>To</p>
+            </div>
+            <div id="report-history__listing">
+                {% for past_rep in past_reports %}
+                <div>
+                    <p class="rep_type">{{ past_rep.report_type }}</p>
+                    <p>{{ past_rep.ran_on_date }}</p>
+                    <p class="rep_start_date">{{ past_rep.start_date }}</p>
+                    <p class="rep_end_date">{{ past_rep.end_date }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 

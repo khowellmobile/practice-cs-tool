@@ -48,10 +48,21 @@ def account_information_view(request):
     Returns:
         HttpResponse: Renders the 'account_information.html' template with user context.
     """
+
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
     user = request.user
+
     context = {
         "user": user,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
     }
 
     return render(request, "subpages/account_information.html", context)

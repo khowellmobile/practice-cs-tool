@@ -51,9 +51,30 @@ def generate_report_view(request):
     """
 
     user = request.user
+
+    menu_status = None
+    start_date = None
+    end_date = None
+    report_type = None
+
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status", None)
+            start_date = format_date(decoded_info.get("start_date", None))
+            end_date = format_date(decoded_info.get("end_date", None))
+            report_type = decoded_info.get("report_type", "Custom")
+        except (ValueError, TypeError) as e:
+            print(f"Error decoding additional_info: {e}")
+
     context = {
         "user": user,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
+        "start_date": start_date,
+        "end_date": end_date,
+        "report_type": report_type,
     }
 
     return render(request, "subpages/generate_report.html", context)
@@ -126,3 +147,16 @@ def load_table_view(request):
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
+    
+
+def format_date(date_str):
+    """Convert a date string to the format YYYY-MM-DD."""
+    try:
+        # Parse the date string to a datetime object
+        date_obj = datetime.strptime(date_str, "%b. %d, %Y")
+
+        # Return the date in the format YYYY-MM-DD
+        return date_obj.strftime("%Y-%m-%d")
+    except ValueError:
+        return None
+        

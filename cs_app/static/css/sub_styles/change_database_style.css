@@ -278,7 +278,7 @@ h5 {
     margin: 0rem 0rem 0rem 0rem;
 }
 
-#db_history__header {
+#db-history__header {
     box-sizing: border-box;
 
     background-color: rgb(231, 231, 231);
@@ -289,11 +289,11 @@ h5 {
     gap: 0;
 }
 
-#db_history__header > p {
+#db-history__header > p {
     font-weight: 500;
 }
 
-#db_history__listing {
+#db-history__listing {
     box-sizing: border-box;
 
     overflow-y: auto;
@@ -302,11 +302,11 @@ h5 {
     flex-direction: column;
 }
 
-#db_history__listing::-webkit-scrollbar {
+#db-history__listing::-webkit-scrollbar {
     display: none;
 }
 
-#db_history__listing > div {
+#db-history__listing > div {
     box-sizing: border-box;
 
     display: grid;
@@ -315,11 +315,11 @@ h5 {
     gap: 0;
 }
 
-#db_history__listing > div > p {
+#db-history__listing > div > p {
     cursor: pointer;
 }
 
-#db_history__listing > div:hover {
+#db-history__listing > div:hover {
     background-color: rgb(245, 245, 245);
 }
 

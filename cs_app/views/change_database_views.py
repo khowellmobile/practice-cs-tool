@@ -62,11 +62,20 @@ def change_database_view(request):
 
     past_connections = DatabaseConnection.objects.filter(user=request.user)
 
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
     context = {
         "user": user,
         "db_info": db_info,
         "past_connections": past_connections,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
     }
 
     return render(request, "subpages/change_database.html", context)
