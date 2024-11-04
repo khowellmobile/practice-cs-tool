@@ -1,0 +1,125 @@
+:root {
+    --sm-gap: 0.5rem;
+    --md-gap: 1rem;
+    --lg-gap: 2rem;
+
+    --primary-blue: rgb(35, 35, 73);
+    --primary-grey: rgb(235, 235, 235);
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+h5 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.content-card {
+    padding: var(--md-gap);
+    box-sizing: border-box;
+
+    background-color: white;
+    border: 2px solid rgb(221, 221, 221);
+}
+
+#main-container {
+    width: 100%;
+    height: 95%;
+
+    background-color: rgb(235, 235, 235);
+}
+
+#main-container p,
+#main-container h3,
+#main-container h4 {
+    cursor: default;
+}
+
+#header {
+    width: 100%;
+
+    background-color: white;
+}
+
+#header > h3 {
+    margin: 1rem 1rem 0rem 1rem;
+
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+#header > h4 {
+    margin: 0rem 1rem 1rem 1rem;
+
+    color: rgb(68, 68, 68);
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#card-holder {
+    width: 100%;
+    height: 100%;
+    padding: var(--md-gap);
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#report-history-card {
+    height: 100%;
+    width: calc(100%);
+}
+
+#history-sep-h {
+    margin: 0rem 0rem 0rem 0rem;
+}
+
+#report-history__header {
+    box-sizing: border-box;
+
+    background-color: rgb(231, 231, 231);
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0;
+}
+
+#report-history__header > p {
+    font-weight: 500;
+}
+
+#report-history__listing {
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#report-history__listing::-webkit-scrollbar {
+    display: none;
+}
+
+#report-history__listing > div {
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 0;
+}
+
+#report-history__listing > div > p {
+    cursor: pointer;
+}
+
+#report-history__listing > div:hover {
+    background-color: rgb(245, 245, 245);
+}
