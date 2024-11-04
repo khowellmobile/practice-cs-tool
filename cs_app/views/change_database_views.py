@@ -53,7 +53,6 @@ def change_database_view(request):
 
     user = request.user
     data_db = settings.DATABASES["data"]
-
     db_info = {
         "db_engine": data_db["ENGINE"],
         "db_name": data_db["NAME"],
@@ -61,7 +60,7 @@ def change_database_view(request):
     }
 
     past_connections = DatabaseConnection.objects.filter(user=request.user)
-
+    menu_status = None
     additional_info = request.GET.get("additionalInfo", None)
 
     if additional_info:

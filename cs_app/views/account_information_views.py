@@ -49,6 +49,7 @@ def account_information_view(request):
         HttpResponse: Renders the 'account_information.html' template with user context.
     """
 
+    menu_status = None
     additional_info = request.GET.get("additionalInfo", None)
 
     if additional_info:

@@ -39,8 +39,7 @@ def generate_report_view(request):
 
     Requires the user to be logged in to access the view.
 
-    Retrieves the latest 25 entries from PastParameter ordered by date_field,
-    prepares the data along with the current user's information, and renders
+    Prepares the data along with the current user's information, and renders
     the 'generate_report.html' template with the context.
 
     Args:
@@ -65,7 +64,7 @@ def generate_report_view(request):
             menu_status = decoded_info.get("menu_status", None)
             start_date = format_date(decoded_info.get("start_date", None))
             end_date = format_date(decoded_info.get("end_date", None))
-            report_type = decoded_info.get("report_type", "Custom")
+            report_type = decoded_info.get("report_type", None)
         except (ValueError, TypeError) as e:
             print(f"Error decoding additional_info: {e}")
 

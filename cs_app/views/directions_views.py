@@ -38,6 +38,7 @@ def directions_view(request):
 
     user = request.user
 
+    menu_status = None
     additional_info = request.GET.get("additionalInfo", None)
 
     if additional_info:
