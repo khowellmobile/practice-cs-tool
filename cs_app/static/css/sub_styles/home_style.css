@@ -33,7 +33,7 @@ h3 {
     margin-left: var(--sm-gap);
 
     background-color: rgba(180, 180, 180, 0.603);
-    transition: all 0.3s ease;
+    transition: all 0.75s ease;
 
     position: relative;
     right: 1px;
