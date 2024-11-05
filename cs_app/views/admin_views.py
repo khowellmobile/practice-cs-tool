@@ -94,6 +94,7 @@ def tinker_view(request):
 @login_required
 def one_page_view(request):
     additional_info = request.GET.get("additionalInfo", None)
+    menu_status = None
 
     if additional_info:
         try:
