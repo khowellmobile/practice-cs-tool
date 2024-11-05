@@ -150,12 +150,16 @@ def load_table_view(request):
 
 def format_date(date_str):
     """Convert a date string to the format YYYY-MM-DD."""
-    try:
-        # Parse the date string to a datetime object
-        date_obj = datetime.strptime(date_str, "%b. %d, %Y")
 
-        # Return the date in the format YYYY-MM-DD
-        return date_obj.strftime("%Y-%m-%d")
-    except ValueError:
+    if date_str:
+        try:
+            # Parse the date string to a datetime object
+            date_obj = datetime.strptime(date_str, "%b. %d, %Y")
+
+            # Return the date in the format YYYY-MM-DD
+            return date_obj.strftime("%Y-%m-%d")
+        except ValueError:
+            return None
+    else:
         return None
         
