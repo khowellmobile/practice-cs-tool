@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.conf import settings
 
-from ..models import User
+from ..models import RanReportParameter, User
 import json
 
 
@@ -111,4 +111,35 @@ def one_page_view(request):
     }
 
     return render(request, "one_page.html", context)
+
+@login_required
+def home_page_sub_view(request):
+    past_reports = RanReportParameter.objects.filter(user=request.user)
+    additional_info = request.GET.get("additionalInfo", None)
+    menu_status = None
+
+    data_db = settings.DATABASES["data"]
+    db_info = {
+        "db_engine": data_db["ENGINE"],
+        "db_name": data_db["NAME"],
+        "db_host": data_db["HOST"],
+    }
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
+    user = request.user
+
+    context = {
+        "user": user,
+        "menu_status": menu_status,
+        "past_reports": past_reports,
+        "db_info": db_info,
+    }
+
+    return render(request, "subpages/home.html", context)
 

@@ -1,7 +1,5 @@
 /**
- * This script handles click events on report history items.
- * When a report item is clicked, it constructs a URL to
- * generate a report with specific parameters and redirects the user to that URL.
+ * 
  */
 
 // Required for global jqeury recognition for use in testing
@@ -42,15 +40,10 @@ function attachEventListeners() {
     
         window.location.assign(url);
     });
+
+    $("#right > span").on("mouseenter", function () {
+        $(this).find("div > p").toggleClass("right-pos left-pos");
+    }).on("mouseleave", function () {
+        $(this).find("div > p").toggleClass("right-pos left-pos");
+    });
 }
-
-try {
-    // Export all functions
-    module.exports = {
-        attachEventListeners,
-    };
-} catch (error) {
-    console.log(error);
-}
-
-
