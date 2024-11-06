@@ -92,28 +92,7 @@ def tinker_view(request):
     return render(request, "tinker.html", context)
 
 @login_required
-def one_page_view(request):
-    additional_info = request.GET.get("additionalInfo", None)
-    menu_status = None
-
-    if additional_info:
-        try:
-            decoded_info = json.loads(additional_info)
-            menu_status = decoded_info.get("menu_status")
-        except (ValueError, TypeError):
-            menu_status = None
-
-    user = request.user
-
-    context = {
-        "user": user,
-        "menu_status": menu_status,
-    }
-
-    return render(request, "one_page.html", context)
-
-@login_required
-def home_page_sub_view(request):
+def home_page_view(request):
     past_reports = RanReportParameter.objects.filter(user=request.user)
     additional_info = request.GET.get("additionalInfo", None)
     menu_status = None
