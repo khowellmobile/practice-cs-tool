@@ -5,6 +5,14 @@
 
     --primary-blue: rgb(35, 35, 73);
     --primary-grey: rgb(235, 235, 235);
+
+    font-size: 16px;
+}
+
+@media (max-width: 1500px) {
+    :root {
+        font-size: 14px;
+    }
 }
 
 * {
@@ -22,7 +30,6 @@
     justify-content: center;
     align-items: center;
 }
-
 
 .seperator-h {
     width: calc(100% - 1rem);
@@ -43,19 +50,19 @@
 }
 
 .small-menu {
-    width: 3%;
+    width: 3.5rem;
 }
 
 .large-menu {
-    width: 15%;
+    width: 17rem;
 }
 
 .small-content {
-    width: 85%;
+    width: calc(100% - 17rem);
 }
 
 .large-content {
-    width: 97%;
+    width: calc(100% - 3.5rem);
 }
 
 .symbol {
@@ -91,6 +98,7 @@
 .page-link {
     width: 100%;
     padding: 0.75rem;
+    box-sizing: border-box;
 
     cursor: pointer;
 
