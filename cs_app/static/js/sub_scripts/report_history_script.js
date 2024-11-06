@@ -38,7 +38,6 @@ function attachEventListeners() {
         // Encode the optionalField to make it URL-safe
         const encodedField = encodeURIComponent(jsonString);
     
-        // Append the optionalField as a query parameter
         url += `?additionalInfo=${encodedField}`;
     
         window.location.assign(url);

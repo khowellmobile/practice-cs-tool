@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.conf import settings
 
-from ..models import User
+from ..models import RanReportParameter, User
 import json
 
 
@@ -92,9 +92,17 @@ def tinker_view(request):
     return render(request, "tinker.html", context)
 
 @login_required
-def one_page_view(request):
+def home_page_view(request):
+    past_reports = RanReportParameter.objects.filter(user=request.user)
     additional_info = request.GET.get("additionalInfo", None)
     menu_status = None
+
+    data_db = settings.DATABASES["data"]
+    db_info = {
+        "db_engine": data_db["ENGINE"],
+        "db_name": data_db["NAME"],
+        "db_host": data_db["HOST"],
+    }
 
     if additional_info:
         try:
@@ -108,7 +116,9 @@ def one_page_view(request):
     context = {
         "user": user,
         "menu_status": menu_status,
+        "past_reports": past_reports,
+        "db_info": db_info,
     }
 
-    return render(request, "one_page.html", context)
+    return render(request, "subpages/home.html", context)
 
