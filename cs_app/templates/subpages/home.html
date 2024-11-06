@@ -48,8 +48,4 @@
 
 {% endblock %} {% block sub_js %}
 <script src="{% static 'js/sub_scripts/home_script.js' %}"></script>
-<script>
-    // Easier to get csrf token from template
-    var csrf_token = "{{ csrf_token }}";
-</script>
 {% endblock %}

@@ -14,14 +14,6 @@ class MainViewtests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "index.html")
 
-
-from django.test import TestCase
-from django.urls import reverse
-from django.contrib.auth.models import User
-from unittest.mock import patch
-from ..models import RanReportParameter
-import json
-
 class HomeViewTests(TestCase):
 
     def setUp(self):
