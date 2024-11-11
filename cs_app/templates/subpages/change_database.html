@@ -1,0 +1,97 @@
+{% extends "one_page.html" %} {% load static %} {% block sub_css %}
+<link rel="stylesheet" href="{% static 'css/sub_styles/change_database_style.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="main-container flex-col">
+    <div class="header">
+        <h3>Change Database</h3>
+        <h4>Connect to a New Database</h4>
+    </div>
+    <div id="card-holder">
+        <span>
+            <div id="current-database-card" class="content-card">
+                <h5>Current Connection</h5>
+                <div class="sep-h"></div>
+                <p><strong>Database Engine:</strong> {{ db_info.db_engine }}</p>
+                <p><strong>Database Name:</strong> {{ db_info.db_name }}</p>
+                <p><strong>Database Host:</strong> {{ db_info.db_host }}</p>
+            </div>
+            <div id="database-inputs-card" class="content-card">
+                <h5>Connect Database</h5>
+                <div class="sep-h"></div>
+                <div>
+                    <div id="database-inputs-card__mains">
+                        <p>Database Information</p>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_engine" placeholder="" required />
+                            <p class="form__label">Engine</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_name" placeholder="" required />
+                            <p class="form__label">Name</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_host" placeholder="" required />
+                            <p class="form__label">Host</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_driver" placeholder="" required />
+                            <p class="form__label">Driver</p>
+                        </div>
+                    </div>
+                    <div id="database-inputs-card__auth">
+                        <p>Authentication</p>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_user" placeholder="" required />
+                            <p class="form__label">Username</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_pass" placeholder="" required />
+                            <p class="form__label">Password</p>
+                        </div>
+                        <span>Leave auth fields <strong>empty</strong> for windows authentication</span>
+                    </div>
+                </div>
+            </div>
+            <div id="database-inputs-card__status">
+                <div id="connect-button" onclick="createNewConfig()">Connect</div>
+                <div id="connect-status" class="content-card">
+                    <p>Connection Status:</p>
+                    <div id="database-change__status"></div>
+                </div>
+            </div>
+        </span>
+        <div id="database-history-card" class="content-card">
+            <h5>Your Databases</h5>
+            <div id="history-sep-h" class="sep-h"></div>
+            <div id="db-history__header">
+                <p>Engine</p>
+                <p>Name</p>
+                <p>Host</p>
+                <p>Driver</p>
+            </div>
+            <div id="db-history__listing">
+                {% for past_conn in past_connections %}
+                <div>
+                    <p class="past-engine">{{ past_conn.engine }}</p>
+                    <p class="past-name">{{ past_conn.name }}</p>
+                    <p class="past-host">{{ past_conn.host }}</p>
+                    <p class="past-driver">{{ past_conn.driver }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="page-overlay" class="overlay-hidden">
+    <div id="spinner"></div>
+</div>
+
+{% endblock %} {% block sub_js %}
+<script src="{% static 'js/sub_scripts/change_database_script.js' %}"></script>
+<script>
+    // Easier to get csrf token from template
+    var csrf_token = "{{ csrf_token }}";
+</script>
+{% endblock %}

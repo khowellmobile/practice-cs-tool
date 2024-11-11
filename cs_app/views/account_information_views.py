@@ -13,6 +13,8 @@ Functions:
   and last name.
 - update_email_view(request): Handles POST requests to update the user's email address
   and username.
+- update_phone_number(request): Handles POST requests to update the user's phone number.
+- update_company_view(request): Handles POST requests to update the user's company.
 - update_password_view(request): Handles POST requests to update the user's password.
 
 Dependencies:
@@ -27,7 +29,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from ..models import User
 
 import json
 import cs_app.utils.common_functions as cf
@@ -46,12 +48,25 @@ def account_information_view(request):
     Returns:
         HttpResponse: Renders the 'account_information.html' template with user context.
     """
+
+    menu_status = None
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
     user = request.user
+
     context = {
         "user": user,
+        "menu_status": menu_status,
     }
 
-    return render(request, "account_information.html", context)
+    return render(request, "subpages/account_information.html", context)
 
 
 @login_required
@@ -121,6 +136,74 @@ def update_email_view(request):
 
         user.email = email
         user.username = email
+        user.save()
+
+        return JsonResponse({"message": "Data received successfully"})
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+@login_required
+def update_phone_number_view(request):
+    """
+    View function to handle POST requests for updating the user's phone number.
+
+    Requires the user to be logged in to access the view.
+    Processes POST requests containing 'phone_number' parameter.
+    Updates the current user's phone number.
+
+    Args:
+        request (HttpRequest): The HTTP request object containing POST data.
+
+    Returns:
+        JsonResponse: Returns a JSON response with a success message upon successful data update,
+                      or an error message if the phone number format is invalid or the request method is not POST.
+    """
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        phone_number = data.get("phone_number")
+
+        # Validation for phone number format
+        if not cf.validate_phone_number(phone_number):
+            return JsonResponse({"error": "Invalid format"}, status=400)
+
+        user = request.user
+
+        user.phone_number = phone_number
+        user.save()
+
+        return JsonResponse({"message": "Data received successfully"})
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+@login_required
+def update_company_view(request):
+    """
+    View function to handle POST requests for updating the user's company name.
+
+    Requires the user to be logged in to access the view.
+    Processes POST requests containing 'company' parameter.
+    Updates the current user's company name.
+
+    Args:
+        request (HttpRequest): The HTTP request object containing POST data.
+
+    Returns:
+        JsonResponse: Returns a JSON response with a success message upon successful data update,
+                      or an error message if the company name format is invalid or the request method is not POST.
+    """
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        company = data.get("company")
+
+        # Validation for company name format
+        if not cf.validate_company(company):
+            return JsonResponse({"error": "Invalid format"}, status=400)
+
+        user = request.user
+
+        user.company = company
         user.save()
 
         return JsonResponse({"message": "Data received successfully"})

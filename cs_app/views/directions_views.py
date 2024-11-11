@@ -15,6 +15,7 @@ Dependencies:
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+import json
 
 
 @login_required
@@ -35,11 +36,21 @@ def directions_view(request):
         HttpResponse: Rendered template with user context.
     """
 
-    print(request.GET.get("additionalInfo", None))
     user = request.user
+
+    menu_status = None
+    additional_info = request.GET.get("additionalInfo", None)
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
     context = {
         "user": user,
-        "additionalInfo": request.GET.get("additionalInfo", None),
+        "menu_status": menu_status,
     }
 
-    return render(request, "directions.html", context)
+    return render(request, "subpages/directions.html", context)

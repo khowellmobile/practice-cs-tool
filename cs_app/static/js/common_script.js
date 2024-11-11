@@ -11,17 +11,27 @@
  */
 
 function redirectTo(url, additionalInfo) {
-
-    console.log("RUN")
     
     if (additionalInfo) {
+        const jsonString = JSON.stringify(additionalInfo);
+
         // Encode the optionalField to make it URL-safe
-        const encodedField = encodeURIComponent(additionalInfo);
+        const encodedField = encodeURIComponent(jsonString);
+
         // Append the optionalField as a query parameter
         url += `?additionalInfo=${encodedField}`;
     }
-    
+
     window.location.href = url;
+}
+
+try {
+    // Export all functions
+    module.exports = {
+        redirectTo,
+    };
+} catch (error) {
+    console.log(error);
 }
 
 

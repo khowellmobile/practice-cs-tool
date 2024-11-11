@@ -15,6 +15,8 @@
  * - ajaxResponseError(fieldName, message): Alerts the user about specific errors encountered after an AJAX call.
  * - validateName(name): Validates if a name follows a standard format.
  * - validateEmail(email): Validates if an email address follows a standard format.
+ * - validatePhoneNumber(number): Validates if a phone number follows a standard format
+ * - validateCompany(company): Validates if a company name follows a standard format
  * - validatePassword(password): Validates if a password meets the specified criteria.
  * - fadeInPopup(fieldName): Displays the popup box and overlay for a given field name.
  * - fadeOutPopup(fieldName): Hides the popup box and overlay for a given field name.
@@ -57,7 +59,8 @@ function attachEventListeners() {
      * Toggles the visibility of the form used to update the specified field gotten from the parent.
      */
     $(".cancel-button").on("click", function () {
-        fieldName = $(this).parents(".popupBox").parent().attr("id");
+        parentID = $(this).parents(".popupBox").attr("id");
+        fieldName = parentID.substring(parentID.indexOf("_") + 1);
         fadeOutPopup(fieldName);
     });
 
@@ -67,7 +70,8 @@ function attachEventListeners() {
      * Submits the form used to update the specified field gotten from the grandparent.
      */
     $(".save-button").on("click", function () {
-        fieldName = $(this).parents(".popupBox").parent().attr("id");
+        parentID = $(this).parents(".popupBox").attr("id");
+        fieldName = parentID.substring(parentID.indexOf("_") + 1);
         let formdata;
         switch (fieldName) {
             case "name":
@@ -81,12 +85,24 @@ function attachEventListeners() {
                     email: $("#email_new").val(),
                 };
                 break;
+            case "phone":
+                formdata = {
+                    phone_number: $("#phone_new").val(),
+                };
+                break;
+            case "company":
+                formdata = {
+                    company: $("#company_new").val(),
+                };
+                break;
             case "password":
                 formdata = {
                     old_password: $("#password_old").val(),
                     password: $("#password_new").val(),
                 };
                 break;
+            default:
+                console.log("field name not reocgnized");
         }
         if (checkFields(fieldName, formdata)) {
             submitForm(fieldName, formdata);
@@ -126,6 +142,20 @@ function checkFields(fieldName, formdata) {
                 return false;
             } else if (!validateEmail(formdata["email"])) {
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
+                return false;
+            }
+            break;
+        case "phone":
+            if (!validatePhoneNumber(formdata["phone_number"])) {
+                alert(`Phone number format is invalid. Please follow standard phone number format: (123) 456-7891`);
+                return false;
+            }
+            break;
+        case "company":
+            if (!validateCompany(formdata["company"])) {
+                alert(
+                    `Company Name format is invalid. Allowed characters include alphabetical characters and common special characters`
+                );
                 return false;
             }
             break;
@@ -192,7 +222,6 @@ function ajaxResponseSuccess(fieldName, formdata) {
         case "name":
             if (!formdata["first_name"] || !formdata["last_name"]) {
                 console.log("Formdata does not include required key-value pairs for name");
-                displayText = "Name data is incomplete.";
             } else {
                 displayText = "Name: " + formdata["first_name"] + " " + formdata["last_name"];
             }
@@ -200,9 +229,22 @@ function ajaxResponseSuccess(fieldName, formdata) {
         case "email":
             if (!formdata["email"]) {
                 console.log("Formdata does not include required key-value pair for email");
-                displayText = "Email data is incomplete.";
             } else {
                 displayText = "Email: " + formdata["email"];
+            }
+            break;
+        case "phone_number":
+            if (!formdata["phone_number"]) {
+                console.log("Formdata does not include required key-value pair for phone number");
+            } else {
+                displayText = formdata["phone_number"];
+            }
+            break;
+        case "company":
+            if (!formdata["company"]) {
+                console.log("Formdata does not include required key-value pair for company");
+            } else {
+                displayText = formdata["company"];
             }
             break;
         case "password":
@@ -233,6 +275,14 @@ function ajaxResponseError(fieldName, message) {
                 break;
             case "email":
                 alert("Email format is invalid. Please follow standard email format: example@domain.com");
+                break;
+            case "phone_number":
+                alert("Phone number format is invalid. Please follow standard phone number format: (123) 456-7891");
+                break;
+            case "company":
+                alert(
+                    "Company name format is invalid. Allowed characters include alphabetical characters and standard special characters"
+                );
                 break;
             case "password":
                 alert(
@@ -281,6 +331,40 @@ function validateEmail(email) {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     return emailPattern.test(email);
+}
+
+/**
+ * Validates if a phone number follows a standard format.
+ *
+ * Phone Number Format:
+ * - Allows optional country code (e.g., +1)
+ * - Allows spaces, dashes, and parentheses
+ * - Matches typical phone number patterns
+ * - Requires phone number to be atleast 7 digits
+ *
+ * @param {string} number - The phone number to be validated.
+ * @returns {boolean} - True if the phone number is valid according to the format, False otherwise.
+ */
+function validatePhoneNumber(number) {
+    const phonePattern = /^(?:(?:\+?\d{1,3}[- ]?)?(?:\(?\d{1,4}?\)?[- ]?)?\d{1,4}[- ]?\d{1,9}){1,2}$/;
+
+    return phonePattern.test(number) && number.replace(/\D/g, "").length >= 7;
+}
+
+/**
+ * Validates if a company name follows a standard format.
+ *
+ * Company Name Format:
+ * - Should contain only letters, numbers, spaces, and certain special characters
+ * - Minimum length of 2 characters
+ *
+ * @param {string} company - The company name to be validated.
+ * @returns {boolean} - True if the company name is valid according to the format, False otherwise.
+ */
+function validateCompany(company) {
+    const companyPattern = /^[a-zA-Z0-9\s&.,'-]{2,}$/;
+
+    return companyPattern.test(company);
 }
 
 /**
@@ -346,6 +430,14 @@ function fadeOutPopup(fieldName) {
     overlay.fadeOut(500);
 }
 
+$(".form__input")
+    .on("focus", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+    })
+    .on("blur", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
+    });
+
 try {
     // Export all needed functions
     module.exports = {
@@ -355,6 +447,8 @@ try {
         ajaxResponseError,
         validateName,
         validateEmail,
+        validatePhoneNumber,
+        validateCompany,
         validatePassword,
         fadeInPopup,
         fadeOutPopup,

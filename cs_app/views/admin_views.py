@@ -22,7 +22,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.conf import settings
 
-from ..models import PastParameter
+from ..models import RanReportParameter, User
+import json
 
 
 def main_view(request):
@@ -54,7 +55,6 @@ def home_view(request):
         HttpResponse: Renders the 'home.html' template with user context.
     """
 
-    data = list(PastParameter.objects.order_by("-date_field")[:5])[::-1]
     user = request.user
     data_db = settings.DATABASES["data"]
 
@@ -66,7 +66,6 @@ def home_view(request):
     
     context = {
         "user": user,
-        "data": data,
         "db_info": db_info,
     }
 
@@ -91,3 +90,35 @@ def tinker_view(request):
     }
 
     return render(request, "tinker.html", context)
+
+@login_required
+def home_page_view(request):
+    past_reports = RanReportParameter.objects.filter(user=request.user)
+    additional_info = request.GET.get("additionalInfo", None)
+    menu_status = None
+
+    data_db = settings.DATABASES["data"]
+    db_info = {
+        "db_engine": data_db["ENGINE"],
+        "db_name": data_db["NAME"],
+        "db_host": data_db["HOST"],
+    }
+
+    if additional_info:
+        try:
+            decoded_info = json.loads(additional_info)
+            menu_status = decoded_info.get("menu_status")
+        except (ValueError, TypeError):
+            menu_status = None
+
+    user = request.user
+
+    context = {
+        "user": user,
+        "menu_status": menu_status,
+        "past_reports": past_reports,
+        "db_info": db_info,
+    }
+
+    return render(request, "subpages/home.html", context)
+
