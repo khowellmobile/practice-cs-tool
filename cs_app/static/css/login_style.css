@@ -1,23 +1,45 @@
-html {
-    margin: 0px;
-    padding: 0px;
+:root {
+    --sm-gap: 0.5rem;
+    --md-gap: 1rem;
+    --lg-gap: 2rem;
 
+    --primary-blue: rgb(35, 35, 75);
+    --secondary-blue: rgb(105, 105, 236);
+    --primary-grey: rgb(235, 235, 235);
+}
+
+html {
     font-size: 16px;
     font-family: "Roboto", sans-serif;
 }
 
-:root {
-    --primary-color: rgb(255, 255, 255, 0.5);
+body {
+    background: linear-gradient(-45deg, rgb(105, 105, 236), rgb(17, 17, 53), rgb(105, 105, 236), rgb(35, 35, 75));
+    background-size: 400% 400%;
+    animation: gradient 45s linear infinite;
 }
 
-.error {
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+* {
     margin: 0px;
+    padding: 0px;
 }
 
 .form__cluster {
     width: 80%;
     height: 2.8rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--sm-gap);
 
     border-bottom: 2px solid rgb(114, 114, 134);
 
@@ -82,6 +104,7 @@ html {
 
     background-color: white;
     border-radius: 1rem;
+    border: 2px solid var(--primary-grey);
 
     display: flex;
     flex-direction: column;
@@ -94,7 +117,9 @@ html {
     height: 3rem;
     margin-bottom: 1rem;
 
-    background-color: rgb(105, 105, 236);
+    background: linear-gradient(-45deg, rgb(105, 105, 236), rgb(17, 17, 53), rgb(105, 105, 236), rgb(35, 35, 75));
+    background-size: 400% 400%;
+    animation: gradient 45s linear infinite;
     border-radius: 50%;
 
     display: flex;
@@ -136,7 +161,9 @@ html {
     width: 100%;
     height: 100%;
 
-    background-color: rgb(105, 105, 236);
+    background: linear-gradient(-45deg, rgb(105, 105, 236), rgb(17, 17, 53), rgb(105, 105, 236), rgb(35, 35, 75));
+    background-size: 400% 400%;
+    animation: gradient 45s linear infinite;
     border: none;
     border-radius: 2rem;
     cursor: pointer;
