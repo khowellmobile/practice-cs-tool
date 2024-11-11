@@ -20,8 +20,8 @@
 
     <body>
         <div class="container-1">
-            <div id="c1" class="{% if menu_status == 'menu_open' %}large-menu{% else %}small-menu{% endif %}">
-                <div id="c1-1">
+            <div id="menu" class="{% if menu_status == 'menu_open' %}large-menu{% else %}small-menu{% endif %}">
+                <div id="menu__header">
                     <div class="symbol flex-center">
                         <b>H</b>
                     </div>
@@ -67,8 +67,8 @@
                     </div>
                 </div>
             </div>
-            <div id="c2" class="{% if menu_status == 'menu_open' %}small-content{% else %}large-content{% endif %} flex-col">
-                <div id="c2-1">
+            <div id="content" class="{% if menu_status == 'menu_open' %}small-content{% else %}large-content{% endif %} flex-col">
+                <div id="content__top">
                     <div class="seperator-v"></div>
                     <div class="back-arrow flex-center"><p>&lt;</p></div>
                     <p id="current_screen_name">Home</p>

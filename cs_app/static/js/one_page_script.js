@@ -1,4 +1,16 @@
-$("#c1")
+/**
+ * JavaScript file for managing elements on the one_page page that is a parent page.
+ *
+ * This file contains functions to handle the expansion and collapse of the menu and content
+ * divs on the one_page page. The one_page is extended my the main pages of this application.
+ *
+ * Functions:
+ * - switchClass(expand): Expands and collapsed menu and content.
+ *
+ * Dependencies: Requires jQuery for DOM manipulation.
+ */
+
+$("#menu")
     .on("mouseenter", function () {
         switchClass(true);
     })
@@ -6,16 +18,22 @@ $("#c1")
         switchClass(false);
     });
 
+/**
+ * Controls the expansion and collapse of the side navigation menu. Will expand
+ * menu when passed true and collapse menu when passed false.
+ *
+ * @param {boolean} expand indicates if the menu should be expanded or collapsed
+ */
 function switchClass(expand) {
     if (expand) {
-        $("#c1").removeClass("small-menu");
-        $("#c1").addClass("large-menu");
-        $("#c2").removeClass("large-content");
-        $("#c2").addClass("small-content");
+        $("#menu").removeClass("small-menu");
+        $("#menu").addClass("large-menu");
+        $("#content").removeClass("large-content");
+        $("#content").addClass("small-content");
     } else {
-        $("#c1").removeClass("large-menu");
-        $("#c1").addClass("small-menu");
-        $("#c2").removeClass("small-content");
-        $("#c2").addClass("large-content");
+        $("#menu").removeClass("large-menu");
+        $("#menu").addClass("small-menu");
+        $("#content").removeClass("small-content");
+        $("#content").addClass("large-content");
     }
 }

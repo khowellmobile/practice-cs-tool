@@ -25,14 +25,6 @@
     transform: translateY(0);
 }
 
-.content-card {
-    padding: var(--md-gap);
-    box-sizing: border-box;
-
-    background-color: white;
-    border: 2px solid rgb(221, 221, 221);
-}
-
 .form__input {
     color: #333;
     background-color: rgb(255, 255, 255);
@@ -81,40 +73,6 @@
 
 .dropdown-item:hover {
     background-color: #ddd;
-}
-
-#main-container {
-    width: 100%;
-    height: 95%;
-
-    background-color: rgb(235, 235, 235);
-}
-
-#main-container p,
-#main-container h3,
-#main-container h4 {
-    cursor: default;
-}
-
-#header {
-    width: 100%;
-
-    background-color: white;
-}
-
-#header > h3 {
-    margin: 1rem 1rem 0rem 1rem;
-
-    font-size: 1.8rem;
-    font-weight: normal;
-}
-
-#header > h4 {
-    margin: 0rem 1rem 1rem 1rem;
-
-    color: rgb(68, 68, 68);
-    font-size: 1rem;
-    font-weight: normal;
 }
 
 #card-holder {
