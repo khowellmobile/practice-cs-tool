@@ -51,6 +51,9 @@ function attachEventListeners() {
         $("#input_host").val($(this).find(".past-host").text());
         $("#input_driver").val($(this).find(".past-driver").text());
     });
+
+    // Setting current screen name in nav bar
+    $("#current-screen-name").text("Change Database");
 }
 
 /**

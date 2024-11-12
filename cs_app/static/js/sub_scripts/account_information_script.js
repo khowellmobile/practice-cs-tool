@@ -108,6 +108,9 @@ function attachEventListeners() {
             submitForm(fieldName, formdata);
         }
     });
+
+    // Setting current screen name in nav bar
+    $("#current-screen-name").text("Account Information");
 }
 
 /**

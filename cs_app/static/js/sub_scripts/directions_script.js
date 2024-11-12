@@ -39,6 +39,9 @@ function attachEventListeners() {
             }
         });
     });
+
+    // Setting current screen name in nav bar
+    $("#current-screen-name").text("Directions");
 }
 
 try {

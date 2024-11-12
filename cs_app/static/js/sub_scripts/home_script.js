@@ -23,4 +23,7 @@ function attachEventListeners() {
     }).on("mouseleave", function () {
         $(this).find("div > p").toggleClass("right-pos left-pos");
     });
+
+    // Setting current screen name in nav bar
+    $("#current-screen-name").text("Home");
 }

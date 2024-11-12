@@ -42,6 +42,9 @@ function attachEventListeners() {
     
         window.location.assign(url);
     });
+
+    // Setting current screen name in nav bar
+    $("#current-screen-name").text("Report History");
 }
 
 try {

@@ -81,6 +81,9 @@ function attachEventListeners() {
             setTableHeight();
         });
     } catch (error) {}
+
+    // Setting current screen name in nav bar
+    $("#current-screen-name").text("Generate Report");
 }
 
 /**
