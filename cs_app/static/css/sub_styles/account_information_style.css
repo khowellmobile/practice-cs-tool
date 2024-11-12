@@ -60,16 +60,32 @@ button {
     transform: scale(1);
 }
 
+.popup-button {
+    width: 6rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+
+    background-color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.save-button {
+    color: rgb(51, 175, 82);
+    border: 2px solid rgb(51, 175, 82);
+}
+
+.cancel-button {
+    color: rgb(199, 47, 47);
+    border: 2px solid rgb(199, 47, 47);
+}
+
 .form__input {
     font-size: 1rem;
     color: #333;
     background-color: rgb(255, 255, 255);
     border-radius: 0.2rem;
     border: 2px solid var(--primary-blue);
-}
-
-.cancel-button {
-    width: 5rem;
 }
 
 .form__cluster {
@@ -177,8 +193,8 @@ button {
     margin-right: 0.5rem;
 
     background-color: white;
-    color: rgb(35, 35, 73);
+    color: var(--primary-blue);;
     border-radius: 0.5rem;
-    border: 2px solid rgb(35, 35, 73);
+    border: 2px solid var(--primary-blue);;
     cursor: pointer;
 }
