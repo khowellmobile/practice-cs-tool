@@ -70,6 +70,15 @@ function createNewConfig() {
         return;
     }
 
+    msg = validateDbConfig(db_info);
+
+    if (msg) {
+        $("#database-change__status").append(`<p class='stat__message'>Error: ${msg}</p>`);
+        return;
+    } else {
+        $("#database-change__status").append(`<p class='stat__message'>Field formats valid.</p>`);
+    }
+
     submitNewConfig(db_info);
 }
 
@@ -146,6 +155,30 @@ function getInputValues() {
 }
 
 /**
+ * Validates the database configuration and displays errors if validation fails.
+ *
+ * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mysql').
+ * @param {string} db_name - The name of the database.
+ * @param {string} db_host - The hostname or IP address of the database server.
+ * @param {string} db_driver - The database driver (e.g., 'psycopg2', 'pymysql').
+ */
+function validateDbConfig({db_engine, db_name, db_host, db_driver}) {
+    let errorMessage = "";
+
+    if (!validateDbEngine(db_engine)) {
+        errorMessage = "Engine name invalid.";
+    } else if (!validateDbName(db_name)) {
+        errorMessage = "Database name invalid. Alphanumerics only.";
+    } else if (!validateDbHost(db_host)) {
+        errorMessage = "Database host invalid";
+    } else if (!validateDbDriver(db_driver)) {
+        errorMessage = "Database driver invalid. Alphanumerics only.";
+    }
+
+    return errorMessage;
+}
+
+/**
  * Controls the display of the overlay. Pass true to show overlay.
  * Pass false to hide it.
  *
@@ -159,6 +192,63 @@ function showOverlay(show) {
     }
 }
 
+/**
+ * Validates the database engine field.
+ *
+ * Database Engine Options:
+ * - Acceptable values: 'postgresql', 'mysql', 'sqlite', 'oracle', 'mssql'.
+ *
+ * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mysql').
+ * @returns {boolean} - True if the engine is valid, False otherwise.
+ */
+function validateDbEngine(db_engine) {
+    const dbEnginePattern = /^(postgresql|mysql|sqlite|oracle|mssql)$/;
+    return dbEnginePattern.test(db_engine);
+}
+
+/**
+ * Validates the database name field.
+ *
+ * Database Name Format:
+ * - Only alphanumeric characters and underscores are allowed.
+ *
+ * @param {string} db_name - The name of the database.
+ * @returns {boolean} - True if the database name is valid, False otherwise.
+ */
+function validateDbName(db_name) {
+    const dbNamePattern = /^[a-zA-Z0-9_]+$/;
+    return dbNamePattern.test(db_name);
+}
+
+/**
+ * Validates the database host field.
+ *
+ * Database Host Format:
+ * - Can be 'localhost', a valid domain name (e.g., 'example.com'), or an IPv4 address (e.g., '192.168.1.1').
+ *
+ * @param {string} db_host - The hostname or IP address of the database server.
+ * @returns {boolean} - True if the host is valid, False otherwise.
+ */
+function validateDbHost(db_host) {
+    const dbHostPattern =
+        /^(localhost|([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}|(\d{1,3}\.){3}\d{1,3}|[a-zA-Z0-9-]+(\[[a-zA-Z0-9-]+\])?)(\\[a-zA-Z0-9-]+)?$/;
+    return dbHostPattern.test(db_host);
+}
+
+/**
+ * Validates the database driver field.
+ *
+ * Database Driver Format:
+ * - Can include alphanumeric characters, underscores, and spaces.
+ *
+ * @param {string} db_driver - The database driver (e.g., 'psycopg2', 'pymysql').
+ * @returns {boolean} - True if the driver is valid, False otherwise.
+ */
+function validateDbDriver(db_driver) {
+    const dbDriverPattern = /^[a-zA-Z0-9_ ]+$/;
+    return dbDriverPattern.test(db_driver);
+}
+
 try {
     // Export all functions
     module.exports = {
@@ -166,6 +256,11 @@ try {
         dbChangeHandler,
         getInputValues,
         showOverlay,
+        validateDbConfig,
+        validateDbEngine,
+        validateDbName,
+        validateDbHost,
+        validateDbDriver,
     };
 } catch (error) {
     console.log(error);
