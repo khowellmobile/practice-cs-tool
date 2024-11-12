@@ -158,19 +158,19 @@ def switch_database_view(request):
             return JsonResponse(
                 {
                     "success": False,
-                    "error": "Database name invalid. Alphanumerics only",
+                    "error": "Database name invalid. Alphanumerics only.",
                 },
                 status=400,
             )
         if not cf.validate_db_host(db_host):
             return JsonResponse(
-                {"success": False, "error": "Database host invalid"}, status=400
+                {"success": False, "error": "Database host invalid."}, status=400
             )
         if not cf.validate_db_driver(db_driver):
             return JsonResponse(
                 {
                     "success": False,
-                    "error": "Database driver invalid. Alphanumerics only",
+                    "error": "Database driver invalid. Alphanumerics only.",
                 },
                 status=400,
             )
