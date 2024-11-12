@@ -37,7 +37,7 @@ html {
 
     position: relative;
     top: 1.2rem;
-    right: 2px;
+    right: 1px;
 
     z-index: 1000;
 }
@@ -72,7 +72,7 @@ html {
 
 .form__label {
     position: relative;
-    right: 2px;
+    right: 1px;
 }
 
 .outlineR {
