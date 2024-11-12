@@ -189,7 +189,7 @@ class SwitchDatabaseViewTests(TestCase):
                 response.content,
                 {
                     "success": False,
-                    "error": "Database name invalid. Alphanumerics only",
+                    "error": "Database name invalid. Alphanumerics only.",
                 },
             )
 
@@ -212,7 +212,7 @@ class SwitchDatabaseViewTests(TestCase):
 
             self.assertEqual(response.status_code, 400)
             self.assertJSONEqual(
-                response.content, {"success": False, "error": "Database host invalid"}
+                response.content, {"success": False, "error": "Database host invalid."}
             )
 
     def test_switch_database_view_authenticated_invalid_driver(self):
@@ -237,7 +237,7 @@ class SwitchDatabaseViewTests(TestCase):
                 response.content,
                 {
                     "success": False,
-                    "error": "Database driver invalid. Alphanumerics only",
+                    "error": "Database driver invalid. Alphanumerics only.",
                 },
             )
 
