@@ -9,32 +9,130 @@
     </div>
     <div id="card-holder">
         <div id="card-grid">
-            <div id="overview-card" class="content-card content-card-initial">
-                <h3>Purpose</h3>
-                <div class="sep-h"></div>
-                <p>
-                    The purpose of this application is to empower users to generate reports from Practice CS that are
-                    otherwise inaccessible.
-                </p>
-                <p><b>Choose</b> a <b>card</b> to discover more about its features and functions.</p>
-            </div>
             <div id="generate-report-card" class="content-card content-card-initial">
                 <h3>Generate Report</h3>
                 <div class="sep-h"></div>
-                <p>
-                    Create custom reports effortlessly. Select from a curated list of available reports. Access your
-                    history to view recently generated reports.
+                <p class="initial-card-text">
+                    Create custom reports effortlessly. Select from a curated list of available reports. Search and sort
+                    however you like.
                 </p>
+                <div id="generate-report-hidden-div" class="hidden-div">
+                    <p>Input Fields</p>
+                    <ul class="unordered-list">
+                        <li>
+                            <strong>Dates (required)</strong> - The date inputs follow the standard MM/DD/YYYY format.
+                            These represent the start and ending date for the requested report.
+                        </li>
+                        <li>
+                            <strong>Date Preset (required)</strong> - The date preset allows the user to select a date
+                            range preset. Changing the dates manually will auto-select the custom preset.
+                        </li>
+                    </ul>
+                    <p>Presets</p>
+                    <ul class="unordered-list">
+                        <li><strong>Custom</strong> - A custom date range entered by the user.</li>
+                        <li>
+                            <strong>All Time</strong> - A date range encomppasing all information up until the run
+                            report button is clicked.
+                        </li>
+                        <li>
+                            <strong>Year to Date</strong> - Covers the first of teh year to the current date and time.
+                        </li>
+                        <li>
+                            <strong>Last Year</strong> - Includes information from the 1st of January to the 31st of
+                            December of the previous year.
+                        </li>
+                    </ul>
+                    <p>Report Functions</p>
+                    <ul class="unordered-list">
+                        <li><strong>Sorting</strong> - Click on a column title to sort the report by that column.</li>
+                        <li>
+                            <strong>Searching</strong> - Type in the search box to quickly find any specific
+                            information.
+                        </li>
+                        <li>
+                            <strong>Pagination</strong> - The number of results per page can be changed using the drop
+                            down in the upper left hand corner
+                        </li>
+                        <li>
+                            <strong>Switch Pages</strong> - The page selector can be found in the lower right hand
+                            corner
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="report-history-card" class="content-card content-card-initial">
+                <h3>Purpose</h3>
+                <div class="sep-h"></div>
+                <p class="initial-card-text">
+                    See your previously run reports and quickly rerun them for access to commonly used reports.
+                </p>
+                <div id="report-history-hidden-div" class="hidden-div">
+                    <p>History Listing</p>
+                    <ul class="unordered-list">
+                        <li>
+                            Each report that you run will have its parameters stored and listed here. Click on one to be
+                            taken to the generate report page with the paramters prefilled.
+                        </li>
+                    </ul>
+                    <p>Fields</p>
+                    <ul class="unordered-list">
+                        <li>
+                            Each parameter required to run the report is listed. This includes date range preset, start
+                            date, end date, and the date the report was initially ran on.
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div id="change-database-card" class="content-card content-card-initial">
                 <h3>Change Database</h3>
                 <div class="sep-h"></div>
-                <p>
+                <p class="initial-card-text">
                     Seamlessly switch to a different database by entering all required fields. Monitor the connection
                     status and stay informed about any potential issues that may arise during the process.
                 </p>
+                <div id="change-database-hidden-div" class="hidden-div">
+                    <p>Input Fields</p>
+                    <ul class="unordered-list">
+                        <li>
+                            <strong>Engine (required)</strong> - Accepted engines are postgresql, mysql, sqlite',
+                            oracle, and mssql.
+                        </li>
+                        <li>
+                            <strong>Name (required)</strong>
+                            - Only alphanumeric characters and underscores are allowed.
+                        </li>
+                        <li>
+                            <strong>Host (optional)</strong>
+                            - Valid host names, domain names, and IPv4 addresses are allowed.
+                        </li>
+                        <li>
+                            <strong>Driver (optional)</strong>
+                            - Can include alphanumeric characters, underscores, and spaces.
+                        </li>
+                        <li>
+                            <strong>Username and Password</strong>
+                            - The connection will use Windows Authentication if these are left blank. Each database has
+                            the potential to have different Username and Password rules. Check your database information
+                            for allowed formats.
+                        </li>
+                    </ul>
+                    <p>Connection Status</p>
+                    <ul class="unordered-list">
+                        <li>
+                            This will keep up updated about your connection. Any errors are displayed hear with common
+                            errors having recommendations on potential fixes.
+                        </li>
+                    </ul>
+                    <p>Database History</p>
+                    <ul class="unordered-list">
+                        <li>
+                            Databases you have connected to in the past are listed here. Click on one to prefill the
+                            fields with your previously entered information. Usernames and Passwords are not saved.
+                        </li>
+                    </ul>
+                </div>
             </div>
-
             <div id="account-information-card" class="content-card content-card-initial">
                 <h3>Account Information</h3>
                 <div class="sep-h"></div>
