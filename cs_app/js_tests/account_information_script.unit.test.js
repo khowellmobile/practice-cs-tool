@@ -492,7 +492,7 @@ describe("checkFields function", () => {
 
     test("should return true with proper phone number", () => {
         const formData = {
-            phone_number: "(123) 456-7891"
+            phone_number: "(123) 456-7891",
         };
 
         let result = accountInfoScript.checkFields("phone", formData);
@@ -501,7 +501,7 @@ describe("checkFields function", () => {
 
     test("should alert invalid phone number format and return false", () => {
         const formData = {
-            phone_number: "123"
+            phone_number: "123",
         };
 
         let result = accountInfoScript.checkFields("phone", formData);
@@ -580,5 +580,86 @@ describe("checkFields function", () => {
         expect(result).toBe(false);
 
         expect(consoleAlertSpy).toHaveBeenCalledWith("Field name not recognized");
+    });
+});
+
+describe("toggleReqs function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="testDiv">
+                        <div class="circle" style="display:flex"></div>
+                        <div class="check-mark" style="display:none"></div>
+                        <div class="req-text uncompleted"></div>
+                    </div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+
+        $ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should have proper classes and displays when passed true", () => {
+        accountInfoScript.toggleReqs("testDiv", true);
+
+        expect($(".circle").css("display")).toBe("none");
+        expect($(".check-mark").css("display")).toBe("flex");
+        expect($(".req-text").hasClass("completed")).toBe(true);
+        expect($(".req-text").hasClass("uncompleted")).toBe(false);
+    });
+
+    test("should have proper classes and displays when passed false", () => {
+        $(".circle").css("display", "none");
+        $(".check-mark").css("display", "flex");
+        $(".req-text").toggleClass("completed uncompleted");
+
+        accountInfoScript.toggleReqs("testDiv", false);
+
+        expect($(".circle").css("display")).toBe("flex");
+        expect($(".check-mark").css("display")).toBe("none");
+        expect($(".req-text").hasClass("completed")).toBe(false);
+        expect($(".req-text").hasClass("uncompleted")).toBe(true);
+    });
+});
+
+describe("passwordChecker function", () => {
+    let dom;
+
+    beforeEach(() => {
+        dom = new JSDOM(
+            `<!DOCTYPE html>
+                <div>
+                    <div id="passChars"></div>
+                    <div id="passNums"></div>
+                    <div id="passSymbols"></div>
+                </div>`
+        );
+        global.document = dom.window.document;
+        global.window = dom.window;
+
+        $ = require("jquery")(dom.window);
+    });
+
+    afterEach(() => {
+        dom.window.close();
+    });
+
+    test("should return true for valid passwords", () => {
+        expect(accountInfoScript.passwordChecker("#GoodPass1")).toBe(true);
+        expect(accountInfoScript.passwordChecker("#Ju5tMaK1nGSur3")).toBe(true);
+    });
+
+    test("should return false for invalid passwords", () => {
+        expect(accountInfoScript.passwordChecker("short")).toBe(false);
+        expect(accountInfoScript.passwordChecker("longbutnodigit!")).toBe(false);
+        expect(accountInfoScript.passwordChecker("longbutnospecial1")).toBe(false);
     });
 });

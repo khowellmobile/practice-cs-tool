@@ -21,6 +21,7 @@
  * - fadeInPopup(fieldName): Displays the popup box and overlay for a given field name.
  * - fadeOutPopup(fieldName): Hides the popup box and overlay for a given field name.
  * - passwordChecker(pass): Validates password strength based on length, special characters, and digits.
+ * - toggleReqs(id, complete): toggles complete/incomplete requirement texts and symbols
  *
  * Dependencies: Requires jQuery for DOM manipulation and AJAX requests.
  */
@@ -129,12 +130,12 @@ function attachEventListeners() {
     });
 
     $(".form__input")
-    .on("focus", function () {
-        $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
-    })
-    .on("blur", function () {
-        $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
-    });
+        .on("focus", function () {
+            $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+        })
+        .on("blur", function () {
+            $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
+        });
 
     // Setting current screen name in nav bar
     $("#current-screen-name").text("Account Information");
@@ -488,6 +489,15 @@ function passwordChecker(pass) {
     }
 }
 
+/**
+ * Toggles check marks, circles, and text to show if password meets requirements
+ *
+ * The id selects the requirement that needs to be changed and the requirement will
+ * be marked as completed if passed true and uncompleted if passed false.
+ *
+ * @param {string} id - The id of the requirement that needs to be toggled
+ * @param {boolean} complete - Indicates if the requriement should be completed or uncompleted
+ */
 function toggleReqs(id, complete) {
     if (complete) {
         $(`#${id} .circle`).css("display", "none");
@@ -516,6 +526,8 @@ try {
         validatePassword,
         fadeInPopup,
         fadeOutPopup,
+        passwordChecker,
+        toggleReqs,
     };
 } catch (error) {
     console.log(error);
