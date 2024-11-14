@@ -104,13 +104,21 @@ def load_table_view(request):
         time_range = data.get("time_range")
         current_date = datetime.now().date()
 
-        RanReportParameter.objects.create(
-            user = request.user,
-            report_type = time_range,
-            ran_on_date = current_date,
-            start_date = start_date,
-            end_date = end_date
-        )
+        existing_report = RanReportParameter.objects.filter(
+            user=request.user,
+            report_type=time_range,
+            start_date=start_date,
+            end_date=end_date
+        ).exists()
+
+        if not existing_report:
+            RanReportParameter.objects.create(
+                user = request.user,
+                report_type = time_range,
+                ran_on_date = current_date,
+                start_date = start_date,
+                end_date = end_date
+            )
 
         conn = connections["data"]
 
