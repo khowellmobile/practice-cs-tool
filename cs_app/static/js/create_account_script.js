@@ -7,6 +7,7 @@
  * - validateName(name): Checks if the name follows the allowed format (letters, spaces, apostrophes, hyphens).
  * - validateEmail(email): Checks if the email follows a standard email format.
  * - passwordChecker(pass): Validates password strength based on length, special characters, and digits.
+ * - toggleReqs(id, complete): toggles complete/incomplete requirement texts and symbols
  *
  * Event Handlers:
  * - $("#create-account-form").on("submit", function (event) { ... }): Prevents default form submission behavior.
@@ -145,6 +146,15 @@ function passwordChecker(pass) {
     }
 }
 
+/**
+ * Toggles check marks, circles, and text to show if password meets requirements
+ *
+ * The id selects the requirement that needs to be changed and the requirement will
+ * be marked as completed if passed true and uncompleted if passed false.
+ *
+ * @param {string} id - The id of the requirement that needs to be toggled
+ * @param {boolean} complete - Indicates if the requriement should be completed or uncompleted
+ */
 function toggleReqs(id, complete) {
     if (complete) {
         $(`#${id} .circle`).css("display", "none");

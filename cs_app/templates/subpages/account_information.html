@@ -131,6 +131,25 @@
         <div class="form__cluster">
             <input type="password" class="form__input" id="password_new" placeholder="" required />
             <p class="form__label">New Password</p>
+            <div id="tool-tip-anchor">
+                <div id="tool-tip">
+                    <div id="passChars" class="password-req">
+                        <span class="circle"></span>
+                        <span class="check-mark">✔</span>
+                        <div class="req-text uncompleted">At Least 8 Characters</div>
+                    </div>
+                    <div id="passNums" class="password-req">
+                        <span class="circle"></span>
+                        <span class="check-mark">✔</span>
+                        <div class="req-text uncompleted">Contains 1 or More Numbers</div>
+                    </div>
+                    <div id="passSymbols" class="password-req">
+                        <span class="circle"></span>
+                        <span class="check-mark">✔</span>
+                        <div class="req-text uncompleted">Contains 1 or More Symbols</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="form__cluster">
             <input type="password" class="form__input" id="password_confirm" placeholder="" required />
