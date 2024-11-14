@@ -20,6 +20,7 @@
  * - validatePassword(password): Validates if a password meets the specified criteria.
  * - fadeInPopup(fieldName): Displays the popup box and overlay for a given field name.
  * - fadeOutPopup(fieldName): Hides the popup box and overlay for a given field name.
+ * - passwordChecker(pass): Validates password strength based on length, special characters, and digits.
  *
  * Dependencies: Requires jQuery for DOM manipulation and AJAX requests.
  */
@@ -107,6 +108,32 @@ function attachEventListeners() {
         if (checkFields(fieldName, formdata)) {
             submitForm(fieldName, formdata);
         }
+    });
+
+    /**
+     * Event listener to show tool-tip when password input is focused
+     */
+    $("#password_new")
+        .on("focus", () => {
+            $("#tool-tip").css("display", "flex").hide().fadeIn(150);
+        })
+        .on("blur", () => {
+            $("#tool-tip").fadeOut(150);
+        });
+
+    /**
+     * Event listener to check password when user types in password
+     */
+    $("#password_new").on("input", function () {
+        passwordChecker($(this).val());
+    });
+
+    $(".form__input")
+    .on("focus", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
+    })
+    .on("blur", function () {
+        $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
     });
 
     // Setting current screen name in nav bar
@@ -433,13 +460,47 @@ function fadeOutPopup(fieldName) {
     overlay.fadeOut(500);
 }
 
-$(".form__input")
-    .on("focus", function () {
-        $(this).parent().css("border-bottom", "2px solid rgb(105, 105, 236)");
-    })
-    .on("blur", function () {
-        $(this).parent().css("border-bottom", "2px solid rgb(114, 114, 134)");
-    });
+/**
+ * Validates if a password meets the specified criteria.
+ *
+ * Password Criteria:
+ * - Minimum 8 characters long
+ * - Includes at least one special character (!@#$%^&*()_+={}[]:;<>,.?)
+ * - Includes at least one digit
+ *
+ * @param {string} password - The password to be validated.
+ * @returns {boolean} - True if the password is valid according to the criteria, False otherwise.
+ */
+function passwordChecker(pass) {
+    // Regular expressions for validation
+    let minLength = pass.length >= 8;
+    let hasSpecialChar = /[!@#$%^&*()_+={}[\]:;<>,.?]/.test(pass);
+    let hasDigit = /\d/.test(pass);
+
+    toggleReqs("passChars", minLength);
+    toggleReqs("passNums", hasDigit);
+    toggleReqs("passSymbols", hasSpecialChar);
+
+    if (minLength && hasDigit && hasSpecialChar) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function toggleReqs(id, complete) {
+    if (complete) {
+        $(`#${id} .circle`).css("display", "none");
+        $(`#${id} .check-mark`).css("display", "flex");
+        $(`#${id} .req-text`).addClass("completed");
+        $(`#${id} .req-text`).removeClass("uncompleted");
+    } else {
+        $(`#${id} .circle`).css("display", "flex");
+        $(`#${id} .check-mark`).css("display", "none");
+        $(`#${id} .req-text`).addClass("uncompleted");
+        $(`#${id} .req-text`).removeClass("completed");
+    }
+}
 
 try {
     // Export all needed functions
