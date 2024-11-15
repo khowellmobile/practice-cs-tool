@@ -4,14 +4,10 @@ from django.contrib.auth.admin import UserAdmin
 
 class UserAdminCustom(UserAdmin):
     model = User
-    list_display = ('username', 'email', 'first_name', 'last_name', 'phone_number', 'company', 'is_active', 'is_staff')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'phone_number', 'company', 'active_database_alias', 'is_active', 'is_staff')
     
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('phone_number', 'company')}),
-    )
-
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('phone_number', 'company')}),
+        (None, {'fields': ('phone_number', 'company', "active_database_alias")}),
     )
 
 admin.site.register(User, UserAdminCustom)

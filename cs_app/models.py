@@ -5,6 +5,7 @@ import json
 class User(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     company = models.CharField(max_length=100, blank=True, null=True)
+    active_database_alias = models.CharField(max_length=100, blank=True, null=True)
 
 class DatabaseConnection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="database_connections")

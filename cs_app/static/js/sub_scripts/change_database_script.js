@@ -136,6 +136,8 @@ function dbChangeHandler(success, message) {
         alert("An error occurred while processing your request. Please check fields and try again.");
     }
 
+    console.log(message.alias);
+
     showOverlay(false);
 }
 

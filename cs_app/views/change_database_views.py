@@ -177,6 +177,9 @@ def switch_database_view(request):
 
             settings.DATABASES[alias] = new_database_config
 
+            request.user.active_database_alias = alias
+            request.user.save()
+
             save_database_into_history(
                 request.user, db_engine, db_name, db_host, db_driver
             )

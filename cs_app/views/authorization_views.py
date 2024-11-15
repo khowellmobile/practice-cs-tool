@@ -163,5 +163,9 @@ def logout_view(request):
     Returns:
         HttpResponseRedirect: Redirects to the login page.
     """
+
+    request.user.active_database_alias = None
+    request.user.save()
+
     logout(request)
     return redirect("login")
