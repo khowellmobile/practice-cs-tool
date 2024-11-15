@@ -205,7 +205,7 @@ function showOverlay(show) {
  * @returns {boolean} - True if the engine is valid, False otherwise.
  */
 function validateDbEngine(db_engine) {
-    const dbEnginePattern = /^(postgresql|mysql|sqlite|oracle|mssql)$/;
+    const dbEnginePattern = /(postgresql|mysql|sqlite|oracle|mssql)/i;  // The 'i' flag makes it case-insensitive
     return dbEnginePattern.test(db_engine);
 }
 

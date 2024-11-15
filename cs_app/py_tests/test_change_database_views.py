@@ -7,7 +7,13 @@ from django.conf import settings
 
 from unittest.mock import patch
 
-from cs_app.views import generate_unique_alias, remove_config, remove_conn
+from cs_app.views import (
+    generate_unique_alias,
+    remove_config,
+    remove_conn,
+    validate_db_fields,
+    construct_config,
+)
 
 
 class ChangeDatabaseViewTests(TestCase):
@@ -340,3 +346,187 @@ class GenerateUniqueAliasTests(TestCase):
         settings.DATABASES["base_1"] = {}
         result = generate_unique_alias(alias)
         self.assertEqual(result, "base_2")
+
+
+class ValidateDBFields(TestCase):
+    def test_valid_fields(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = "valid_driver"
+
+        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+
+        self.assertEqual(result_1, None)
+        self.assertEqual(result_2, None)
+
+    def test_invalid_engine(self):
+        db_engine = "invalid_engine"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = "valid_driver"
+
+        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+
+        self.assertEqual(
+            result_1,
+            {
+                "success": False,
+                "error": "Engine name invalid.",
+            },
+        )
+        self.assertEqual(result_2, 400)
+
+    def test_invalid_name(self):
+        db_engine = "mssql"
+        db_name = "invalid_name_$%^"
+        db_host = "valid.host.com"
+        db_driver = "valid_driver"
+
+        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+
+        self.assertEqual(
+            result_1,
+            {
+                "success": False,
+                "error": "Database name invalid. Alphanumerics only.",
+            },
+        )
+        self.assertEqual(result_2, 400)
+
+    def test_invalid_host(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "invalid_host_*&^%??"
+        db_driver = "valid_driver"
+
+        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+
+        self.assertEqual(
+            result_1,
+            {
+                "success": False,
+                "error": "Database host invalid.",
+            },
+        )
+        self.assertEqual(result_2, 400)
+
+    def test_invalid_driver(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = "invalid_driver_&*()"
+
+        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+
+        self.assertEqual(
+            result_1,
+            {
+                "success": False,
+                "error": "Database driver invalid. Alphanumerics only.",
+            },
+        )
+        self.assertEqual(result_2, 400)
+
+class ConstructConfigTestCase(TestCase):
+    def test_mssql_valid_config(self):
+        db_engine = "mssql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "SQL Server"
+        db_user = "valid_user"
+        db_pass = "valid_password"
+
+        result = construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+
+        expected_result = {
+            "ENGINE": "mssql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "OPTIONS": {
+                "driver": "SQL Server",
+                "trusted_connection": "no",
+            },
+            "USER": "valid_user",
+            "PASSWORD": "valid_password",
+            "PORT": "",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_mssql_config_with_trusted_connection(self):
+        db_engine = "mssql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "SQL Server"
+        db_user = None  
+        db_pass = None 
+
+        result = construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+
+        expected_result = {
+            "ENGINE": "mssql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "OPTIONS": {
+                "driver": "SQL Server",
+                "trusted_connection": "yes", 
+            },
+            "USER": None,
+            "PASSWORD": None,
+            "PORT": "",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_postgresql_valid_config(self):
+        db_engine = "postgresql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "PostgreSQL"
+        db_user = "valid_user"
+        db_pass = "valid_password"
+
+        result = construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+
+        expected_result = {
+            "ENGINE": "postgresql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "USER": "valid_user",
+            "PASSWORD": "valid_password",
+            "PORT": "5432",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+            "OPTIONS": {
+                "connect_timeout": 10,
+            },
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_invalid_engine(self):
+        db_engine = "invalid_engine"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "invalid_driver"
+        db_user = "valid_user"
+        db_pass = "valid_password"
+
+        with self.assertRaises(ValueError) as context:
+            construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+
+        self.assertEqual(str(context.exception), "construct_config: Engine not recognized")

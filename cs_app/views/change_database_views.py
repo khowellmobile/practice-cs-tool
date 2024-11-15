@@ -32,6 +32,7 @@ from ..models import DatabaseConnection
 import cs_app.utils.common_functions as cf
 import json
 import pyodbc
+import psycopg2
 
 
 @login_required
@@ -143,63 +144,21 @@ def switch_database_view(request):
         db_driver = data.get("db_driver")
         db_user = data.get("db_user")
         db_pass = data.get("db_pass")
-        trust_conn = "no" if db_user and db_pass else "yes"
 
         # Validates engine, name, host, and driver.
-        if not cf.validate_db_engine(db_engine):
-            return JsonResponse(
-                {
-                    "success": False,
-                    "error": "Engine name invalid.",
-                },
-                status=400,
-            )
-        if not cf.validate_db_name(db_name):
-            return JsonResponse(
-                {
-                    "success": False,
-                    "error": "Database name invalid. Alphanumerics only.",
-                },
-                status=400,
-            )
-        if not cf.validate_db_host(db_host):
-            return JsonResponse(
-                {"success": False, "error": "Database host invalid."}, status=400
-            )
-        if not cf.validate_db_driver(db_driver):
-            return JsonResponse(
-                {
-                    "success": False,
-                    "error": "Database driver invalid. Alphanumerics only.",
-                },
-                status=400,
-            )
+        error_response, status_code = validate_db_fields(
+            db_engine, db_name, db_host, db_driver
+        )
 
-        new_database_config = {
-            "ENGINE": db_engine,
-            "NAME": db_name,
-            "HOST": db_host,
-            "OPTIONS": {
-                "driver": db_driver,
-                "trusted_connection": trust_conn,
-            },
-            "ATOMIC_REQUESTS": True,
-            "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
-            "CONN_HEALTH_CHECKS": False,
-            "TIME_ZONE": None,
-            "USER": (db_user if db_user else None),
-            "PASSWORD": db_pass if db_pass else None,
-            "PORT": "",
-            "TEST": {
-                "CHARSET": None,
-                "COLLATION": None,
-                "MIGRATE": True,
-                "MIRROR": None,
-                "NAME": None,
-            },
-        }
+        if error_response:
+            return JsonResponse(error_response, status=status_code)
 
+        # Getting database config
+        new_database_config = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass
+        )
+
+        # Generating unique alias for connections
         if db_name in settings.DATABASES:
             alias = generate_unique_alias(db_name)
         else:
@@ -250,43 +209,48 @@ def test_database_connection(db_config):
         str or None: Returns a custom error message if the connection fails,
                      otherwise returns None.
     """
-    try:
-        if db_config["USER"] and db_config["PASSWORD"]:
-            # Use SQL authentication
-            conn_str = (
-                f"DRIVER={db_config['OPTIONS']['driver']};"
-                f"SERVER={db_config['HOST']};"
-                f"DATABASE={db_config['NAME']};"
-                f"UID={db_config['USER']};"
-                f"PWD={db_config['PASSWORD']};"
-            )
-        else:
-            # Use Windows authentication
-            conn_str = (
-                f"DRIVER={db_config['OPTIONS']['driver']};"
-                f"SERVER={db_config['HOST']};"
-                f"DATABASE={db_config['NAME']};"
-                f"Trusted_Connection=Yes;"
-            )
+    if "mssql" in db_config["ENGINE"]:
+        try:
+            if db_config["USER"] and db_config["PASSWORD"]:
+                # Use SQL authentication
+                conn_str = (
+                    f"DRIVER={db_config['OPTIONS']['driver']};"
+                    f"SERVER={db_config['HOST']};"
+                    f"DATABASE={db_config['NAME']};"
+                    f"UID={db_config['USER']};"
+                    f"PWD={db_config['PASSWORD']};"
+                )
+            else:
+                # Use Windows authentication
+                conn_str = (
+                    f"DRIVER={db_config['OPTIONS']['driver']};"
+                    f"SERVER={db_config['HOST']};"
+                    f"DATABASE={db_config['NAME']};"
+                    f"Trusted_Connection=Yes;"
+                )
 
-        connection = pyodbc.connect(conn_str)
-        connection.close()
+            connection = pyodbc.connect(conn_str)
+            connection.close()
+            return None
+        except pyodbc.Error as e:
+            return str(e)
+    elif "postgresql" in db_config["ENGINE"]:
+        try:
+            # Connect to PostgreSQL using psycopg2
+            conn = psycopg2.connect(
+                dbname=db_config["NAME"],
+                user=db_config["USER"],
+                password=db_config["PASSWORD"],
+                host=db_config["HOST"],
+                port=db_config.get("PORT", "5432"),  # Default to 5432 if not specified
+            )
+            conn.close()
+            return None
+        except psycopg2.Error as e:
+            return str(e)
+    else:
+
         return None
-    except pyodbc.Error as e:
-        error_message = str(e)
-
-        custom_errors = {
-            "28000": "(Code 2800) Connection failed. Checking database name is recommended.",
-            "08001": "(Code 08001) Connection failed. Checking database host is recommended",
-            "IM002": "(Code IM002) Connection failed. Checking database driver is recommended.",
-        }
-
-        # Extract specific error code from the message
-        for code in custom_errors.keys():
-            if code in error_message:
-                return custom_errors[code]
-
-        return "An unknown error occurred: " + error_message
 
 
 def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver):
@@ -370,3 +334,83 @@ def generate_unique_alias(base_alias):
         index += 1
 
     return unique_alias
+
+
+def validate_db_fields(db_engine, db_name, db_host, db_driver):
+    """
+    Validates the database parameters (engine, name, host, driver).
+    Returns a JsonResponse dictionary if any validation fails.
+    """
+    if not cf.validate_db_engine(db_engine):
+        return {
+            "success": False,
+            "error": "Engine name invalid.",
+        }, 400
+
+    if not cf.validate_db_name(db_name):
+        return {
+            "success": False,
+            "error": "Database name invalid. Alphanumerics only.",
+        }, 400
+
+    if not cf.validate_db_host(db_host):
+        return {
+            "success": False,
+            "error": "Database host invalid.",
+        }, 400
+
+    if not cf.validate_db_driver(db_driver):
+        return {
+            "success": False,
+            "error": "Database driver invalid. Alphanumerics only.",
+        }, 400
+
+    # If all validations pass, return None (indicating success)
+    return None, None
+
+
+def construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass):
+    """
+    Returns a dictionary containing a database config based upon
+    what engine the user has selected.
+    """
+    if "mssql" in db_engine:
+        trust_conn = "no" if db_user and db_pass else "yes"
+        new_database_config = {
+            "ENGINE": db_engine,
+            "NAME": db_name,
+            "HOST": db_host,
+            "OPTIONS": {
+                "driver": db_driver,
+                "trusted_connection": trust_conn,
+            },
+            "USER": db_user if db_user else None,
+            "PASSWORD": db_pass if db_pass else None,
+            "PORT": "",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+        }
+        return new_database_config
+    elif "postgresql" in db_engine:
+        new_database_config = {
+            "ENGINE": db_engine,
+            "NAME": db_name,
+            "HOST": db_host,
+            "USER": db_user,
+            "PASSWORD": db_pass,
+            "PORT": "5432",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+            "OPTIONS": {
+                "connect_timeout": 10,
+            },
+        }
+        return new_database_config
+    else:
+        raise ValueError("construct_config: Engine not recognized")

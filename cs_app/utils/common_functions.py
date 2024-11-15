@@ -153,8 +153,8 @@ def validate_db_engine(db_engine):
     Returns:
         bool: True if the engine is valid, False otherwise.
     """
-    db_engine_pattern = r"^(postgresql|mysql|sqlite|oracle|mssql)$"
-    return bool(re.match(db_engine_pattern, db_engine))
+    db_engine_pattern = r"(postgresql|mssql)"
+    return bool(re.search(db_engine_pattern, db_engine.lower()))
 
 
 def validate_db_name(db_name):
