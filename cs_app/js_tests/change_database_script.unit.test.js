@@ -370,8 +370,26 @@ describe("validateDbConfig function", () => {
             db_driver: "12345",
         };
 
+        const config3 = {
+            db_engine: "mssql",
+            db_name: "good_name",
+            db_host: "localHost",
+            db_driver: "",
+            db_port: "1234",
+        };
+
+        const config4 = {
+            db_engine: "postgresql",
+            db_name: "goodName",
+            db_host: "192.168.1.1",
+            db_driver: "pymysql",
+            db_driver: "",
+        };
+
         expect(changeDbScript.validateDbConfig(config1)).toEqual("");
         expect(changeDbScript.validateDbConfig(config2)).toEqual("");
+        expect(changeDbScript.validateDbConfig(config3)).toEqual("");
+        expect(changeDbScript.validateDbConfig(config4)).toEqual("");
     });
 
     test("should return false with invalid config", () => {
