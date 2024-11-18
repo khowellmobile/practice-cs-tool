@@ -53,7 +53,13 @@ def change_database_view(request):
     """
 
     user = request.user
-    data_db = settings.DATABASES["data"]
+
+    data_db = None
+    if user.active_database_alias in settings.DATABASES:
+        data_db = settings.DATABASES[user.active_database_alias]
+    else:
+        data_db = settings.DATABASES["default"]
+
     db_info = {
         "db_engine": data_db["ENGINE"],
         "db_name": data_db["NAME"],
@@ -99,11 +105,11 @@ def get_db_info_view(request):
         JsonResponse: JSON response with database information or error message.
     """
 
-    db_alias = request.GET.get("db_alias")
+    db_alias = request.user.active_database_alias
 
     if db_alias:
-        data_db = settings.DATABASES.get(db_alias)
-        if data_db:
+        if db_alias in settings.DATABASES:
+            data_db = settings.DATABASES[db_alias]
             return JsonResponse(
                 {
                     "db_engine": data_db.get("ENGINE"),
@@ -184,7 +190,14 @@ def switch_database_view(request):
                 request.user, db_engine, db_name, db_host, db_driver
             )
 
-            return JsonResponse({"success": True, "db_alias": alias})
+            return JsonResponse(
+                {
+                    "success": True,
+                    "db_engine": db_engine,
+                    "db_name": db_name,
+                    "db_host": db_host,
+                }
+            )
 
         # Catch general exceptions not caught by "test_database_connection"
         except Exception as e:

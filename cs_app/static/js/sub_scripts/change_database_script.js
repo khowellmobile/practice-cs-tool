@@ -128,6 +128,9 @@ function submitNewConfig(db_info) {
 function dbChangeHandler(success, message) {
     if (success) {
         $("#database-change__status").append("<p class='stat__message'>Successful Connection</p>");
+        $(".database-info").eq(0).html(`<strong>Database Engine:</strong> ${message.db_engine}`);
+        $(".database-info").eq(1).html(`<strong>Database Name:</strong> ${message.db_name}`);
+        $(".database-info").eq(2).html(`<strong>Database Host:</strong> ${message.db_host}`);
     } else if (message.error) {
         // captures a failure but one that includes a json response
         $("#database-change__status").append(`<p class='stat__message'>Error: ${message.error}</p>`);
@@ -135,8 +138,6 @@ function dbChangeHandler(success, message) {
         // captures a failure due to non-view related circumstances
         alert("An error occurred while processing your request. Please check fields and try again.");
     }
-
-    console.log(message.alias);
 
     showOverlay(false);
 }
@@ -167,7 +168,7 @@ function getInputValues() {
  * @param {string} db_host - The hostname or IP address of the database server.
  * @param {string} db_driver - The database driver (e.g., 'psycopg2', 'pymysql').
  */
-function validateDbConfig({db_engine, db_name, db_host, db_driver}) {
+function validateDbConfig({ db_engine, db_name, db_host, db_driver }) {
     let errorMessage = "";
 
     if (!validateDbEngine(db_engine)) {
@@ -207,7 +208,7 @@ function showOverlay(show) {
  * @returns {boolean} - True if the engine is valid, False otherwise.
  */
 function validateDbEngine(db_engine) {
-    const dbEnginePattern = /(postgresql|mysql|sqlite|oracle|mssql)/i;  // The 'i' flag makes it case-insensitive
+    const dbEnginePattern = /(postgresql|mysql|sqlite|oracle|mssql)/i; // The 'i' flag makes it case-insensitive
     return dbEnginePattern.test(db_engine);
 }
 
