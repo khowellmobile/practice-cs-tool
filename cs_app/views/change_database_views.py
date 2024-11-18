@@ -15,6 +15,8 @@ Functions:
 - remove_config(alias): Removes a config from settings
 - remove_conn(alias): Removes a connection from the list of connections
 - generate_unique_alias(base_alias): Generates a unique alias to ensure no duplicate aliases
+- validate_db_fields(db_engine, db_name, db_host, db_driver, db_port): validates input fields
+- construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port): contructs database config from parameters
 
 Dependencies:
 - Django modules: render, JsonResponse, settings, connections, ImproperlyConfigured
@@ -335,6 +337,13 @@ def validate_db_fields(db_engine, db_name, db_host, db_driver, db_port):
     """
     Validates the database parameters (engine, name, host, driver).
     Returns a JsonResponse dictionary if any validation fails.
+
+    Args:
+         b_engine (str): The database engine being used.
+        db_name (str): The name of the database.
+        db_host (str): The host of the database.
+        db_driver (str): The driver used to connect to the database.
+        db_port (str): The port used to connect to the database. 
     """
     if not cf.validate_db_engine(db_engine):
         return {
@@ -366,7 +375,6 @@ def validate_db_fields(db_engine, db_name, db_host, db_driver, db_port):
             "error": "Database port invalid. Number must be between 1024 and 65535.",
         }, 400
 
-    # If all validations pass, return None (indicating success)
     return None, None
 
 
@@ -374,6 +382,14 @@ def construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass, d
     """
     Returns a dictionary containing a database config based upon
     what engine the user has selected.
+
+    Args:
+         b_engine (str): The database engine being used.
+        db_name (str): The name of the database.
+        db_host (str): The host of the database.
+        db_driver (str): The driver used to connect to the database.
+        db_port (str): The port used to connect to the database. 
+
     """
     if "mssql" in db_engine:
         trust_conn = "no" if db_user and db_pass else "yes"

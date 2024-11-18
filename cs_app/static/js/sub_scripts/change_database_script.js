@@ -15,6 +15,11 @@
  * - getInputValues(): Gathers input values of all inputs in the form and formats them into an object
  *                    for creating the new database configuration.
  * - showOverlay(show): Controls the display of the overlay for loading indications.
+ * - validateDbEngine(db_engine): Validates database engine string with regex
+ * - validateDbName(db_name): Validates database name string with regex
+ * - validateDbHost(db_host): Validates database host string with regex
+ * - validateDbDriver(db_driver): Validates database driver string with regex
+ * - validateDbPort(db_port): Validates database port string
  *
  * Dependencies: Requires jQuery for DOM manipulation.
  */
@@ -263,8 +268,8 @@ function validateDbDriver(db_driver) {
  * @param {string|number} port - The port number (e.g., 5432, 80).
  * @returns {boolean} - True if the port number is valid, False otherwise.
  */
-function validateDbPort(port) {
-    const portNumber = parseInt(port, 10);
+function validateDbPort(db_port) {
+    const portNumber = parseInt(db_port, 10);
     return Number.isInteger(portNumber) && portNumber >= 1024 && portNumber <= 65535;
 }
 
