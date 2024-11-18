@@ -11,7 +11,7 @@ Functions:
 - get_db_info_view(request): Retrieves database information based on the provided alias via AJAX GET request.
 - switch_database_view(request): Handles POST request to switch database configurations dynamically.
 - test_database_connection(db_config): Creates connection to ensure proper config.
-- save_database_into_history(req_user, db_engine, db_name, db_host, db_driver): Saves database information into history
+- save_database_into_history(req_user, db_engine, db_name, db_host, db_driver, db_port): Saves database information into history
 - remove_config(alias): Removes a config from settings
 - remove_conn(alias): Removes a connection from the list of connections
 - generate_unique_alias(base_alias): Generates a unique alias to ensure no duplicate aliases
@@ -85,42 +85,6 @@ def change_database_view(request):
     }
 
     return render(request, "subpages/change_database.html", context)
-
-
-@login_required
-def get_db_info_view(request):
-    """
-    View function to retrieve database information based on alias via AJAX GET request.
-
-    Requires the user to be logged in to access the view.
-
-    Retrieves database configuration details from Django settings based on the provided
-    alias via GET parameters. Returns a JSON response with database engine, name, and host
-    information if the alias is valid; otherwise, returns an error message.
-
-    Args:
-        request (HttpRequest): The HTTP request object containing GET parameters.
-
-    Returns:
-        JsonResponse: JSON response with database information or error message.
-    """
-
-    db_alias = request.user.active_database_alias
-
-    if db_alias:
-        if db_alias in settings.DATABASES:
-            data_db = settings.DATABASES[db_alias]
-            return JsonResponse(
-                {
-                    "db_engine": data_db.get("ENGINE"),
-                    "db_name": data_db.get("NAME"),
-                    "db_host": data_db.get("HOST"),
-                }
-            )
-        else:
-            return JsonResponse({"Error": "Invalid database alias"}, status=400)
-    else:
-        return JsonResponse({"Error": "Missing database alias"}, status=400)
 
 
 @login_required
@@ -238,7 +202,7 @@ def test_database_connection(db_config):
                     f"PWD={db_config['PASSWORD']};"
                 )
 
-                if db_config.get("PORT"): 
+                if db_config.get("PORT"):
                     conn_str += f"PORT={db_config['PORT']};"
             else:
                 # Use Windows authentication
@@ -275,7 +239,9 @@ def test_database_connection(db_config):
         return None
 
 
-def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver, db_port):
+def save_database_into_history(
+    req_user, db_engine, db_name, db_host, db_driver, db_port
+):
     """
     Helper function to save database connection details into history.
 
@@ -291,7 +257,12 @@ def save_database_into_history(req_user, db_engine, db_name, db_host, db_driver,
         db_port (str): The port used to connect to the database.
     """
     existing_connection = DatabaseConnection.objects.filter(
-        user=req_user, engine=db_engine, name=db_name, host=db_host, driver=db_driver, port=db_port
+        user=req_user,
+        engine=db_engine,
+        name=db_name,
+        host=db_host,
+        driver=db_driver,
+        port=db_port,
     ).first()
 
     if not existing_connection:
@@ -388,11 +359,11 @@ def validate_db_fields(db_engine, db_name, db_host, db_driver, db_port):
             "success": False,
             "error": "Database driver invalid. Alphanumerics only.",
         }, 400
-    
+
     if db_port and not cf.validate_db_port(db_port):
         return {
             "success": False,
-            "error": "Database port invalid. Number must be between 1024 and 65535",
+            "error": "Database port invalid. Number must be between 1024 and 65535.",
         }, 400
 
     # If all validations pass, return None (indicating success)
@@ -439,6 +410,7 @@ def construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass, d
             "TIME_ZONE": None,
             "OPTIONS": {
                 "connect_timeout": 10,
+                "driver": db_driver,
             },
         }
         return new_database_config
