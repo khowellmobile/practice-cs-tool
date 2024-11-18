@@ -174,7 +174,7 @@ function validateDbConfig({ db_engine, db_name, db_host, db_driver, db_port }) {
         errorMessage = "Database name invalid. Alphanumerics only.";
     } else if (!validateDbHost(db_host)) {
         errorMessage = "Database host invalid";
-    } else if (!validateDbDriver(db_driver)) {
+    } else if (db_port && !validateDbDriver(db_driver)) {
         errorMessage = "Database driver invalid. Alphanumerics only.";
     } else if (db_port && !validateDbPort(db_port)) {
         errorMessage = "Database port invalid. Numbers must be between 1024 and 65535.";

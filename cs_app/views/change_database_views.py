@@ -383,7 +383,7 @@ def validate_db_fields(db_engine, db_name, db_host, db_driver, db_port):
             "error": "Database host invalid.",
         }, 400
 
-    if not cf.validate_db_driver(db_driver):
+    if db_driver and not cf.validate_db_driver(db_driver):
         return {
             "success": False,
             "error": "Database driver invalid. Alphanumerics only.",
