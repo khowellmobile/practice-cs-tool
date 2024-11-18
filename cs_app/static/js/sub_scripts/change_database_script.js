@@ -15,6 +15,11 @@
  * - getInputValues(): Gathers input values of all inputs in the form and formats them into an object
  *                    for creating the new database configuration.
  * - showOverlay(show): Controls the display of the overlay for loading indications.
+ * - validateDbEngine(db_engine): Validates database engine string with regex
+ * - validateDbName(db_name): Validates database name string with regex
+ * - validateDbHost(db_host): Validates database host string with regex
+ * - validateDbDriver(db_driver): Validates database driver string with regex
+ * - validateDbPort(db_port): Validates database port string
  *
  * Dependencies: Requires jQuery for DOM manipulation.
  */
@@ -50,6 +55,7 @@ function attachEventListeners() {
         $("#input_name").val($(this).find(".past-name").text());
         $("#input_host").val($(this).find(".past-host").text());
         $("#input_driver").val($(this).find(".past-driver").text());
+        $("#input_port").val($(this).find(".past-port").text());
     });
 
     // Setting current screen name in nav bar
@@ -63,13 +69,8 @@ function attachEventListeners() {
 function createNewConfig() {
     db_info = getInputValues();
 
-    if (
-        (db_info["db_engine"] == "") |
-        (db_info["db_name"] == "") |
-        (db_info["db_host"] == "") |
-        (db_info["db_driver"] == "")
-    ) {
-        alert("Please fill out engine, name, host, and driver");
+    if ((db_info["db_engine"] == "") | (db_info["db_name"] == "") | (db_info["db_host"] == "")) {
+        alert("Please fill out engine, name, and host");
         return;
     }
 
@@ -128,6 +129,9 @@ function submitNewConfig(db_info) {
 function dbChangeHandler(success, message) {
     if (success) {
         $("#database-change__status").append("<p class='stat__message'>Successful Connection</p>");
+        $(".database-info").eq(0).html(`<strong>Database Engine:</strong> ${message.db_engine}`);
+        $(".database-info").eq(1).html(`<strong>Database Name:</strong> ${message.db_name}`);
+        $(".database-info").eq(2).html(`<strong>Database Host:</strong> ${message.db_host}`);
     } else if (message.error) {
         // captures a failure but one that includes a json response
         $("#database-change__status").append(`<p class='stat__message'>Error: ${message.error}</p>`);
@@ -141,7 +145,7 @@ function dbChangeHandler(success, message) {
 
 /**
  * Gathers input values of all inputs in the form on the change database page.
- * Formats these into an object used in creating the new databse configuration.
+ * Formats these into an object used in creating the new database configuration.
  *
  * @return {Object} - Object that contains the information from the form inputs
  */
@@ -160,12 +164,13 @@ function getInputValues() {
 /**
  * Validates the database configuration and displays errors if validation fails.
  *
- * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mysql').
+ * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mssql').
  * @param {string} db_name - The name of the database.
  * @param {string} db_host - The hostname or IP address of the database server.
  * @param {string} db_driver - The database driver (e.g., 'psycopg2', 'pymysql').
+ * @param {string} db_port - The database port.
  */
-function validateDbConfig({db_engine, db_name, db_host, db_driver}) {
+function validateDbConfig({ db_engine, db_name, db_host, db_driver, db_port }) {
     let errorMessage = "";
 
     if (!validateDbEngine(db_engine)) {
@@ -174,8 +179,10 @@ function validateDbConfig({db_engine, db_name, db_host, db_driver}) {
         errorMessage = "Database name invalid. Alphanumerics only.";
     } else if (!validateDbHost(db_host)) {
         errorMessage = "Database host invalid";
-    } else if (!validateDbDriver(db_driver)) {
+    } else if (db_driver && !validateDbDriver(db_driver)) {
         errorMessage = "Database driver invalid. Alphanumerics only.";
+    } else if (db_port && !validateDbPort(db_port)) {
+        errorMessage = "Database port invalid. Numbers must be between 1024 and 65535.";
     }
 
     return errorMessage;
@@ -199,13 +206,13 @@ function showOverlay(show) {
  * Validates the database engine field.
  *
  * Database Engine Options:
- * - Acceptable values: 'postgresql', 'mysql', 'sqlite', 'oracle', 'mssql'.
+ * - Acceptable values: 'postgresql' and 'mssql'.
  *
- * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mysql').
+ * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mssql').
  * @returns {boolean} - True if the engine is valid, False otherwise.
  */
 function validateDbEngine(db_engine) {
-    const dbEnginePattern = /^(postgresql|mysql|sqlite|oracle|mssql)$/;
+    const dbEnginePattern = /(postgresql|mssql)/i;
     return dbEnginePattern.test(db_engine);
 }
 
@@ -252,6 +259,20 @@ function validateDbDriver(db_driver) {
     return dbDriverPattern.test(db_driver);
 }
 
+/**
+ * Validates the port number field.
+ *
+ * Port Number Format:
+ * - Must be an integer between 0 and 65535.
+ *
+ * @param {string|number} port - The port number (e.g., 5432, 80).
+ * @returns {boolean} - True if the port number is valid, False otherwise.
+ */
+function validateDbPort(db_port) {
+    const portNumber = parseInt(db_port, 10);
+    return Number.isInteger(portNumber) && portNumber >= 1024 && portNumber <= 65535;
+}
+
 try {
     // Export all functions
     module.exports = {
@@ -264,6 +285,7 @@ try {
         validateDbName,
         validateDbHost,
         validateDbDriver,
+        validateDbPort,
     };
 } catch (error) {
     console.log(error);

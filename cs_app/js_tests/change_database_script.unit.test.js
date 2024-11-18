@@ -55,6 +55,9 @@ describe("dbChangeHandler function", () => {
             `<!DOCTYPE html>
                 <div>
                     <div id="database-change__status">
+                    <div class="database-info"></div>
+                    <div class="database-info"></div>
+                    <div class="database-info"></div>
                 </div>
             </div>`
         );
@@ -71,7 +74,7 @@ describe("dbChangeHandler function", () => {
     });
 
     test("should append success message to div when success is true", () => {
-        changeDbScript.dbChangeHandler(true, {}, jest.fn());
+        changeDbScript.dbChangeHandler(true, {});
 
         const pElements = $("#database-change__status p");
 
@@ -83,8 +86,16 @@ describe("dbChangeHandler function", () => {
         expect(pElement.textContent).toBe("Successful Connection");
     });
 
+    test("should set html of database-info class when success is true", () => {
+        changeDbScript.dbChangeHandler(true, { db_engine: "test_engine", db_name: "test_name", db_host: "db_host" });
+
+        expect($(".database-info").eq(0).html()).toBe("<strong>Database Engine:</strong> test_engine");
+        expect($(".database-info").eq(1).html()).toBe("<strong>Database Name:</strong> test_name");
+        expect($(".database-info").eq(2).html()).toBe("<strong>Database Host:</strong> db_host");
+    });
+
     test("should append error message to div when success false and message is non-empty", () => {
-        changeDbScript.dbChangeHandler(false, { error: "test-error" }, jest.fn());
+        changeDbScript.dbChangeHandler(false, { error: "test-error" });
 
         const pElements = $("#database-change__status p");
 
@@ -97,7 +108,7 @@ describe("dbChangeHandler function", () => {
     });
 
     test("should alert error when success is false and message is empty", () => {
-        changeDbScript.dbChangeHandler(false, {}, jest.fn());
+        changeDbScript.dbChangeHandler(false, {});
 
         expect(global.alert).toHaveBeenCalledWith(
             "An error occurred while processing your request. Please check fields and try again."
@@ -120,6 +131,7 @@ describe("getInputValues function", () => {
                         <input id="input_name" value="test_db" />
                         <input id="input_host" value="localhost" />
                         <input id="input_driver" value="driver_name" />
+                        <input id="input_port" value="1234" />
                     </form>
                 </div>`
         );
@@ -139,6 +151,7 @@ describe("getInputValues function", () => {
             db_name: "test_db",
             db_host: "localhost",
             db_driver: "driver_name",
+            db_port: "1234",
         };
 
         const result = changeDbScript.getInputValues();
@@ -151,12 +164,14 @@ describe("getInputValues function", () => {
         $("#db_name").val("  test_db  ");
         $("#db_host").val("  localhost  ");
         $("#db_driver").val("  driver_name  ");
+        $("#db_port").val("  1234  ");
 
         const expected = {
             db_engine: "MySQL",
             db_name: "test_db",
             db_host: "localhost",
             db_driver: "driver_name",
+            db_port: "1234",
         };
 
         const result = changeDbScript.getInputValues();
@@ -197,17 +212,45 @@ describe("getInputValues function", () => {
         $(".form__cluster").append('<input id="input_name" value="test_db" />');
         $(".form__cluster").append('<input id="input_host" />');
         $(".form__cluster").append('<input id="input_driver" />');
+        $(".form__cluster").append('<input id="input_port" />');
 
         const expected = {
             db_engine: "MySQL",
             db_name: "test_db",
             db_host: "",
             db_driver: "",
+            db_port: "",
         };
 
         const result = changeDbScript.getInputValues();
 
         expect(result).toEqual(expected);
+    });
+});
+
+describe("validateDBPort function", () => {
+    test("should return true with a valid ports", () => {
+        const testPort1 = "1024";
+        const testPort2 = "65535";
+        const testPort3 = "1234";
+        const testPort4 = "15155";
+
+        expect(changeDbScript.validateDbPort(testPort1)).toEqual(true);
+        expect(changeDbScript.validateDbPort(testPort2)).toEqual(true);
+        expect(changeDbScript.validateDbPort(testPort3)).toEqual(true);
+        expect(changeDbScript.validateDbPort(testPort4)).toEqual(true);
+    });
+
+    test("should return false with invalid ports", () => {
+        const testPort1 = "";
+        const testPort2 = "-4563";
+        const testPort3 = "1212151561";
+        const testPort4 = "NotAPort";
+
+        expect(changeDbScript.validateDbPort(testPort1)).toEqual(false);
+        expect(changeDbScript.validateDbPort(testPort2)).toEqual(false);
+        expect(changeDbScript.validateDbPort(testPort3)).toEqual(false);
+        expect(changeDbScript.validateDbPort(testPort4)).toEqual(false);
     });
 });
 
@@ -290,16 +333,10 @@ describe("validateDbName function", () => {
 describe("validateDbEngine function", () => {
     test("should return true with a valid engines", () => {
         const testEngine1 = "postgresql";
-        const testEngine2 = "mysql";
-        const testEngine3 = "sqlite";
-        const testEngine4 = "oracle";
-        const testEngine5 = "mssql";
+        const testEngine2 = "mssql";
 
         expect(changeDbScript.validateDbEngine(testEngine1)).toEqual(true);
         expect(changeDbScript.validateDbEngine(testEngine2)).toEqual(true);
-        expect(changeDbScript.validateDbEngine(testEngine3)).toEqual(true);
-        expect(changeDbScript.validateDbEngine(testEngine4)).toEqual(true);
-        expect(changeDbScript.validateDbEngine(testEngine5)).toEqual(true);
     });
 
     test("should return false with invalid engines", () => {
@@ -322,6 +359,7 @@ describe("validateDbConfig function", () => {
             db_name: "good_name",
             db_host: "localHost",
             db_driver: "good_driver",
+            db_port: "1234",
         };
 
         const config2 = {
@@ -329,10 +367,29 @@ describe("validateDbConfig function", () => {
             db_name: "goodName",
             db_host: "192.168.1.1",
             db_driver: "pymysql",
+            db_driver: "12345",
+        };
+
+        const config3 = {
+            db_engine: "mssql",
+            db_name: "good_name",
+            db_host: "localHost",
+            db_driver: "",
+            db_port: "1234",
+        };
+
+        const config4 = {
+            db_engine: "postgresql",
+            db_name: "goodName",
+            db_host: "192.168.1.1",
+            db_driver: "pymysql",
+            db_driver: "",
         };
 
         expect(changeDbScript.validateDbConfig(config1)).toEqual("");
         expect(changeDbScript.validateDbConfig(config2)).toEqual("");
+        expect(changeDbScript.validateDbConfig(config3)).toEqual("");
+        expect(changeDbScript.validateDbConfig(config4)).toEqual("");
     });
 
     test("should return false with invalid config", () => {
@@ -364,9 +421,20 @@ describe("validateDbConfig function", () => {
             db_driver: "%^baD Driver",
         };
 
+        const config5 = {
+            db_engine: "mssql",
+            db_name: "good_name",
+            db_host: "localHost",
+            db_driver: "good_driver",
+            db_port: "bad_port",
+        };
+
         expect(changeDbScript.validateDbConfig(config1)).toEqual("Engine name invalid.");
         expect(changeDbScript.validateDbConfig(config2)).toEqual("Database name invalid. Alphanumerics only.");
         expect(changeDbScript.validateDbConfig(config3)).toEqual("Database host invalid");
         expect(changeDbScript.validateDbConfig(config4)).toEqual("Database driver invalid. Alphanumerics only.");
+        expect(changeDbScript.validateDbConfig(config5)).toEqual(
+            "Database port invalid. Numbers must be between 1024 and 65535."
+        );
     });
 });

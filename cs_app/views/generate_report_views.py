@@ -103,6 +103,7 @@ def load_table_view(request):
         end_date = data.get("end_date")
         time_range = data.get("time_range")
         current_date = datetime.now().date()
+        active_database_alias = request.user.active_database_alias
 
         existing_report = RanReportParameter.objects.filter(
             user=request.user,
@@ -120,7 +121,7 @@ def load_table_view(request):
                 end_date = end_date
             )
 
-        conn = connections["data"]
+        conn = connections[active_database_alias]
 
         cursor = conn.cursor()
 

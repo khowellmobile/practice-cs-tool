@@ -70,7 +70,8 @@ def validate_email(email):
         return True
     else:
         return False
-    
+
+
 def validate_phone_number(number):
     """
     Validates if a phone number follows a standard format.
@@ -94,8 +95,9 @@ def validate_phone_number(number):
     if pattern.match(number):
         digit_count = sum(c.isdigit() for c in number)
         return digit_count >= 7
-    
+
     return False
+
 
 def validate_company(company):
     """
@@ -153,8 +155,8 @@ def validate_db_engine(db_engine):
     Returns:
         bool: True if the engine is valid, False otherwise.
     """
-    db_engine_pattern = r"^(postgresql|mysql|sqlite|oracle|mssql)$"
-    return bool(re.match(db_engine_pattern, db_engine))
+    db_engine_pattern = r"(postgresql|mssql)"
+    return bool(re.search(db_engine_pattern, db_engine.lower()))
 
 
 def validate_db_name(db_name):
@@ -202,3 +204,21 @@ def validate_db_driver(db_driver):
     """
     db_driver_pattern = r"^[a-zA-Z0-9_ ]+$"
     return bool(re.match(db_driver_pattern, db_driver))
+
+
+def validate_db_port(port):
+    """
+    Validates the port number field.
+
+    Args:
+        port (str|int): The port number (e.g., '5432', 80).
+
+    Returns:
+        bool: True if the port number is valid, False otherwise.
+    """
+    try:
+        port_number = int(port)
+    except ValueError:
+        return False
+
+    return 0 <= port_number <= 65535
