@@ -14,7 +14,7 @@ admin.site.register(User, UserAdminCustom)
 
 @admin.register(DatabaseConnection)
 class DatabaseConnectionsAdmin(admin.ModelAdmin):
-    list_display = ["user", "engine", "name", "host", "driver"]
+    list_display = ["user", "engine", "name", "host", "driver", "port"]
 
 @admin.register(RanReportParameter)
 class RanReportParametersAdmin(admin.ModelAdmin):

@@ -50,6 +50,7 @@ function attachEventListeners() {
         $("#input_name").val($(this).find(".past-name").text());
         $("#input_host").val($(this).find(".past-host").text());
         $("#input_driver").val($(this).find(".past-driver").text());
+        $("#input_port").val($(this).find(".past-port").text());
     });
 
     // Setting current screen name in nav bar
@@ -63,13 +64,8 @@ function attachEventListeners() {
 function createNewConfig() {
     db_info = getInputValues();
 
-    if (
-        (db_info["db_engine"] == "") |
-        (db_info["db_name"] == "") |
-        (db_info["db_host"] == "") |
-        (db_info["db_driver"] == "")
-    ) {
-        alert("Please fill out engine, name, host, and driver");
+    if ((db_info["db_engine"] == "") | (db_info["db_name"] == "") | (db_info["db_host"] == "")) {
+        alert("Please fill out engine, name, and host");
         return;
     }
 
@@ -144,7 +140,7 @@ function dbChangeHandler(success, message) {
 
 /**
  * Gathers input values of all inputs in the form on the change database page.
- * Formats these into an object used in creating the new databse configuration.
+ * Formats these into an object used in creating the new database configuration.
  *
  * @return {Object} - Object that contains the information from the form inputs
  */
@@ -163,12 +159,13 @@ function getInputValues() {
 /**
  * Validates the database configuration and displays errors if validation fails.
  *
- * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mysql').
+ * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mssql').
  * @param {string} db_name - The name of the database.
  * @param {string} db_host - The hostname or IP address of the database server.
  * @param {string} db_driver - The database driver (e.g., 'psycopg2', 'pymysql').
+ * @param {string} db_port - The database port.
  */
-function validateDbConfig({ db_engine, db_name, db_host, db_driver }) {
+function validateDbConfig({ db_engine, db_name, db_host, db_driver, db_port }) {
     let errorMessage = "";
 
     if (!validateDbEngine(db_engine)) {
@@ -179,6 +176,8 @@ function validateDbConfig({ db_engine, db_name, db_host, db_driver }) {
         errorMessage = "Database host invalid";
     } else if (!validateDbDriver(db_driver)) {
         errorMessage = "Database driver invalid. Alphanumerics only.";
+    } else if (db_port && !validateDbPort(db_port)) {
+        errorMessage = "Database port invalid. Numbers must be between 1024 and 65535. fe";
     }
 
     return errorMessage;
@@ -202,13 +201,13 @@ function showOverlay(show) {
  * Validates the database engine field.
  *
  * Database Engine Options:
- * - Acceptable values: 'postgresql', 'mysql', 'sqlite', 'oracle', 'mssql'.
+ * - Acceptable values: 'postgresql' and 'mssql'.
  *
- * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mysql').
+ * @param {string} db_engine - The database engine (e.g., 'postgresql', 'mssql').
  * @returns {boolean} - True if the engine is valid, False otherwise.
  */
 function validateDbEngine(db_engine) {
-    const dbEnginePattern = /(postgresql|mysql|sqlite|oracle|mssql)/i; // The 'i' flag makes it case-insensitive
+    const dbEnginePattern = /(postgresql|mssql)/i;
     return dbEnginePattern.test(db_engine);
 }
 
@@ -255,6 +254,20 @@ function validateDbDriver(db_driver) {
     return dbDriverPattern.test(db_driver);
 }
 
+/**
+ * Validates the port number field.
+ *
+ * Port Number Format:
+ * - Must be an integer between 0 and 65535.
+ *
+ * @param {string|number} port - The port number (e.g., 5432, 80).
+ * @returns {boolean} - True if the port number is valid, False otherwise.
+ */
+function validateDbPort(port) {
+    const portNumber = parseInt(port, 10);
+    return Number.isInteger(portNumber) && portNumber >= 1024 && portNumber <= 65535;
+}
+
 try {
     // Export all functions
     module.exports = {
@@ -267,6 +280,7 @@ try {
         validateDbName,
         validateDbHost,
         validateDbDriver,
+        validateDbPort,
     };
 } catch (error) {
     console.log(error);

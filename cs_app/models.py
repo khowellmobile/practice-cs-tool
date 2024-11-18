@@ -12,7 +12,8 @@ class DatabaseConnection(models.Model):
     engine = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     host = models.CharField(max_length=100)
-    driver = models.CharField(max_length=100)
+    driver = models.CharField(max_length=100, blank=True, default='')
+    port = models.CharField(max_length=100, blank=True, default='')
 
 class RanReportParameter(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ran_report_parameters")
