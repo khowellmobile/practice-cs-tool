@@ -48,61 +48,6 @@ class ChangeDatabaseViewTests(TestCase):
         self.assertRedirects(response, f'/login/?next={reverse("change_database")}')
 
 
-class GetDbInfoViewTests(TestCase):
-
-    def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="testpass")
-
-    @patch("django.conf.settings.DATABASES", new_callable=dict)
-    def test_get_db_info_view_authenticated_valid_alias(self, mock_databases):
-        mock_databases.update(
-            {
-                "test_db": {
-                    "ENGINE": "django.db.backends.sqlite3",
-                    "NAME": "test_db.sqlite",
-                    "HOST": "localhost",
-                }
-            }
-        )
-
-        self.client.login(username="testuser", password="testpass")
-
-        # Requesting the database info with a valid alias
-        response = self.client.get(reverse("get_db_info"), {"db_alias": "test_db"})
-
-        self.assertEqual(response.status_code, 200)
-        self.assertJSONEqual(
-            response.content,
-            {
-                "db_engine": "django.db.backends.sqlite3",
-                "db_name": "test_db.sqlite",
-                "db_host": "localhost",
-            },
-        )
-
-    def test_get_db_info_view_authenticated_invalid_alias(self):
-        self.client.login(username="testuser", password="testpass")
-
-        response = self.client.get(reverse("get_db_info"), {"db_alias": "invalid_db"})
-
-        self.assertEqual(response.status_code, 400)
-        self.assertJSONEqual(response.content, {"Error": "Invalid database alias"})
-
-    def test_get_db_info_view_authenticated_missing_alias(self):
-        self.client.login(username="testuser", password="testpass")
-
-        response = self.client.get(reverse("get_db_info"))
-
-        self.assertEqual(response.status_code, 400)
-        self.assertJSONEqual(response.content, {"Error": "Missing database alias"})
-
-    def test_get_db_info_view_unauthenticated(self):
-        response = self.client.get(reverse("get_db_info"))
-
-        expected_redirect_url = f'/login/?next={reverse("get_db_info")}'
-        self.assertRedirects(response, expected_redirect_url)
-
-
 class SwitchDatabaseViewTests(TestCase):
 
     def setUp(self):
@@ -118,6 +63,8 @@ class SwitchDatabaseViewTests(TestCase):
             "cs_app.utils.common_functions.validate_db_host", return_value=True
         ), patch(
             "cs_app.utils.common_functions.validate_db_driver", return_value=True
+        ), patch(
+            "cs_app.utils.common_functions.validate_db_port", return_value=True
         ), patch(
             "django.db.connections"
         ) as mock_connections:
@@ -142,9 +89,15 @@ class SwitchDatabaseViewTests(TestCase):
                 content_type="application/json",
             )
 
-            """ self.assertEqual(response.status_code, 200) """
+            self.assertEqual(response.status_code, 200)
             self.assertJSONEqual(
-                response.content, {"success": True, "db_alias": "AdventureWorks2022"}
+                response.content,
+                {
+                    "success": True,
+                    "db_engine": "mssql",
+                    "db_name": "AdventureWorks2022",
+                    "db_host": "HOWELL-PC8\\SQLEXPRESS",
+                },
             )
 
     def test_switch_database_view_authenticated_invalid_engine(self):
@@ -181,7 +134,7 @@ class SwitchDatabaseViewTests(TestCase):
                 "db_engine": "postgresql",
                 "db_name": "invalid name",
                 "db_host": "localhost",
-                "db_driver": "psycopg2",
+                "db_port": "15154",
             }
 
             response = self.client.post(
@@ -208,6 +161,7 @@ class SwitchDatabaseViewTests(TestCase):
                 "db_name": "test_database",
                 "db_host": "localhost",
                 "db_driver": "psycopg2",
+                "db_port": "15514",
             }
 
             response = self.client.post(
@@ -244,6 +198,32 @@ class SwitchDatabaseViewTests(TestCase):
                 {
                     "success": False,
                     "error": "Database driver invalid. Alphanumerics only.",
+                },
+            )
+
+    def test_switch_database_view_authenticated_invalid_port(self):
+        with patch(
+            "cs_app.utils.common_functions.validate_db_port", return_value=False
+        ):
+            data = {
+                "db_engine": "postgresql",
+                "db_name": "test_database",
+                "db_host": "localhost",
+                "db_port": "bad_port",
+            }
+
+            response = self.client.post(
+                reverse("switch_database"),
+                data=json.dumps(data),
+                content_type="application/json",
+            )
+
+            self.assertEqual(response.status_code, 400)
+            self.assertJSONEqual(
+                response.content,
+                {
+                    "success": False,
+                    "error": "Database port invalid. Number must be between 1024 and 65535.",
                 },
             )
 
@@ -349,13 +329,58 @@ class GenerateUniqueAliasTests(TestCase):
 
 
 class ValidateDBFields(TestCase):
-    def test_valid_fields(self):
+    def test_valid_fields_all(self):
         db_engine = "mssql"
         db_name = "valid_name"
         db_host = "valid.host.com"
         db_driver = "valid_driver"
+        db_port = "1234"
 
-        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
+
+        self.assertEqual(result_1, None)
+        self.assertEqual(result_2, None)
+
+    def test_valid_fields_no_driver(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = ""
+        db_port = "1234"
+
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
+
+        self.assertEqual(result_1, None)
+        self.assertEqual(result_2, None)
+
+    def test_valid_fields_no_port(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = "valid_driver"
+        db_port = ""
+
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
+
+        self.assertEqual(result_1, None)
+        self.assertEqual(result_2, None)
+
+    def test_valid_fields_no_port_no_driver(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = ""
+        db_port = ""
+
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
 
         self.assertEqual(result_1, None)
         self.assertEqual(result_2, None)
@@ -365,8 +390,11 @@ class ValidateDBFields(TestCase):
         db_name = "valid_name"
         db_host = "valid.host.com"
         db_driver = "valid_driver"
+        db_port = "1234"
 
-        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
 
         self.assertEqual(
             result_1,
@@ -382,8 +410,11 @@ class ValidateDBFields(TestCase):
         db_name = "invalid_name_$%^"
         db_host = "valid.host.com"
         db_driver = "valid_driver"
+        db_port = "1234"
 
-        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
 
         self.assertEqual(
             result_1,
@@ -399,8 +430,11 @@ class ValidateDBFields(TestCase):
         db_name = "valid_name"
         db_host = "invalid_host_*&^%??"
         db_driver = "valid_driver"
+        db_port = "1234"
 
-        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
 
         self.assertEqual(
             result_1,
@@ -416,8 +450,11 @@ class ValidateDBFields(TestCase):
         db_name = "valid_name"
         db_host = "valid.host.com"
         db_driver = "invalid_driver_&*()"
+        db_port = "1234"
 
-        result_1, result_2 = validate_db_fields(db_engine, db_name, db_host, db_driver)
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
 
         self.assertEqual(
             result_1,
@@ -428,16 +465,40 @@ class ValidateDBFields(TestCase):
         )
         self.assertEqual(result_2, 400)
 
+    def test_invalid_port(self):
+        db_engine = "mssql"
+        db_name = "valid_name"
+        db_host = "valid.host.com"
+        db_driver = "valid_driver"
+        db_port = "bad_port"
+
+        result_1, result_2 = validate_db_fields(
+            db_engine, db_name, db_host, db_driver, db_port
+        )
+
+        self.assertEqual(
+            result_1,
+            {
+                "success": False,
+                "error": "Database port invalid. Number must be between 1024 and 65535.",
+            },
+        )
+        self.assertEqual(result_2, 400)
+
+
 class ConstructConfigTestCase(TestCase):
     def test_mssql_valid_config(self):
         db_engine = "mssql"
         db_name = "valid_db"
         db_host = "valid.host.com"
         db_driver = "SQL Server"
+        db_port = "1234"
         db_user = "valid_user"
         db_pass = "valid_password"
 
-        result = construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
 
         expected_result = {
             "ENGINE": "mssql",
@@ -449,6 +510,72 @@ class ConstructConfigTestCase(TestCase):
             },
             "USER": "valid_user",
             "PASSWORD": "valid_password",
+            "PORT": "1234",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_valid_mssql_config_with_trusted_connection(self):
+        db_engine = "mssql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "SQL Server"
+        db_port = "1234"
+        db_user = None
+        db_pass = None
+
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
+
+        expected_result = {
+            "ENGINE": "mssql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "OPTIONS": {
+                "driver": "SQL Server",
+                "trusted_connection": "yes",
+            },
+            "USER": None,
+            "PASSWORD": None,
+            "PORT": "1234",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_valid_mssql_config_without_port(self):
+        db_engine = "mssql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "SQL Server"
+        db_port = ""
+        db_user = None
+        db_pass = None
+
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
+
+        expected_result = {
+            "ENGINE": "mssql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "OPTIONS": {
+                "driver": "SQL Server",
+                "trusted_connection": "yes",
+            },
+            "USER": None,
+            "PASSWORD": None,
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
@@ -459,23 +586,59 @@ class ConstructConfigTestCase(TestCase):
 
         self.assertEqual(result, expected_result)
 
-    def test_mssql_config_with_trusted_connection(self):
+    def test_valid_mssql_config_without_driver(self):
         db_engine = "mssql"
         db_name = "valid_db"
         db_host = "valid.host.com"
-        db_driver = "SQL Server"
-        db_user = None  
-        db_pass = None 
+        db_driver = ""
+        db_port = "1234"
+        db_user = None
+        db_pass = None
 
-        result = construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
 
         expected_result = {
             "ENGINE": "mssql",
             "NAME": "valid_db",
             "HOST": "valid.host.com",
             "OPTIONS": {
-                "driver": "SQL Server",
-                "trusted_connection": "yes", 
+                "driver": "",
+                "trusted_connection": "yes",
+            },
+            "USER": None,
+            "PASSWORD": None,
+            "PORT": "1234",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_valid_mssql_config_with_no_driver_no_port(self):
+        db_engine = "mssql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = ""
+        db_port = ""
+        db_user = None
+        db_pass = None
+
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
+
+        expected_result = {
+            "ENGINE": "mssql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "OPTIONS": {
+                "driver": "",
+                "trusted_connection": "yes",
             },
             "USER": None,
             "PASSWORD": None,
@@ -494,10 +657,13 @@ class ConstructConfigTestCase(TestCase):
         db_name = "valid_db"
         db_host = "valid.host.com"
         db_driver = "PostgreSQL"
+        db_port = "5432"
         db_user = "valid_user"
         db_pass = "valid_password"
 
-        result = construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
 
         expected_result = {
             "ENGINE": "postgresql",
@@ -512,6 +678,106 @@ class ConstructConfigTestCase(TestCase):
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
+                "driver": "PostgreSQL",
+                "connect_timeout": 10,
+            },
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_postgresql_valid_config_no_driver(self):
+        db_engine = "postgresql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = ""
+        db_port = "5432"
+        db_user = "valid_user"
+        db_pass = "valid_password"
+
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
+
+        expected_result = {
+            "ENGINE": "postgresql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "USER": "valid_user",
+            "PASSWORD": "valid_password",
+            "PORT": "5432",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+            "OPTIONS": {
+                "driver": "",
+                "connect_timeout": 10,
+            },
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_postgresql_valid_config_no_port(self):
+        db_engine = "postgresql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = "PostgreSQL"
+        db_port = ""
+        db_user = "valid_user"
+        db_pass = "valid_password"
+
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
+
+        expected_result = {
+            "ENGINE": "postgresql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "USER": "valid_user",
+            "PASSWORD": "valid_password",
+            "PORT": "",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+            "OPTIONS": {
+                "driver": "PostgreSQL",
+                "connect_timeout": 10,
+            },
+        }
+
+        self.assertEqual(result, expected_result)
+
+    def test_postgresql_valid_config_no_driver_no_port(self):
+        db_engine = "postgresql"
+        db_name = "valid_db"
+        db_host = "valid.host.com"
+        db_driver = ""
+        db_port = ""
+        db_user = "valid_user"
+        db_pass = "valid_password"
+
+        result = construct_config(
+            db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+        )
+
+        expected_result = {
+            "ENGINE": "postgresql",
+            "NAME": "valid_db",
+            "HOST": "valid.host.com",
+            "USER": "valid_user",
+            "PASSWORD": "valid_password",
+            "PORT": "",
+            "ATOMIC_REQUESTS": True,
+            "AUTOCOMMIT": True,
+            "CONN_MAX_AGE": 0,
+            "CONN_HEALTH_CHECKS": False,
+            "TIME_ZONE": None,
+            "OPTIONS": {
+                "driver": "",
                 "connect_timeout": 10,
             },
         }
@@ -523,10 +789,15 @@ class ConstructConfigTestCase(TestCase):
         db_name = "valid_db"
         db_host = "valid.host.com"
         db_driver = "invalid_driver"
+        db_port = "bad_port"
         db_user = "valid_user"
         db_pass = "valid_password"
 
         with self.assertRaises(ValueError) as context:
-            construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass)
+            construct_config(
+                db_engine, db_name, db_host, db_driver, db_user, db_pass, db_port
+            )
 
-        self.assertEqual(str(context.exception), "construct_config: Engine not recognized")
+        self.assertEqual(
+            str(context.exception), "construct_config: Engine not recognized"
+        )

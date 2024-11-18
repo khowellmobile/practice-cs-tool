@@ -34,9 +34,16 @@
                             <input type="text" class="form__input" id="input_host" placeholder="" required />
                             <p class="form__label">Host</p>
                         </div>
+                    </div>
+                    <div id="database-inputs-card__options">
+                        <p>Options</p>
                         <div class="form__cluster">
                             <input type="text" class="form__input" id="input_driver" placeholder="" required />
                             <p class="form__label">Driver</p>
+                        </div>
+                        <div class="form__cluster">
+                            <input type="text" class="form__input" id="input_port" placeholder="" required />
+                            <p class="form__label">Port</p>
                         </div>
                     </div>
                     <div id="database-inputs-card__auth">
@@ -69,6 +76,7 @@
                 <p>Name</p>
                 <p>Host</p>
                 <p>Driver</p>
+                <p>Port</p>
             </div>
             <div id="db-history__listing">
                 {% for past_conn in past_connections %}
@@ -77,6 +85,7 @@
                     <p class="past-name">{{ past_conn.name }}</p>
                     <p class="past-host">{{ past_conn.host }}</p>
                     <p class="past-driver">{{ past_conn.driver }}</p>
+                    <p class="past-port">{{ past_conn.port }}</p>
                 </div>
                 {% endfor %}
             </div>
