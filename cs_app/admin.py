@@ -18,4 +18,4 @@ class DatabaseConnectionsAdmin(admin.ModelAdmin):
 
 @admin.register(RanReportParameter)
 class RanReportParametersAdmin(admin.ModelAdmin):
-    list_display = ["user", "report_type", "ran_on_date", "start_date", "end_date"]
+    list_display = ["user", "database_name", "report_type", "ran_on_date", "start_date", "end_date"]

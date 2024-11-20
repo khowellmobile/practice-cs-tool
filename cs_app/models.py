@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-import json
 
 
 class User(AbstractUser):
@@ -28,3 +27,4 @@ class RanReportParameter(models.Model):
     ran_on_date = models.DateField()
     start_date = models.DateField()
     end_date = models.DateField()
+    database_name = models.CharField(max_length=100, default="")
