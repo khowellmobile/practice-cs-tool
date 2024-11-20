@@ -13,32 +13,43 @@
     </div>
     <div id="card-holder">
         <div id="inputs" class="content-card">
-            <input
-                type="date"
-                id="start_date"
-                class="form__input"
-                name="start_date"
-                value="{{ start_date|default:'' }}"
-                required
-            />
-            <p>to</p>
-            <input
-                type="date"
-                id="end_date"
-                class="form__input"
-                name="end_date"
-                value="{{ end_date|default:'' }}"
-                required
-            />
+            <div id="inputs__actions">
+                <input
+                    type="date"
+                    id="start_date"
+                    class="form__input"
+                    name="start_date"
+                    value="{{ start_date|default:'' }}"
+                    required
+                />
+                <p>to</p>
+                <input
+                    type="date"
+                    id="end_date"
+                    class="form__input"
+                    name="end_date"
+                    value="{{ end_date|default:'' }}"
+                    required
+                />
 
-            <div class="dropdown-button">{{ report_type|default:"Custom" }}</div>
-            <div class="dropdown-content">
-                <div class="dropdown-item" data-value="YTD">YTD</div>
-                <div class="dropdown-item" data-value="Last Year">Last Year</div>
-                <div class="dropdown-item" data-value="All Time">All Time</div>
-                <div class="dropdown-item" data-value="Custom">Custom</div>
+                <div class="dropdown-button">{{ report_type|default:"Custom" }}</div>
+                <div class="dropdown-content">
+                    <div class="dropdown-item" data-value="YTD">YTD</div>
+                    <div class="dropdown-item" data-value="Last Year">Last Year</div>
+                    <div class="dropdown-item" data-value="All Time">All Time</div>
+                    <div class="dropdown-item" data-value="Custom">Custom</div>
+                </div>
+                <div class="button" id="run-report-button" onclick="generateTable()"><strong>Run Report</strong></div>
             </div>
-            <div class="button" id="run-report-button" onclick="generateTable()"><strong>Run Report</strong></div>
+            <div id="inputs__database-information">
+                <div id="database-information">
+                    {% if current_database_name == history_database_name or not current_database_name or not history_database_name %}
+                    <p><strong>Database: </strong>{{ current_database_name|default:"No Active Connection" }}</p>
+                    {% else %}
+                    <p class="mismatch-message"><strong>Error: </strong>Report Database and Active Database differ.</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
         <div id="report-holder" class="content-card">
             <div id="report"></div>

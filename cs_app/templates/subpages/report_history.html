@@ -13,6 +13,7 @@
             <div id="history-sep-h" class="sep-h"></div>
             <div id="report-history__header">
                 <p>Type</p>
+                <p>Database</p>
                 <p>Ran On</p>
                 <p>From</p>
                 <p>To</p>
@@ -21,6 +22,7 @@
                 {% for past_rep in past_reports %}
                 <div>
                     <p class="rep_type">{{ past_rep.report_type }}</p>
+                    <p class="rep_db_name">{{ past_rep.database_name }}</p>
                     <p>{{ past_rep.ran_on_date }}</p>
                     <p class="rep_start_date">{{ past_rep.start_date }}</p>
                     <p class="rep_end_date">{{ past_rep.end_date }}</p>
