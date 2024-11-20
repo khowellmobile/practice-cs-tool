@@ -48,7 +48,10 @@ h3 {
     height: 2rem;
     box-sizing: border-box;
 
-    background-color: var(--primary-blue);
+    background: linear-gradient(-45deg, rgb(105, 105, 236), rgb(17, 17, 53), rgb(105, 105, 236), rgb(35, 35, 75));
+    background-size: 400% 400%;
+    animation: gradient 45s linear infinite;
+    border-radius: 2rem;
     cursor: pointer;
 
     display: flex;
