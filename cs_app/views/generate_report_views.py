@@ -32,6 +32,7 @@ from ..models import RanReportParameter
 
 import json
 
+
 @login_required
 def generate_report_view(request):
     """
@@ -55,6 +56,7 @@ def generate_report_view(request):
     start_date = None
     end_date = None
     report_type = None
+    history_database_name = None
 
     additional_info = request.GET.get("additionalInfo", None)
 
@@ -65,6 +67,7 @@ def generate_report_view(request):
             start_date = format_date(decoded_info.get("start_date", None))
             end_date = format_date(decoded_info.get("end_date", None))
             report_type = decoded_info.get("report_type", None)
+            history_database_name = decoded_info.get("database_name", None)
         except (ValueError, TypeError) as e:
             print(f"Error decoding additional_info: {e}")
 
@@ -74,6 +77,8 @@ def generate_report_view(request):
         "start_date": start_date,
         "end_date": end_date,
         "report_type": report_type,
+        "history_database_name": history_database_name,
+        "current_database_name": request.user.active_database_alias,
     }
 
     return render(request, "subpages/generate_report.html", context)
@@ -109,16 +114,17 @@ def load_table_view(request):
             user=request.user,
             report_type=time_range,
             start_date=start_date,
-            end_date=end_date
+            end_date=end_date,
         ).exists()
 
         if not existing_report:
             RanReportParameter.objects.create(
-                user = request.user,
-                report_type = time_range,
-                ran_on_date = current_date,
-                start_date = start_date,
-                end_date = end_date
+                user=request.user,
+                report_type=time_range,
+                ran_on_date=current_date,
+                start_date=start_date,
+                end_date=end_date,
+                database_name=active_database_alias.split("_")[0] if active_database_alias else "unrecognized name format",
             )
 
         conn = connections[active_database_alias]
@@ -155,7 +161,7 @@ def load_table_view(request):
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
-    
+
 
 def format_date(date_str):
     """Convert a date string to the format YYYY-MM-DD."""
@@ -171,4 +177,3 @@ def format_date(date_str):
             return None
     else:
         return None
-        
