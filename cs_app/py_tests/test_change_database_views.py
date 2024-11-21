@@ -47,7 +47,7 @@ class ChangeDatabaseViewTests(TestCase):
 
         self.assertRedirects(response, f'/login/?next={reverse("change_database")}')
 
-
+################## ADDING COMMENT TO ACTIVATE WORKFLOW
 class SwitchDatabaseViewTests(TestCase):
 
     def setUp(self):
