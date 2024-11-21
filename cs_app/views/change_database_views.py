@@ -406,7 +406,7 @@ def construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass, d
             "PORT": db_port,
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -421,11 +421,11 @@ def construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass, d
             "PORT": db_port,
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
-                "connect_timeout": 10,
+                "connect_timeout": 30,
                 "driver": db_driver,
             },
         }
