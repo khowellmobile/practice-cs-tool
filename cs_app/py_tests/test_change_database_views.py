@@ -5,7 +5,7 @@ from django.urls import reverse
 from ..models import User
 from django.conf import settings
 
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from cs_app.views import (
     generate_unique_alias,
@@ -51,6 +51,7 @@ class ChangeDatabaseViewTests(TestCase):
 class SwitchDatabaseViewTests(TestCase):
 
     def setUp(self):
+        # Create a user and log in
         self.user = User.objects.create_user(username="testuser", password="testpass")
         self.client.login(username="testuser", password="testpass")
 
@@ -65,16 +66,15 @@ class SwitchDatabaseViewTests(TestCase):
             "cs_app.utils.common_functions.validate_db_driver", return_value=True
         ), patch(
             "cs_app.utils.common_functions.validate_db_port", return_value=True
-        ), patch(
-            "django.db.connections"
-        ) as mock_connections:
+        ), patch("django.db.connections") as mock_connections:
 
-            mock_cursor = mock_connections.return_value.cursor.return_value
+            mock_db_connection = MagicMock()
+            mock_connections.__getitem__.return_value = mock_db_connection
+            mock_cursor = MagicMock()
+            mock_db_connection.cursor.return_value = mock_cursor
+
             mock_cursor.fetchall.return_value = [("row1",)]
 
-            """ TODO 
-                Add generic test DB to simulate connection
-            """
             data = {
                 "db_engine": "mssql",
                 "db_name": "AdventureWorks2022",
@@ -92,6 +92,7 @@ class SwitchDatabaseViewTests(TestCase):
             print("Response status code:", response.status_code)
             print("Response content:", response.content.decode()) 
 
+            # Assertions
             self.assertEqual(response.status_code, 200)
             self.assertJSONEqual(
                 response.content,
