@@ -89,6 +89,10 @@ class SwitchDatabaseViewTests(TestCase):
                 content_type="application/json",
             )
 
+            # Log the response content to debug
+            print("Response status code:", response.status_code)
+            print("Response content:", response.content.decode()) 
+
             self.assertEqual(response.status_code, 200)
             self.assertJSONEqual(
                 response.content,
