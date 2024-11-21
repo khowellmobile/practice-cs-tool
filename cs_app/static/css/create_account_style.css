@@ -146,7 +146,7 @@ body {
 
 #tool-tip {
     height: 5rem;
-    width: 15rem;
+    width: 16rem;
     padding: 0.5rem;
     box-sizing: border-box;
 
@@ -160,8 +160,8 @@ body {
     justify-content: space-between;
 
     position: absolute;
-    top: -2.7rem;
-    left: -16rem;
+    top: -3rem;
+    left: -17rem;
 }
 
 #tool-tip::after {
