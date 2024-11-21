@@ -425,7 +425,7 @@ def construct_config(db_engine, db_name, db_host, db_driver, db_user, db_pass, d
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
-                "connect_timeout": 10,
+                "connect_timeout": 20,
                 "driver": db_driver,
             },
         }
