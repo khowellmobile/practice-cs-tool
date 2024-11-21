@@ -21,19 +21,18 @@ The Practice CS Tool is a powerful application designed to generate custom repor
 To run the Practice CS Tool:
 
 1. **Clone Repository**: Clone this repository to your local machine using `git clone https://github.com/your-username/practice-cs-tool.git`.
-2. **Install Major Dependencies**: Navigate to the project directory and install [Node.js](https://nodejs.org/en/download/), [Python](https://www.python.org/downloads/), and [Django](https://www.djangoproject.com/).
+2. **Install Major Dependencies**: Navigate to the project directory and install [Node.js](https://nodejs.org/en/download/) and [Python](https://www.python.org/downloads/).
 3. **Install Dependencies**:
-   - **Python Libraries**: Ensure you have installed the following Python libraries:
-     - [pyodbc](https://pypi.org/project/pyodbc/): A Python library that provides an interface for accessing ODBC databases, essential for connecting to the SQL Server housing the Practice CS database.
-     - [mssql-django](https://github.com/microsoft/mssql-django): A library for connecting Django to Microsoft SQL Server databases.
-   - **JavaScript Libraries**: Additionally, make sure you have the following JavaScript libraries installed:
+   - **Python Libraries**: Ensure you have installed the proper Python libraries:
+     - A list of the modules can be found in requirements.txt or run `pip install -r requirements.txt`
+   - **JavaScript Libraries**: Additionally, make sure you have the following JavaScript libraries installed to facilitate JavaScript testing:
      - [Jest](https://jestjs.io/): A JavaScript testing framework.
      - [jQuery](https://jquery.com/): A fast, small, and feature-rich JavaScript library.
      - [jsdom](https://github.com/jsdom/jsdom): A JavaScript implementation of various web standards, for use with Node.js
 4. **Run Server**: Start the Django development server using `python manage.py runserver`.
 5. **Access the Tool**: Open your web browser and navigate to `http://localhost:8000` to access the Practice CS Tool.
 
-NOTE: Currently the app only runs with Microsoft SQL Server Database
+NOTE: Currently the app only runs with Microsoft SQL Server Database and PostgreSql
 
 ## Contributing
 
