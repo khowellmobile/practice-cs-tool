@@ -516,7 +516,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "1234",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -549,7 +549,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "1234",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -582,7 +582,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -615,7 +615,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "1234",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -648,7 +648,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -677,12 +677,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "5432",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "PostgreSQL",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
@@ -710,12 +710,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "5432",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
@@ -743,12 +743,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "PostgreSQL",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
@@ -776,12 +776,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
