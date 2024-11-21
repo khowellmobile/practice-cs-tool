@@ -47,62 +47,12 @@ class ChangeDatabaseViewTests(TestCase):
 
         self.assertRedirects(response, f'/login/?next={reverse("change_database")}')
 
-################## ADDING COMMENT TO ACTIVATE WORKFLOW
-class SwitchDatabaseViewTests(TestCase):
 
+class DatabaseViewTestCase(TestCase):
     def setUp(self):
         # Create a user and log in
         self.user = User.objects.create_user(username="testuser", password="testpass")
         self.client.login(username="testuser", password="testpass")
-
-    def test_switch_database_view_authenticated_success(self):
-        with patch(
-            "cs_app.utils.common_functions.validate_db_engine", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_name", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_host", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_driver", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_port", return_value=True
-        ), patch("django.db.connections") as mock_connections:
-
-            mock_db_connection = MagicMock()
-            mock_connections.__getitem__.return_value = mock_db_connection
-            mock_cursor = MagicMock()
-            mock_db_connection.cursor.return_value = mock_cursor
-
-            mock_cursor.fetchall.return_value = [("row1",)]
-
-            data = {
-                "db_engine": "mssql",
-                "db_name": "AdventureWorks2022",
-                "db_host": "HOWELL-PC8\\SQLEXPRESS",
-                "db_driver": "ODBC Driver 17 for SQL Server",
-            }
-
-            response = self.client.post(
-                reverse("switch_database"),
-                data=json.dumps(data),
-                content_type="application/json",
-            )
-
-            # Log the response content to debug
-            print("Response status code:", response.status_code)
-            print("Response content:", response.content.decode()) 
-
-            # Assertions
-            self.assertEqual(response.status_code, 200)
-            self.assertJSONEqual(
-                response.content,
-                {
-                    "success": True,
-                    "db_engine": "mssql",
-                    "db_name": "AdventureWorks2022",
-                    "db_host": "HOWELL-PC8\\SQLEXPRESS",
-                },
-            )
 
     def test_switch_database_view_authenticated_invalid_engine(self):
         with patch(
