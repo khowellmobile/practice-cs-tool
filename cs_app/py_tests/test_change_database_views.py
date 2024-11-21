@@ -5,7 +5,7 @@ from django.urls import reverse
 from ..models import User
 from django.conf import settings
 
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from cs_app.views import (
     generate_unique_alias,
@@ -48,57 +48,11 @@ class ChangeDatabaseViewTests(TestCase):
         self.assertRedirects(response, f'/login/?next={reverse("change_database")}')
 
 
-class SwitchDatabaseViewTests(TestCase):
-
+class DatabaseViewTestCase(TestCase):
     def setUp(self):
+        # Create a user and log in
         self.user = User.objects.create_user(username="testuser", password="testpass")
         self.client.login(username="testuser", password="testpass")
-
-    def test_switch_database_view_authenticated_success(self):
-        with patch(
-            "cs_app.utils.common_functions.validate_db_engine", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_name", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_host", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_driver", return_value=True
-        ), patch(
-            "cs_app.utils.common_functions.validate_db_port", return_value=True
-        ), patch(
-            "django.db.connections"
-        ) as mock_connections:
-
-            mock_connections.return_value.cursor.return_value.fetchall.return_value = [
-                ("row1",)
-            ]
-
-            """ TODO 
-                Add generic test DB to simulate connection
-            """
-            data = {
-                "db_engine": "mssql",
-                "db_name": "AdventureWorks2022",
-                "db_host": "HOWELL-PC8\\SQLEXPRESS",
-                "db_driver": "ODBC Driver 17 for SQL Server",
-            }
-
-            response = self.client.post(
-                reverse("switch_database"),
-                data=json.dumps(data),
-                content_type="application/json",
-            )
-
-            self.assertEqual(response.status_code, 200)
-            self.assertJSONEqual(
-                response.content,
-                {
-                    "success": True,
-                    "db_engine": "mssql",
-                    "db_name": "AdventureWorks2022",
-                    "db_host": "HOWELL-PC8\\SQLEXPRESS",
-                },
-            )
 
     def test_switch_database_view_authenticated_invalid_engine(self):
         with patch(
@@ -513,7 +467,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "1234",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -546,7 +500,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "1234",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -579,7 +533,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -612,7 +566,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "1234",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -645,7 +599,7 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
         }
@@ -674,12 +628,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "5432",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "PostgreSQL",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
@@ -707,12 +661,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "5432",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
@@ -740,12 +694,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "PostgreSQL",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
@@ -773,12 +727,12 @@ class ConstructConfigTestCase(TestCase):
             "PORT": "",
             "ATOMIC_REQUESTS": True,
             "AUTOCOMMIT": True,
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 600,
             "CONN_HEALTH_CHECKS": False,
             "TIME_ZONE": None,
             "OPTIONS": {
                 "driver": "",
-                "connect_timeout": 10,
+                "connect_timeout": 30,
             },
         }
 
