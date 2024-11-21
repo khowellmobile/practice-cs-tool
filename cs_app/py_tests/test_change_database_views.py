@@ -69,9 +69,8 @@ class SwitchDatabaseViewTests(TestCase):
             "django.db.connections"
         ) as mock_connections:
 
-            mock_connections.return_value.cursor.return_value.fetchall.return_value = [
-                ("row1",)
-            ]
+            mock_cursor = mock_connections.return_value.cursor.return_value
+            mock_cursor.fetchall.return_value = [("row1",)]
 
             """ TODO 
                 Add generic test DB to simulate connection
@@ -88,10 +87,6 @@ class SwitchDatabaseViewTests(TestCase):
                 data=json.dumps(data),
                 content_type="application/json",
             )
-
-            # Log the response content to debug
-            print("Response status code:", response.status_code)
-            print("Response content:", response.content.decode()) 
 
             self.assertEqual(response.status_code, 200)
             self.assertJSONEqual(
