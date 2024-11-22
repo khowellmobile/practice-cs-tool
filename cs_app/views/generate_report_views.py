@@ -25,6 +25,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.db import connections
+from django.conf import settings
 
 from datetime import datetime
 
@@ -109,6 +110,10 @@ def load_table_view(request):
         time_range = data.get("time_range")
         current_date = datetime.now().date()
         active_database_alias = request.user.active_database_alias
+
+        # Check to ensure an active database is being used
+        if not any(active_database_alias in key for key in settings.DATABASES):
+            return JsonResponse({"error": "No connections with database name active"}, status=400) 
 
         existing_report = RanReportParameter.objects.filter(
             user=request.user,
