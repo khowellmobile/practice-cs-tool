@@ -9,7 +9,7 @@ import json
 @login_required
 def report_history_view(request):
 
-    past_reports = RanReportParameter.objects.filter(user=request.user)
+    past_reports = RanReportParameter.objects.filter(user=request.user)[::-1]
 
     user = request.user
 
