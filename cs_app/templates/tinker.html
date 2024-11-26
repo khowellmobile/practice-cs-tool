@@ -20,15 +20,79 @@
             <div id="main">
                 <div id="left"></div>
                 <div class="sep-v"></div>
-                <div id="right">
+                <div id="options">
                     <div id="tabs">
-                        <div class="tab active-border"><p>CSS</p></div>
-                        <div class="tab inactive-border"><p>Sliders</p></div>
-                        <div class="tab inactive-border"><p>Buttons</p></div>
-                        <div class="tab inactive-border"><p>Selection</p></div>
-                        <div class="tab inactive-border"><p>Tree</p></div>
+                        <div class="tab inactive-tab"><p>CSS</p></div>
+                        <div class="tab active-tab"><p>Sliders</p></div>
+                        <div class="tab inactive-tab"><p>Buttons</p></div>
+                        <div class="tab inactive-tab"><p>Tree</p></div>
+                        <div class="tab inactive-tab"><p>Settings</p></div>
                     </div>
                     <div class="sep-h"></div>
+                    <div id="slides">
+                        <div class="slide inactive-slide">
+                            <div id="textarea-buttons">
+                                <div id="run-css-button" class="run-button"><p>Run CSS</p></div>
+                                <div id="reset-css-button" class="run-button"><p>Reset CSS</p></div>
+                            </div>
+                            <textarea
+                                type="text"
+                                id="css-textarea"
+                                name="css"
+                                spellcheck="false"
+                                placeholder="Type here"
+                            ></textarea>
+                        </div>
+                        <div class="slide active-slide">
+                            <div id="sliders">
+                                <div class="slider-cluster">
+                                    <div class="slider-cluster__options">
+                                        <input
+                                            type="text"
+                                            class="css-selector-input slider-input__full"
+                                            spellcheck="false"
+                                            placeholder="Selector"
+                                        />
+                                        <input
+                                            type="text"
+                                            class="css-property-input slider-input__full"
+                                            spellcheck="false"
+                                            placeholder="Property"
+                                        />
+                                        <span>
+                                            <input
+                                                type="text"
+                                                class="css-range-start-input slider-input__half"
+                                                spellcheck="false"
+                                                placeholder="Start"
+                                            />
+                                            <input
+                                                type="text"
+                                                class="css-range-end-input slider-input__half"
+                                                spellcheck="false"
+                                                placeholder="End"
+                                            />
+                                            <input
+                                            type="text"
+                                            class="css-units-input slider-input__half"
+                                            spellcheck="false"
+                                            placeholder="Units"
+                                        />
+                                        </span>
+                                    </div>
+                                    <div class="slider-cluster__slider">
+                                        <div class="indicator"><p class="indicator-text">0</p></div>
+                                        <input type="range" min="0.00" max="50" step="0.1" value="0" class="css-range-slider" />
+                                    </div>
+                                </div>
+                                <div class="sep-h"></div>
+                            </div>
+                            <div id="add-slider-button" onclick="addSlider()"><p>Add Slider</p></div>
+                        </div>
+                        <div class="slide inactive-slide"><p>Buttons</p></div>
+                        <div class="slide inactive-slide"><p>Tree</p></div>
+                        <div class="slide inactive-slide"><p>Settings</p></div>
+                    </div>
                 </div>
             </div>
         </div>

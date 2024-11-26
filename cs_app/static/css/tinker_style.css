@@ -40,6 +40,7 @@ body {
 .sep-h {
     width: 100%;
     height: 1px;
+    min-height: 1px;
 
     background-color: rgb(100, 100, 100);
 }
@@ -73,8 +74,152 @@ body {
     background-color: rgba(168, 168, 168, 0.5);
 }
 
-.active-border {
-    border-bottom: 2px solid orange;
+.active-tab {
+    box-shadow: inset 0 -2px 0 0 orange;
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    padding: var(--md-gap);
+}
+
+.slide > p {
+    color: white;
+}
+
+.active-slide {
+    display: flex;
+}
+
+.inactive-slide {
+    display: none;
+}
+
+.slide:nth-child(1),
+.slide:nth-child(2) {
+    flex-direction: column;
+}
+
+.run-button {
+    width: 7rem;
+    padding: 0.5rem;
+    margin: 0rem 0rem 0.5rem 0.5rem;
+
+    background-color: orange;
+    cursor: pointer;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.run-button > p {
+    font-size: 0.8rem;
+}
+
+.run-button:hover {
+    transform: translateY(-1px);
+}
+
+.run-button:active {
+    transform: translateY(0);
+}
+
+.slider-cluster {
+    width: 100%;
+    min-height: 8rem;
+    max-height: 8rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slider-cluster__options {
+    height: 100%;
+    width: 40%;
+    padding: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.slider-cluster__options input {
+    padding: 0.25rem;
+    font-family: "Poppins", sans-serif;
+
+    background-color: rgb(0, 0, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 0.1rem;
+    outline: 1px solid rgb(100, 100, 100);
+}
+
+.slider-cluster__options > span {
+    display: flex;
+    justify-content: space-between;
+}
+
+.slider-input__full {
+    width: 100%;
+}
+
+.slider-input__half {
+    width: 25%;
+}
+
+.slider-cluster__slider {
+    width: 60%;
+    height: 100%;
+    padding: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.indicator {
+    width: 2rem;
+    height: 1rem;
+
+    position: relative;
+    transform: translateX(calc(-1rem + 7px)) translateY(-0.5rem);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.indicator > p {
+    color: white;
+    cursor: default;
+}
+
+.css-range-slider {
+    width: 100%;
+    height: 15px;
+
+    -webkit-appearance: none;
+    background: #111;
+    outline: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+}
+
+.css-range-slider::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+
+    background: orange;
+    border: 4px solid #333;
+    border-radius: 50%;
+    box-shadow: -407px 0 0 400px orange;
+    cursor: pointer;
+    -webkit-appearance: none;
 }
 
 #main {
@@ -89,7 +234,7 @@ body {
     width: 70%;
 }
 
-#right {
+#options {
     width: 30%;
     padding: 0rem 0.5rem;
 
@@ -98,6 +243,82 @@ body {
 }
 
 #tabs {
+    height: 2rem;
+
     display: flex;
     justify-content: space-between;
+}
+
+#slides {
+    width: 100%;
+    height: 100%;
+
+    max-height: calc(100% - 2rem);
+}
+
+#textarea-buttons {
+    display: flex;
+    justify-content: end;
+}
+
+#css-textarea {
+    width: 100%;
+    height: 100%;
+    padding: var(--sm-gap);
+
+    color: white;
+    background-color: rgb(0, 0, 0, 0);
+    resize: none;
+}
+
+#css-textarea::-webkit-scrollbar, #sliders::-webkit-scrollbar {
+    display: none;
+}
+
+#sliders {
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rangeValue {
+    position: relative;
+    display: block;
+    text-align: center;
+    font-size: 6em;
+    color: #999;
+    font-weight: 400;
+}
+
+#add-slider-button {
+    width: 100%;
+    height: 2rem;
+
+    /* Darker orange due to lighter appearence at buttons position */
+    background-color: rgb(255, 140, 0);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all ease 0.25s;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add-slider-button > p {
+    color: rgb(255, 255, 255);
+    font: 500;
+}
+
+#add-slider-button:hover {
+    transform: translateY(-2px);
+}
+
+#add-slider-button:active {
+    transform: translateY(0);
 }
