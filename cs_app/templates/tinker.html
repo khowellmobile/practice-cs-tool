@@ -100,9 +100,5 @@
         <!-- Links to .js files and getting csrf_token -->
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/tinker_script.js' %}"></script>
-        <script>
-            // Easier to get csrf token from template
-            var csrf_token = "{{ csrf_token }}";
-        </script>
     </body>
 </html>

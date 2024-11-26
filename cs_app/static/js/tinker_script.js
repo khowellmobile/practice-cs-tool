@@ -229,3 +229,5 @@ function addSlider() {
     $("#sliders").append(sliderHtml);
     attachEventListeners();
 }
+
+console.log($("#main").html())
