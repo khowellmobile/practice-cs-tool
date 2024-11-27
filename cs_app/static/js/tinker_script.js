@@ -85,6 +85,16 @@ function attachEventListeners() {
         }
     });
 
+    $(".button-function-input").on("input", function () {
+        let cluster = $(this).closest(".button-cluster");
+        let button = cluster.find(".tinker-function-button");
+        let value = $(this).val();
+
+        button.off("click").on("click", function () {
+            eval(value);
+        })
+    })
+
     $("#run-css-button").on("click", applyTextAreaCss);
     $("#reset-css-button").on("click", resetCssToBase);
 }
@@ -182,7 +192,7 @@ function setCSS(selector, property, units, value) {
     $(selector).css(`${property}: ${value}${units}`);
 }
 
-function addSlider() {
+function addTinkerSlider() {
     let sliderHtml = `
         <div class="slider-cluster">
             <div class="slider-cluster__options">
@@ -230,4 +240,25 @@ function addSlider() {
     attachEventListeners();
 }
 
-console.log($("#main").html())
+function addTinkerButton() {
+    let buttonHtml = `
+        <div class="button-cluster">
+            <div class="button-cluster__inputs">
+                <input
+                    type="text"
+                    class="button-function-input tinker-text-input tinker-text-input__full"
+                    spellcheck="false"
+                    placeholder="Function"
+                />
+            </div>
+            <button class="tinker-function-button">Run Function</button>
+        </div>
+        <div class="sep-h"></div>
+        `;
+    $("#tinker-buttons").append(buttonHtml);
+    attachEventListeners();
+}
+
+function foo(str) {
+    console.log(str);
+}

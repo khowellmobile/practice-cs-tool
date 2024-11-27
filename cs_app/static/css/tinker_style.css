@@ -97,7 +97,8 @@ body {
 }
 
 .slide:nth-child(1),
-.slide:nth-child(2) {
+.slide:nth-child(2),
+.slide:nth-child(3) {
     flex-direction: column;
 }
 
@@ -109,6 +110,9 @@ body {
     background-color: orange;
     cursor: pointer;
     position: relative;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
 
     display: flex;
     justify-content: center;
@@ -147,7 +151,12 @@ body {
     justify-content: space-between;
 }
 
-.slider-cluster__options input {
+.slider-cluster__options > span {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tinker-text-input {
     padding: 0.25rem;
     font-family: "Poppins", sans-serif;
 
@@ -158,16 +167,11 @@ body {
     outline: 1px solid rgb(100, 100, 100);
 }
 
-.slider-cluster__options > span {
-    display: flex;
-    justify-content: space-between;
-}
-
-.slider-input__full {
+.tinker-text-input__full {
     width: 100%;
 }
 
-.slider-input__half {
+.tinker-text-input__half {
     width: 25%;
 }
 
@@ -203,6 +207,7 @@ body {
     height: 15px;
 
     -webkit-appearance: none;
+    appearance: none;
     background: #111;
     outline: none;
     border-radius: 15px;
@@ -220,6 +225,45 @@ body {
     box-shadow: -407px 0 0 400px orange;
     cursor: pointer;
     -webkit-appearance: none;
+}
+
+.button-cluster {
+    width: 100%;
+    max-height: 4rem;
+    padding: 0.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-cluster__inputs {
+    width: 65%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tinker-function-button {
+    width: 8rem;
+    height: calc(2rem - 2px);
+    padding: 0.1rem;
+
+    background-color: orange;
+    border: none;
+    border-radius: 0.25rem;
+    outline: none;
+    cursor: pointer;
+    transition: all ease 0.25s;
+}
+
+.tinker-function-button:hover {
+    transform: translateY(-2px);
+}
+
+.tinker-function-button:active {
+    transform: translateY(0);
 }
 
 #main {
@@ -271,11 +315,23 @@ body {
     resize: none;
 }
 
-#css-textarea::-webkit-scrollbar, #sliders::-webkit-scrollbar {
+#css-textarea::-webkit-scrollbar,
+#sliders::-webkit-scrollbar {
     display: none;
 }
 
 #sliders {
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tinker-buttons {
     width: 100%;
     height: 100%;
 
@@ -304,6 +360,9 @@ body {
     border-radius: 0.5rem;
     cursor: pointer;
     transition: all ease 0.25s;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
 
     display: flex;
     justify-content: center;
@@ -312,7 +371,8 @@ body {
 
 #add-slider-button > p {
     color: rgb(255, 255, 255);
-    font: 500;
+    font-weight: 500;
+    font-size: 1rem;
 }
 
 #add-slider-button:hover {
