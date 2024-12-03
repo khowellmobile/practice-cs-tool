@@ -77,9 +77,9 @@ function attachEventListeners() {
         let value = $(this).val();
         let indicator = $(this).parent().children(1);
         let inputs = $(this).parent().parent().children(1);
-        let selector = inputs.find(".css-selector-input");
-        let property = inputs.find(".css-property-input");
-        let units = inputs.find("css-units-input");
+        let selector = inputs.find(".css-selector-input").val();
+        let property = inputs.find(".css-property-input").val();
+        let units = inputs.find(".css-units-input").val();
 
         setIndicator($(this).attr("min"), $(this).attr("max"), value, indicator);
         setCSS(selector, property, units, value);
@@ -200,7 +200,7 @@ function setIndicator(min, max, value, indicator) {
 }
 
 function setCSS(selector, property, units, value) {
-    $(selector).css(`${property}: ${value}${units}`);
+    $(selector).css(`${property}`, `${value}${units}`);
 }
 
 function addTinkerSlider() {
