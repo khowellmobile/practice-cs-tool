@@ -274,8 +274,12 @@ body {
     background-color: rgb(255, 255, 255, 0.1);
 }
 
+.constant-outline {
+    outline: 1px solid red;
+}
+
 .blinking-outline {
-    outline: 2px dashed rgb(98, 98, 255);
+    outline: 1px dashed rgb(98, 98, 255);
     animation: blink-outline 1s infinite;
 }
 

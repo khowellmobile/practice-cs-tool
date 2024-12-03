@@ -315,3 +315,10 @@ $(".leaf").on("mouseleave", function () {
 
     $(`[leafId='${elementLeafId}']`).removeClass("blinking-outline");
 })
+
+$(".leaf").on("click", function () {
+    let leafLeafId = $(this).attr("leafId");
+    let elementLeafId = leafs[leafLeafId.slice(0,-2)].elementLeafId;
+
+    $(`[leafId='${elementLeafId}']`).toggleClass("constant-outline");
+})
