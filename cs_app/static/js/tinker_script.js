@@ -2,9 +2,16 @@
  * This file contains functions to handle various UI interactions including button actions, slider operations,
  * and element manipulation within the dev-container and slider interfaces. Write all components in #dev-container.
  * Css For #dev-container may need small adjustments.
+ * 
+ * Tree/Leaf explained:
+ * To facilitate the outlines and matching of elements a leaf global object named leafs is used.
+ * The leafs object tracks the state of each leaf and its relevant id variations.
+ * Each element/leaf pair is given a "leafId". The number is then stored in a custom
+ * attribute named leadId on each leaf and element. Elements leafIds are suffixed by "-e"
+ * and leafs are suffixed by "-l"
  *
  * Global Variables:
- * -
+ * - leafs: object to track the state of leafs. Each leaf matches an html element.
  *
  * Functions:
  * - attachEventListeners(): Attaches eventlisteners to elements
@@ -13,11 +20,15 @@
  * - saveCssToStorage(cssContent): Saves textarea css to storage (prevent removal on refresh)
  * - loadCssFromStorage(): Loads textarea css from storage (runs on page load)
  * - resetCssToBase(): Resets the page css and storage css back to default
+ * 
  */
 
 attachEventListeners();
 loadCssToTextarea();
 window.onload = loadCssFromStorage;
+
+
+var leafs = {};
 
 /**
  * Function to attach event listeners
@@ -92,8 +103,8 @@ function attachEventListeners() {
 
         button.off("click").on("click", function () {
             eval(value);
-        })
-    })
+        });
+    });
 
     $("#run-css-button").on("click", applyTextAreaCss);
     $("#reset-css-button").on("click", resetCssToBase);
@@ -248,7 +259,7 @@ function addTinkerButton() {
                     type="text"
                     class="button-function-input tinker-text-input tinker-text-input__full"
                     spellcheck="false"
-                    placeholder="Function"
+                    placeholder="Function(args)"
                 />
             </div>
             <button class="tinker-function-button">Run Function</button>
@@ -259,6 +270,48 @@ function addTinkerButton() {
     attachEventListeners();
 }
 
-function foo(str) {
-    console.log(str);
+printTree($("#dev-container"), "");
+
+function printTree(element, indent, leafCounter = { count: 0 }) {
+    let numOfChildren = element.children().length;
+
+    // Base Case: If no children, stop recursion
+    if (numOfChildren === 0) {
+        return;
+    }
+
+    let newIndent = indent + "    ";
+
+    element.children().each(function () {
+        let leafId = leafCounter.count++;
+        let tagName = $(this).prop("nodeName").toLowerCase();
+        let leaf = `<div class="leaf" leafId="${leafId}-l"><p>${newIndent}${tagName}</p></div>`;
+
+        $(this).attr("leafId", `${leafId}-e`);
+            
+        leafs[leafId] = {
+            leafLeafId: leafId + "-l",
+            elementLeafId: leafId + "-e",
+            outline: false,
+        }
+
+        $("#tinker-tree").append(leaf);
+
+        // Recursive call
+        printTree($(this), newIndent, leafCounter);
+    });
 }
+
+$(".leaf").on("mouseenter", function () {
+    let leafLeafId = $(this).attr("leafId");
+    let elementLeafId = leafs[leafLeafId.slice(0,-2)].elementLeafId;
+
+    $(`[leafId='${elementLeafId}']`).addClass("blinking-outline");
+})
+
+$(".leaf").on("mouseleave", function () {
+    let leafLeafId = $(this).attr("leafId");
+    let elementLeafId = leafs[leafLeafId.slice(0,-2)].elementLeafId;
+
+    $(`[leafId='${elementLeafId}']`).removeClass("blinking-outline");
+})

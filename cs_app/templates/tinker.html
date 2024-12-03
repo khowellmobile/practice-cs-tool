@@ -18,14 +18,23 @@
     <body>
         <div class="container-1">
             <div id="main">
-                <div id="left"></div>
+                <div id="dev-container">
+                    <div>
+                        <h1>Hello</h1>
+                        <h2>Bye</h3>
+                    </div>
+                    <div>
+                        <h1>Hello1</h1>
+                        <h2>Bye1</h3>
+                    </div>
+                </div>
                 <div class="sep-v"></div>
                 <div id="options">
                     <div id="tabs">
                         <div class="tab inactive-tab"><p>CSS</p></div>
                         <div class="tab inactive-tab"><p>Sliders</p></div>
-                        <div class="tab active-tab"><p>Buttons</p></div>
-                        <div class="tab inactive-tab"><p>Tree</p></div>
+                        <div class="tab inactive-tab"><p>Buttons</p></div>
+                        <div class="tab active-tab"><p>Tree</p></div>
                         <div class="tab inactive-tab"><p>Settings</p></div>
                     </div>
                     <div class="sep-h"></div>
@@ -96,7 +105,7 @@
                             </div>
                             <button id="add-slider-button" onclick="addTinkerSlider()"><p>Add Slider</p></button>
                         </div>
-                        <div class="slide active-slide">
+                        <div class="slide inactive-slide">
                             <div id="tinker-buttons">
                                 <div class="button-cluster">
                                     <div class="button-cluster__inputs">
@@ -113,7 +122,9 @@
                             </div>
                             <button id="add-slider-button" onclick="addTinkerButton()"><p>Add Button</p></button>
                         </div>
-                        <div class="slide inactive-slide"><p>Tree</p></div>
+                        <div class="slide active-slide">
+                            <div id="tinker-tree"></div>
+                        </div>
                         <div class="slide inactive-slide"><p>Settings</p></div>
                     </div>
                 </div>
