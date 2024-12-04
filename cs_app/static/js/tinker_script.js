@@ -2,7 +2,7 @@
  * This file contains functions to handle various UI interactions including button actions, slider operations,
  * and element manipulation within the dev-container and slider interfaces. Write all components in #dev-container.
  * Css For #dev-container may need small adjustments.
- * 
+ *
  * Tree/Leaf explained:
  * To facilitate the outlines and matching of elements a leaf global object named leafs is used.
  * The leafs object tracks the state of each leaf and its relevant id variations.
@@ -20,13 +20,24 @@
  * - saveCssToStorage(cssContent): Saves textarea css to storage (prevent removal on refresh)
  * - loadCssFromStorage(): Loads textarea css from storage (runs on page load)
  * - resetCssToBase(): Resets the page css and storage css back to default
- * 
+ *
  */
 
-attachEventListeners();
-loadCssToTextarea();
-window.onload = loadCssFromStorage;
+// Save input values before refresh
+$(window).on("beforeunload", function () {
+    saveSlidersToStorage();
+    saveButtonsToStorage();
+    saveSettingsToStorage();
+});
 
+$(window).on("load", function () {
+    loadSlidersFromStorage();
+    loadButtonsFromStorage();
+    loadSettingsFromStorage();
+    loadCssFromStorage();
+    loadCssToTextarea()
+    attachEventListeners();
+});
 
 var leafs = {};
 
@@ -153,7 +164,7 @@ function applyTextAreaCss() {
  * @param {*} cssContent
  */
 function saveCssToStorage(cssContent) {
-    localStorage.setItem("textareaCss", cssContent);
+    sessionStorage.setItem("textareaCss", cssContent);
 }
 
 /**
@@ -161,7 +172,8 @@ function saveCssToStorage(cssContent) {
  * area, and applies the css.
  */
 function loadCssFromStorage() {
-    const savedCss = localStorage.getItem("textareaCss");
+    console.log("loadings");
+    const savedCss = sessionStorage.getItem("textareaCss");
     if (savedCss) {
         $("#css-textarea").val(savedCss);
         applyTextAreaCss();
@@ -175,7 +187,7 @@ function loadCssFromStorage() {
 function resetCssToBase() {
     // Remove all dynamically added styles
     $("style").remove();
-    localStorage.removeItem("textareaCss");
+    sessionStorage.removeItem("textareaCss");
 
     // Get base link
     let baseLink = $('link[rel="stylesheet"][href*="tinker_style.css"]');
@@ -209,35 +221,35 @@ function addTinkerSlider() {
             <div class="slider-cluster__options">
                 <input
                     type="text"
-                    class="css-selector-input slider-input__full"
+                    class="css-selector-input tinker-text-input tinker-text-input__full"
                     spellcheck="false"
                     placeholder="Selector"
                 />
                 <input
                     type="text"
-                    class="css-property-input slider-input__full"
+                    class="css-property-input tinker-text-input tinker-text-input__full"
                     spellcheck="false"
                     placeholder="Property"
                 />
                 <span>
                     <input
                         type="text"
-                        class="css-range-start-input slider-input__half"
+                        class="css-range-start-input tinker-text-input tinker-text-input__half"
                         spellcheck="false"
                         placeholder="Start"
                     />
                     <input
                         type="text"
-                        class="css-range-end-input slider-input__half"
+                        class="css-range-end-input tinker-text-input tinker-text-input__half"
                         spellcheck="false"
                         placeholder="End"
                     />
                     <input
                     type="text"
-                    class="css-units-input slider-input__half"
+                    class="css-units-input tinker-text-input tinker-text-input__half"
                     spellcheck="false"
                     placeholder="Units"
-                />
+                    />
                 </span>
             </div>
             <div class="slider-cluster__slider">
@@ -288,12 +300,12 @@ function printTree(element, indent, leafCounter = { count: 0 }) {
         let leaf = `<div class="leaf" leafId="${leafId}-l"><p>${newIndent}${tagName}</p></div>`;
 
         $(this).attr("leafId", `${leafId}-e`);
-            
+
         leafs[leafId] = {
             leafLeafId: leafId + "-l",
             elementLeafId: leafId + "-e",
             outline: false,
-        }
+        };
 
         $("#tinker-tree").append(leaf);
 
@@ -304,21 +316,153 @@ function printTree(element, indent, leafCounter = { count: 0 }) {
 
 $(".leaf").on("mouseenter", function () {
     let leafLeafId = $(this).attr("leafId");
-    let elementLeafId = leafs[leafLeafId.slice(0,-2)].elementLeafId;
+    let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
     $(`[leafId='${elementLeafId}']`).addClass("blinking-outline");
-})
+});
 
 $(".leaf").on("mouseleave", function () {
     let leafLeafId = $(this).attr("leafId");
-    let elementLeafId = leafs[leafLeafId.slice(0,-2)].elementLeafId;
+    let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
     $(`[leafId='${elementLeafId}']`).removeClass("blinking-outline");
-})
+});
 
 $(".leaf").on("click", function () {
     let leafLeafId = $(this).attr("leafId");
-    let elementLeafId = leafs[leafLeafId.slice(0,-2)].elementLeafId;
+    let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
     $(`[leafId='${elementLeafId}']`).toggleClass("constant-outline");
-})
+});
+
+function darkMode() {
+    $("html").css("--tinker-primary-color", "orange");
+    $("html").css("--tinker-darker-primary", "rgb(255, 140, 0)");
+    $("html").css("--tinker-background-color", "rgb(22, 22, 22)");
+    $("html").css("--tinker-background-shadow-color", "rgb(15, 15, 15)");
+    $("html").css("--tinker-text-color", "white");
+    $("html").css("--tinker-slider-background", "black");
+    $("html").css("--tinker-slider-thumb", "#333");
+    $("html").css("--tinker-slider-shadow", "#333");
+}
+
+function lightMode() {
+    $("html").css("--tinker-primary-color", "rgb(94, 94, 248)");
+    $("html").css("--tinker-darker-primary", "rgb(94, 94, 248)");
+    $("html").css("--tinker-background-color", "white");
+    $("html").css("--tinker-background-shadow-color", "rgb(0, 0, 0, 0)");
+    $("html").css("--tinker-text-color", "black");
+    $("html").css("--tinker-slider-background", "white");
+    $("html").css("--tinker-slider-thumb", "rgb(0, 0, 0, 0)");
+    $("html").css("--tinker-slider-shadow", "rgb(0, 0, 0, 0.2)");
+}
+
+function saveSlidersToStorage() {
+    let sliderValues = [];
+
+    $(".slider-cluster").each(function () {
+        const cluster = $(this);
+
+        const selectorInput = cluster.find(".css-selector-input").val();
+        const propertyInput = cluster.find(".css-property-input").val();
+        const rangeStartInput = cluster.find(".css-range-start-input").val();
+        const rangeEndInput = cluster.find(".css-range-end-input").val();
+        const unitsInput = cluster.find(".css-units-input").val();
+        const sliderValue = cluster.find(".css-range-slider").val();
+
+        const clusterData = {
+            selector: selectorInput,
+            property: propertyInput,
+            rangeStart: rangeStartInput,
+            rangeEnd: rangeEndInput,
+            units: unitsInput,
+            sliderValue: sliderValue,
+        };
+
+        sliderValues.push(clusterData);
+    });
+
+    sessionStorage.setItem("sliderData", JSON.stringify(sliderValues));
+}
+
+function loadSlidersFromStorage() {
+    const savedSliderData = JSON.parse(sessionStorage.getItem("sliderData"));
+
+    if (savedSliderData.length > 0) {
+        savedSliderData.forEach((sliderData, index) => {
+            addTinkerSlider();
+
+            let cluster = $(".slider-cluster").eq(index);
+
+            if (cluster.length) {
+                cluster.find(".css-selector-input").val(sliderData.selector);
+                cluster.find(".css-property-input").val(sliderData.property);
+                cluster.find(".css-range-start-input").val(sliderData.rangeStart);
+                cluster.find(".css-range-end-input").val(sliderData.rangeEnd);
+                cluster.find(".css-units-input").val(sliderData.units);
+                cluster.find(".css-range-slider").val(sliderData.sliderValue);
+                cluster.find(".slider-cluster__slider input").attr("min", sliderData.rangeStart);
+                cluster.find(".slider-cluster__slider input").attr("max", sliderData.rangeEnd);
+
+                let indicator = cluster.find(".indicator");
+
+                setIndicator(sliderData.rangeStart, sliderData.rangeEnd, sliderData.sliderValue, indicator);
+                setCSS(sliderData.selector, sliderData.property, sliderData.units, sliderData.sliderValue);
+            }
+        });
+    } else {
+        addTinkerSlider();
+    }
+}
+
+function saveButtonsToStorage() {
+    let buttonValues = [];
+
+    $(".button-cluster").each(function () {
+        const cluster = $(this);
+
+        const functionInfo = cluster.find(".button-function-input").val();
+
+        const clusterData = {
+            functionInfo: functionInfo,
+        };
+
+        buttonValues.push(clusterData);
+    });
+
+    sessionStorage.setItem("buttonData", JSON.stringify(buttonValues));
+}
+
+function loadButtonsFromStorage() {
+    const savedButtonData = JSON.parse(sessionStorage.getItem("buttonData"));
+
+    if (savedButtonData.length > 0) {
+        savedButtonData.forEach((buttonData, index) => {
+            addTinkerButton();
+
+            let cluster = $(".button-cluster").eq(index);
+            cluster.find(".button-function-input").val(buttonData.functionInfo);
+        });
+    } else {
+        addTinkerButton();
+    }
+}
+
+function saveSettingsToStorage() {
+    const settingsData = {
+        displayMode: $("html").css("--current-display-mode"),
+        backgroundColor: $("dev-container").css("background-color"),
+    };
+
+    sessionStorage.setItem("settingsData", JSON.stringify(settingsData));
+}
+
+function loadSettingsFromStorage() {
+    const settingsData = JSON.parse(sessionStorage.getItem("settingsData"));
+
+    if (settingsData.displayMode == "light") {
+        lightMode();
+    }
+
+    $("dev-container").css("background-color", settingsData.backgroundColor);
+}

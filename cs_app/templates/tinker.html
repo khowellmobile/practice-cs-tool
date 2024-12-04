@@ -21,11 +21,11 @@
                 <div id="dev-container">
                     <div>
                         <h1 id="tester">Hello</h1>
-                        <h2>Bye</h3>
+                        <h2>Bye</h2>
                     </div>
                     <div>
                         <h1>Hello1</h1>
-                        <h2>Bye1</h3>
+                        <h2>Bye1</h2>
                     </div>
                 </div>
                 <div class="sep-v"></div>
@@ -34,8 +34,8 @@
                         <div class="tab inactive-tab"><p>CSS</p></div>
                         <div class="tab inactive-tab"><p>Sliders</p></div>
                         <div class="tab inactive-tab"><p>Buttons</p></div>
-                        <div class="tab active-tab"><p>Tree</p></div>
-                        <div class="tab inactive-tab"><p>Settings</p></div>
+                        <div class="tab inactive-tab"><p>Tree</p></div>
+                        <div class="tab active-tab"><p>Settings</p></div>
                     </div>
                     <div class="sep-h"></div>
                     <div id="slides">
@@ -53,79 +53,36 @@
                             ></textarea>
                         </div>
                         <div class="slide inactive-slide">
-                            <div id="sliders">
-                                <div class="slider-cluster">
-                                    <div class="slider-cluster__options">
-                                        <input
-                                            type="text"
-                                            class="css-selector-input tinker-text-input tinker-text-input__full"
-                                            spellcheck="false"
-                                            placeholder="Selector"
-                                        />
-                                        <input
-                                            type="text"
-                                            class="css-property-input tinker-text-input tinker-text-input__full"
-                                            spellcheck="false"
-                                            placeholder="Property"
-                                        />
-                                        <span>
-                                            <input
-                                                type="text"
-                                                class="css-range-start-input tinker-text-input tinker-text-input__half"
-                                                spellcheck="false"
-                                                placeholder="Start"
-                                            />
-                                            <input
-                                                type="text"
-                                                class="css-range-end-input tinker-text-input tinker-text-input__half"
-                                                spellcheck="false"
-                                                placeholder="End"
-                                            />
-                                            <input
-                                                type="text"
-                                                class="css-units-input tinker-text-input tinker-text-input__half"
-                                                spellcheck="false"
-                                                placeholder="Units"
-                                            />
-                                        </span>
-                                    </div>
-                                    <div class="slider-cluster__slider">
-                                        <div class="indicator"><p class="indicator-text">0</p></div>
-                                        <input
-                                            type="range"
-                                            min="0.00"
-                                            max="50"
-                                            step="0.1"
-                                            value="0"
-                                            class="css-range-slider"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="sep-h"></div>
-                            </div>
+                            <div id="sliders"></div>
                             <button id="add-slider-button" onclick="addTinkerSlider()"><p>Add Slider</p></button>
                         </div>
                         <div class="slide inactive-slide">
-                            <div id="tinker-buttons">
-                                <div class="button-cluster">
-                                    <div class="button-cluster__inputs">
-                                        <input
-                                            type="text"
-                                            class="button-function-input tinker-text-input tinker-text-input__full"
-                                            spellcheck="false"
-                                            placeholder="Function(args)"
-                                        />
-                                    </div>
-                                    <button class="tinker-function-button">Run Function</button>
+                            <div id="tinker-buttons"></div>
+                            <button id="add-slider-button" onclick="addTinkerButton()"><p>Add Button</p></button>
+                        </div>
+                        <div class="slide inactive-slide">
+                            <div id="tinker-tree"></div>
+                        </div>
+                        <div class="slide active-slide">
+                            <div id="tinker-settings">
+                                <div id="display-mode-settings">
+                                    <h4>Display mode:</h4>
+                                    <button onclick="lightMode()">Light</button>
+                                    <button onclick="darkMode()">Dark</button>
+                                </div>
+                                <div class="sep-h"></div>
+                                <div id="dev-container-settings">
+                                    <h4>Dev Area Background Color:</h4>
+                                    <input
+                                        type="text"
+                                        class="tinker-text-input tinker-text-input__full"
+                                        spellcheck="false"
+                                        placeholder="rgb(255, 255, 255), rgba(0, 0, 0, 0), #ffffff, ..."
+                                    />
                                 </div>
                                 <div class="sep-h"></div>
                             </div>
-                            <button id="add-slider-button" onclick="addTinkerButton()"><p>Add Button</p></button>
                         </div>
-                        <div class="slide active-slide">
-                            <div id="tinker-tree"></div>
-                        </div>
-                        <div class="slide inactive-slide"><p>Settings</p></div>
                     </div>
                 </div>
             </div>

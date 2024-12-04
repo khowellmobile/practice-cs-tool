@@ -5,12 +5,15 @@
 /* all css written below here is for the ui and functionality of the page */
 
 :root {
-    --sm-gap: 0.5rem;
-    --md-gap: 1rem;
-    --lg-gap: 2rem;
-
-    --primary-blue: rgb(35, 35, 73);
-    --primary-grey: rgb(235, 235, 235);
+    --current-display-mode: "dark";
+    --tinker-primary-color: orange;
+    --tinker-darker-primary: rgb(255, 140, 0);
+    --tinker-background-color: rgb(22, 22, 22);
+    --tinker-background-shadow-color: rgb(15, 15, 15);
+    --tinker-text-color: white;
+    --tinker-slider-background: black;
+    --tinker-slider-thumb: #333;
+    --tinker-slider-shadow: rgb(0, 0, 0, 1);
 
     font-size: 16px;
 }
@@ -20,8 +23,8 @@ html {
 }
 
 body {
-    background-color: rgb(22, 22, 22);
-    box-shadow: inset 0 0 30px 20px rgb(15, 15, 15);
+    background-color: var(--tinker-background-color);
+    box-shadow: inset 0 0 30px 20px var(--tinker-background-shadow-color);
 }
 
 * {
@@ -60,7 +63,7 @@ body {
     width: 100%;
     height: 100%;
 
-    color: white;
+    color: var(--tinker-text-color);
     border-radius: 0.25rem;
     text-align: center;
 
@@ -75,17 +78,17 @@ body {
 }
 
 .active-tab {
-    box-shadow: inset 0 -2px 0 0 orange;
+    box-shadow: inset 0 -2px 0 0 var(--tinker-primary-color);
 }
 
 .slide {
     width: 100%;
     height: 100%;
-    padding: var(--md-gap);
+    padding: 1rem;
 }
 
 .slide > p {
-    color: white;
+    color: var(--tinker-text-color);
 }
 
 .active-slide {
@@ -98,7 +101,8 @@ body {
 
 .slide:nth-child(1),
 .slide:nth-child(2),
-.slide:nth-child(3) {
+.slide:nth-child(3),
+.slide:nth-child(4) {
     flex-direction: column;
 }
 
@@ -107,7 +111,7 @@ body {
     padding: 0.5rem;
     margin: 0rem 0rem 0.5rem 0.5rem;
 
-    background-color: orange;
+    background-color: var(--tinker-primary-color);
     cursor: pointer;
     position: relative;
     border: none;
@@ -161,7 +165,7 @@ body {
     font-family: "Poppins", sans-serif;
 
     background-color: rgb(0, 0, 0, 0);
-    color: white;
+    color: var(--tinker-text-color);
     border: none;
     border-radius: 0.1rem;
     outline: 1px solid rgb(100, 100, 100);
@@ -198,7 +202,7 @@ body {
 }
 
 .indicator > p {
-    color: white;
+    color: var(--tinker-text-color);
     cursor: default;
 }
 
@@ -208,21 +212,21 @@ body {
 
     -webkit-appearance: none;
     appearance: none;
-    background: #111;
+    background: var(--tinker-slider-background);
     outline: none;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+    box-shadow: inset 0 0 5px var(--tinker-slider-shadow);
 }
 
 .css-range-slider::-webkit-slider-thumb {
     width: 15px;
     height: 15px;
 
-    background: orange;
+    background: var(--tinker-primary-color);
     border: 4px solid #333;
     border-radius: 50%;
-    box-shadow: -407px 0 0 400px orange;
+    box-shadow: -407px 0 0 400px var(--tinker-primary-color);
     cursor: pointer;
     -webkit-appearance: none;
 }
@@ -250,7 +254,7 @@ body {
     height: calc(2rem - 2px);
     padding: 0.1rem;
 
-    background-color: orange;
+    background-color: var(--tinker-primary-color);
     border: none;
     border-radius: 0.25rem;
     outline: none;
@@ -341,9 +345,9 @@ body {
 #css-textarea {
     width: 100%;
     height: 100%;
-    padding: var(--sm-gap);
+    padding: 0.5rem;
 
-    color: white;
+    color: var(--tinker-text-color);
     background-color: rgb(0, 0, 0, 0);
     resize: none;
 }
@@ -389,7 +393,7 @@ body {
     height: 2rem;
 
     /* Darker orange due to lighter appearence at buttons position */
-    background-color: rgb(255, 140, 0);
+    background-color: var(--tinker-darker-primary);
     border-radius: 0.5rem;
     cursor: pointer;
     transition: all ease 0.25s;
@@ -425,6 +429,39 @@ body {
 }
 
 #tinker-tree p {
-    color: white;
+    color: var(--tinker-text-color);
     white-space: pre;
+}
+
+#tinker-settings {
+    width: 100%;
+    height: 100%;
+}
+
+#tinker-settings h4 {
+    padding-bottom: 0.5rem;
+
+    color: var(--tinker-text-color);
+    font-weight: 400;
+}
+
+#display-mode-settings {
+    padding: 0.5rem;
+}
+
+#display-mode-settings button {
+    width: 7rem;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+
+    background-color: var(--tinker-primary-color);
+    cursor: pointer;
+    position: relative;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+}
+
+#dev-container-settings {
+    padding: 0.5rem;
 }
