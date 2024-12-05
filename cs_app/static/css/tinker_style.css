@@ -1,12 +1,3 @@
-/* Write all dev css below here */
-
-/* Write all dev css above here */
-
-/* 
-All css written below here is for the ui and functionality of the page.
-Alter it at your own risk.
-*/
-
 :root {
     --current-display-mode: "dark";
     --tinker-primary-color: orange;
