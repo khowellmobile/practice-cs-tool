@@ -3,450 +3,586 @@
  * and element manipulation within the dev-container and slider interfaces. Write all components in #dev-container.
  * Css For #dev-container may need small adjustments.
  *
+ * Tree/Leaf explained:
+ * To facilitate the outlines and matching of elements a leaf global object named leafs is used.
+ * The leafs object tracks the state of each leaf and its relevant id variations.
+ * Each element/leaf pair is given a "leafId". The number is then stored in a custom
+ * attribute named leadId on each leaf and element. Elements leafIds are suffixed by "-e"
+ * and leafs are suffixed by "-l"
+ *
  * Global Variables:
- * - buttonAssignments: Maps button IDs to corresponding functions to execute on click.
- * - leafStates: Tracks the state of leaf elements in the tree structure.
- * - sliderStates: Keeps track of the state of sliders and their configurations.
- * - activeElement: The currently active element in the UI.
+ * - leafs: object to track the state of leafs. Each leaf matches an html element.
  *
  * Functions:
- * - $(document).ready(function () { ... }): Initializes the page by populating elements, attaching event handlers.
- * - populateLeafs(identifier, indent, k, i): Recursively populates tree structure with leaf elements.
- * - getLeaf(eId, eTag, indent, k): Creates HTML for a leaf element based on its attributes.
- * - populateSliders(): Creates and appends slider elements to the page.
- * - populateSliderAssigns(): Creates and appends slider assignment elements to the page.
- * - populateButtons(): Creates and appends buttons with assigned actions to the page.
- * - attachLeafActionHandlers(): Attaches event handlers to leaf elements for interaction.
- * - attachSliderActionHandlers(): Attaches event handlers to sliders for user interactions.
- * - activateSlider(sliderId): Activates a slider and updates its state and visual indicators.
- * - deactivateSlider(sliderId): Deactivates a slider and updates its state and visual indicators.
- * - toggleOutline(outlineOn): Toggles the outline appearance of the active element.
- * - toggleOutlineAll(identifier): Toggles the outline appearance for all elements within a given container.
- * - changeCss(parentId, val): Updates the CSS property of an element based on slider input.
+ * - attachEventListeners(): Attaches event listeners to elements
+ * - attachRangeEventListeners(): Attaches event listeners to range input elements
+ * - attachButtonEventListeners(): Attaches event listeners to button elements
+ * - loadCssToTextarea(): Loads CSS from the tinker CSS file into the text area
+ * - applyTextAreaCss(): Applies CSS in the textarea to the page
+ * - saveCssToStorage(cssContent): Saves textarea CSS to storage (prevents removal on refresh)
+ * - loadCssFromStorage(): Loads textarea CSS from storage (runs on page load)
+ * - resetCssToBase(): Resets the page CSS and storage CSS back to default
+ * - setIndicator(min, max, value, indicator): Sets the indicator for a range element
+ * - setCSS(selector, property, units, value): Sets CSS properties for a given selector
+ * - printTree(element, indent, leafCounter = { co }): Prints a tree structure of the elements
+ * - darkMode(): Activates dark mode for the page
+ * - lightMode(): Activates light mode for the page
+ * - addTinkerSlider(): Adds a slider element to the page
+ * - saveSlidersToStorage(): Saves slider states to storage
+ * - loadSlidersFromStorage(): Loads slider states from storage
+ * - resetTinkerSliders(): Resets the sliders to their default state
+ * - addTinkerButton(): Adds a button element to the page
+ * - saveButtonsToStorage(): Saves button states to storage
+ * - loadButtonsFromStorage(): Loads button states from storage
+ * - resetTinkerButtons(): Resets the buttons to their default state
+ * - saveSettingsToStorage(): Saves settings to storage
+ * - loadSettingsFromStorage(): Loads settings from storage
  */
 
-var buttonAssignments = {
-    "b-1": `foo()`,
-    "b-2": `foo1()`,
-    "b-3": `foo2()`,
-    "b-4": null,
-    "b-5": null,
-    "b-6": null,
-    "b-7": null,
-    "b-8": null,
-    "b-9": null,
-    "b-10": null,
-};
-
-/*----------------------------------- Dev Functions Go Here -----------------------------------*/
-
-$(".pill")
-    .on("mouseenter", function () {
-        $(this).css("width", "21.9rem");
-    })
-    .on("mouseleave", function () {
-        $(this).css("width", "3.85rem");
-    });
-
-function foo() {
-    $(".mutate").toggleClass("m-hide m-show");
-}
-
-function foo1() {
-    $(".pill").css("width", "3.85rem");
-}
-
-function foo2() {
-    $(".pill").css("width", "21.9rem");
-}
-
-/*---------------------------------------------------------------------------------------------*/
-
-/**
- * Functions written below are used to run the ui and functionality of the page.
- */
-
-// Generic object added for clarity.
-// Other objects added in populateLeafs().
-var leafStates = {
-    "k-?-l": {
-        "k-value": null,
-        "slider-id": null,
-    },
-};
-
-// Generic object added for clarity.
-// Other objects added in populateSliders().
-var sliderStates = {
-    "s-?": {
-        "slider-assign-id": "s-?-a",
-        "k-l": null,
-        units: null,
-        property: null,
-        assigned: false,
-    },
-};
-
-var activeElement = "";
-
-/**
- * Initializes the page by populating elements, attaching event handlers, and setting up listeners.
- *
- * This function is called when the document is ready. It populates leaf elements, sliders, slider assignments,
- * and attaches event handlers to sliders and leaf elements. It also sets up change listeners for outline checkboxes.
- */
-$(document).ready(function () {
-    // Populating page elements
-    populateLeafs("#dev-container", "", "k", "1");
-    populateSliders();
-    populateSliderAssigns();
-    populateButtons();
-
-    // Attaching listeners to sliders
-    attachSliderActionHandlers();
-
-    // Attaching listeners to leafs
-    attachLeafActionHandlers();
-
-    $("#outline-check").on("change", function () {
-        toggleOutline($(this).is(":checked"));
-    });
-
-    $("#outline-check-all").on("change", function () {
-        toggleOutlineAll("#dev-container");
-    });
+// Save input values before refresh
+$(window).on("beforeunload", function () {
+    saveSlidersToStorage();
+    saveButtonsToStorage();
+    saveSettingsToStorage();
 });
 
-/**
- * Recursively populates tree structure with leaf elements.
- *
- * @param {string} identifier - The jQuery selector to identify the parent element.
- * @param {string} indent - The current indentation level for visual representation.
- * @param {string} k - The key value used to track the leaf element.
- * @param {string} i - The index used for numbering child elements.
- */
-function populateLeafs(identifier, indent, k, i) {
-    $element = $(identifier);
-    eId = $element.attr("id");
-    eTag = $element.prop("tagName");
+// Load needed information from storage and attach event listeners
+$(window).on("load", function () {
+    loadSlidersFromStorage();
+    loadButtonsFromStorage();
+    loadSettingsFromStorage();
+    loadCssFromStorage();
+    loadCssToTextarea();
+    attachEventListeners();
+});
 
-    $element.attr("k-value", k);
-
-    var leaf = getLeaf(eId, eTag, indent, k);
-
-    leafStates[k + "-l"] = {
-        "k-value": k,
-        "slider-id": null,
-    };
-
-    $("#tree-container").append(leaf);
-
-    $element.children().each(function () {
-        // Recursive call
-        populateLeafs($(this), indent + "---", k + "-" + i++, 1);
-    });
-}
+var leafs = {};
 
 /**
- * Creates HTML for a leaf element based on its attributes.
- *
- * @param {string} eId - The ID of the element.
- * @param {string} eTag - The tag name of the element.
- * @param {string} indent - The current indentation level for visual representation.
- * @param {string} k - The key value used to track the leaf element.
- * @returns {string} - The HTML string for the leaf element.
+ * Function to attach event listeners
  */
-function getLeaf(eId, eTag, indent, k) {
-    if (eId == undefined) {
-        eId = "";
-    }
+function attachEventListeners() {
+    $(".tab").on("click", function () {
+        let index = $(this).index();
 
-    var leaf = `<div class="leaf" k-value='${k}-l'>
-            <div>${indent}<p>${eTag} ${eId}</p></div><div class='indicators-div'></div>
-        </div>
-    `;
+        // Sets proper tab as active
+        $(".active-tab").toggleClass("active-tab inactive-tab");
 
-    return leaf;
-}
+        $(this).toggleClass("active-tab inactive-tab");
 
-/**
- * Creates and appends slider elements to the page.
- *
- * This function generates slider HTML for a predefined number of sliders and appends them to the container.
- * It also initializes the sliderStates object with relevant slider information.
- */
-function populateSliders() {
-    // Number of sliders to add
-    var numberOfSliders = 9;
+        // Sets matching slide as active
+        $(".active-slide").toggleClass("active-slide inactive-slide");
 
-    for (var i = 1; i <= numberOfSliders; i++) {
-        var sliderHtml = `
-            <div class="slider-container">
-                <span>s-${i}</span>
-                <input type="text" value="1.0" class="sliderInput"/>
-                <div id="s-${i}" class="input-container">
-                    <input type="text" value="0.0" class="slider-start"/>
-                    <input
-                        type="range"
-                        min="0.00"
-                        max="10.0"
-                        step="0.01"
-                        value="1.00"
-                        class="sliderRange"
-                    />
-                    <input type="text" value="10.0" class="slider-end"/>
-                </div>
-            </div>
-        `;
-
-        $("#d1-1").append(sliderHtml);
-
-        sliderStates["s-" + i] = {
-            "slider-assign-id": `s-${i}-a`,
-            "k-l": null,
-            units: null,
-            property: null,
-            assigned: false,
-        };
-    }
-}
-
-/**
- * Creates and appends slider assignment elements to the page.
- *
- * This function generates HTML for slider assignment options and appends them to the element options container.
- */
-function populateSliderAssigns() {
-    let e = $("#element-options__slider-assigns");
-    for (let i = 1; i <= 9; i++) {
-        e.append(
-            `
-            <div id="s-${i}-a" class="grid-item mini-card">
-                <div class='dot dot-hallow'></div>
-                <span>s-${i}</span>
-                <input type="text" placeholder="" class="slider-prop"/>
-                <select id="unit-select" class="slider-units">
-                    <option value="" disabled selected></option>
-                    <option value="px">px</option>
-                    <option value="em">em</option>
-                    <option value="rem">rem</option>
-                    <option value="%">%</option>
-                </select>
-            </div>
-            `
-        );
-    }
-}
-
-/**
- * Creates and appends buttons with assigned actions to the page.
- *
- * This function generates HTML for buttons based on the buttonAssignments object and appends them to the container.
- */
-function populateButtons() {
-    // Loop to create and append the buttons
-    for (let i = 1; i <= 10; i++) {
-        let id = "b-" + i;
-        var buttonHtml = `
-            <button 
-                id="${id}" 
-                class="button-1" 
-                onclick="${buttonAssignments[id]}"
-            >${id}</button>
-        `;
-
-        $("#d2-1").append(buttonHtml);
-    }
-}
-
-/**
- * Attaches event handlers to leaf elements for interaction.
- *
- * This function sets up mouse enter, click, and mouse leave event handlers to manage leaf element behavior
- * and update the active element's information.
- */
-function attachLeafActionHandlers() {
-    $(".leaf").on("mouseenter", function () {
-        let k = $(this).attr("k-value").slice(0, -2);
-
-        $(`[k-value='${k}']`).addClass("hovered");
+        $("#tinker-slides .slide").eq(index).toggleClass("active-slide inactive-slide");
     });
 
-    $(".leaf").on("click", function () {
-        // Getting/setting variables
-        const k = $(this).attr("k-value").slice(0, -2);
-        const element = $(`[k-value='${k}']`);
-        const tagName = element.prop("tagName");
-        const id = element.attr("id") || "No ID";
-        const classList = element.attr("class").split(/\s+/) || "No Classes";
+    $("#css-textarea").on("keydown", function (e) {
+        if (e.key == "Tab") {
+            e.preventDefault();
 
-        activeElement = element;
+            var cursorPos = this.selectionStart;
+            var textBefore = this.value.substring(0, cursorPos);
+            var textAfter = this.value.substring(cursorPos);
 
-        $(this).toggleClass("clicked");
+            this.value = textBefore + "    " + textAfter;
 
-        $("#outline-check").prop("checked", element.hasClass("outlineP"));
+            this.selectionStart = this.selectionEnd = cursorPos + 4;
+        } else if (e.key == "{") {
+            e.preventDefault();
 
-        $("#e-classes").empty();
+            var cursorPos = this.selectionStart;
+            var textBefore = this.value.substring(0, cursorPos);
+            var textAfter = this.value.substring(cursorPos);
 
-        for (e in classList) {
-            $("#e-classes").append(`<li>${classList[e]}</li>`);
+            this.value = textBefore + "{}" + textAfter;
+
+            this.selectionStart = this.selectionEnd = cursorPos + 1;
         }
-        $("#e-tag").html(`<b>Tag Name: </b>${tagName}`);
-        $("#e-id").html(`<b>Id: </b>${id}`);
+    });
+
+    $(".leaf").on("mouseenter", function () {
+        let leafLeafId = $(this).attr("leafId");
+        let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
+
+        $(`[leafId='${elementLeafId}']`).addClass("blinking-outline");
     });
 
     $(".leaf").on("mouseleave", function () {
-        let k = $(this).attr("k-value").slice(0, -2);
+        let leafLeafId = $(this).attr("leafId");
+        let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
-        $(`[k-value='${k}']`).removeClass("hovered");
+        $(`[leafId='${elementLeafId}']`).removeClass("blinking-outline");
     });
+
+    $(".leaf").on("click", function () {
+        let leafLeafId = $(this).attr("leafId");
+        let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
+
+        $(`[leafId='${elementLeafId}']`).toggleClass("constant-outline");
+    });
+
+    attachRangeEventListeners();
+    attachButtonEventListeners();
+
+    $("#run-css-button").on("click", applyTextAreaCss);
+    $("#reset-css-button").on("click", resetCssToBase);
 }
 
 /**
- * Attaches event handlers to sliders for user interactions.
- *
- * This function sets up input change and range input event handlers to update slider values and CSS properties.
+ * Attaches relevany event listeners to sliders
  */
-function attachSliderActionHandlers() {
-    $(".sliderRange").on("input", function () {
-        let parentId = $(this).parent().attr("id");
-        e = $("#" + parentId).prev("input");
-        e.val($(this).val());
+function attachRangeEventListeners() {
+    // Update the indicator position when the slider value changes
+    $(".css-range-slider")
+        .off("input")
+        .on("input", function () {
+            let value = $(this).val();
+            let indicator = $(this).parent().children(1);
+            let inputs = $(this).parent().parent().children(1);
+            let selector = inputs.find(".css-selector-input").val();
+            let property = inputs.find(".css-property-input").val();
+            let units = inputs.find(".css-units-input").val();
 
-        changeCss(parentId, $(this).val());
-    });
+            setIndicator($(this).attr("min"), $(this).attr("max"), value, indicator);
+            setCSS(selector, property, units, value);
+        });
 
-    $(".sliderInput").on("change", function () {
-        let parent = $(this).next("div");
-        e = parent.children().eq(1);
-        e.val($(this).val());
+    $(".css-range-start-input, .css-range-end-input")
+        .off("input")
+        .on("input", function () {
+            let cluster = $(this).closest(".slider-cluster");
+            let slider = cluster.find(".css-range-slider");
 
-        let parentId = parent.attr("id");
-
-        changeCss(parentId, $(this).val());
-    });
-
-    $(".slider-start").on("change", function () {
-        e = $(this).next("input");
-        e.attr("min", $(this).val());
-    });
-
-    $(".slider-end").on("change", function () {
-        e = $(this).prev("input");
-        e.attr("max", $(this).val());
-    });
-
-    $(".slider-prop").on("change", function () {
-        sliderId = $(this).parent().attr("id").slice(0, -2);
-
-        sliderStates[sliderId]["property"] = $(this).val();
-    });
-
-    $(".slider-units").on("change", function () {
-        sliderId = $(this).parent().attr("id").slice(0, -2);
-
-        sliderStates[sliderId]["units"] = $(this).val();
-    });
-
-    $(".grid-item .dot").on("click", function () {
-        sliderId = $(this).parent().attr("id").slice(0, -2);
-        sliderStates[sliderId]["k-l"] = activeElement.attr("k-l");
-
-        if ($(this).hasClass("dot-hallow")) {
-            activateSlider(sliderId);
-        } else {
-            deactivateSlider(sliderId);
-        }
-
-        $(this).toggleClass("dot-hallow dot-solid");
-    });
+            if ($(this).hasClass("css-range-start-input")) {
+                slider.attr("min", $(this).val());
+            } else if ($(this).hasClass("css-range-end-input")) {
+                slider.attr("max", $(this).val());
+            }
+        });
 }
 
 /**
- * Activates a slider and updates its state and visual indicators.
- *
- * @param {string} sliderId - The ID of the slider to be activated.
+ * Attaches relevant event listeners to function buttons
  */
-function activateSlider(sliderId) {
-    kL = activeElement.attr("k-value") + "-l";
-    sliderNum = sliderId[sliderId.length - 1];
+function attachButtonEventListeners() {
+    $(".button-function-input")
+        .off("input")
+        .on("input", function () {
+            let cluster = $(this).closest(".button-cluster");
+            let button = cluster.find(".tinker-function-button");
+            let value = $(this).val();
 
-    leafStates[kL]["slider-id"] = sliderId;
-    sliderStates[sliderId]["k-l"] = kL;
-    sliderStates[sliderId]["assigned"] = true;
-
-    $(`[k-value='${kL}'] > .indicators-div`).append(
-        `<div id='dot-${sliderNum}'class='dot dot-solid'><b>${sliderNum}</b></div>`
-    );
+            button.off("click").on("click", function () {
+                eval(value);
+            });
+        });
 }
 
 /**
- * Deactivates a slider and updates its state and visual indicators.
- *
- * @param {string} sliderId - The ID of the slider to be deactivated.
+ * Loads css from tinker_style.css link into the text area.
  */
-function deactivateSlider(sliderId) {
-    kL = activeElement.attr("k-value") + "-l";
-    sliderNum = sliderId[sliderId.length - 1];
+function loadCssToTextarea() {
+    const linkElement = document.querySelector('link[rel="stylesheet"][href*="tinker_style.css"]');
 
-    leafStates[kL]["slider-id"] = "";
-    sliderStates[sliderId]["k-l"] = "";
-    sliderStates[sliderId]["assigned"] = false;
+    if (linkElement) {
+        const stylesheetUrl = linkElement.href;
 
-    $(`#dot-${sliderNum}`).remove();
-}
-
-/**
- * Toggles the outline appearance of the active element.
- *
- * @param {boolean} outlineOn - Whether to turn the outline on or off.
- */
-function toggleOutline(outlineOn) {
-    kL = activeElement.attr("k-value") + "-l";
-
-    if (outlineOn) {
-        activeElement.addClass("outlineP");
-        $(`[k-value='${kL}'] > .indicators-div`).append("<div class='blue-box'></div>");
+        // Fetch file and load into textarea
+        fetch(stylesheetUrl)
+            .then((response) => response.text())
+            .then((cssContent) => {
+                $("#css-textarea").val(cssContent);
+            })
+            .catch((error) => {
+                console.error("Error loading CSS file:", error);
+            });
     } else {
-        activeElement.removeClass("outlineP");
-        $(`[k-value='${kL}'] > .indicators-div .blue-box`).remove();
+        console.error("Stylesheet not found");
     }
 }
 
 /**
- * Toggles the outline appearance for all elements within a given container.
- *
- * @param {string} identifier - The jQuery selector to identify the container element.
+ * Applys the css contained within the text are to the page.
  */
-function toggleOutlineAll(identifier) {
-    $element = $(identifier);
+function applyTextAreaCss() {
+    const cssContent = $("#css-textarea").val();
+    const styleElement = $("<style></style>");
 
-    $element.toggleClass("outlineR");
+    styleElement.html(cssContent);
 
-    $element.children().each(function () {
-        toggleOutlineAll($(this));
+    $("head").append(styleElement);
+
+    saveCssToStorage(cssContent);
+}
+
+/**
+ * Saves the passed variable to a local storage item named "textareaCss"
+ *
+ * @param {*} cssContent
+ */
+function saveCssToStorage(cssContent) {
+    sessionStorage.setItem("textareaCss", cssContent);
+}
+
+/**
+ * Loads an item called "textareaCss" from local storage, loads it into the text
+ * area, and applies the css.
+ */
+function loadCssFromStorage() {
+    const savedCss = sessionStorage.getItem("textareaCss");
+    if (savedCss) {
+        $("#css-textarea").val(savedCss);
+        applyTextAreaCss();
+    }
+}
+
+/**
+ * Resets the pages css back to whatever is contained within "tinker_style.css"
+ * This function will also clear the "textareaCss" from local storage.
+ */
+function resetCssToBase() {
+    // Remove all dynamically added styles
+    $("style").remove();
+    sessionStorage.removeItem("textareaCss");
+
+    // Get base link
+    let baseLink = $('link[rel="stylesheet"][href*="tinker_style.css"]');
+
+    // Add link if no longer present
+    if (baseLink.length === 0) {
+        $("head").append('<link rel="stylesheet" href="{% static \'css/tinker_style.css\' %}" />');
+    }
+
+    loadCssToTextarea();
+}
+
+/**
+ * Calculates and sets the proper offset and
+ * value for the indicator on a slider
+ *
+ * @param {int} min - minimum value of the slider range
+ * @param {int} max - maximum value of the slider range
+ * @param {int} value - Current value of the slider
+ * @param {$element} indicator - Indicator element for the slider
+ */
+function setIndicator(min, max, value, indicator) {
+    let percentThrough = ((value - min) / (max - min)) * 100;
+
+    // Offset to avoid additional movement due to thumb width
+    let leftOffset = (percentThrough / 100) * 15;
+
+    indicator.css("left", `calc(${percentThrough}% - ${leftOffset}px)`);
+
+    $(indicator).find(".indicator-text").text(value);
+}
+
+/**
+ * Uses jquery to set the css of a DOM element using the input information
+ *
+ * @param {string} selector - CSS selector to select the jquery element
+ * @param {string} property - CSs property to change
+ * @param {string} units - Units of the CSS property (eq. rem, px, vh,...)
+ * @param {int} value - The value to set the property to
+ */
+function setCSS(selector, property, units, value) {
+    $(selector).css(`${property}`, `${value}${units}`);
+}
+
+printTree($("#dev-container"), "");
+
+/**
+ * Recursive function to print the DOM elements in the tinker tree
+ *
+ * The function works by creating a "leaf" that correlates to a real
+ * DOM element by use of a leaf-id. The leafs are then stored in a
+ * global object that tracks their relevant states.
+ *
+ * @param {$element} element - The current element to print the children of
+ * @param {string} indent - The amount to indent the text by for formatting
+ * @param {object} leafCounter - The leaf number that correlates to the current element
+ * @returns
+ */
+function printTree(element, indent, leafCounter = { count: 0 }) {
+    let numOfChildren = element.children().length;
+
+    // Base Case: If no children, stop recursion
+    if (numOfChildren === 0) {
+        return;
+    }
+
+    let newIndent = indent + "    ";
+
+    element.children().each(function () {
+        let leafId = leafCounter.count++;
+        let tagName = $(this).prop("nodeName").toLowerCase();
+        let leaf = `<div class="leaf" leafId="${leafId}-l"><p>${newIndent}${tagName}</p></div>`;
+
+        $(this).attr("leafId", `${leafId}-e`);
+
+        leafs[leafId] = {
+            leafLeafId: leafId + "-l",
+            elementLeafId: leafId + "-e",
+            outline: false,
+        };
+
+        $("#tinker-tree").append(leaf);
+
+        // Recursive call
+        printTree($(this), newIndent, leafCounter);
     });
 }
 
 /**
- * Updates the CSS property of an element based on slider input.
- *
- * @param {string} parentId - The ID of the slider container element.
- * @param {string} val - The value from the slider input to set.
+ * Sets all necessary css variables to dark mode variations
  */
-function changeCss(parentId, val) {
-    let units = sliderStates[parentId]["units"];
-    let property = sliderStates[parentId]["property"];
-    let kL = sliderStates[parentId]["k-l"];
-    let kval = leafStates[kL]["k-value"];
+function darkMode() {
+    $("html").css("--current-display-mode", "dark");
+    $("html").css("--tinker-primary-color", "orange");
+    $("html").css("--tinker-darker-primary", "rgb(255, 140, 0)");
+    $("html").css("--tinker-background-color", "rgb(22, 22, 22)");
+    $("html").css("--tinker-background-shadow-color", "rgb(15, 15, 15)");
+    $("html").css("--tinker-text-color", "white");
+    $("html").css("--tinker-slider-background", "black");
+    $("html").css("--tinker-slider-thumb", "#333");
+    $("html").css("--tinker-slider-shadow", "#333");
+}
 
-    if (units == null) {
-        units = "";
+/**
+ * Sets all necessary css variables to light mode variations
+ */
+function lightMode() {
+    $("html").css("--current-display-mode", "light");
+    $("html").css("--tinker-primary-color", "rgb(94, 94, 248)");
+    $("html").css("--tinker-darker-primary", "rgb(94, 94, 248)");
+    $("html").css("--tinker-background-color", "white");
+    $("html").css("--tinker-background-shadow-color", "rgb(0, 0, 0, 0)");
+    $("html").css("--tinker-text-color", "black");
+    $("html").css("--tinker-slider-background", "white");
+    $("html").css("--tinker-slider-thumb", "rgb(0, 0, 0, 0)");
+    $("html").css("--tinker-slider-shadow", "rgb(0, 0, 0, 0.2)");
+}
+
+/**
+ * Adds default slider html to the slider container and attaches event listeners to
+ * new slider.
+ */
+function addTinkerSlider() {
+    let sliderHtml = `
+        <div class="slider-cluster">
+            <div class="slider-cluster__options">
+                <input
+                    type="text"
+                    class="css-selector-input tinker-text-input tinker-text-input__full"
+                    spellcheck="false"
+                    placeholder="Selector"
+                />
+                <input
+                    type="text"
+                    class="css-property-input tinker-text-input tinker-text-input__full"
+                    spellcheck="false"
+                    placeholder="Property"
+                />
+                <span>
+                    <input
+                        type="text"
+                        class="css-range-start-input tinker-text-input tinker-text-input__half"
+                        spellcheck="false"
+                        placeholder="Start"
+                    />
+                    <input
+                        type="text"
+                        class="css-range-end-input tinker-text-input tinker-text-input__half"
+                        spellcheck="false"
+                        placeholder="End"
+                    />
+                    <input
+                    type="text"
+                    class="css-units-input tinker-text-input tinker-text-input__half"
+                    spellcheck="false"
+                    placeholder="Units"
+                    />
+                </span>
+            </div>
+            <div class="slider-cluster__slider">
+                <div class="indicator"><p class="indicator-text">0</p></div>
+                <input type="range" min="0.00" max="50" step="0.1" value="0" class="css-range-slider" />
+            </div>
+        </div>
+        <div class="sep-h"></div>
+        `;
+    $("#sliders").append(sliderHtml);
+    attachRangeEventListeners();
+}
+
+/**
+ * Saves sliders information to sessionStorage
+ */
+function saveSlidersToStorage() {
+    let sliderValues = [];
+
+    $(".slider-cluster").each(function () {
+        const cluster = $(this);
+
+        const selectorInput = cluster.find(".css-selector-input").val();
+        const propertyInput = cluster.find(".css-property-input").val();
+        const rangeStartInput = cluster.find(".css-range-start-input").val();
+        const rangeEndInput = cluster.find(".css-range-end-input").val();
+        const unitsInput = cluster.find(".css-units-input").val();
+        const sliderValue = cluster.find(".css-range-slider").val();
+
+        const clusterData = {
+            selector: selectorInput,
+            property: propertyInput,
+            rangeStart: rangeStartInput,
+            rangeEnd: rangeEndInput,
+            units: unitsInput,
+            sliderValue: sliderValue,
+        };
+
+        sliderValues.push(clusterData);
+    });
+
+    sessionStorage.setItem("sliderData", JSON.stringify(sliderValues));
+}
+
+/**
+ * Loads sliders information from storage and creates needed sliders
+ */
+function loadSlidersFromStorage() {
+    const savedSliderData = JSON.parse(sessionStorage.getItem("sliderData"));
+
+    if (savedSliderData && savedSliderData.length > 0) {
+        savedSliderData.forEach((sliderData, index) => {
+            addTinkerSlider();
+
+            let cluster = $(".slider-cluster").eq(index);
+
+            if (cluster.length) {
+                cluster.find(".css-selector-input").val(sliderData.selector);
+                cluster.find(".css-property-input").val(sliderData.property);
+                cluster.find(".css-range-start-input").val(sliderData.rangeStart);
+                cluster.find(".css-range-end-input").val(sliderData.rangeEnd);
+                cluster.find(".css-units-input").val(sliderData.units);
+                cluster.find(".css-range-slider").val(sliderData.sliderValue);
+                cluster.find(".slider-cluster__slider input").attr("min", sliderData.rangeStart);
+                cluster.find(".slider-cluster__slider input").attr("max", sliderData.rangeEnd);
+
+                let indicator = cluster.find(".indicator");
+
+                setIndicator(sliderData.rangeStart, sliderData.rangeEnd, sliderData.sliderValue, indicator);
+                setCSS(sliderData.selector, sliderData.property, sliderData.units, sliderData.sliderValue);
+            }
+        });
+    } else {
+        addTinkerSlider();
+    }
+}
+
+/**
+ * Clears sliders container and resets the session storage
+ * that holds sliders information
+ */
+function resetTinkerSliders() {
+    sessionStorage.removeItem("sliderData");
+    $("#sliders").empty();
+    addTinkerSlider();
+}
+
+/**
+ * Adds default function button to button container and attaches event listeners to new
+ * button
+ */
+function addTinkerButton() {
+    let buttonHtml = `
+        <div class="button-cluster">
+            <div class="button-cluster__inputs">
+                <input
+                    type="text"
+                    class="button-function-input tinker-text-input tinker-text-input__full"
+                    spellcheck="false"
+                    placeholder="Function(args)"
+                />
+            </div>
+            <button class="tinker-function-button">Run Function</button>
+        </div>
+        <div class="sep-h"></div>
+        `;
+    $("#tinker-buttons").append(buttonHtml);
+    attachButtonEventListeners();
+}
+
+/**
+ * Saves function button information to sesstion storage
+ */
+function saveButtonsToStorage() {
+    let buttonValues = [];
+
+    $(".button-cluster").each(function () {
+        const cluster = $(this);
+
+        const functionInfo = cluster.find(".button-function-input").val();
+
+        const clusterData = {
+            functionInfo: functionInfo,
+        };
+
+        buttonValues.push(clusterData);
+    });
+
+    sessionStorage.setItem("buttonData", JSON.stringify(buttonValues));
+}
+
+/**
+ * Loads function button information from storage and adds needed buttons to the page.
+ */
+function loadButtonsFromStorage() {
+    const savedButtonData = JSON.parse(sessionStorage.getItem("buttonData"));
+
+    if (savedButtonData && savedButtonData.length > 0) {
+        savedButtonData.forEach((buttonData, index) => {
+            addTinkerButton();
+
+            let cluster = $(".button-cluster").eq(index);
+            cluster.find(".button-function-input").val(buttonData.functionInfo);
+        });
+    } else {
+        addTinkerButton();
+    }
+}
+
+/**
+ * Clears function button container and resets the session storage
+ * that holds buttons information
+ */
+function resetTinkerButtons() {
+    sessionStorage.removeItem("buttonData");
+    $("#tinker-buttons").empty();
+    addTinkerButton();
+}
+
+/**
+ * Saves settings to session storage
+ */
+function saveSettingsToStorage() {
+    const settingsData = {
+        displayMode: $("html").css("--current-display-mode"),
+        backgroundColor: $("dev-container").css("background-color"),
+    };
+
+    sessionStorage.setItem("settingsData", JSON.stringify(settingsData));
+}
+
+/**
+ * Loads settings from session storage and applies the stored information
+ */
+function loadSettingsFromStorage() {
+    const settingsData = JSON.parse(sessionStorage.getItem("settingsData"));
+
+    if (settingsData && settingsData.displayMode && settingsData.displayMode == "light") {
+        lightMode();
     }
 
-    element = $(`[k-value='${kval}']`);
-
-    console.log(property, val + units);
-
-    element.css(property, val + units);
+    if (settingsData && settingsData.backgroundColor) {
+        $("dev-container").css("background-color", settingsData.backgroundColor);
+    }
 }

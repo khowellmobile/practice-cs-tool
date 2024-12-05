@@ -7,78 +7,85 @@
         <link rel="stylesheet" href="{% static 'css/tinker_style.css' %}" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+            rel="stylesheet"
+        />
     </head>
 
     <body>
         <div class="container-1">
             <div id="main">
-                <div id="d1">
-                    <div id="d1-1">
-                        <!-- sliders added here in js file -->
-                    </div>
-                    <div id="d1-2">
-                        <div id="dev-container">
-                            <!-- Add all html below here -->
+                <div id="dev-container">
+                    <!-- All dev html below this line -->
 
-                            <div id="c1">
-                                <div class="pill">
-                                    <div class="sym">
-                                        <span><b>C</b></span>
-                                    </div>
-                                    <div class="seperator"></div>
-                                    <div class="report-date">
-                                        <p><b>2021-02-15</b></p>
-                                    </div>
-                                    <div class="seperator"></div>
-                                    <div class="reportSE">
-                                        <div>
-                                            <p><b>Start</b></p>
-                                            <p>2020-05-10</p>
-                                        </div>
-                                        <div class="seperator"></div>
-                                        <div>
-                                            <p><b>End</b></p>
-                                            <p>2020-05-23</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Add all html above here -->
-                        </div>
-                    </div>
-                    <div id="d1-3">
-                        <div id="tree-info" class="card">
-                            <span class="mini-card">
-                                <input id="outline-check-all" type="checkbox" /> <span>Outline All</span>
-                            </span>
-                        </div>
-                        <div id="tree-container" class="card">
-                            <!-- Leafs added here in js file -->
-                        </div>
-                    </div>
+                    <!-- All dev html above this line -->
                 </div>
-                <div id="d2">
-                    <div id="d2-1">
-                        <!-- buttons added here in js file -->
+                <div class="sep-v"></div>
+                <div id="tinker-tools">
+                    <div id="tinker-tabs">
+                        <div class="tab active-tab"><p>CSS</p></div>
+                        <div class="tab inactive-tab"><p>Sliders</p></div>
+                        <div class="tab inactive-tab"><p>Buttons</p></div>
+                        <div class="tab inactive-tab"><p>Tree</p></div>
+                        <div class="tab inactive-tab"><p>Settings</p></div>
                     </div>
-                    <div id="d2-2">
-                        <div id="element-info" class="card">
-                            <p id="e-tag"><b>Tag Name: </b>No Selection</p>
-                            <p id="e-id"><b>Id: </b>No Selection</p>
-                            <p><b>Classes: </b></p>
-                            <ul id="e-classes">
-                                <li>No Selection</li>
-                            </ul>
+                    <div class="sep-h"></div>
+                    <div id="tinker-slides">
+                        <div class="slide active-slide">
+                            <div class="slide-options">
+                                <button id="run-css-button" class="option-button"><p>Run CSS</p></button>
+                                <button id="reset-css-button" class="option-button"><p>Reset CSS</p></button>
+                            </div>
+                            <textarea
+                                type="text"
+                                id="css-textarea"
+                                name="css"
+                                spellcheck="false"
+                                placeholder="Type here"
+                            ></textarea>
                         </div>
-                        <div id="element-options" class="card">
-                            <span class="mini-card"
-                                ><input id="outline-check" type="checkbox" /> <span>Add Outline</span></span
-                            >
-                            <br />
-                            <h3>Assign Sliders</h3>
-                            <div id="element-options__slider-assigns">
-                                <!-- slider assigns added here in js file -->
+                        <div class="slide inactive-slide">
+                            <div class="slide-options">
+                                <button id="reset-sliders" class="option-button" onclick="resetTinkerButtons()">
+                                    Reset Sliders
+                                </button>
+                            </div>
+                            <div id="sliders"></div>
+                            <button class="add-element-button" onclick="addTinkerSlider()"><p>Add Slider</p></button>
+                        </div>
+                        <div class="slide inactive-slide">
+                            <div class="slide-options">
+                                <button id="reset-buttons" class="option-button" onclick="resetTinkerSliders()">
+                                    Reset Buttons
+                                </button>
+                            </div>
+                            <div id="tinker-buttons"></div>
+                            <button class="add-element-button" onclick="addTinkerButton()"><p>Add Button</p></button>
+                        </div>
+                        <div class="slide inactive-slide">
+                            <div id="tinker-tree"></div>
+                        </div>
+                        <div class="slide inactive-slide">
+                            <div id="tinker-settings">
+                                <div id="display-mode-settings">
+                                    <h4>Display mode:</h4>
+                                    <button onclick="lightMode()">Light</button>
+                                    <button onclick="darkMode()">Dark</button>
+                                </div>
+                                <div class="sep-h"></div>
+                                <div id="dev-container-settings">
+                                    <h4>Dev Area Background Color:</h4>
+                                    <input
+                                        type="text"
+                                        class="tinker-text-input tinker-text-input__full"
+                                        spellcheck="false"
+                                        placeholder="rgb(255, 255, 255), rgba(0, 0, 0, 0), #ffffff, ..."
+                                    />
+                                </div>
+                                <div class="sep-h"></div>
                             </div>
                         </div>
                     </div>
@@ -89,9 +96,5 @@
         <!-- Links to .js files and getting csrf_token -->
         <script src="{% static 'js/common_script.js' %}"></script>
         <script src="{% static 'js/tinker_script.js' %}"></script>
-        <script>
-            // Easier to get csrf token from template
-            var csrf_token = "{{ csrf_token }}";
-        </script>
     </body>
 </html>
