@@ -35,7 +35,7 @@ $(window).on("load", function () {
     loadButtonsFromStorage();
     loadSettingsFromStorage();
     loadCssFromStorage();
-    loadCssToTextarea()
+    loadCssToTextarea();
     attachEventListeners();
 });
 
@@ -172,7 +172,6 @@ function saveCssToStorage(cssContent) {
  * area, and applies the css.
  */
 function loadCssFromStorage() {
-    console.log("loadings");
     const savedCss = sessionStorage.getItem("textareaCss");
     if (savedCss) {
         $("#css-textarea").val(savedCss);
@@ -260,7 +259,6 @@ function addTinkerSlider() {
         <div class="sep-h"></div>
         `;
     $("#sliders").append(sliderHtml);
-    attachEventListeners();
 }
 
 function addTinkerButton() {
@@ -279,7 +277,6 @@ function addTinkerButton() {
         <div class="sep-h"></div>
         `;
     $("#tinker-buttons").append(buttonHtml);
-    attachEventListeners();
 }
 
 printTree($("#dev-container"), "");
@@ -336,6 +333,7 @@ $(".leaf").on("click", function () {
 });
 
 function darkMode() {
+    $("html").css("--current-display-mode", "dark");
     $("html").css("--tinker-primary-color", "orange");
     $("html").css("--tinker-darker-primary", "rgb(255, 140, 0)");
     $("html").css("--tinker-background-color", "rgb(22, 22, 22)");
@@ -347,6 +345,7 @@ function darkMode() {
 }
 
 function lightMode() {
+    $("html").css("--current-display-mode", "light");
     $("html").css("--tinker-primary-color", "rgb(94, 94, 248)");
     $("html").css("--tinker-darker-primary", "rgb(94, 94, 248)");
     $("html").css("--tinker-background-color", "white");
@@ -388,7 +387,7 @@ function saveSlidersToStorage() {
 function loadSlidersFromStorage() {
     const savedSliderData = JSON.parse(sessionStorage.getItem("sliderData"));
 
-    if (savedSliderData.length > 0) {
+    if (savedSliderData && savedSliderData.length > 0) {
         savedSliderData.forEach((sliderData, index) => {
             addTinkerSlider();
 
@@ -436,7 +435,7 @@ function saveButtonsToStorage() {
 function loadButtonsFromStorage() {
     const savedButtonData = JSON.parse(sessionStorage.getItem("buttonData"));
 
-    if (savedButtonData.length > 0) {
+    if (savedButtonData && savedButtonData.length > 0) {
         savedButtonData.forEach((buttonData, index) => {
             addTinkerButton();
 
@@ -460,9 +459,11 @@ function saveSettingsToStorage() {
 function loadSettingsFromStorage() {
     const settingsData = JSON.parse(sessionStorage.getItem("settingsData"));
 
-    if (settingsData.displayMode == "light") {
+    if (settingsData && settingsData.displayMode && settingsData.displayMode == "light") {
         lightMode();
     }
 
-    $("dev-container").css("background-color", settingsData.backgroundColor);
+    if (settingsData && settingsData.backgroundColor) {
+        $("dev-container").css("background-color", settingsData.backgroundColor);
+    }
 }

@@ -2,7 +2,10 @@
 
 /* Write all dev css above here */
 
-/* all css written below here is for the ui and functionality of the page */
+/* 
+All css written below here is for the ui and functionality of the page.
+Alter it at your own risk.
+*/
 
 :root {
     --current-display-mode: "dark";
