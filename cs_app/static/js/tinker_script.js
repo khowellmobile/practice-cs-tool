@@ -14,13 +14,29 @@
  * - leafs: object to track the state of leafs. Each leaf matches an html element.
  *
  * Functions:
- * - attachEventListeners(): Attaches eventlisteners to elements
- * - loadCssToTextarea(): Loads css from tinker css file into text area
- * - applyTextAreaCss(): Applies css in textarea to the page
- * - saveCssToStorage(cssContent): Saves textarea css to storage (prevent removal on refresh)
- * - loadCssFromStorage(): Loads textarea css from storage (runs on page load)
- * - resetCssToBase(): Resets the page css and storage css back to default
- *
+ * - attachEventListeners(): Attaches event listeners to elements
+ * - attachRangeEventListeners(): Attaches event listeners to range input elements
+ * - attachButtonEventListeners(): Attaches event listeners to button elements
+ * - loadCssToTextarea(): Loads CSS from the tinker CSS file into the text area
+ * - applyTextAreaCss(): Applies CSS in the textarea to the page
+ * - saveCssToStorage(cssContent): Saves textarea CSS to storage (prevents removal on refresh)
+ * - loadCssFromStorage(): Loads textarea CSS from storage (runs on page load)
+ * - resetCssToBase(): Resets the page CSS and storage CSS back to default
+ * - setIndicator(min, max, value, indicator): Sets the indicator for a range element
+ * - setCSS(selector, property, units, value): Sets CSS properties for a given selector
+ * - printTree(element, indent, leafCounter = { co }): Prints a tree structure of the elements
+ * - darkMode(): Activates dark mode for the page
+ * - lightMode(): Activates light mode for the page
+ * - addTinkerSlider(): Adds a slider element to the page
+ * - saveSlidersToStorage(): Saves slider states to storage
+ * - loadSlidersFromStorage(): Loads slider states from storage
+ * - resetTinkerSliders(): Resets the sliders to their default state
+ * - addTinkerButton(): Adds a button element to the page
+ * - saveButtonsToStorage(): Saves button states to storage
+ * - loadButtonsFromStorage(): Loads button states from storage
+ * - resetTinkerButtons(): Resets the buttons to their default state
+ * - saveSettingsToStorage(): Saves settings to storage
+ * - loadSettingsFromStorage(): Loads settings from storage
  */
 
 // Save input values before refresh
@@ -30,6 +46,7 @@ $(window).on("beforeunload", function () {
     saveSettingsToStorage();
 });
 
+// Load needed information from storage and attach event listeners
 $(window).on("load", function () {
     loadSlidersFromStorage();
     loadButtonsFromStorage();
@@ -56,7 +73,7 @@ function attachEventListeners() {
         // Sets matching slide as active
         $(".active-slide").toggleClass("active-slide inactive-slide");
 
-        $("#slides .slide").eq(index).toggleClass("active-slide inactive-slide");
+        $("#tinker-slides .slide").eq(index).toggleClass("active-slide inactive-slide");
     });
 
     $("#css-textarea").on("keydown", function (e) {
@@ -83,42 +100,82 @@ function attachEventListeners() {
         }
     });
 
-    // Update the indicator position when the slider value changes
-    $(".css-range-slider").on("input", function () {
-        let value = $(this).val();
-        let indicator = $(this).parent().children(1);
-        let inputs = $(this).parent().parent().children(1);
-        let selector = inputs.find(".css-selector-input").val();
-        let property = inputs.find(".css-property-input").val();
-        let units = inputs.find(".css-units-input").val();
+    $(".leaf").on("mouseenter", function () {
+        let leafLeafId = $(this).attr("leafId");
+        let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
-        setIndicator($(this).attr("min"), $(this).attr("max"), value, indicator);
-        setCSS(selector, property, units, value);
+        $(`[leafId='${elementLeafId}']`).addClass("blinking-outline");
     });
 
-    $(".css-range-start-input, .css-range-end-input").on("input", function () {
-        let cluster = $(this).closest(".slider-cluster");
-        let slider = cluster.find(".css-range-slider");
+    $(".leaf").on("mouseleave", function () {
+        let leafLeafId = $(this).attr("leafId");
+        let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
-        if ($(this).hasClass("css-range-start-input")) {
-            slider.attr("min", $(this).val());
-        } else if ($(this).hasClass("css-range-end-input")) {
-            slider.attr("max", $(this).val());
-        }
+        $(`[leafId='${elementLeafId}']`).removeClass("blinking-outline");
     });
 
-    $(".button-function-input").on("input", function () {
-        let cluster = $(this).closest(".button-cluster");
-        let button = cluster.find(".tinker-function-button");
-        let value = $(this).val();
+    $(".leaf").on("click", function () {
+        let leafLeafId = $(this).attr("leafId");
+        let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
 
-        button.off("click").on("click", function () {
-            eval(value);
-        });
+        $(`[leafId='${elementLeafId}']`).toggleClass("constant-outline");
     });
+
+    attachRangeEventListeners();
+    attachButtonEventListeners();
 
     $("#run-css-button").on("click", applyTextAreaCss);
     $("#reset-css-button").on("click", resetCssToBase);
+}
+
+/**
+ * Attaches relevany event listeners to sliders
+ */
+function attachRangeEventListeners() {
+    // Update the indicator position when the slider value changes
+    $(".css-range-slider")
+        .off("input")
+        .on("input", function () {
+            let value = $(this).val();
+            let indicator = $(this).parent().children(1);
+            let inputs = $(this).parent().parent().children(1);
+            let selector = inputs.find(".css-selector-input").val();
+            let property = inputs.find(".css-property-input").val();
+            let units = inputs.find(".css-units-input").val();
+
+            setIndicator($(this).attr("min"), $(this).attr("max"), value, indicator);
+            setCSS(selector, property, units, value);
+        });
+
+    $(".css-range-start-input, .css-range-end-input")
+        .off("input")
+        .on("input", function () {
+            let cluster = $(this).closest(".slider-cluster");
+            let slider = cluster.find(".css-range-slider");
+
+            if ($(this).hasClass("css-range-start-input")) {
+                slider.attr("min", $(this).val());
+            } else if ($(this).hasClass("css-range-end-input")) {
+                slider.attr("max", $(this).val());
+            }
+        });
+}
+
+/**
+ * Attaches relevant event listeners to function buttons
+ */
+function attachButtonEventListeners() {
+    $(".button-function-input")
+        .off("input")
+        .on("input", function () {
+            let cluster = $(this).closest(".button-cluster");
+            let button = cluster.find(".tinker-function-button");
+            let value = $(this).val();
+
+            button.off("click").on("click", function () {
+                eval(value);
+            });
+        });
 }
 
 /**
@@ -199,6 +256,15 @@ function resetCssToBase() {
     loadCssToTextarea();
 }
 
+/**
+ * Calculates and sets the proper offset and
+ * value for the indicator on a slider
+ *
+ * @param {int} min - minimum value of the slider range
+ * @param {int} max - maximum value of the slider range
+ * @param {int} value - Current value of the slider
+ * @param {$element} indicator - Indicator element for the slider
+ */
 function setIndicator(min, max, value, indicator) {
     let percentThrough = ((value - min) / (max - min)) * 100;
 
@@ -210,10 +276,96 @@ function setIndicator(min, max, value, indicator) {
     $(indicator).find(".indicator-text").text(value);
 }
 
+/**
+ * Uses jquery to set the css of a DOM element using the input information
+ *
+ * @param {string} selector - CSS selector to select the jquery element
+ * @param {string} property - CSs property to change
+ * @param {string} units - Units of the CSS property (eq. rem, px, vh,...)
+ * @param {int} value - The value to set the property to
+ */
 function setCSS(selector, property, units, value) {
     $(selector).css(`${property}`, `${value}${units}`);
 }
 
+printTree($("#dev-container"), "");
+
+/**
+ * Recursive function to print the DOM elements in the tinker tree
+ *
+ * The function works by creating a "leaf" that correlates to a real
+ * DOM element by use of a leaf-id. The leafs are then stored in a
+ * global object that tracks their relevant states.
+ *
+ * @param {$element} element - The current element to print the children of
+ * @param {string} indent - The amount to indent the text by for formatting
+ * @param {object} leafCounter - The leaf number that correlates to the current element
+ * @returns
+ */
+function printTree(element, indent, leafCounter = { count: 0 }) {
+    let numOfChildren = element.children().length;
+
+    // Base Case: If no children, stop recursion
+    if (numOfChildren === 0) {
+        return;
+    }
+
+    let newIndent = indent + "    ";
+
+    element.children().each(function () {
+        let leafId = leafCounter.count++;
+        let tagName = $(this).prop("nodeName").toLowerCase();
+        let leaf = `<div class="leaf" leafId="${leafId}-l"><p>${newIndent}${tagName}</p></div>`;
+
+        $(this).attr("leafId", `${leafId}-e`);
+
+        leafs[leafId] = {
+            leafLeafId: leafId + "-l",
+            elementLeafId: leafId + "-e",
+            outline: false,
+        };
+
+        $("#tinker-tree").append(leaf);
+
+        // Recursive call
+        printTree($(this), newIndent, leafCounter);
+    });
+}
+
+/**
+ * Sets all necessary css variables to dark mode variations
+ */
+function darkMode() {
+    $("html").css("--current-display-mode", "dark");
+    $("html").css("--tinker-primary-color", "orange");
+    $("html").css("--tinker-darker-primary", "rgb(255, 140, 0)");
+    $("html").css("--tinker-background-color", "rgb(22, 22, 22)");
+    $("html").css("--tinker-background-shadow-color", "rgb(15, 15, 15)");
+    $("html").css("--tinker-text-color", "white");
+    $("html").css("--tinker-slider-background", "black");
+    $("html").css("--tinker-slider-thumb", "#333");
+    $("html").css("--tinker-slider-shadow", "#333");
+}
+
+/**
+ * Sets all necessary css variables to light mode variations
+ */
+function lightMode() {
+    $("html").css("--current-display-mode", "light");
+    $("html").css("--tinker-primary-color", "rgb(94, 94, 248)");
+    $("html").css("--tinker-darker-primary", "rgb(94, 94, 248)");
+    $("html").css("--tinker-background-color", "white");
+    $("html").css("--tinker-background-shadow-color", "rgb(0, 0, 0, 0)");
+    $("html").css("--tinker-text-color", "black");
+    $("html").css("--tinker-slider-background", "white");
+    $("html").css("--tinker-slider-thumb", "rgb(0, 0, 0, 0)");
+    $("html").css("--tinker-slider-shadow", "rgb(0, 0, 0, 0.2)");
+}
+
+/**
+ * Adds default slider html to the slider container and attaches event listeners to
+ * new slider.
+ */
 function addTinkerSlider() {
     let sliderHtml = `
         <div class="slider-cluster">
@@ -259,103 +411,12 @@ function addTinkerSlider() {
         <div class="sep-h"></div>
         `;
     $("#sliders").append(sliderHtml);
+    attachRangeEventListeners();
 }
 
-function addTinkerButton() {
-    let buttonHtml = `
-        <div class="button-cluster">
-            <div class="button-cluster__inputs">
-                <input
-                    type="text"
-                    class="button-function-input tinker-text-input tinker-text-input__full"
-                    spellcheck="false"
-                    placeholder="Function(args)"
-                />
-            </div>
-            <button class="tinker-function-button">Run Function</button>
-        </div>
-        <div class="sep-h"></div>
-        `;
-    $("#tinker-buttons").append(buttonHtml);
-}
-
-printTree($("#dev-container"), "");
-
-function printTree(element, indent, leafCounter = { count: 0 }) {
-    let numOfChildren = element.children().length;
-
-    // Base Case: If no children, stop recursion
-    if (numOfChildren === 0) {
-        return;
-    }
-
-    let newIndent = indent + "    ";
-
-    element.children().each(function () {
-        let leafId = leafCounter.count++;
-        let tagName = $(this).prop("nodeName").toLowerCase();
-        let leaf = `<div class="leaf" leafId="${leafId}-l"><p>${newIndent}${tagName}</p></div>`;
-
-        $(this).attr("leafId", `${leafId}-e`);
-
-        leafs[leafId] = {
-            leafLeafId: leafId + "-l",
-            elementLeafId: leafId + "-e",
-            outline: false,
-        };
-
-        $("#tinker-tree").append(leaf);
-
-        // Recursive call
-        printTree($(this), newIndent, leafCounter);
-    });
-}
-
-$(".leaf").on("mouseenter", function () {
-    let leafLeafId = $(this).attr("leafId");
-    let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
-
-    $(`[leafId='${elementLeafId}']`).addClass("blinking-outline");
-});
-
-$(".leaf").on("mouseleave", function () {
-    let leafLeafId = $(this).attr("leafId");
-    let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
-
-    $(`[leafId='${elementLeafId}']`).removeClass("blinking-outline");
-});
-
-$(".leaf").on("click", function () {
-    let leafLeafId = $(this).attr("leafId");
-    let elementLeafId = leafs[leafLeafId.slice(0, -2)].elementLeafId;
-
-    $(`[leafId='${elementLeafId}']`).toggleClass("constant-outline");
-});
-
-function darkMode() {
-    $("html").css("--current-display-mode", "dark");
-    $("html").css("--tinker-primary-color", "orange");
-    $("html").css("--tinker-darker-primary", "rgb(255, 140, 0)");
-    $("html").css("--tinker-background-color", "rgb(22, 22, 22)");
-    $("html").css("--tinker-background-shadow-color", "rgb(15, 15, 15)");
-    $("html").css("--tinker-text-color", "white");
-    $("html").css("--tinker-slider-background", "black");
-    $("html").css("--tinker-slider-thumb", "#333");
-    $("html").css("--tinker-slider-shadow", "#333");
-}
-
-function lightMode() {
-    $("html").css("--current-display-mode", "light");
-    $("html").css("--tinker-primary-color", "rgb(94, 94, 248)");
-    $("html").css("--tinker-darker-primary", "rgb(94, 94, 248)");
-    $("html").css("--tinker-background-color", "white");
-    $("html").css("--tinker-background-shadow-color", "rgb(0, 0, 0, 0)");
-    $("html").css("--tinker-text-color", "black");
-    $("html").css("--tinker-slider-background", "white");
-    $("html").css("--tinker-slider-thumb", "rgb(0, 0, 0, 0)");
-    $("html").css("--tinker-slider-shadow", "rgb(0, 0, 0, 0.2)");
-}
-
+/**
+ * Saves sliders information to sessionStorage
+ */
 function saveSlidersToStorage() {
     let sliderValues = [];
 
@@ -384,6 +445,9 @@ function saveSlidersToStorage() {
     sessionStorage.setItem("sliderData", JSON.stringify(sliderValues));
 }
 
+/**
+ * Loads sliders information from storage and creates needed sliders
+ */
 function loadSlidersFromStorage() {
     const savedSliderData = JSON.parse(sessionStorage.getItem("sliderData"));
 
@@ -414,6 +478,42 @@ function loadSlidersFromStorage() {
     }
 }
 
+/**
+ * Clears sliders container and resets the session storage
+ * that holds sliders information
+ */
+function resetTinkerSliders() {
+    sessionStorage.removeItem("sliderData");
+    $("#sliders").empty();
+    addTinkerSlider();
+}
+
+/**
+ * Adds default function button to button container and attaches event listeners to new
+ * button
+ */
+function addTinkerButton() {
+    let buttonHtml = `
+        <div class="button-cluster">
+            <div class="button-cluster__inputs">
+                <input
+                    type="text"
+                    class="button-function-input tinker-text-input tinker-text-input__full"
+                    spellcheck="false"
+                    placeholder="Function(args)"
+                />
+            </div>
+            <button class="tinker-function-button">Run Function</button>
+        </div>
+        <div class="sep-h"></div>
+        `;
+    $("#tinker-buttons").append(buttonHtml);
+    attachButtonEventListeners();
+}
+
+/**
+ * Saves function button information to sesstion storage
+ */
 function saveButtonsToStorage() {
     let buttonValues = [];
 
@@ -432,6 +532,9 @@ function saveButtonsToStorage() {
     sessionStorage.setItem("buttonData", JSON.stringify(buttonValues));
 }
 
+/**
+ * Loads function button information from storage and adds needed buttons to the page.
+ */
 function loadButtonsFromStorage() {
     const savedButtonData = JSON.parse(sessionStorage.getItem("buttonData"));
 
@@ -447,6 +550,19 @@ function loadButtonsFromStorage() {
     }
 }
 
+/**
+ * Clears function button container and resets the session storage
+ * that holds buttons information
+ */
+function resetTinkerButtons() {
+    sessionStorage.removeItem("buttonData");
+    $("#tinker-buttons").empty();
+    addTinkerButton();
+}
+
+/**
+ * Saves settings to session storage
+ */
 function saveSettingsToStorage() {
     const settingsData = {
         displayMode: $("html").css("--current-display-mode"),
@@ -456,6 +572,9 @@ function saveSettingsToStorage() {
     sessionStorage.setItem("settingsData", JSON.stringify(settingsData));
 }
 
+/**
+ * Loads settings from session storage and applies the stored information
+ */
 function loadSettingsFromStorage() {
     const settingsData = JSON.parse(sessionStorage.getItem("settingsData"));
 

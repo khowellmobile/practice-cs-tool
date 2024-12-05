@@ -29,20 +29,20 @@
                     </div>
                 </div>
                 <div class="sep-v"></div>
-                <div id="options">
-                    <div id="tabs">
-                        <div class="tab inactive-tab"><p>CSS</p></div>
+                <div id="tinker-tools">
+                    <div id="tinker-tabs">
+                        <div class="tab active-tab"><p>CSS</p></div>
                         <div class="tab inactive-tab"><p>Sliders</p></div>
                         <div class="tab inactive-tab"><p>Buttons</p></div>
                         <div class="tab inactive-tab"><p>Tree</p></div>
-                        <div class="tab active-tab"><p>Settings</p></div>
+                        <div class="tab inactive-tab"><p>Settings</p></div>
                     </div>
                     <div class="sep-h"></div>
-                    <div id="slides">
-                        <div class="slide inactive-slide">
-                            <div id="textarea-buttons">
-                                <button id="run-css-button" class="run-button"><p>Run CSS</p></button>
-                                <button id="reset-css-button" class="run-button"><p>Reset CSS</p></button>
+                    <div id="tinker-slides">
+                        <div class="slide active-slide">
+                            <div class="slide-options">
+                                <button id="run-css-button" class="option-button"><p>Run CSS</p></button>
+                                <button id="reset-css-button" class="option-button"><p>Reset CSS</p></button>
                             </div>
                             <textarea
                                 type="text"
@@ -53,17 +53,27 @@
                             ></textarea>
                         </div>
                         <div class="slide inactive-slide">
+                            <div class="slide-options">
+                                <button id="reset-sliders" class="option-button" onclick="resetTinkerButtons()">
+                                    Reset Sliders
+                                </button>
+                            </div>
                             <div id="sliders"></div>
-                            <button id="add-slider-button" onclick="addTinkerSlider()"><p>Add Slider</p></button>
+                            <button class="add-element-button" onclick="addTinkerSlider()"><p>Add Slider</p></button>
                         </div>
                         <div class="slide inactive-slide">
+                            <div class="slide-options">
+                                <button id="reset-buttons" class="option-button" onclick="resetTinkerSliders()">
+                                    Reset Buttons
+                                </button>
+                            </div>
                             <div id="tinker-buttons"></div>
-                            <button id="add-slider-button" onclick="addTinkerButton()"><p>Add Button</p></button>
+                            <button class="add-element-button" onclick="addTinkerButton()"><p>Add Button</p></button>
                         </div>
                         <div class="slide inactive-slide">
                             <div id="tinker-tree"></div>
                         </div>
-                        <div class="slide active-slide">
+                        <div class="slide inactive-slide">
                             <div id="tinker-settings">
                                 <div id="display-mode-settings">
                                     <h4>Display mode:</h4>

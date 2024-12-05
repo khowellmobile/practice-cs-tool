@@ -109,9 +109,13 @@ body {
     flex-direction: column;
 }
 
-.run-button {
-    width: 7rem;
-    padding: 0.5rem;
+.slide-options {
+    display: flex;
+    justify-content: end;
+}
+
+.option-button {
+    padding: 0.5rem 1rem;
     margin: 0rem 0rem 0.5rem 0.5rem;
 
     background-color: var(--tinker-primary-color);
@@ -126,15 +130,15 @@ body {
     align-items: center;
 }
 
-.run-button > p {
+.option-button > p {
     font-size: 0.8rem;
 }
 
-.run-button:hover {
+.option-button:hover {
     transform: translateY(-1px);
 }
 
-.run-button:active {
+.option-button:active {
     transform: translateY(0);
 }
 
@@ -234,6 +238,38 @@ body {
     -webkit-appearance: none;
 }
 
+.add-element-button {
+    width: 100%;
+    height: 2rem;
+
+    /* Darker orange due to lighter appearence at buttons position */
+    background-color: var(--tinker-darker-primary);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all ease 0.25s;
+    border: none;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-element-button > p {
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.add-element-button:hover {
+    transform: translateY(-2px);
+}
+
+.add-element-button:active {
+    transform: translateY(0);
+}
+
 .button-cluster {
     width: 100%;
     max-height: 4rem;
@@ -292,13 +328,13 @@ body {
 
 @keyframes blink-outline {
     0% {
-        outline-color: transparent; /* Border disappears */
+        outline-color: transparent;
     }
     50% {
-        outline-color: #5784ff; /* Border color back to initial */
+        outline-color: #5784ff;
     }
     100% {
-        outline-color: transparent; /* Border disappears */
+        outline-color: transparent; 
     }
 }
 
@@ -318,7 +354,7 @@ body {
     align-items: center;
 }
 
-#options {
+#tinker-tools {
     width: 30%;
     padding: 0rem 0.5rem;
 
@@ -326,23 +362,18 @@ body {
     flex-direction: column;
 }
 
-#tabs {
+#tinker-tabs {
     height: 2rem;
 
     display: flex;
     justify-content: space-between;
 }
 
-#slides {
+#tinker-slides {
     width: 100%;
     height: 100%;
 
     max-height: calc(100% - 2rem);
-}
-
-#textarea-buttons {
-    display: flex;
-    justify-content: end;
 }
 
 #css-textarea {
@@ -389,38 +420,6 @@ body {
     font-size: 6em;
     color: #999;
     font-weight: 400;
-}
-
-#add-slider-button {
-    width: 100%;
-    height: 2rem;
-
-    /* Darker orange due to lighter appearence at buttons position */
-    background-color: var(--tinker-darker-primary);
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all ease 0.25s;
-    border: none;
-    outline: none;
-    font-family: "Poppins", sans-serif;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#add-slider-button > p {
-    color: rgb(255, 255, 255);
-    font-weight: 500;
-    font-size: 1rem;
-}
-
-#add-slider-button:hover {
-    transform: translateY(-2px);
-}
-
-#add-slider-button:active {
-    transform: translateY(0);
 }
 
 #tinker-tree {
