@@ -6,7 +6,6 @@
  *   to provide visual feedback on user interactions.
  */
 
-
 attachEventListeners();
 
 /**

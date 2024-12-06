@@ -43,7 +43,8 @@
             </div>
             <div id="inputs__database-information">
                 <div id="database-information">
-                    {% if current_database_name == history_database_name or not current_database_name or not history_database_name %}
+                    {% if current_database_name == history_database_name or not current_database_name or not
+                    history_database_name %}
                     <p><strong>Database: </strong>{{ current_database_name|default:"No Active Connection" }}</p>
                     {% else %}
                     <p class="mismatch-message"><strong>Error: </strong>Report Database and Active Database differ.</p>

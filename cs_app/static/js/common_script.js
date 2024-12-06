@@ -11,7 +11,6 @@
  */
 
 function redirectTo(url, additionalInfo) {
-    
     if (additionalInfo) {
         const jsonString = JSON.stringify(additionalInfo);
 
@@ -33,5 +32,3 @@ try {
 } catch (error) {
     console.log(error);
 }
-
-

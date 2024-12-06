@@ -11,18 +11,19 @@ try {
     console.log(error);
 }
 
-
 attachEventListeners();
 
 /**
- * Attaches event listeners to elements. 
+ * Attaches event listeners to elements.
  */
 function attachEventListeners() {
-    $("#right > span").on("mouseenter", function () {
-        $(this).find("div > p").toggleClass("right-pos left-pos");
-    }).on("mouseleave", function () {
-        $(this).find("div > p").toggleClass("right-pos left-pos");
-    });
+    $("#right > span")
+        .on("mouseenter", function () {
+            $(this).find("div > p").toggleClass("right-pos left-pos");
+        })
+        .on("mouseleave", function () {
+            $(this).find("div > p").toggleClass("right-pos left-pos");
+        });
 
     // Setting current screen name in nav bar
     $("#current-screen-name").text("Home");
