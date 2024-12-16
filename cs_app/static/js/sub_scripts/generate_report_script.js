@@ -37,7 +37,11 @@ function attachEventListeners() {
     $(".dropdown-button").on("click", function (event) {
         // Prevent the document click event from firing
         event.stopPropagation();
-        $(".dropdown-content").css("visibility", "visible");
+        if ($(".dropdown-content").css("visibility") === "hidden") {
+            $(".dropdown-content").css("visibility", "visible");
+        } else {
+            $(".dropdown-content").css("visibility", "hidden");
+        }
     });
 
     /**
