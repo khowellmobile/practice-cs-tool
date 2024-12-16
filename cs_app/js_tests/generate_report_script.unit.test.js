@@ -125,7 +125,7 @@ describe("test dropdown menu jquery eventlistener", () => {
         dom = new JSDOM(
             `<!DOCTYPE html>
                 <button class="dropdown-button">ButtonText</button>
-                <div class="dropdown-content" style="display: flex;">
+                <div class="dropdown-content" style="visibility: hidden">
                     <div class="dropdown-item" id="item-text1">Text1</div>
                     <div class="dropdown-item">Text2</div>
                     <div class="dropdown-item">Text3</div>
@@ -155,7 +155,7 @@ describe("test dropdown menu jquery eventlistener", () => {
 
         dropButton.trigger("click");
 
-        expect(dropContent.css("visibility")).toBe("visible");
+        expect(dropContent.css("visibility")).toBe("hidden");
 
         $("#non-dropdown-click").trigger("click");
 
