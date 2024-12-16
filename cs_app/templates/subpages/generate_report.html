@@ -43,6 +43,7 @@
             </div>
             <div id="inputs__database-information">
                 <div id="database-information">
+                    <!-- The line 47 must remain as one line. A Django error is thrown if it is formatted differently -->
                     {% if current_database_name == history_database_name or not current_database_name or not history_database_name %}
                     <p><strong>Database: </strong>{{ current_database_name|default:"No Active Connection" }}</p>
                     {% else %}
