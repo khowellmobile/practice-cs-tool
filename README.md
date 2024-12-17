@@ -9,7 +9,7 @@ The Practice CS Tool is a powerful application designed to generate custom repor
 - **Pyodbc**: A Python library that provides an interface for accessing ODBC databases, essential for connecting to the SQL Server housing the Practice CS database.
 - **SQL Server**: A robust relational database management system utilized for storing and managing the Practice CS database.
 
-## Features (Coming Soon)
+## Features
 
 - **Custom Reports**: Generate detailed reports customized to your requirements, extracting relevant data from the Practice CS database.
 - **Local Server Support**: Seamlessly connect to your locally hosted Practice CS database for efficient data retrieval and analysis.
